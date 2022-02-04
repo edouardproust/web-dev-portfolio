@@ -19,5 +19,5 @@ symfony check:requirements
 
 ```bash
 docker compose up -d
-symfony serv -d
+symfony serv -d 
 ```
