@@ -20,13 +20,13 @@ services:
   #   environment:
   #     MYSQL_ROOT_PASSWORD: root
 
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      PMA_HOST: db
+  # phpmyadmin:
+  #   image: phpmyadmin
+  #   restart: always
+  #   ports:
+  #     - 8080:80
+  #   environment:
+  #     PMA_HOST: db
 
   mailcatcher:
     image: schickling/mailcatcher
