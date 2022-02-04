@@ -2,26 +2,6 @@ version: '3.1'
 
 services:
 
-  # db:
-  #   image: mysql
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root
-
-  # phpmyadmin:
-  #   image: phpmyadmin
-  #   restart: always
-  #   ports:
-  #     - 8080:80
-  #   environment:
-  #     PMA_HOST: db
-
-  mailcatcher:
-    image: schickling/mailcatcher
-    ports:
-      - 1080:1080
-      - 1025:1025
-
   database:
     image: 'mysql:latest'
     environment:
@@ -33,3 +13,17 @@ services:
       # "3306" to "3306:3306". Where the first port is exposed to the host and the second is the container port.
       # See https://docs.docker.com/compose/compose-file/#ports for more information.
       - '3306'
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: database
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - 1080:1080
+      - 1025:1025
