@@ -24,6 +24,9 @@ yarn install
 yarn dev
 docker compose up -d
 symfony serve -d
+symfony console make:migration
+symfony console doctrine:migrations:migrate
+symfony console doctrine:fixtures:load
 ```
 
 ## Usefull commands
