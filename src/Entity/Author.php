@@ -271,5 +271,4 @@ class Author
 
         return $this;
     }
-
 }
