@@ -34,11 +34,6 @@ abstract class PHPUnitEntityAbstract extends TestCase
         foreach ($properties as $key => $value) {
             [$setterFn, $getterFn] = $this->getGetterAndSetter($key);
             $entity->$setterFn($value);
-
-            if(method_exists($entity, 'getPassword')) {
-                dump($entity);
-            }
-
             $this->assertTrue($entity->$getterFn() === $value);
         } 
     }
