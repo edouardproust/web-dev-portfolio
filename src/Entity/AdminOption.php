@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AdminOptionsRepository;
+use App\Repository\AdminOptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=AdminOptionsRepository::class)
+ * @ORM\Entity(repositoryClass=AdminOptionRepository::class)
  */
-class AdminOptions
+class AdminOption
 {
     /**
      * @ORM\Id
@@ -23,7 +23,7 @@ class AdminOptions
     private $slug;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="json")
      */
     private $value;
 
