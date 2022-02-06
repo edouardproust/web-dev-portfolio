@@ -171,7 +171,7 @@ class AppFixtures extends Fixture
             ;
             $randomUser = $this->faker->randomElement($this->users);
             //> security
-            while(in_array($randomUser, $usersSetAsAuthor)) {
+            while (in_array($randomUser, $usersSetAsAuthor)) {
                 $randomUser = $this->faker->randomElement($this->users);
             }
             $usersSetAsAuthor[] = $randomUser;
@@ -351,7 +351,9 @@ class AppFixtures extends Fixture
         // users
         for ($u = 0; $u < self::USERS_NB; $u++) {
             $user = (new User)
-                ->setEmail(strtolower($this->faker->firstName().'.'.$this->faker->lastName()).'@'.$this->faker->freeEmailDomain())
+                ->setEmail(strtolower(
+                    $this->faker->firstName().'.'.$this->faker->lastName()).'@'.$this->faker->freeEmailDomain()
+                )
                 ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
             ;
             $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));
