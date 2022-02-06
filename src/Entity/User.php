@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
@@ -141,12 +141,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

@@ -2,21 +2,21 @@
 
 namespace App\Tests;
 
-use DateTimeImmutable;
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 abstract class PHPUnitEntityAbstract extends TestCase
 {
 
-    /** @var DateTimeImmutable */
+    /** @var DateTime */
     protected $now;
 
     private function setNow(): void
     {
-        if(!$this->now) $this->now = new DateTimeImmutable();
+        if(!$this->now) $this->now = new DateTime();
     }
 
-    protected function getNow(): DateTimeImmutable
+    protected function getNow(): DateTime
     {
         if(!$this->now) $this->setNow();
         return $this->now;

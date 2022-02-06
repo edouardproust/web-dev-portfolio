@@ -6,4 +6,8 @@
 
 <h1>Home</h1>
 
+<div>{{ faker.firstName }} {{ faker.lastName }}</div>
+<img src="{{ faker.imageUrl(60,60) }}" alt="">
+<div>{{ date.format('d M Y (H:i)') }}</div>
+
 {% endblock %}
