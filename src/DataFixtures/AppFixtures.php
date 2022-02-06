@@ -79,7 +79,7 @@ class AppFixtures extends Fixture
     private $users = [];
 
     /** @var EntityManagerInterface */
-    private $objectManager;
+    private $entityManager;
     /** @var SluggerInterface */
     private $slugger;
     /** @var UserPasswordHasherInterface */
@@ -99,41 +99,41 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->createAdminOptions();
-        foreach($this->adminOptions as $adminOption) $manager->persist($adminOption);
+        foreach ($this->adminOptions as $adminOption) $manager->persist($adminOption);
 
         $this->createUsers();
-        foreach($this->users as $user) $manager->persist($user);
+        foreach ($this->users as $user) $manager->persist($user);
 
         $this->createAuthors();
-        foreach($this->authors as $author) $manager->persist($author);
+        foreach ($this->authors as $author) $manager->persist($author);
 
         $this->createCodingLanguages();
-        foreach($this->codingLanguages as $codingLanguage) $manager->persist($codingLanguage);
+        foreach ($this->codingLanguages as $codingLanguage) $manager->persist($codingLanguage);
 
         $this->createProjectCategories();
-        foreach($this->projectCategories as $projectCategory) $manager->persist($projectCategory);
+        foreach ($this->projectCategories as $projectCategory) $manager->persist($projectCategory);
 
         $this->createPostCategories();
-        foreach($this->postCategories as $postCategory) $manager->persist($postCategory);
+        foreach ($this->postCategories as $postCategory) $manager->persist($postCategory);
 
         $this->createLessonCategories();
-        foreach($this->lessonCategories as $lessonCategory) $manager->persist($lessonCategory);
+        foreach ($this->lessonCategories as $lessonCategory) $manager->persist($lessonCategory);
 
         $this->createProjects();
-        foreach($this->projects as $project) $manager->persist($project);
+        foreach ($this->projects as $project) $manager->persist($project);
 
         $this->createPosts();
-        foreach($this->posts as $post) $manager->persist($post);
+        foreach ($this->posts as $post) $manager->persist($post);
 
         $this->createLessons();
-        foreach($this->lessons as $lesson) $manager->persist($lesson);
+        foreach ($this->lessons as $lesson) $manager->persist($lesson);
 
         $manager->flush();
     }
 
     private function createAdminOptions()
     {
-        foreach(self::ADMIN_OPTIONS as $slug => $value) {
+        foreach (self::ADMIN_OPTIONS as $slug => $value) {
             $option = (new AdminOption)
                 ->setSlug($slug)
                 ->setValue($value)
@@ -144,18 +144,18 @@ class AppFixtures extends Fixture
 
     private function createAuthors()
     {
-        for($a = 0; $a < self::AUTHORS_NB; $a++) {
+        for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
                 ->setAvatar($this->faker->imageUrl(60,60))
                 ->setBio($this->faker->paragraph(5, true))
                 ->setUser($this->faker->randomElement($this->users))
             ;
             // optional fields
-            if(random_int(1,100) < 70) $author->setContactEmail(self::AUTHOR_DEFAUT['contactEmail']);
-            if(random_int(1,100) < 90) $author->setGithub(self::AUTHOR_DEFAUT['github']);
-            if(random_int(1,100) < 50) $author->setLinkedin(self::AUTHOR_DEFAUT['linkedin']);
-            if(random_int(1,100) < 70) $author->setStackoverflow(self::AUTHOR_DEFAUT['stackoverflow']);
-            if(random_int(1,100) < 30) $author->setWebsite(self::AUTHOR_DEFAUT['website']);
+            if (random_int(1,100) < 70) $author->setContactEmail(self::AUTHOR_DEFAUT['contactEmail']);
+            if (random_int(1,100) < 90) $author->setGithub(self::AUTHOR_DEFAUT['github']);
+            if (random_int(1,100) < 50) $author->setLinkedin(self::AUTHOR_DEFAUT['linkedin']);
+            if (random_int(1,100) < 70) $author->setStackoverflow(self::AUTHOR_DEFAUT['stackoverflow']);
+            if (random_int(1,100) < 30) $author->setWebsite(self::AUTHOR_DEFAUT['website']);
 
             $this->authors[] = $author;
         }
@@ -163,7 +163,7 @@ class AppFixtures extends Fixture
 
     private function createCodingLanguages()
     {
-        foreach(self::CONDING_LANGUAGES as $key => $value) {
+        foreach (self::CONDING_LANGUAGES as $key => $value) {
             $codingLanguage = (new CodingLanguage)
                 ->setLabel($value)
                 ->setSlug($key)
@@ -174,7 +174,7 @@ class AppFixtures extends Fixture
 
     private function createLessons()
     {
-        for($l = 0; $l < self::LESSONS_NB; $l++) {
+        for ($l = 0; $l < self::LESSONS_NB; $l++) {
             $title = $this->faker->sentence();
             $lesson = (new Lesson)
                 ->setAuthor($this->faker->randomElement($this->authors))
@@ -185,9 +185,9 @@ class AppFixtures extends Fixture
                 ->setTitle($title)
             ;
             // optional fields
-            if(random_int(1,100) < 70) $lesson->setUrl(self::LESSON_DEFAULT['url']);
-            if(random_int(1,100) < 70) $lesson->setVideoUrl(self::LESSON_DEFAULT['videoUrl']);
-            if(random_int(1,100) < 70) $lesson->setRepository(self::LESSON_DEFAULT['repository']);
+            if (random_int(1,100) < 70) $lesson->setUrl(self::LESSON_DEFAULT['url']);
+            if (random_int(1,100) < 70) $lesson->setVideoUrl(self::LESSON_DEFAULT['videoUrl']);
+            if (random_int(1,100) < 70) $lesson->setRepository(self::LESSON_DEFAULT['repository']);
 
             $lesson->addCategory($this->faker->randomElement($this->lessonCategories));
             $this->createAndAddComments($lesson, 'setLesson');
@@ -198,7 +198,7 @@ class AppFixtures extends Fixture
 
     private function createLessonCategories()
     {
-        foreach(self::LESSON_CATEGORIES as $key => $value) {
+        foreach (self::LESSON_CATEGORIES as $key => $value) {
             $lessonCategory = (new LessonCategory)
                 ->setLabel($value)
                 ->setSlug($key)
@@ -209,7 +209,7 @@ class AppFixtures extends Fixture
 
     private function createPosts()
     {
-        for($p = 0; $p < self::POSTS_NB; $p++) {
+        for ($p = 0; $p < self::POSTS_NB; $p++) {
             $title = $this->faker->sentence();
             $post = (new Post)
                 ->setAuthor($this->faker->randomElement($this->authors))
@@ -219,7 +219,7 @@ class AppFixtures extends Fixture
                 ->setTitle($title)
             ;
             // optional fields
-            if(random_int(1,100) < 70) $post->setMainImage($this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height']));
+            if (random_int(1,100) < 70) $post->setMainImage($this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height']));
 
             $post->addCategory($this->faker->randomElement($this->postCategories));
             $post->addCodingLanguage($this->faker->randomElement($this->codingLanguages));
@@ -231,7 +231,7 @@ class AppFixtures extends Fixture
 
     private function createPostCategories()
     {
-        for($pc = 0; $pc < self::POST_CATEGORIES_NB; $pc++) {
+        for ($pc = 0; $pc < self::POST_CATEGORIES_NB; $pc++) {
             $label = $this->faker->words(1, true);
             $postCategory = (new PostCategory)
                 ->setLabel($label)
@@ -243,7 +243,7 @@ class AppFixtures extends Fixture
 
     private function createProjects()
     {
-        for($p = 0; $p < self::PROJECTS_NB; $p++) {
+        for ($p = 0; $p < self::PROJECTS_NB; $p++) {
             $title = $this->faker->sentence();
             $project = (new Project)
                 ->setAuthor($this->faker->randomElement($this->authors))
@@ -256,9 +256,9 @@ class AppFixtures extends Fixture
                 ->setUrl(self::PROJECT_DEFAULT['url'])
             ;
             // optional fields
-            if(random_int(1,100) < 70) {
+            if (random_int(1,100) < 70) {
                 $description = $this->faker->paragraph(5, true);
-                if(strlen($description) > self::PROJECT_DEFAULT['descriptionLength']) $description = substr($description, 0, self::PROJECT_DEFAULT['descriptionLength']);
+                if (strlen($description) > self::PROJECT_DEFAULT['descriptionLength']) $description = substr($description, 0, self::PROJECT_DEFAULT['descriptionLength']);
                 $project->setDescription($description);
             }
 
@@ -272,7 +272,7 @@ class AppFixtures extends Fixture
 
     private function createProjectCategories()
     {
-        for($pc = 0; $pc < self::PROJECT_CATEGORIES_NB; $pc++) {
+        for ($pc = 0; $pc < self::PROJECT_CATEGORIES_NB; $pc++) {
             $label = $this->faker->words(1, true);
             $projectCategory = (new ProjectCategory)
                 ->setLabel($label)
@@ -294,7 +294,7 @@ class AppFixtures extends Fixture
         $this->users[] = $admin;
 
         // users
-        for($u = 0; $u < self::USERS_NB; $u++) {
+        for ($u = 0; $u < self::USERS_NB; $u++) {
             $user = (new User)
                 ->setEmail($this->faker->firstName().$this->faker->lastName().'@'.$this->faker->freeEmailDomain())
                 ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
@@ -307,7 +307,7 @@ class AppFixtures extends Fixture
     private function createAndAddComments(object $entity, string $setterFn) 
     {
         $commentsNb = $this->faker->numberBetween(0, self::COMMENTS_MAX_NB_PER_POST);
-        for($c = 0; $c < $commentsNb; $c++) {
+        for ($c = 0; $c < $commentsNb; $c++) {
             $comment = (new Comment)
                 ->$setterFn($entity)
                 ->setCreatedAt($this->faker->dateTimeBetween($entity->getCreatedAt(), '-1 hour'))
