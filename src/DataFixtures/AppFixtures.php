@@ -78,11 +78,17 @@ class AppFixtures extends Fixture
     private $projectCategories = [];
     private $users = [];
 
-    /** @var EntityManagerInterface */
+    /** 
+     * @var EntityManagerInterface 
+     */
     private $entityManager;
-    /** @var SluggerInterface */
+    /** 
+     * @var SluggerInterface 
+     */
     private $slugger;
-    /** @var UserPasswordHasherInterface */
+    /** 
+     * @var UserPasswordHasherInterface 
+     */
     private $hasher;
     private $faker;
 
@@ -249,9 +255,11 @@ class AppFixtures extends Fixture
             ;
             // optional fields
             if (random_int(1, 100) < 70) {
-                $post->setMainImage($this->faker->imageUrl(
-                    self::IMAGE_DEFAULT['width'], 
-                    self::IMAGE_DEFAULT['height'])
+                $post->setMainImage(
+                    $this->faker->imageUrl(
+                        self::IMAGE_DEFAULT['width'],
+                        self::IMAGE_DEFAULT['height']
+                    )
                 );
             }
 
@@ -283,10 +291,9 @@ class AppFixtures extends Fixture
                 ->setAuthor($this->faker->randomElement($this->authors))
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
-                ->setMainImage($this->faker->imageUrl(
-                        self::IMAGE_DEFAULT['width'], 
-                        self::IMAGE_DEFAULT['height']
-                    ))
+                ->setMainImage(
+                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'])
+                )
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
