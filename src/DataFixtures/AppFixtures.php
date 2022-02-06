@@ -87,8 +87,8 @@ class AppFixtures extends Fixture
     private $faker;
 
     public function __construct(
-        EntityManagerInterface $entityManager, 
-        SluggerInterface $slugger, 
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger,
         UserPasswordHasherInterface $hasher
     ) {
         $this->entityManager = $entityManager;
@@ -159,7 +159,7 @@ class AppFixtures extends Fixture
     {
         for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
-                ->setAvatar($this->faker->imageUrl(60,60))
+                ->setAvatar($this->faker->imageUrl(60, 60))
                 ->setBio($this->faker->paragraph(5, true))
                 ->setUser($this->faker->randomElement($this->users))
             ;
@@ -249,7 +249,10 @@ class AppFixtures extends Fixture
             ;
             // optional fields
             if (random_int(1, 100) < 70) {
-                $post->setMainImage($this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height']));
+                $post->setMainImage($this->faker->imageUrl(
+                    self::IMAGE_DEFAULT['width'], 
+                    self::IMAGE_DEFAULT['height'])
+                );
             }
 
             $post->addCategory($this->faker->randomElement($this->postCategories));
@@ -270,7 +273,7 @@ class AppFixtures extends Fixture
             ;
             $this->postCategories[] = $postCategory;
         }
-    } 
+    }
 
     private function createProjects()
     {
@@ -280,7 +283,10 @@ class AppFixtures extends Fixture
                 ->setAuthor($this->faker->randomElement($this->authors))
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
-                ->setMainImage($this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height']))
+                ->setMainImage($this->faker->imageUrl(
+                        self::IMAGE_DEFAULT['width'], 
+                        self::IMAGE_DEFAULT['height']
+                    ))
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
