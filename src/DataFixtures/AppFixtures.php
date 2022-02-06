@@ -78,16 +78,16 @@ class AppFixtures extends Fixture
     private $projectCategories = [];
     private $users = [];
 
-    /** 
-     * @var EntityManagerInterface 
+    /**
+     * @var EntityManagerInterface
      */
     private $entityManager;
-    /** 
-     * @var SluggerInterface 
+    /**
+     * @var SluggerInterface
      */
     private $slugger;
-    /** 
-     * @var UserPasswordHasherInterface 
+    /**
+     * @var UserPasswordHasherInterface
      */
     private $hasher;
     private $faker;
