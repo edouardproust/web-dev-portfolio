@@ -163,12 +163,21 @@ class AppFixtures extends Fixture
 
     private function createAuthors()
     {
+        $usersSetAsAuthor = [];
         for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
                 ->setAvatar($this->faker->imageUrl(60, 60))
                 ->setBio($this->faker->paragraph(5, true))
-                ->setUser($this->faker->randomElement($this->users))
             ;
+            $randomUser = $this->faker->randomElement($this->users);
+            //> security
+            while (in_array($randomUser, $usersSetAsAuthor)) {
+                $randomUser = $this->faker->randomElement($this->users);
+            }
+            $usersSetAsAuthor[] = $randomUser;
+            //< security
+            $author->setUser($randomUser);
+            
             // optional fields
             if (random_int(1, 100) < 70) {
                 $author->setContactEmail(self::AUTHOR_DEFAUT['contactEmail']);
@@ -342,10 +351,12 @@ class AppFixtures extends Fixture
         // users
         for ($u = 0; $u < self::USERS_NB; $u++) {
             $user = (new User)
-                ->setEmail($this->faker->firstName().$this->faker->lastName().'@'.$this->faker->freeEmailDomain())
+                ->setEmail(strtolower(
+                    $this->faker->firstName().'.'.$this->faker->lastName()).'@'.$this->faker->freeEmailDomain()
+                )
                 ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
             ;
-            $user->setPassword($this->hasher->hashPassword($user, $this->faker->firstName()));
+            $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));
             $this->users[] = $user;
         }
     }
