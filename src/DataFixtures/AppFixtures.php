@@ -270,7 +270,7 @@ class AppFixtures extends Fixture
             ;
             $this->postCategories[] = $postCategory;
         }
-    }
+    } 
 
     private function createProjects()
     {
