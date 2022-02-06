@@ -49,7 +49,7 @@ class AppFixtures extends Fixture
     ];
     const LESSON_CATEGORIES = [
         'course' => 'Course',
-        'exercise' => 'Exercice', 
+        'exercise' => 'Exercice',
         'project' => 'Project'
     ];
     const POSTS_NB = 20;
@@ -78,16 +78,25 @@ class AppFixtures extends Fixture
     private $projectCategories = [];
     private $users = [];
 
-    /** @var EntityManagerInterface */
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
-    /** @var SluggerInterface */
+    /**
+     * @var SluggerInterface
+     */
     private $slugger;
-    /** @var UserPasswordHasherInterface */
+    /**
+     * @var UserPasswordHasherInterface
+     */
     private $hasher;
     private $faker;
 
-    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, UserPasswordHasherInterface $hasher)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger,
+        UserPasswordHasherInterface $hasher
+    ) {
         $this->entityManager = $entityManager;
         $this->slugger = $slugger;
         $this->hasher = $hasher;
@@ -99,35 +108,45 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->createAdminOptions();
-        foreach ($this->adminOptions as $adminOption) $manager->persist($adminOption);
-
+        foreach ($this->adminOptions as $adminOption) {
+            $manager->persist($adminOption);
+        }
         $this->createUsers();
-        foreach ($this->users as $user) $manager->persist($user);
-
+        foreach ($this->users as $user) {
+            $manager->persist($user);
+        }
         $this->createAuthors();
-        foreach ($this->authors as $author) $manager->persist($author);
-
+        foreach ($this->authors as $author) {
+            $manager->persist($author);
+        }
         $this->createCodingLanguages();
-        foreach ($this->codingLanguages as $codingLanguage) $manager->persist($codingLanguage);
-
+        foreach ($this->codingLanguages as $codingLanguage) {
+            $manager->persist($codingLanguage);
+        }
         $this->createProjectCategories();
-        foreach ($this->projectCategories as $projectCategory) $manager->persist($projectCategory);
-
+        foreach ($this->projectCategories as $projectCategory) {
+            $manager->persist($projectCategory);
+        }
         $this->createPostCategories();
-        foreach ($this->postCategories as $postCategory) $manager->persist($postCategory);
-
+        foreach ($this->postCategories as $postCategory) {
+            $manager->persist($postCategory);
+        }
         $this->createLessonCategories();
-        foreach ($this->lessonCategories as $lessonCategory) $manager->persist($lessonCategory);
-
+        foreach ($this->lessonCategories as $lessonCategory) {
+            $manager->persist($lessonCategory);
+        }
         $this->createProjects();
-        foreach ($this->projects as $project) $manager->persist($project);
-
+        foreach ($this->projects as $project) {
+            $manager->persist($project);
+        }
         $this->createPosts();
-        foreach ($this->posts as $post) $manager->persist($post);
-
+        foreach ($this->posts as $post) {
+            $manager->persist($post);
+        }
         $this->createLessons();
-        foreach ($this->lessons as $lesson) $manager->persist($lesson);
-
+        foreach ($this->lessons as $lesson) {
+            $manager->persist($lesson);
+        }
         $manager->flush();
     }
 
@@ -146,16 +165,26 @@ class AppFixtures extends Fixture
     {
         for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
-                ->setAvatar($this->faker->imageUrl(60,60))
+                ->setAvatar($this->faker->imageUrl(60, 60))
                 ->setBio($this->faker->paragraph(5, true))
                 ->setUser($this->faker->randomElement($this->users))
             ;
             // optional fields
-            if (random_int(1,100) < 70) $author->setContactEmail(self::AUTHOR_DEFAUT['contactEmail']);
-            if (random_int(1,100) < 90) $author->setGithub(self::AUTHOR_DEFAUT['github']);
-            if (random_int(1,100) < 50) $author->setLinkedin(self::AUTHOR_DEFAUT['linkedin']);
-            if (random_int(1,100) < 70) $author->setStackoverflow(self::AUTHOR_DEFAUT['stackoverflow']);
-            if (random_int(1,100) < 30) $author->setWebsite(self::AUTHOR_DEFAUT['website']);
+            if (random_int(1, 100) < 70) {
+                $author->setContactEmail(self::AUTHOR_DEFAUT['contactEmail']);
+            }
+            if (random_int(1, 100) < 90) {
+                $author->setGithub(self::AUTHOR_DEFAUT['github']);
+            }
+            if (random_int(1, 100) < 50) {
+                $author->setLinkedin(self::AUTHOR_DEFAUT['linkedin']);
+            }
+            if (random_int(1, 100) < 70) {
+                $author->setStackoverflow(self::AUTHOR_DEFAUT['stackoverflow']);
+            }
+            if (random_int(1, 100) < 30) {
+                $author->setWebsite(self::AUTHOR_DEFAUT['website']);
+            }
 
             $this->authors[] = $author;
         }
@@ -179,15 +208,21 @@ class AppFixtures extends Fixture
             $lesson = (new Lesson)
                 ->setAuthor($this->faker->randomElement($this->authors))
                 ->setCodingLanguage($this->faker->randomElement($this->codingLanguages))
-                ->setContent($this->faker->paragraphs($this->faker->numberBetween(5,10), true))
+                ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
             ;
             // optional fields
-            if (random_int(1,100) < 70) $lesson->setUrl(self::LESSON_DEFAULT['url']);
-            if (random_int(1,100) < 70) $lesson->setVideoUrl(self::LESSON_DEFAULT['videoUrl']);
-            if (random_int(1,100) < 70) $lesson->setRepository(self::LESSON_DEFAULT['repository']);
+            if (random_int(1, 100) < 70) {
+                $lesson->setUrl(self::LESSON_DEFAULT['url']);
+            }
+            if (random_int(1, 100) < 70) {
+                $lesson->setVideoUrl(self::LESSON_DEFAULT['videoUrl']);
+            }
+            if (random_int(1, 100) < 70) {
+                $lesson->setRepository(self::LESSON_DEFAULT['repository']);
+            }
 
             $lesson->addCategory($this->faker->randomElement($this->lessonCategories));
             $this->createAndAddComments($lesson, 'setLesson');
@@ -213,13 +248,20 @@ class AppFixtures extends Fixture
             $title = $this->faker->sentence();
             $post = (new Post)
                 ->setAuthor($this->faker->randomElement($this->authors))
-                ->setContent($this->faker->paragraphs($this->faker->numberBetween(5,10), true))
+                ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
             ;
             // optional fields
-            if (random_int(1,100) < 70) $post->setMainImage($this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height']));
+            if (random_int(1, 100) < 70) {
+                $post->setMainImage(
+                    $this->faker->imageUrl(
+                        self::IMAGE_DEFAULT['width'],
+                        self::IMAGE_DEFAULT['height']
+                    )
+                );
+            }
 
             $post->addCategory($this->faker->randomElement($this->postCategories));
             $post->addCodingLanguage($this->faker->randomElement($this->codingLanguages));
@@ -247,18 +289,22 @@ class AppFixtures extends Fixture
             $title = $this->faker->sentence();
             $project = (new Project)
                 ->setAuthor($this->faker->randomElement($this->authors))
-                ->setContent($this->faker->paragraphs($this->faker->numberBetween(5,10), true))
+                ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
-                ->setMainImage($this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height']))
+                ->setMainImage(
+                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'])
+                )
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
                 ->setUrl(self::PROJECT_DEFAULT['url'])
             ;
             // optional fields
-            if (random_int(1,100) < 70) {
+            if (random_int(1, 100) < 70) {
                 $description = $this->faker->paragraph(5, true);
-                if (strlen($description) > self::PROJECT_DEFAULT['descriptionLength']) $description = substr($description, 0, self::PROJECT_DEFAULT['descriptionLength']);
+                if (strlen($description) > self::PROJECT_DEFAULT['descriptionLength']) {
+                    $description = substr($description, 0, self::PROJECT_DEFAULT['descriptionLength']);
+                }
                 $project->setDescription($description);
             }
 
@@ -304,7 +350,7 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function createAndAddComments(object $entity, string $setterFn) 
+    private function createAndAddComments(object $entity, string $setterFn)
     {
         $commentsNb = $this->faker->numberBetween(0, self::COMMENTS_MAX_NB_PER_POST);
         for ($c = 0; $c < $commentsNb; $c++) {
