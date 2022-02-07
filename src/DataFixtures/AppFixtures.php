@@ -352,8 +352,8 @@ class AppFixtures extends Fixture
         for ($u = 0; $u < self::USERS_NB; $u++) {
             $user = (new User)
                 ->setEmail(strtolower(
-                    $this->faker->firstName().'.'.$this->faker->lastName()).'@'.$this->faker->freeEmailDomain()
-                )
+                    $this->faker->firstName().'.'.$this->faker->lastName()
+                ).'@'.$this->faker->freeEmailDomain())
                 ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
             ;
             $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));
