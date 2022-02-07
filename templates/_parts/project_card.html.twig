@@ -1,0 +1,44 @@
+<div class="card project">
+
+    <div class="show_img">
+        <img src="{{ project.mainImage }}" alt="Image for project: {{ project.title }}">
+    </div>
+
+    <div class="card_title">
+        <a href="{{ path('project_show', {id: project.id, slug: project.slug}) }}">
+            <h3>{{ project.title }}</h3>
+        </a>
+    </div>
+
+    <div class="card_data">
+        <span>{{ project.createdAt|date('m/d/Y') }}
+        <span> | By <a href="">{{ project.author.fullName }}</a></span>
+    </div>
+
+    <div class="card_pills">
+        <div class="pills-list">
+            {% for category in project.categories %}
+                <a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">{{ category.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card_pills">
+        <div class="pills-list">
+            {% for language in project.codingLanguages %}
+                <a class="pill" href="">{{ language.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="card_extract">
+        {{ project.description ?? project.content|extract }}
+    </div>
+
+    <div class="card_btn">
+        <a href="{{ path('project_show', {id: project.id, slug: project.slug}) }}">
+            <button class="btn-primary">See More</button>
+        </a>
+    </div>
+
+</div>

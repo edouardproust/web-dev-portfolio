@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category: {{ category.label }}{% endblock %}
+
+{% block body %}
+
+<h1>Category: {{ category.label }}</h1>
+
+{% for project in category.projects %}
+    <div class="collection">
+        {% include "_parts/entity_card.html.twig" with {
+            'entity': project
+        } %}
+    </div>
+{% endfor %}
+
+{% endblock %}
