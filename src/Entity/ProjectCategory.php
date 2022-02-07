@@ -35,7 +35,7 @@ class ProjectCategory
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="categories")
      */
     private $projects;
 

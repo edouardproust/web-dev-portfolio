@@ -166,8 +166,11 @@ class AppFixtures extends Fixture
         $usersSetAsAuthor = [];
         for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
-                ->setAvatar($this->faker->imageUrl(60, 60))
+                ->setAvatar($this->faker->imageUrl(60, 60, true))
                 ->setBio($this->faker->paragraph(5, true))
+                ->setFullName(
+                    $this->faker->firstName().' '.$this->faker->lastName()
+                )
             ;
             $randomUser = $this->faker->randomElement($this->users);
             //> security
@@ -267,7 +270,8 @@ class AppFixtures extends Fixture
                 $post->setMainImage(
                     $this->faker->imageUrl(
                         self::IMAGE_DEFAULT['width'],
-                        self::IMAGE_DEFAULT['height']
+                        self::IMAGE_DEFAULT['height'],
+                        true
                     )
                 );
             }
@@ -306,7 +310,7 @@ class AppFixtures extends Fixture
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setMainImage(
-                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'])
+                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'], true)
                 )
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))

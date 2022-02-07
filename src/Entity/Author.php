@@ -74,6 +74,11 @@ class Author
      */
     private $projects;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $fullName;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -268,6 +273,18 @@ class Author
                 $project->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(string $fullName): self
+    {
+        $this->fullName = $fullName;
 
         return $this;
     }
