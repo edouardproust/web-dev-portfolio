@@ -282,12 +282,17 @@ class AppFixtures extends Fixture
 
     private function createPostCategories()
     {
+        $setLabels = [];
         for ($pc = 0; $pc < self::POST_CATEGORIES_NB; $pc++) {
-            $label = $this->faker->words(1, true);
-            $postCategory = (new PostCategory)
-                ->setLabel($label)
-                ->setSlug(strtolower($label))
-            ;
+            $label = ucFirst($this->faker->words(1, true));
+            //> security
+            while (in_array($label, $setLabels)) {
+                $label = ucFirst($this->faker->words(1, true));
+            }
+            $setLabels[] = $label;
+            //< security
+            $postCategory = (new PostCategory)->setLabel($label);
+            $postCategory->setSlug(strtolower($label));
             $this->postCategories[] = $postCategory;
         }
     }
@@ -327,8 +332,15 @@ class AppFixtures extends Fixture
 
     private function createProjectCategories()
     {
+        $setLabels = [];
         for ($pc = 0; $pc < self::PROJECT_CATEGORIES_NB; $pc++) {
-            $label = $this->faker->words(1, true);
+            $label = ucFirst($this->faker->words(1, true));
+            //> security
+            while (in_array($label, $setLabels)) {
+                $label = ucFirst($this->faker->words(1, true));
+            }
+            $setLabels[] = $label;
+            //< security
             $projectCategory = (new ProjectCategory)
                 ->setLabel($label)
                 ->setSlug(strtolower($label))
