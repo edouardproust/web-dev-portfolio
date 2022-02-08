@@ -37,7 +37,7 @@
             {% endif %}
         </span>
         {% for codingLanguage in project.codingLanguages %}
-            <a class="pill" href="{{ path('coding_language', {'slug': codingLanguage.slug}) }}">
+            <a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}">
                 {{ codingLanguage.label }}
             </a>
         {% endfor %}

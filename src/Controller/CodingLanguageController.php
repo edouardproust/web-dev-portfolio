@@ -19,11 +19,11 @@ class CodingLanguageController extends AbstractController
     }
 
     /**
-     * @Route("/projects/language/{slug}", name="coding_language")
+     * @Route("/projects/language/{slug}", name="coding_language_projects")
      */ 
-    public function index($slug): Response
+    public function projects($slug): Response
     {
-        return $this->render('coding_language/index.html.twig', [
+        return $this->render('coding_language/projects.html.twig', [
             'codingLanguage' => $this->codingLanguageRepository->findOneBy([
                 'slug' => $slug
             ])
