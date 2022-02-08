@@ -13,14 +13,16 @@
 <div class="show_data">
     <span>{{ project.createdAt|date('m/d/Y') }}</span>
    <span> | By </span>
-    <a href="">{{ project.author.fullName }}</a>
+    <a href="{{ path('author_projects', {'id': project.author.id}) }}">{{ project.author.fullName }}</a>
 </div>
 
 <div class="show_pills">
     <div class="pills-list">
         <span>In: </span>
         {% for category in project.categories %}
-            <a class="pill" href="">{{ category.label }}</a>
+            <a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">
+                {{ category.label }}
+            </a>
         {% endfor %}
     </div>
 </div>
@@ -35,7 +37,9 @@
             {% endif %}
         </span>
         {% for codingLanguage in project.codingLanguages %}
-            <a class="pill" href="{{ path('coding_language', {'slug': codingLanguage.slug}) }}">{{ codingLanguage.label }}</a>
+            <a class="pill" href="{{ path('coding_language', {'slug': codingLanguage.slug}) }}">
+                {{ codingLanguage.label }}
+            </a>
         {% endfor %}
     </div>
 </div>

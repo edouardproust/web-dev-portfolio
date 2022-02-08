@@ -9,7 +9,7 @@
     {% endif %}
 
     <div class="card_title">
-        <a href="">
+        <a href="{{ path('author_projects', {'id': author.id}) }}">
             <h3>{{ author.fullName }}</h3>
         </a>
     </div>

@@ -25,12 +25,10 @@ class ProjectCategoryController extends AbstractController
      */ 
     public function index($slug): Response
     {
-        $category = $this->projectCategoryRepository->findOneBy([
-            'slug' => $slug
-        ]);
-
         return $this->render('project_category/index.html.twig', [
-            'category' => $category,
+            'category' => $this->projectCategoryRepository->findOneBy([
+                'slug' => $slug
+            ])
         ]);
     }
 }

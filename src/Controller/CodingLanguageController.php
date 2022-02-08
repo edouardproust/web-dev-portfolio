@@ -23,12 +23,10 @@ class CodingLanguageController extends AbstractController
      */ 
     public function index($slug): Response
     {
-        $codingLanguage = $this->codingLanguageRepository->findOneBy([
-            'slug' => $slug
-        ]);
-
         return $this->render('coding_language/index.html.twig', [
-            'codingLanguage' => $codingLanguage
+            'codingLanguage' => $this->codingLanguageRepository->findOneBy([
+                'slug' => $slug
+            ])
         ]);
     }
 }
