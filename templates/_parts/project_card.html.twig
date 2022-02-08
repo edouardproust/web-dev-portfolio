@@ -39,7 +39,11 @@
     </div>
     
     <div class="card_extract">
-        {{ project.description ?? project.content|extract }}
+        {% if project.description is defined %}
+            {{ project.description }}
+        {% else %}
+            {{ project.content|extract }}
+        {% endif %}
     </div>
 
     <div class="card_btn">
