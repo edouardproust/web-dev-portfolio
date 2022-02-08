@@ -57,11 +57,18 @@
 </div>
 
 <div class="show_author">
-    <div class="card author">
-        {% include "_parts/author_card.html.twig" with {
-            'author': project.author
-        } %}
-    </div>
+    {% include "_parts/author_card.html.twig" with {
+        'author': project.author
+    } %}
 </div>
+
+{% if project.comments|length > 0 %}
+    <div class="show_comments">
+        <h3>Comments</h3>
+        {% for comment in project.comments %}
+            {% include "_parts/comment_card.html.twig" %}
+        {% endfor %}
+    </div>
+{% endif %}
 
 {% endblock %}

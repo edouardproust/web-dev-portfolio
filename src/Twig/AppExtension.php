@@ -11,6 +11,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('extract', [$this, 'getExtract']),
+            new TwigFilter('safeEmail', [$this, 'getAntiScrappingEmailString']),
         ];
     }
 
@@ -25,5 +26,13 @@ class AppExtension extends AbstractExtension
                     : substr($content, 0, $maxCharacters)) . $replacer;
         }
         return $content;
+    }
+
+    public function getAntiScrappingEmailString(string $email)
+    {
+        $parts = explode("@", $email);
+        $start = substr($parts[0], 0, 10);
+        $end = explode(".", $parts[1])[1];
+        return $start . '***@***.' . $end;
     }
 }
