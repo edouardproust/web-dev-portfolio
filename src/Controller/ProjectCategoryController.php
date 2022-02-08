@@ -22,7 +22,7 @@ class ProjectCategoryController extends AbstractController
 
     /**
      * @Route("/projects/category/{slug}", name="project_category")
-     */ 
+     */
     public function index($slug): Response
     {
         return $this->render('project_category/index.html.twig', [

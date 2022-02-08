@@ -155,8 +155,7 @@ class AppFixtures extends Fixture
         foreach (self::ADMIN_OPTIONS as $slug => $value) {
             $option = (new AdminOption)
                 ->setSlug($slug)
-                ->setValue($value)
-            ;
+                ->setValue($value);
             $this->adminOptions[] = $option;
         }
     }
@@ -169,9 +168,8 @@ class AppFixtures extends Fixture
                 ->setAvatar($this->faker->imageUrl(60, 60, true))
                 ->setBio($this->faker->paragraph(5, true))
                 ->setFullName(
-                    $this->faker->firstName().' '.$this->faker->lastName()
-                )
-            ;
+                    $this->faker->firstName() . ' ' . $this->faker->lastName()
+                );
             $randomUser = $this->faker->randomElement($this->users);
             //> security
             while (in_array($randomUser, $usersSetAsAuthor)) {
@@ -180,7 +178,7 @@ class AppFixtures extends Fixture
             $usersSetAsAuthor[] = $randomUser;
             //< security
             $author->setUser($randomUser);
-            
+
             // optional fields
             if (random_int(1, 100) < 70) {
                 $author->setContactEmail(self::AUTHOR_DEFAUT['contactEmail']);
@@ -207,8 +205,7 @@ class AppFixtures extends Fixture
         foreach (self::CONDING_LANGUAGES as $key => $value) {
             $codingLanguage = (new CodingLanguage)
                 ->setLabel($value)
-                ->setSlug($key)
-            ;
+                ->setSlug($key);
             $this->codingLanguages[] = $codingLanguage;
         }
     }
@@ -223,8 +220,7 @@ class AppFixtures extends Fixture
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setSlug(strtolower($this->slugger->slug($title)))
-                ->setTitle($title)
-            ;
+                ->setTitle($title);
             // optional fields
             if (random_int(1, 100) < 70) {
                 $lesson->setUrl(self::LESSON_DEFAULT['url']);
@@ -248,8 +244,7 @@ class AppFixtures extends Fixture
         foreach (self::LESSON_CATEGORIES as $key => $value) {
             $lessonCategory = (new LessonCategory)
                 ->setLabel($value)
-                ->setSlug($key)
-            ;
+                ->setSlug($key);
             $this->lessonCategories[] = $lessonCategory;
         }
     }
@@ -263,8 +258,7 @@ class AppFixtures extends Fixture
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setSlug(strtolower($this->slugger->slug($title)))
-                ->setTitle($title)
-            ;
+                ->setTitle($title);
             // optional fields
             if (random_int(1, 100) < 70) {
                 $post->setMainImage(
@@ -315,8 +309,7 @@ class AppFixtures extends Fixture
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
-                ->setUrl(self::PROJECT_DEFAULT['url'])
-            ;
+                ->setUrl(self::PROJECT_DEFAULT['url']);
             // optional fields
             if (random_int(1, 100) < 70) {
                 $description = $this->faker->paragraph(5, true);
@@ -347,8 +340,7 @@ class AppFixtures extends Fixture
             //< security
             $projectCategory = (new ProjectCategory)
                 ->setLabel($label)
-                ->setSlug(strtolower($label))
-            ;
+                ->setSlug(strtolower($label));
             $this->projectCategories[] = $projectCategory;
         }
     }
@@ -359,8 +351,7 @@ class AppFixtures extends Fixture
         $admin = (new User)
             ->setCreatedAt(new Datetime('-1 year'))
             ->setEmail('contact@edouardproust.dev')
-            ->setRoles(['ROLE_ADMIN'])
-        ;
+            ->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->hasher->hashPassword($admin, 'admin'));
         $this->users[] = $admin;
 
@@ -368,9 +359,9 @@ class AppFixtures extends Fixture
         for ($u = 0; $u < self::USERS_NB; $u++) {
             $user = (new User)
                 ->setEmail(strtolower(
-                    $this->faker->firstName().'.'.$this->faker->lastName()
-                ).'@'.$this->faker->freeEmailDomain())
-                ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
+                    $this->faker->firstName() . '.' . $this->faker->lastName()
+                ) . '@' . $this->faker->freeEmailDomain())
+                ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'))
             ;
             $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));
             $this->users[] = $user;
@@ -385,8 +376,7 @@ class AppFixtures extends Fixture
                 ->$setterFn($entity)
                 ->setCreatedAt($this->faker->dateTimeBetween($entity->getCreatedAt(), '-1 hour'))
                 ->setContent($this->faker->paragraph(5, true))
-                ->setUser($this->faker->randomElement($this->users))
-            ;
+                ->setUser($this->faker->randomElement($this->users));
             $this->entityManager->persist($comment);
             $entity->addComment($comment);
         }
