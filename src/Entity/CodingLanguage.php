@@ -30,7 +30,7 @@ class CodingLanguage
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="codingLanguage")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="codingLanguages")
      */
     private $projects;
 
@@ -40,7 +40,7 @@ class CodingLanguage
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguage")
+     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguages")
      */
     private $lessons;
 

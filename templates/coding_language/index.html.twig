@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category: {{ category.label }}{% endblock %}
+{% block title %}Language: {{ codingLanguage.label }}{% endblock %}
 
 {% block body %}
 
-<h1>Category: {{ category.label }}</h1>
+<h1>Language: {{ codingLanguage.label }}</h1>
 
-{% for project in category.projects %}
+{% for project in codingLanguage.projects %}
     <div class="collection">
         {% include "_parts/project_card.html.twig" %}
     </div>

@@ -31,7 +31,6 @@ class ProjectCategoryController extends AbstractController
 
         return $this->render('project_category/index.html.twig', [
             'category' => $category,
-            'project' => $category->getProjects()[0]
         ]);
     }
 }

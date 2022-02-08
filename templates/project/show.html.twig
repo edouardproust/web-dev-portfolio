@@ -34,8 +34,8 @@
                 Language:
             {% endif %}
         </span>
-        {% for language in project.codingLanguages %}
-            <a class="pill" href="">{{ language.label }}</a>
+        {% for codingLanguage in project.codingLanguages %}
+            <a class="pill" href="{{ path('coding_language', {'slug': codingLanguage.slug}) }}">{{ codingLanguage.label }}</a>
         {% endfor %}
     </div>
 </div>
