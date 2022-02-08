@@ -1,0 +1,36 @@
+<div class="card author">
+    
+    <hr>
+    
+    {% if author.avatar is defined %}
+        <div class="show_avatar">
+            <img src="{{ author.avatar }}" alt="Image for project: {{ project.title }}">
+        </div>
+    {% endif %}
+
+    <div class="card_title">
+        <a href="{{ path('author_projects', {'id': author.id}) }}">
+            <h3>{{ author.fullName }}</h3>
+        </a>
+    </div>
+    
+    <div class="card_bio">
+        {{ author.bio }}
+    </div>
+
+    <div class="card_social-icons">
+        {% if author.website is defined %}
+            <a href="{{ author.website }}" class="icon website">Website</a>
+        {% endif %}
+        {% if author.linkedin is defined %}
+            <a href="{{ author.linkedin }}" class="icon website">LinkedIn</a>
+        {% endif %}
+        {% if author.github is defined %}
+            <a href="{{ author.github }}" class="icon github">GitHub</a>
+        {% endif %}
+        {% if author.stackoverflow is defined %}
+            <a href="{{ author.stackoverflow }}" class="icon stackoverflow">StackOverflow</a>
+        {% endif %}
+    </div>
+
+</div>

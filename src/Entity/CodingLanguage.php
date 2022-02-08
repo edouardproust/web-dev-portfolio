@@ -25,12 +25,12 @@ class CodingLanguage
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="codingLanguage")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="codingLanguages")
      */
     private $projects;
 
@@ -40,7 +40,7 @@ class CodingLanguage
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguage")
+     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguages")
      */
     private $lessons;
 

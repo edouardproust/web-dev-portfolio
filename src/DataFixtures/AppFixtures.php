@@ -166,8 +166,11 @@ class AppFixtures extends Fixture
         $usersSetAsAuthor = [];
         for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
-                ->setAvatar($this->faker->imageUrl(60, 60))
+                ->setAvatar($this->faker->imageUrl(60, 60, true))
                 ->setBio($this->faker->paragraph(5, true))
+                ->setFullName(
+                    $this->faker->firstName().' '.$this->faker->lastName()
+                )
             ;
             $randomUser = $this->faker->randomElement($this->users);
             //> security
@@ -267,7 +270,8 @@ class AppFixtures extends Fixture
                 $post->setMainImage(
                     $this->faker->imageUrl(
                         self::IMAGE_DEFAULT['width'],
-                        self::IMAGE_DEFAULT['height']
+                        self::IMAGE_DEFAULT['height'],
+                        true
                     )
                 );
             }
@@ -282,12 +286,17 @@ class AppFixtures extends Fixture
 
     private function createPostCategories()
     {
+        $setLabels = [];
         for ($pc = 0; $pc < self::POST_CATEGORIES_NB; $pc++) {
-            $label = $this->faker->words(1, true);
-            $postCategory = (new PostCategory)
-                ->setLabel($label)
-                ->setSlug(strtolower($label))
-            ;
+            $label = ucFirst($this->faker->words(1, true));
+            //> security
+            while (in_array($label, $setLabels)) {
+                $label = ucFirst($this->faker->words(1, true));
+            }
+            $setLabels[] = $label;
+            //< security
+            $postCategory = (new PostCategory)->setLabel($label);
+            $postCategory->setSlug(strtolower($label));
             $this->postCategories[] = $postCategory;
         }
     }
@@ -301,7 +310,7 @@ class AppFixtures extends Fixture
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setMainImage(
-                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'])
+                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'], true)
                 )
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
@@ -327,8 +336,15 @@ class AppFixtures extends Fixture
 
     private function createProjectCategories()
     {
+        $setLabels = [];
         for ($pc = 0; $pc < self::PROJECT_CATEGORIES_NB; $pc++) {
-            $label = $this->faker->words(1, true);
+            $label = ucFirst($this->faker->words(1, true));
+            //> security
+            while (in_array($label, $setLabels)) {
+                $label = ucFirst($this->faker->words(1, true));
+            }
+            $setLabels[] = $label;
+            //< security
             $projectCategory = (new ProjectCategory)
                 ->setLabel($label)
                 ->setSlug(strtolower($label))
@@ -352,8 +368,8 @@ class AppFixtures extends Fixture
         for ($u = 0; $u < self::USERS_NB; $u++) {
             $user = (new User)
                 ->setEmail(strtolower(
-                    $this->faker->firstName().'.'.$this->faker->lastName()).'@'.$this->faker->freeEmailDomain()
-                )
+                    $this->faker->firstName().'.'.$this->faker->lastName()
+                ).'@'.$this->faker->freeEmailDomain())
                 ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
             ;
             $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));

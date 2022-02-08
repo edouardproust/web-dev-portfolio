@@ -20,7 +20,7 @@ class ProjectCategory
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
@@ -35,7 +35,7 @@ class ProjectCategory
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="category")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="categories")
      */
     private $projects;
 
