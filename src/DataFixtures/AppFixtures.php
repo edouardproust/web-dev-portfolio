@@ -271,7 +271,6 @@ class AppFixtures extends Fixture
             }
 
             $post->addCategory($this->faker->randomElement($this->postCategories));
-            $post->addCodingLanguage($this->faker->randomElement($this->codingLanguages));
             $this->createAndAddComments($post, 'setPost');
 
             $this->posts[] = $post;
@@ -361,8 +360,7 @@ class AppFixtures extends Fixture
                 ->setEmail(strtolower(
                     $this->faker->firstName() . '.' . $this->faker->lastName()
                 ) . '@' . $this->faker->freeEmailDomain())
-                ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'))
-            ;
+                ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
             $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));
             $this->users[] = $user;
         }

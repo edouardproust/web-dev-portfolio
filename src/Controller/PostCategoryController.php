@@ -4,45 +4,46 @@ namespace App\Controller;
 
 use App\Config;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Repository\LessonCategoryRepository;
+use App\Repository\PostCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class LessonCategoryController extends AbstractController
+class PostCategoryController extends AbstractController
 {
-    /** @var LessonCategoryRepository */
-    private $lessonCategoryRepository;
+
+    /** @var PostCategoryRepository */
+    private $postCategoryRepository;
 
     /** @var PaginatorInterface */
     private $paginator;
 
     public function __construct(
-        LessonCategoryRepository $lessonCategoryRepository,
+        PostCategoryRepository $postCategoryRepository,
         PaginatorInterface $paginator
     ) {
-        $this->lessonCategoryRepository = $lessonCategoryRepository;
+        $this->postCategoryRepository = $postCategoryRepository;
         $this->paginator = $paginator;
     }
 
     /**
-     * @Route("/lessons/category/{slug}", name="lesson_category")
+     * @Route("/blog/category/{slug}", name="post_category")
      */
     public function index($slug, Request $request): Response
     {
-        $category = $this->lessonCategoryRepository->findOneBy([
+        $category = $this->postCategoryRepository->findOneBy([
             'slug' => $slug
         ]);
-        $lessons = $this->paginator->paginate(
-            $category->getLessons(),
+        $posts = $this->paginator->paginate(
+            $category->getPosts(),
             $request->query->getInt('page', 1),
-            Config::LESSONS_PER_PAGE
+            Config::POSTS_PER_PAGE
         );
 
-        return $this->render('lesson_category/index.html.twig', [
+        return $this->render('post_category/index.html.twig', [
             'category' => $category,
-            'lessons' => $lessons
+            'posts' => $posts
         ]);
     }
 }

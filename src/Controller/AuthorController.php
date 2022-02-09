@@ -60,6 +60,23 @@ class AuthorController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/blog/author/{id<\d+>}", name="author_posts")
+     */
+    public function posts($id, Request $request): Response
+    {
+        [$author, $posts] = $this->getCollection(
+            $id,
+            $request,
+            'getPosts',
+            Config::POSTS_PER_PAGE
+        );
+        return $this->render('author/posts.html.twig', [
+            'author' => $author,
+            'posts' => $posts
+        ]);
+    }
+
     private function getCollection(
         int $id,
         Request $request,

@@ -50,11 +50,6 @@ class Post
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity=CodingLanguage::class, inversedBy="posts")
-     */
-    private $codingLanguages;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="posts")
      */
     private $author;
@@ -156,30 +151,6 @@ class Post
     public function removeCategory(PostCategory $category): self
     {
         $this->categories->removeElement($category);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CodingLanguage[]
-     */
-    public function getCodingLanguages(): Collection
-    {
-        return $this->codingLanguages;
-    }
-
-    public function addCodingLanguage(CodingLanguage $codingLanguage): self
-    {
-        if (!$this->codingLanguages->contains($codingLanguage)) {
-            $this->codingLanguages[] = $codingLanguage;
-        }
-
-        return $this;
-    }
-
-    public function removeCodingLanguage(CodingLanguage $codingLanguage): self
-    {
-        $this->codingLanguages->removeElement($codingLanguage);
 
         return $this;
     }

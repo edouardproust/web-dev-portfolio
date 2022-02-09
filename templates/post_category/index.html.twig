@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	"{{ category.label }}" Posts
+{% endblock %}
+
+{% block body %}
+
+	<h1>"{{ category.label }}" Posts</h1>
+
+
+	<div class="collection">
+
+		{% for post in posts %}
+			{% include "_parts/card_post.html.twig" %}
+		{% endfor %}
+
+		<div class="pagination">
+			{{ knp_pagination_render(posts) }}
+		</div>
+
+	</div>
+
+{% endblock %}
