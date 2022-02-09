@@ -60,23 +60,6 @@ class CodingLanguageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/posts/language/{slug}", name="coding_language_posts")
-     */
-    public function posts($slug, Request $request): Response
-    {
-        [$codingLanguage, $posts] = $this->getCollection(
-            $slug,
-            $request,
-            'getPosts',
-            Config::POSTS_PER_PAGE
-        );
-        return $this->render('coding_language/posts.html.twig', [
-            'codingLanguage' => $codingLanguage,
-            'posts' => $posts
-        ]);
-    }
-
     private function getCollection(
         string $slug,
         Request $request,
