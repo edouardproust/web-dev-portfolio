@@ -62,7 +62,6 @@ class Post
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->codingLanguages = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
