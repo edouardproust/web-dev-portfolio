@@ -4,6 +4,6 @@ namespace App;
 
 class Config
 {
-    const siteNAME = 'EP Portfolio';
+    const SITE_NAME = 'EP Portfolio';
     const POST_PER_PAGE = 6;
 }
