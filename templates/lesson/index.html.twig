@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Projects
+	Lessons
 {% endblock %}
 
 {% block body %}
 
-	<h1>Projects</h1>
+	<h1>Lessons</h1>
 
 	<div class="collection">
 
-		{% for project in projects %}
-			{% include "_parts/card_project.html.twig" %}
+		{% for lesson in lessons %}
+			{% include "_parts/card_lesson.html.twig" %}
 		{% endfor %}
 
 		<div class="pagination">
-			{{ knp_pagination_render(projects) }}
+			{{ knp_pagination_render(lessons) }}
 		</div>
 
 	</div>

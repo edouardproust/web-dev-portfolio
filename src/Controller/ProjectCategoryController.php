@@ -39,7 +39,7 @@ class ProjectCategoryController extends AbstractController
         $projects = $this->paginator->paginate(
             $category->getProjects(),
             $request->query->getInt('page', 1),
-            Config::POST_PER_PAGE
+            Config::PROJECTS_PER_PAGE
         );
 
         return $this->render('project_category/index.html.twig', [
