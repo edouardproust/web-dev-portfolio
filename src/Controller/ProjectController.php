@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Config;
 use App\Repository\ProjectRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProjectController extends AbstractController
 {
@@ -13,19 +16,31 @@ class ProjectController extends AbstractController
     /** @var ProjectRepository */
     private $projectRepository;
 
-    public function __construct(ProjectRepository $projectRepository)
-    {
-        
+    /** @var PaginatorInterface */
+    private $paginator;
+
+    public function __construct(
+        ProjectRepository $projectRepository,
+        PaginatorInterface $paginator
+    ) {
         $this->projectRepository = $projectRepository;
+        $this->paginator = $paginator;
     }
 
     /**
      * @Route("/projects", name="projects")
+     * @see https://github.com/KnpLabs/KnpPaginatorBundle
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $projects = $this->paginator->paginate(
+            $this->projectRepository->findAll(),
+            $request->query->getInt('page', 1),
+            Config::POST_PER_PAGE
+        );
+
         return $this->render('project/index.html.twig', [
-            'projects' => $this->projectRepository->findAll(),
+            'projects' => $projects,
         ]);
     }
 

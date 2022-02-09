@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Author: {{ author.fullName }}{% endblock %}
+{% block title %}
+	{{ author.fullName }}'s Projects
+{% endblock %}
 
 {% block body %}
 
-<h1>Author: {{ author.fullName }}</h1>
+	<h1>{{ author.fullName }}'s Projects</h1>
 
-{% for project in author.projects %}
-    <div class="collection">
-        {% include "_parts/project_card.html.twig" %}
-    </div>
-{% endfor %}
+	{% for project in projects %}
+		<div class="collection">
+			{% include "_parts/project_card.html.twig" %}
+		</div>
+	{% endfor %}
 
 {% endblock %}

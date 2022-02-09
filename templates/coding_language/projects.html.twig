@@ -1,15 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Language: {{ codingLanguage.label }}{% endblock %}
+{% block title %}
+	{{ codingLanguage.label ~ ' Projects' }}
+{% endblock %}
 
 {% block body %}
 
-<h1>Language: {{ codingLanguage.label }}</h1>
+	<h1>{{ codingLanguage.label ~ ' Projects' }}</h1>
 
-{% for project in codingLanguage.projects %}
-    <div class="collection">
-        {% include "_parts/project_card.html.twig" %}
-    </div>
-{% endfor %}
+	<div class="collection">
+
+		{% for project in projects %}
+			{% include "_parts/project_card.html.twig" %}
+		{% endfor %}
+
+		<div class="pagination">
+			{{ knp_pagination_render(projects) }}
+		</div>
+
+	</div>
 
 {% endblock %}
