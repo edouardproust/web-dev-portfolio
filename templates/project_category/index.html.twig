@@ -1,15 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category: {{ category.label }}{% endblock %}
+{% block title %}
+	"{{ category.label }}" Projects
+{% endblock %}
 
 {% block body %}
 
-<h1>Category: {{ category.label }}</h1>
+	<h1>"{{ category.label }}" Projects</h1>
 
-{% for project in category.projects %}
-    <div class="collection">
-        {% include "_parts/project_card.html.twig" %}
-    </div>
-{% endfor %}
+
+	<div class="collection">
+
+		{% for project in projects %}
+			{% include "_parts/project_card.html.twig" %}
+		{% endfor %}
+
+		<div class="pagination">
+			{{ knp_pagination_render(projects) }}
+		</div>
+
+	</div>
 
 {% endblock %}
