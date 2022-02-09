@@ -3,51 +3,54 @@
 namespace App\Controller;
 
 use App\Config;
-use App\Repository\LessonRepository;
+use App\Repository\PostRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class LessonController extends AbstractController
+class PostController extends AbstractController
 {
 
-    /** @var LessonRepository */
-    private $lessonRepository;
+    /** @var PostRepository */
+    private $postRepository;
 
     /** @var PaginatorInterface */
     private $paginator;
 
     public function __construct(
-        LessonRepository $lessonRepository,
+        PostRepository $postRepository,
         PaginatorInterface $paginator
     ) {
-        $this->lessonRepository = $lessonRepository;
+        $this->postRepository = $postRepository;
         $this->paginator = $paginator;
     }
 
     /**
-     * @Route("/lessons", name="lessons")
+     * @Route("/blog", name="posts")
      * @see https://github.com/KnpLabs/KnpPaginatorBundle
      */
     public function index(Request $request): Response
     {
-        $lessons = $this->paginator->paginate(
-            $this->lessonRepository->findAll(),
+        $posts = $this->paginator->paginate(
+            $this->postRepository->findAll(),
             $request->query->getInt('page', 1),
-            Config::LESSONS_PER_PAGE
+            Config::POSTS_PER_PAGE
         );
 
-        return $this->render('lesson/index.html.twig', [
-            'lessons' => $lessons,
+        return $this->render('post/index.html.twig', [
+            'posts' => $posts,
         ]);
     }
+
     /**
-     * @Route("/lessons/{slug}_{id}", name="lesson_show")
+     * @Route("/blog/{slug}_{id}", name="post_show")
      */
-    public function show(): Response
+    public function show($slug, $id): Response
     {
-        return new Response();
+        return $this->render('post/show.html.twig', [
+            'post' => $this->postRepository->find($id),
+        ]);
     }
 }

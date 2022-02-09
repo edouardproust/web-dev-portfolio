@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Config;
-use App\Repository\ProjectRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\ProjectCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
