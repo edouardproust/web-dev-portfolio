@@ -40,7 +40,7 @@ class CodingLanguage
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguages")
+     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguage")
      */
     private $lessons;
 

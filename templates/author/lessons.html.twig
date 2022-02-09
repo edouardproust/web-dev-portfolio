@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ author.fullName }}'s Lessons
+{% endblock %}
+
+{% block body %}
+
+	<h1>{{ author.fullName }}'s Lessons</h1>
+
+	{% for lesson in lessons %}
+		<div class="collection">
+			{% include "_parts/card_lesson.html.twig" %}
+		</div>
+	{% endfor %}
+
+{% endblock %}

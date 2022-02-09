@@ -60,12 +60,12 @@ class Author
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="authors")
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
      */
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="authors")
+     * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="author")
      */
     private $lessons;
 

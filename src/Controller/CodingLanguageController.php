@@ -31,17 +31,49 @@ class CodingLanguageController extends AbstractController
      */
     public function projects($slug, Request $request): Response
     {
-        $codingLanguage = $this->codingLanguageRepository->findOneBy([
-            'slug' => $slug
-        ]);
-        $projects = $this->paginator->paginate(
-            $codingLanguage->getProjects(),
-            $request->query->getInt('page', 1),
-            Config::POST_PER_PAGE
+        [$codingLanguage, $projects] = $this->getCollection(
+            $slug,
+            $request,
+            'getProjects',
+            Config::PROJECTS_PER_PAGE
         );
         return $this->render('coding_language/projects.html.twig', [
             'codingLanguage' => $codingLanguage,
             'projects' => $projects
         ]);
+    }
+
+    /**
+     * @Route("/lessons/language/{slug}", name="coding_language_lessons")
+     */
+    public function lessons($slug, Request $request): Response
+    {
+        [$codingLanguage, $lessons] = $this->getCollection(
+            $slug,
+            $request,
+            'getLessons',
+            Config::LESSONS_PER_PAGE
+        );
+        return $this->render('coding_language/lessons.html.twig', [
+            'codingLanguage' => $codingLanguage,
+            'lessons' => $lessons
+        ]);
+    }
+
+    private function getCollection(
+        string $slug,
+        Request $request,
+        string $getterFn,
+        int $limit
+    ): array {
+        $codingLanguage = $this->codingLanguageRepository->findOneBy([
+            'slug' => $slug
+        ]);
+        $entities = $this->paginator->paginate(
+            $codingLanguage->$getterFn(),
+            $request->query->getInt('page', 1),
+            $limit
+        );
+        return [$codingLanguage, $entities];
     }
 }

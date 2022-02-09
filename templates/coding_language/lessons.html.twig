@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ codingLanguage.label ~ ' Lessons' }}
+{% endblock %}
+
+{% block body %}
+
+	<h1>{{ codingLanguage.label ~ ' Lessons' }}</h1>
+
+	<div class="collection">
+
+		{% for lesson in lessons %}
+			{% include "_parts/card_lesson.html.twig" %}
+		{% endfor %}
+
+		<div class="pagination">
+			{{ knp_pagination_render(lessons) }}
+		</div>
+
+	</div>
+
+{% endblock %}

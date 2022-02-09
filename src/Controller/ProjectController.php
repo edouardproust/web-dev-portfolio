@@ -36,7 +36,7 @@ class ProjectController extends AbstractController
         $projects = $this->paginator->paginate(
             $this->projectRepository->findAll(),
             $request->query->getInt('page', 1),
-            Config::POST_PER_PAGE
+            Config::PROJECTS_PER_PAGE
         );
 
         return $this->render('project/index.html.twig', [
@@ -45,7 +45,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/project/{slug}_{id}", name="project_show")
+     * @Route("/projects/{slug}_{id}", name="project_show")
      */
     public function show($slug, $id): Response
     {
