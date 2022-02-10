@@ -28,7 +28,7 @@ class ProjectCategoryController extends AbstractController
     }
 
     /**
-     * @Route("/projects/category/{slug}", name="project_category")
+     * @Route("/portfolio/category/{slug}", name="project_category")
      */
     public function index($slug, Request $request): Response
     {

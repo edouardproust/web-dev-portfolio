@@ -1,0 +1,18 @@
+{% set menuItems = {
+    0: {type: 'link', label: 'Home', url: path('home')},
+    5: {type: 'link', label: 'Portfolio', url: path('projects')},
+    10: {type: 'link', label: 'Lessons', url: path('lessons')},
+    15: {type: 'link', label: 'Blog', url: path('posts')},
+    20: {type: 'link', label: 'About', url: '#'},
+    25: {type: 'link', label: 'Contact', url: '#'},
+} %}
+
+<ul class="menu header_main">
+
+	{% for item in menuItems %}
+		<li class="item">
+			{% include "_parts/menu/item/" ~ item.type ~ ".html.twig" %}
+		</li>
+	{% endfor %}
+
+</ul>
