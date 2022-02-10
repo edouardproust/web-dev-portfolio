@@ -47,7 +47,7 @@ class ProjectController extends AbstractController
     /**
      * @Route("/projects/{slug}_{id}", name="project_show")
      */
-    public function show($slug, $id): Response
+    public function show(int $id): Response
     {
         return $this->render('project/show.html.twig', [
             'project' => $this->projectRepository->find($id),
