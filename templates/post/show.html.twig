@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="show_author">
-		{% include "_parts/card_author.html.twig" with {
+		{% include "_parts/card/author.html.twig" with {
         'author': post.author
     } %}
 	</div>
@@ -51,7 +51,7 @@
 		<div class="show_comments">
 			<h3>Comments</h3>
 			{% for comment in post.comments %}
-				{% include "_parts/card_comment.html.twig" %}
+				{% include "_parts/card/comment.html.twig" %}
 			{% endfor %}
 		</div>
 	{% endif %}

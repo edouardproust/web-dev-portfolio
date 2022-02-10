@@ -28,7 +28,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projects", name="projects")
+     * @Route("/portfolio", name="projects")
      * @see https://github.com/KnpLabs/KnpPaginatorBundle
      */
     public function index(Request $request): Response
@@ -45,7 +45,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projects/{slug}_{id}", name="project_show")
+     * @Route("/portfolio/{slug}_{id}", name="project_show")
      */
     public function show(int $id): Response
     {
