@@ -46,8 +46,10 @@ class LessonController extends AbstractController
     /**
      * @Route("/lessons/{slug}_{id}", name="lesson_show")
      */
-    public function show(): Response
+    public function show(int $id): Response
     {
-        return new Response();
+        return $this->render('lesson/show.html.twig', [
+            'lesson' => $this->lessonRepository->find($id),
+        ]);
     }
 }
