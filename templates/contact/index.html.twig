@@ -5,23 +5,31 @@
 {% endblock %}
 
 {% block body %}
+
 	<h1>Contact</h1>
 
-	<h3>Send me an email</h3>
+	<div class="section">
+		<h2>Send me an email</h2>
 
-	{{ form_start(contactForm) }}
-	{{ form_widget(contactForm) }}
-	<button type="submit" class="btn primary">Send</button>
-	{{ form_end(contactForm) }}
+		{{ form_start(contactForm) }}
+		{{ form_widget(contactForm) }}
+		<button type="submit" class="btn primary">Send</button>
+		{{ form_end(contactForm) }}
+	</div>
 
-	<h3>Other ways to contact me</h3>
-	<ul class="unstyled">
-		<li>Phone: (+48) 727 775 824</li>
-		<li>Email:
-			<a mailto="contact@edouardproust.dev">contact@edouardproust.dev</a>
-		</li>
-		<li>LinkedIn:
-		</li>Helclów 9/5A, 31-148 Kraków (Polska</li>
+	<div class="section">
+		<h2>Other ways to contact me</h2>
+		<ul class="unstyled">
+			<li>Phone: (+48) 727 775 824</li>
+			<li>Email:
+				<a href="{{ 'mailto:' ~ config('CONTACT_EMAIL') }}">
+					{{ config('CONTACT_EMAIL')|safeEmail(false) }}
+				</a>
+			</li>
+			<li>LinkedIn
+			</li>
+			<li>Address: Helclów 9/5A, 31-148 Kraków (Polska)</li>
+		</ul>
+	</div>
 
-
-</ul>{% endblock %}
+{% endblock %}
