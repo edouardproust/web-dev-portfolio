@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use DateTime;
-use App\Entity\Project;
-use App\Repository\UserRepository;
-use Bluemmb\Faker\PicsumPhotosProvider;
+use App\Config;
+use App\Repository\PostRepository;
+use App\Repository\LessonRepository;
+use App\Repository\ProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,19 +13,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+
+    public function __construct(
+        ProjectRepository $projectRepository,
+        LessonRepository $lessonRepository,
+        PostRepository $postRepository
+    ) {
+        $this->projectRepository = $projectRepository;
+        $this->lessonRepository = $lessonRepository;
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * @Route("/", name="home")
      */
-    public function index(UserRepository $userRepo, EntityManagerInterface $entityManager): Response
+    public function index(): Response
     {
-        $faker = \Faker\Factory::create();
-        $faker->addProvider(new PicsumPhotosProvider($faker));
-        $project = (new Project)->setCreatedAt(new DateTime('-1 month'));
-        $date = $faker->dateTimeBetween($project->getCreatedAt(), '-1 hour');
-
         return $this->render('home/index.html.twig', [
-            'faker' => $faker,
-            'date' => $date
+            'projects' => $this->projectRepository->findLast(Config::HOME_PROJECTS),
+            'lessons' => $this->lessonRepository->findLast(Config::HOME_LESSONS),
+            'posts' => $this->postRepository->findLast(Config::HOME_POSTS),
         ]);
     }
 }

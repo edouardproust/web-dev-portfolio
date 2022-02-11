@@ -6,17 +6,17 @@
 {% block body %}
 	<h1>About</h1>
 
-	<div class="section">
+	<div class="section container">
 		<h2>Bio</h2>
 		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate quae, ullam quibusdam sit non maiores ad, odio, commodi in autem officiis eos excepturi neque iure inventore! Temporibus error ex tenetur!</p>
 		<div class="social-links about">
-			<a href="#" title="My GitHub page">GitHub</a>
-			<a href="#" title="My StackOverflow account">StackOverflow</a>
+			<a href="{{ config('SOCIAL_GITHUB') }}" title="My GitHub page">GitHub</a>
+			<a href="{{ config('SOCIAL_STACKOVERFLOW') }}" title="My StackOverflow account">StackOverflow</a>
 			<a href="{{ path('contact') }}">Contact me</a>
 		</div>
 	</div>
 
-	<div class="section">
+	<div class="section container">
 		<h2>Coding skills</h2>
 		<ul>
 			<li>CV: Embed / Download / View on LinkedIn</li>
