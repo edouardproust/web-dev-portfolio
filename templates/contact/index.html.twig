@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Contact
+{% endblock %}
+
+{% block body %}
+	<h1>Contact</h1>
+
+	<h3>Send me an email</h3>
+
+	{{ form_start(contactForm) }}
+	{{ form_widget(contactForm) }}
+	<button type="submit" class="btn primary">Send</button>
+	{{ form_end(contactForm) }}
+
+	<h3>Other ways to contact me</h3>
+	<ul class="unstyled">
+		<li>Phone: (+48) 727 775 824</li>
+		<li>Email:
+			<a mailto="contact@edouardproust.dev">contact@edouardproust.dev</a>
+		</li>
+		<li>LinkedIn:
+		</li>Helclów 9/5A, 31-148 Kraków (Polska</li>
+
+
+</ul>{% endblock %}
