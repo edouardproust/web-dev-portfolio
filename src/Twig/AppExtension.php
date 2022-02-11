@@ -43,11 +43,12 @@ class AppExtension extends AbstractExtension
         return $content;
     }
 
-    public function getAntiScrappingEmailString(string $email): string
+    public function getAntiScrappingEmailString(string $email, bool $enabled = true): string
     {
-        $parts = explode("@", $email);
-        $start = substr($parts[0], 0, 10);
-        $end = explode(".", $parts[1])[1];
-        return $start . '***@***.' . $end;
+        if ($enabled) {
+            $email = str_replace('@', '(at)', $email);
+            $email = str_replace('.', '(dot)', $email);
+        }
+        return $email;
     }
 }

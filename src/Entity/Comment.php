@@ -28,9 +28,9 @@ class Comment
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @ORM\Column(type="string", length=255)
      */
-    private $user;
+    private $fullName;
 
     /**
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="comments")
@@ -76,14 +76,14 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getFullName(): ?string
     {
-        return $this->user;
+        return $this->fullName;
     }
 
-    public function setUser(?User $user): self
+    public function setFullName(string $fullName): self
     {
-        $this->user = $user;
+        $this->fullName = $fullName;
 
         return $this;
     }

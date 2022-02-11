@@ -1,5 +1,12 @@
 {% include "_parts/header.html.twig" %}
 
+{% for type, messages in app.flashes %}
+	{% for message in messages %}
+		<div class="alert alert-{{ type }}">{{ message|raw }}</div>
+	{% endfor %}
+{% endfor %}
+
+
 {% block body %}{% endblock %}
 
 {% include "_parts/footer.html.twig" %}

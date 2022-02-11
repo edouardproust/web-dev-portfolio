@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About
+{% endblock %}
+
+{% block body %}
+	<h1>About</h1>
+
+	<div class="section container">
+		<h2>Bio</h2>
+		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate quae, ullam quibusdam sit non maiores ad, odio, commodi in autem officiis eos excepturi neque iure inventore! Temporibus error ex tenetur!</p>
+		<div class="social-links about">
+			<a href="{{ config('SOCIAL_GITHUB') }}" title="My GitHub page">GitHub</a>
+			<a href="{{ config('SOCIAL_STACKOVERFLOW') }}" title="My StackOverflow account">StackOverflow</a>
+			<a href="{{ path('contact') }}">Contact me</a>
+		</div>
+	</div>
+
+	<div class="section container">
+		<h2>Coding skills</h2>
+		<ul>
+			<li>CV: Embed / Download / View on LinkedIn</li>
+			<li>PHP</li>
+			<li>Object-oriented Programming</li>
+			<li>Javascript</li>
+			<li>CSS + Sass</li>
+			<li>SQL</li>
+			<li>Symfony
+				<ul>
+					<li>WebPack Encore</li>
+				</ul>
+			</li>
+			<li>Docker</li>
+			<li>Methodology
+				<ul>
+					<li>Git / GitHub / GitLab</li>
+					<li>Trello</li>
+					<li>ULM Schemes</li>
+				</ul>
+			</li>
+		</ul>
+
+		<h2>More skills</h2>
+		<ul>
+			<li>UX & UI Design</li>
+			<li>Marketing & online sales (e-commerce)</li>
+			<li>No code:
+				<ul>
+					<li>Wordpress</li>
+					<li>Shopify</li>
+					<li>Webflow</li>
+				</ul>
+			</li>
+
+		</ul>
+	</div>
+
+{% endblock %}

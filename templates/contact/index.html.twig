@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Contact
+{% endblock %}
+
+{% block body %}
+
+	<h1>Contact</h1>
+
+	<div class="section container">
+		<h2>Send me an email</h2>
+
+		{{ form_start(contactForm) }}
+		{{ form_widget(contactForm) }}
+		<button type="submit" class="primary">Send</button>
+		{{ form_end(contactForm) }}
+	</div>
+
+	<div class="section container">
+		<h2>Other ways to contact me</h2>
+		<ul class="unstyled">
+			<li>Phone:
+				{{ config('CONTACT_PHONE') }}
+			</li>
+			<li>Email:
+				<a href="{{ 'mailto:' ~ config('CONTACT_EMAIL') }}">
+					{{ config('CONTACT_EMAIL')|safeEmail(false) }}
+				</a>
+			</li>
+			<li>
+				<a href="{{ config('SOCIAL_LINKEDIN') }}">LinkedIn</a>
+			</li>
+			<li>Address:
+				{{ config('CONTACT_ADDRESS') }}
+			</li>
+		</ul>
+	</div>
+
+{% endblock %}

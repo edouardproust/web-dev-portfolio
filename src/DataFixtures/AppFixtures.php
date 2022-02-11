@@ -61,7 +61,7 @@ class AppFixtures extends Fixture
         'descriptionLength' => 255
     ];
     const PROJECT_CATEGORIES_NB = 5;
-    const USERS_NB = 10;
+    const USERS_NB = 3;
     const IMAGE_DEFAULT = [
         'width' => 800,
         'height' => 400,
@@ -374,7 +374,7 @@ class AppFixtures extends Fixture
                 ->$setterFn($entity)
                 ->setCreatedAt($this->faker->dateTimeBetween($entity->getCreatedAt(), '-1 hour'))
                 ->setContent($this->faker->paragraph(5, true))
-                ->setUser($this->faker->randomElement($this->users));
+                ->setFullName($this->faker->firstName());
             $this->entityManager->persist($comment);
             $entity->addComment($comment);
         }
