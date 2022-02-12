@@ -31,15 +31,16 @@ class ProjectRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Project
+    /**
+     * @return Project[] Returns an array of Project objects
+     */
+    public function findFeatured($limit)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('p.featured = 1')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

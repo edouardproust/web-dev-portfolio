@@ -20,6 +20,7 @@ class Config
     const POSTS_PER_PAGE = 6;
 
     const HOME_PROJECTS = 3;
+    const HOME_FEATURED_PROJECTS = 3;
     const HOME_LESSONS = 3;
     const HOME_POSTS = 3;
 }

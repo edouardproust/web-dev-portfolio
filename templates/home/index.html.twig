@@ -14,6 +14,21 @@
 	</div>
 
 	<div class="section container">
+		<h2>Featured Projects</h2>
+		<div class="collection">
+			{% for project in featuredProjects %}
+				{% include "_parts/card/project.html.twig" %}
+			{% endfor %}
+		</div>
+		<div class="see_more">
+			<a href="{{ path('projects') }}">
+				<button class="primary">Browse all projects</button>
+			</a>
+		</div>
+	</div>
+
+
+	<div class="section container">
 		<h2>Last Projects</h2>
 		<div class="collection">
 			{% for project in projects %}

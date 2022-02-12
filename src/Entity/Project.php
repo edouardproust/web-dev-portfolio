@@ -79,6 +79,11 @@ class Project
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $featured;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -273,6 +278,18 @@ class Project
     public function setAuthor(?Author $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(?bool $featured): self
+    {
+        $this->featured = $featured;
 
         return $this;
     }
