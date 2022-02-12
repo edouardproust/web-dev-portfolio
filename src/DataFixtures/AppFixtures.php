@@ -312,10 +312,13 @@ class AppFixtures extends Fixture
             // optional fields
             if (random_int(1, 100) < 70) {
                 $description = $this->faker->paragraph(5, true);
-                if (strlen($description) > self::PROJECT_DEFAULT['descriptionLength']) {
+                if (strlen($description) > self::PROJECT_DEFAULT['descriptionLength']) { // cut description if to long
                     $description = substr($description, 0, self::PROJECT_DEFAULT['descriptionLength']);
                 }
                 $project->setDescription($description);
+            }
+            if (random_int(1, 100) < 20) {
+                $project->setFeatured(true);
             }
 
             $project->addCategory($this->faker->randomElement($this->projectCategories));

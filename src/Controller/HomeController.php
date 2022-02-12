@@ -34,8 +34,9 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig', [
             'projects' => $this->projectRepository->findLast(Config::HOME_PROJECTS),
+            'featuredProjects' => $this->projectRepository->findFeatured(Config::HOME_FEATURED_PROJECTS),
             'lessons' => $this->lessonRepository->findLast(Config::HOME_LESSONS),
-            'posts' => $this->postRepository->findLast(Config::HOME_POSTS),
+            'posts' => $this->postRepository->findLast(Config::HOME_PROJECTS),
         ]);
     }
 }
