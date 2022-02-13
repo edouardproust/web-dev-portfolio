@@ -1,0 +1,18 @@
+{% set menuItems = {
+    0: {type: 'link', label: 'Admin', url: path('admin')},
+} %}
+    
+<div class="menu header_main">
+
+	<ul class="menu header_main">
+
+		{% for item in menuItems %}
+			<li class="item">
+				{% include "_parts/menu/item/" ~ item.type ~ ".html.twig" %}
+			</li>
+		{% endfor %}
+
+	</ul>
+
+</div>
+

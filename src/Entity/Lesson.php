@@ -74,6 +74,11 @@ class Lesson
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $headline;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -243,6 +248,18 @@ class Lesson
                 $comment->setLesson(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHeadline(): ?string
+    {
+        return $this->headline;
+    }
+
+    public function setHeadline(?string $headline): self
+    {
+        $this->headline = $headline;
 
         return $this;
     }

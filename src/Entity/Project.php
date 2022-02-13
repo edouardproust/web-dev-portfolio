@@ -37,7 +37,7 @@ class Project
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private $headline;
 
     /**
      * @ORM\Column(type="text")
@@ -132,14 +132,14 @@ class Project
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getHeadline(): ?string
     {
-        return $this->description;
+        return $this->headline;
     }
 
-    public function setDescription(?string $description): self
+    public function setHeadline(?string $headline): self
     {
-        $this->description = $description;
+        $this->headline = $headline;
 
         return $this;
     }

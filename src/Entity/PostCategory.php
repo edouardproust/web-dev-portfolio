@@ -39,9 +39,15 @@ class PostCategory
      */
     private $posts;
 
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLabel();
     }
 
     public function getId(): ?int

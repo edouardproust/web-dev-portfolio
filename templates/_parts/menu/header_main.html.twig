@@ -7,12 +7,17 @@
     25: {type: 'link', label: 'Contact', url: path('contact')},
 } %}
 
-<ul class="menu header_main">
+<div class="menu header_main">
 
-	{% for item in menuItems %}
-		<li class="item">
-			{% include "_parts/menu/item/" ~ item.type ~ ".html.twig" %}
-		</li>
-	{% endfor %}
+	<ul class="menu header_main">
 
-</ul>
+		{% for item in menuItems %}
+			<li class="item">
+				{% include "_parts/menu/item/" ~ item.type ~ ".html.twig" %}
+			</li>
+		{% endfor %}
+
+	</ul>
+
+</div>
+

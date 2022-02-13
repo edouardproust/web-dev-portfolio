@@ -1,59 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	{{ post.title }}
-{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% block body %}
 
-	{% if post.mainImage is not null %}
-		<div class="show_img">
-			<img src="{{ post.mainImage }}" alt="Image for post: {{ post.title }}">
-		</div>
-	{% endif %}
+{% if post.mainImage is not null %}
+<div class="show_img">
+	<img src="{{ post.mainImage }}" alt="Image for post: {{ post.title }}">
+</div>
+{% endif %}
 
 
-	<h1>{{ post.title }}</h1>
+<h1>{{ post.title }}</h1>
 
-	<div class="show_data">
-		<span>{{ post.createdAt|date('m/d/Y') }}</span>
-		<span>
-			| By
-		</span>
-		<a href="{{ path('author_posts', {'id': post.author.id}) }}">{{ post.author.fullName }}</a>
+<div class="show_data">
+	<span>{{ post.createdAt|date('m/d/Y') }}</span>
+	<span> | By </span>
+	<a href="{{ path('author_posts', {'id': post.author.id}) }}">{{ post.author.fullName }}</a>
+</div>
+
+<div class="show_pills">
+	<div class="pills-list">
+		<span>In: </span>
+		{% for category in post.categories %}
+		<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
+			{{ category.label }}
+		</a>
+		{% endfor %}
 	</div>
+</div>
 
-	<div class="show_pills">
-		<div class="pills-list">
-			<span>In:
-			</span>
-			{% for category in post.categories %}
-				<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
-			{% endfor %}
-		</div>
-	</div>
+{% if post.headline is not null %}
+<div class="show_headline">
+	{{ project.headline }}
+</div>
+{% endif %}
 
-	<hr>
+<hr>
 
-	<div class="show_content">
-		{{ post.content }}
-	</div>
+<div class="show_content">
+	{{ post.content }}
+</div>
 
-	<div class="show_author">
-		{% include "_parts/card/author.html.twig" with {
-        'author': post.author
-    } %}
-	</div>
+<div class="show_author">
+	{% include "_parts/card/author.html.twig" with {
+	'author': post.author
+	} %}
+</div>
 
-	{% if post.comments|length > 0 %}
-		<div class="show_comments">
-			<h3>Comments</h3>
-			{% for comment in post.comments %}
-				{% include "_parts/card/comment.html.twig" %}
-			{% endfor %}
-		</div>
-	{% endif %}
+{% if post.comments|length > 0 %}
+<div class="show_comments">
+	<h3>Comments</h3>
+	{% for comment in post.comments %}
+	{% include "_parts/card/comment.html.twig" %}
+	{% endfor %}
+</div>
+{% endif %}
 
 {% endblock %}

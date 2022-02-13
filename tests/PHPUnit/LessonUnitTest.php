@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class LessonUnitTest extends PHPUnitEntityAbstract
 {
-    
+
     private $entityClass = Lesson::class;
 
     public function testBasic(): void
@@ -16,7 +16,8 @@ class LessonUnitTest extends PHPUnitEntityAbstract
             'createdAt' => $this->getNow(),
             'slug' => 'title',
             'title' => 'Title',
-            'content' => 'This is a Lesson',
+            'headline' => 'This a lesson.',
+            'content' => 'This is a Lesson content.',
             'videoUrl' => 'www.youtube.com/lesson',
             'url' => 'lessons/mylesson/result',
             'repository' => 'www.github.com/myrepo',

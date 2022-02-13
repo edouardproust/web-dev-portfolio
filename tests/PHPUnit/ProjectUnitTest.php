@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class ProjectUnitTest extends PHPUnitEntityAbstract
 {
-    
+
     private $entityClass = Project::class;
 
     public function testBasic(): void
@@ -16,7 +16,7 @@ class ProjectUnitTest extends PHPUnitEntityAbstract
             'createdAt' => $this->getNow(),
             'slug' => 'project',
             'title' => 'Project',
-            'description' => 'This a project.',
+            'headline' => 'This a project.',
             'content' => 'This project is awesome!',
             'mainImage' => 'img/posts/mypostimg',
             'url' => 'projects/project/show',

@@ -1,0 +1,21 @@
+{% extends "@EasyAdmin/page/content.html.twig" %}
+
+{% block content %}
+
+<article class="content">
+
+    <section class="content-header">
+        <div class="title">
+            <h1>Welcome
+                {% if user.firstname is defined and not null %} {{ user.firstname}}{% endif %}
+            </h1>
+        </div>
+    </section>
+
+    <section class="content-body">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis quisquam ipsum reiciendis pariatur ea saepe, accusantium adipisci exercitationem blanditiis molestias commodi error consectetur. Et voluptates eveniet veniam at illum nulla!
+    </section>
+    
+</article>
+
+{% endblock %}
