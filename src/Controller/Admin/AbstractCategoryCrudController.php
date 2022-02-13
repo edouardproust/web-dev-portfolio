@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractEntityCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 abstract class AbstractCategoryCrudController extends AbstractEntityCrudController
 {

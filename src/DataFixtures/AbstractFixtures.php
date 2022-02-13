@@ -12,7 +12,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 abstract class AbstractFixtures extends Fixture
 {
-
     private $uniqueElements = [];
 
     protected $hasher;
@@ -42,7 +41,7 @@ abstract class AbstractFixtures extends Fixture
      * Run and persists methods in the provided order
      * @param array $methods Array of method names.
      * Method names must start by 'create' (eg. 'createUsers', 'createPosts')
-     * @return void 
+     * @return void
      */
     protected function runAndPersistAll(array $methods): void
     {
@@ -53,10 +52,10 @@ abstract class AbstractFixtures extends Fixture
 
     /**
      * Run a given function and persist the generated entities
-     * - Before running this function you must set a property (array type) 
+     * - Before running this function you must set a property (array type)
      * to store the generated entities
      * @param string $method The method name. Must start by 'create' (eg. 'createUsers', 'createPosts')
-     * @return void 
+     * @return void
      */
     protected function runAndPersist(string $method): void
     {
@@ -84,12 +83,12 @@ abstract class AbstractFixtures extends Fixture
     }
 
     /**
-     * Set a healine for a content Entity (Post, Lesson, Project) 
+     * Set a healine for a content Entity (Post, Lesson, Project)
      * based on a probability or leave the field empty
      *
      * @param  object $entity
      * @param  int    $probability Percent between 0 and 100
-     * @param  string|null $setterFn Alternative setter function name if the property 
+     * @param  string|null $setterFn Alternative setter function name if the property
      * is different from 'setHeadline' (eg. 'setDescription)
      * @return void
      */
@@ -109,7 +108,7 @@ abstract class AbstractFixtures extends Fixture
     }
 
     /**
-     * Set a description for a content Entity (Post, Lesson, Project) 
+     * Set a description for a content Entity (Post, Lesson, Project)
      * based on a probability or leave the field empty
      *
      * @param  object $entity
@@ -126,7 +125,7 @@ abstract class AbstractFixtures extends Fixture
      * Check that the value has not already been used for another entity. If yes, generates a new value
      * @param string $entitySlug eg. 'post', 'lesson', project'
      * @param callable $callable The function used to generate the unique value
-     * @return mixed The unique value 
+     * @return mixed The unique value
      */
     protected function uniqueValue(string $entitySlug, callable $generator)
     {

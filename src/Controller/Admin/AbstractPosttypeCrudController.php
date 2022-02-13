@@ -10,6 +10,8 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
 {
     const MANDATORY_PROPERTIES_IN_CHILD = ['route'];
 
+    protected $route;
+
     abstract public static function getEntityFqcn(): string;
 
     abstract public function setFields(): array;
@@ -63,7 +65,9 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     {
         foreach (self::MANDATORY_PROPERTIES_IN_CHILD as $property) {
             if (!isset($this->$property)) {
-                throw new  \Exception('Protected property $' . $property . ' must be declared in class ' . get_called_class());
+                throw new  \Exception(
+                    'Protected property $' . $property . ' must be declared in class ' . get_called_class()
+                );
             }
         }
     }

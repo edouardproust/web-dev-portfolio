@@ -4,7 +4,6 @@ namespace App\Twig;
 
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use App\Entity\Menu\Menu;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +12,8 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('config', [$this, 'getConfigConstant']),         new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
+            new TwigFunction('config', [$this, 'getConfigConstant']),
+            new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
         ];
     }
@@ -34,11 +34,11 @@ class AppExtension extends AbstractExtension
 
     /**
      * @var \EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA EasyAdmin options reference
-     * 
-     * @param Request $request 
-     * @param string $option 
-     * @param string $optionBag 
-     * @return null|string 
+     *
+     * @param Request $request
+     * @param string $option
+     * @param string $optionBag
+     * @return null|string
      */
     public function getEasyAdminConstant(string $option, ?Request $request = null, ?string $constantBag = null): ?string
     {

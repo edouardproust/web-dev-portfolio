@@ -20,7 +20,7 @@ class AuthorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $id 
+     * @param int $id
      * @return Author  Returns an Author object
      */
     public function findByUserId(int $id)

@@ -42,7 +42,6 @@ class CodingLanguage
     public function __construct()
     {
         $this->projects = new ArrayCollection();
-        $this->posts = new ArrayCollection();
         $this->lessons = new ArrayCollection();
     }
 

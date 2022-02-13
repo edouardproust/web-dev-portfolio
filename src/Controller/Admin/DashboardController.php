@@ -31,7 +31,9 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         // return parent::index();
-        // return $this->redirect($this->adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
+        // return $this->redirect(
+        //     $this->adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl()
+        // );
         return $this->render('admin/dashboard.html.twig', [
             'user' => $this->getUser()
         ]);
@@ -88,7 +90,7 @@ class DashboardController extends AbstractDashboardController
 
     /**
      * Default templates location: vendor/easycorp/easyadmin-bundle/src/Resources/views
-     * @return Crud 
+     * @return Crud
      */
     public function configureCrud(): Crud
     {

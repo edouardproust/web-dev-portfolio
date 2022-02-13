@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class PostUnitTest extends PHPUnitEntityAbstract
 {
-    
+
     private $entityClass = Post::class;
 
     public function testBasic(): void
@@ -16,7 +16,8 @@ class PostUnitTest extends PHPUnitEntityAbstract
             'createdAt' => $this->getNow(),
             'slug' => 'title',
             'title' => 'Title',
-            'content' => 'This is a post.',
+            'headline' => 'This a post.',
+            'content' => 'This is a post content.',
             'mainImage' => 'img/posts/mypostimg',
         ];
         $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
