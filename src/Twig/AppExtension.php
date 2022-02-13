@@ -2,18 +2,19 @@
 
 namespace App\Twig;
 
-use App\Entity\Menu\Menu;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use App\Entity\Menu\Menu;
 use Twig\Extension\AbstractExtension;
+use Symfony\Component\HttpFoundation\Request;
 
 class AppExtension extends AbstractExtension
 {
     public function getFunctions()
     {
         return [
-            new TwigFunction('config', [$this, 'getConfigConstant']),
-            new TwigFunction('menu', [$this, 'renderMenu']),
+            new TwigFunction('config', [$this, 'getConfigConstant']),         new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
+            new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
         ];
     }
 
@@ -22,12 +23,30 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFilter('extract', [$this, 'getExtract']),
             new TwigFilter('safeEmail', [$this, 'getAntiScrappingEmailString']),
+            new TwigFilter('int', [$this, 'convertToInteger']),
         ];
     }
 
     public function getConfigConstant(string $constant)
     {
         return constant('\App\Config::' . $constant);
+    }
+
+    /**
+     * @var \EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA EasyAdmin options reference
+     * 
+     * @param Request $request 
+     * @param string $option 
+     * @param string $optionBag 
+     * @return null|string 
+     */
+    public function getEasyAdminConstant(string $option, ?Request $request = null, ?string $constantBag = null): ?string
+    {
+        if ($constantBag === null) {
+            $constant = constant('\EasyCorp\Bundle\EasyAdminBundle\Config\Option\EA::' . $option);
+            return $request->query->get($constant);
+        }
+        return constant('\EasyCorp\Bundle\EasyAdminBundle\Config\\' . $constantBag . '::' . $option);
     }
 
     public function getExtract(
@@ -50,5 +69,10 @@ class AppExtension extends AbstractExtension
             $email = str_replace('.', '(dot)', $email);
         }
         return $email;
+    }
+
+    public function convertToInteger(string $str)
+    {
+        return (int)$str;
     }
 }

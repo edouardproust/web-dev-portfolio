@@ -39,6 +39,7 @@ class PostCategory
      */
     private $posts;
 
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();

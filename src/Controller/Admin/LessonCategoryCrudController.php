@@ -3,23 +3,20 @@
 namespace App\Controller\Admin;
 
 use App\Entity\LessonCategory;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
-class LessonCategoryCrudController extends AbstractCrudController
+class LessonCategoryCrudController extends AbstractCategoryCrudController
 {
     public static function getEntityFqcn(): string
     {
         return LessonCategory::class;
     }
 
-    /*
-    public function configureFields(string $pageName): iterable
+    public function setAdditionalFields(): array
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextareaField::new('description')
+                ->setSortable(false)
         ];
     }
-    */
 }

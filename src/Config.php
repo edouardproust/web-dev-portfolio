@@ -23,4 +23,6 @@ class Config
     const HOME_FEATURED_PROJECTS = 3;
     const HOME_LESSONS = 3;
     const HOME_POSTS = 3;
+
+    const HEADLINE_MAX_LENGTH = 255;
 }

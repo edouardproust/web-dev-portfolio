@@ -19,9 +19,9 @@
 	<div class="card_pills">
 		<div class="pills-list">
 			{% for category in lesson.categories %}
-				<a class="pill" href="{{ path('lesson_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
+			<a class="pill" href="{{ path('lesson_category', {slug:category.slug}) }}">
+				{{ category.label }}
+			</a>
 			{% endfor %}
 		</div>
 	</div>
@@ -35,10 +35,10 @@
 	</div>
 
 	<div class="card_extract">
-		{% if lesson.description is defined %}
-			{{ lesson.description }}
+		{% if lesson.headline is not null %}
+		{{ lesson.headline }}
 		{% else %}
-			{{ lesson.content|extract }}
+		{{ lesson.content|extract }}
 		{% endif %}
 	</div>
 

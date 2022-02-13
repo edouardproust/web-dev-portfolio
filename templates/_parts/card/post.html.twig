@@ -1,9 +1,9 @@
 <div class="card post">
 
 	{% if post.mainImage is not null %}
-		<div class="show_img">
-			<img src="{{ post.mainImage }}" alt="Image for post: {{ post.title }}">
-		</div>
+	<div class="show_img">
+		<img src="{{ post.mainImage }}" alt="Image for post: {{ post.title }}">
+	</div>
 	{% endif %}
 
 	<div class="card_title">
@@ -25,16 +25,16 @@
 	<div class="card_pills">
 		<div class="pills-list">
 			{% for category in post.categories %}
-				<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
+			<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
+				{{ category.label }}
+			</a>
 			{% endfor %}
 		</div>
 	</div>
 
 	<div class="card_extract">
-		{% if post.description is defined %}
-			{{ post.description }}
+		{% if post.headline is not null %}
+			{{ post.headline }}
 		{% else %}
 			{{ post.content|extract }}
 		{% endif %}
