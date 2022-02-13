@@ -6,7 +6,9 @@
 
     <section class="content-header">
         <div class="title">
-            <h1>Welcome {{ user.firstname ?? '' }}</h1>
+            <h1>Welcome
+                {% if user.firstname is defined and not null %} {{ user.firstname}}{% endif %}
+            </h1>
         </div>
     </section>
 
