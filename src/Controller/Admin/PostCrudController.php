@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use App\Controller\Admin\AbstractPosttypeCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -47,6 +48,11 @@ class PostCrudController extends AbstractPosttypeCrudController
             // ImageField::new('mainImage')
             //     ->setLabel('Featured image')
             //     ->setSortable(false),
+            AssociationField::new('categories')
+                ->hideOnIndex(),
+            AssociationField::new('author')
+                ->hideWhenCreating()
+
         ];
     }
 }

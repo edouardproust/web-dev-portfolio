@@ -42,7 +42,7 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle(Config::SITE_NAME);
     }
-    
+
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
@@ -57,7 +57,7 @@ class DashboardController extends AbstractDashboardController
         ]);
         yield MenuItem::subMenu('Learn', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('Lessons', 'fas fa-list', Lesson::class),
-            MenuItem::linkToCrud('New', 'fas fa-plus', Post::class)
+            MenuItem::linkToCrud('New', 'fas fa-plus', Lesson::class)
                 ->setAction('new'),
             MenuItem::linkToCrud('Categories', 'fas fa-tags', LessonCategory::class),
         ]);

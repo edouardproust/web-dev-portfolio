@@ -22,6 +22,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setEntityLabelInSingular(ucfirst($this->route))
             ->setEntityLabelInPlural(ucfirst($this->route) . 's')
             ->setDefaultSort(['createdAt' => 'DESC']);
     }

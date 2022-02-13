@@ -35,11 +35,6 @@ class CodingLanguage
     private $projects;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Post::class, mappedBy="codingLanguages")
-     */
-    private $posts;
-
-    /**
      * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="codingLanguage")
      */
     private $lessons;
@@ -49,6 +44,11 @@ class CodingLanguage
         $this->projects = new ArrayCollection();
         $this->posts = new ArrayCollection();
         $this->lessons = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLabel();
     }
 
     public function getId(): ?int
@@ -102,33 +102,6 @@ class CodingLanguage
     {
         if ($this->projects->removeElement($project)) {
             $project->removeCodingLanguage($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Post[]
-     */
-    public function getPosts(): Collection
-    {
-        return $this->posts;
-    }
-
-    public function addPost(Post $post): self
-    {
-        if (!$this->posts->contains($post)) {
-            $this->posts[] = $post;
-            $post->addCodingLanguage($this);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Post $post): self
-    {
-        if ($this->posts->removeElement($post)) {
-            $post->removeCodingLanguage($this);
         }
 
         return $this;
