@@ -17,6 +17,8 @@ class LessonCategoryCrudController extends AbstractCategoryCrudController
         return [
             TextareaField::new('description')
                 ->setSortable(false)
+                ->hideOnIndex()
+                ->setCustomOption('position', 3)
         ];
     }
 }

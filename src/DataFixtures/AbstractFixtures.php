@@ -10,7 +10,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AbstractFixtures extends Fixture
+abstract class AbstractFixtures extends Fixture
 {
 
     private $uniqueElements = [];
@@ -39,6 +39,35 @@ class AbstractFixtures extends Fixture
     }
 
     /**
+     * Run and persists methods in the provided order
+     * @param array $methods Array of method names.
+     * Method names must start by 'create' (eg. 'createUsers', 'createPosts')
+     * @return void 
+     */
+    protected function runAndPersistAll(array $methods): void
+    {
+        foreach ($methods as $method) {
+            $this->runAndPersist($method);
+        }
+    }
+
+    /**
+     * Run a given function and persist the generated entities
+     * - Before running this function you must set a property (array type) 
+     * to store the generated entities
+     * @param string $method The method name. Must start by 'create' (eg. 'createUsers', 'createPosts')
+     * @return void 
+     */
+    protected function runAndPersist(string $method): void
+    {
+        $entities = lcfirst(str_replace('create', '', $method));
+        $this->$method();
+        foreach ($this->$entities as $entity) {
+            $this->entityManager->persist($entity);
+        }
+    }
+
+    /**
      * Set a value for a given field based on a probability or leave the field empty
      *
      * @param  string $fieldName
@@ -46,7 +75,7 @@ class AbstractFixtures extends Fixture
      * @param  int    $probability Probability to set a value. Percent between 0 and 100.
      * @return void
      */
-    public function setOptional(object $entity, string $fieldName, $value, int $probability = 100)
+    protected function setOptional(object $entity, string $fieldName, $value, int $probability = 100)
     {
         $setterFn = 'set' . ucFirst($fieldName);
         if (random_int(1, 100) < $probability) {
@@ -64,7 +93,7 @@ class AbstractFixtures extends Fixture
      * is different from 'setHeadline' (eg. 'setDescription)
      * @return void
      */
-    public function setHeadline(object $entity, int $probability = 100, ?string $setterFn = null)
+    protected function setHeadline(object $entity, int $probability = 100, ?string $setterFn = null)
     {
         if (random_int(1, 100) < $probability) {
             $headline = $this->faker->paragraph(5, true);
@@ -87,7 +116,7 @@ class AbstractFixtures extends Fixture
      * @param  int    $probability Percent between 0 and 100
      * @return void
      */
-    public function setDescription(object $entity, int $probability = 100)
+    protected function setDescription(object $entity, int $probability = 100)
     {
         $this->setHeadline($entity, $probability, 'setDescription');
     }
@@ -99,7 +128,7 @@ class AbstractFixtures extends Fixture
      * @param callable $callable The function used to generate the unique value
      * @return mixed The unique value 
      */
-    public function uniqueValue(string $entitySlug, callable $generator)
+    protected function uniqueValue(string $entitySlug, callable $generator)
     {
         $value = $generator();
         if (!isset($this->uniqueElements[$entitySlug])) {

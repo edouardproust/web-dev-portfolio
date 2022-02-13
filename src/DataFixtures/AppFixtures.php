@@ -59,63 +59,35 @@ class AppFixtures extends AbstractFixtures
         'height' => 400,
     ];
 
-    private $adminOptions = [];
-    private $authors = [];
-    private $codingLanguages = [];
-    private $lessons = [];
-    private $lessonCategories = [];
-    private $posts = [];
-    private $postCategories = [];
-    private $projects = [];
-    private $projectCategories = [];
-    private $users = [];
+    protected $adminOptions = [];
+    protected $authors = [];
+    protected $codingLanguages = [];
+    protected $lessons = [];
+    protected $lessonCategories = [];
+    protected $posts = [];
+    protected $postCategories = [];
+    protected $projects = [];
+    protected $projectCategories = [];
+    protected $users = [];
 
     public function load(ObjectManager $manager): void
     {
-        $this->createAdminOptions();
-        foreach ($this->adminOptions as $adminOption) {
-            $manager->persist($adminOption);
-        }
-        $this->createUsers();
-        foreach ($this->users as $user) {
-            $manager->persist($user);
-        }
-        $this->createAuthors();
-        foreach ($this->authors as $author) {
-            $manager->persist($author);
-        }
-        $this->createCodingLanguages();
-        foreach ($this->codingLanguages as $codingLanguage) {
-            $manager->persist($codingLanguage);
-        }
-        $this->createProjectCategories();
-        foreach ($this->projectCategories as $projectCategory) {
-            $manager->persist($projectCategory);
-        }
-        $this->createPostCategories();
-        foreach ($this->postCategories as $postCategory) {
-            $manager->persist($postCategory);
-        }
-        $this->createLessonCategories();
-        foreach ($this->lessonCategories as $lessonCategory) {
-            $manager->persist($lessonCategory);
-        }
-        $this->createProjects();
-        foreach ($this->projects as $project) {
-            $manager->persist($project);
-        }
-        $this->createPosts();
-        foreach ($this->posts as $post) {
-            $manager->persist($post);
-        }
-        $this->createLessons();
-        foreach ($this->lessons as $lesson) {
-            $manager->persist($lesson);
-        }
+        $this->runAndPersistAll([
+            'createAdminOptions',
+            'createUsers',
+            'createAuthors',
+            'createCodingLanguages',
+            'createProjectCategories',
+            'createPostCategories',
+            'createLessonCategories',
+            'createProjects',
+            'createPosts',
+            'createLessons'
+        ]);
         $manager->flush();
     }
 
-    private function createAdminOptions()
+    protected function createAdminOptions()
     {
         foreach (self::ADMIN_OPTIONS as $slug => $value) {
             $option = (new AdminOption)
@@ -125,7 +97,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createAuthors()
+    protected function createAuthors()
     {
         for ($a = 0; $a < self::AUTHORS_NB; $a++) {
             $author = (new Author)
@@ -154,7 +126,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createCodingLanguages()
+    protected function createCodingLanguages()
     {
         foreach (self::CONDING_LANGUAGES as $key => $value) {
             $codingLanguage = (new CodingLanguage)
@@ -164,7 +136,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createLessons()
+    protected function createLessons()
     {
         for ($l = 0; $l < self::LESSONS_NB; $l++) {
             $title = $this->faker->sentence();
@@ -190,7 +162,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createLessonCategories()
+    protected function createLessonCategories()
     {
         foreach (self::LESSON_CATEGORIES as $key => $value) {
             $lessonCategory = new LessonCategory;
@@ -206,7 +178,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createPosts()
+    protected function createPosts()
     {
         for ($p = 0; $p < self::POSTS_NB; $p++) {
             $title = $this->faker->sentence();
@@ -232,7 +204,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createPostCategories()
+    protected function createPostCategories()
     {
         for ($pc = 0; $pc < self::POST_CATEGORIES_NB; $pc++) {
             $postCategory = new PostCategory;
@@ -248,7 +220,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createProjects()
+    protected function createProjects()
     {
         for ($p = 0; $p < self::PROJECTS_NB; $p++) {
             $title = $this->faker->sentence();
@@ -275,7 +247,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createProjectCategories()
+    protected function createProjectCategories()
     {
         for ($pc = 0; $pc < self::PROJECT_CATEGORIES_NB; $pc++) {
             $projectCategory = new ProjectCategory;
@@ -291,7 +263,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createUsers()
+    protected function createUsers()
     {
         // admin
         $admin = (new User)
@@ -315,7 +287,7 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    private function createAndAddComments(object $entity, string $setterFn)
+    protected function createAndAddComments(object $entity, string $setterFn)
     {
         $commentsNb = $this->faker->numberBetween(0, self::COMMENTS_MAX_NB_PER_POST);
         for ($c = 0; $c < $commentsNb; $c++) {
