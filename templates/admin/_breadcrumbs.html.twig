@@ -3,22 +3,24 @@
 {% set menuItem = '' %}
 {% set menuItemLabel, menuItemUrl, submenuItemLabel, submenuItemUrl = null, null, null, null %}
 {% for item in ea.mainMenu.items %}
-    {% if item.index is same as(eaConst('MENU_INDEX', ea.request)|int) %}
+    {% set itemIndex = eaConst('MENU_INDEX', ea.request)|int %}
+    {% if item.index is same as(itemIndex) %}
         {% set menuItem = item %}
         {% set menuItemLabel = item.label %}
         {% set menuItemUrl = item.linkUrl is not empty ? item.linkUrl : null %}
         {% if menuItemUrl is null and item.subItems is not empty %}
-            {% set menuItemUrl = item.subItems.0.routeParameters.crudAction is same as(eaConst('INDEX', null, 'Action')) 
+            {% set actionIndex = eaConst('INDEX', null, 'Action') %}
+            {% set menuItemUrl = item.subItems.0.routeParameters.crudAction is same as(actionIndex) 
                 ? item.subItems.0.linkUrl 
                 : null 
             %}
         {% endif %}
         {% for subItem in item.subItems %}
-            {% if subItem.subIndex is same as(eaConst('SUBMENU_INDEX', ea.request)|int) %}
-                {% if subItem.linkUrl is not same as(menuItemUrl) %}
-                    {% set submenuItemLabel = subItem.label %}
-                    {% set submenuItemUrl = subItem.linkUrl %}
-                {% endif %}
+            {% set subItemIndex = eaConst('SUBMENU_INDEX', ea.request)|int %}
+            {% if subItem.subIndex is same as(subItemIndex) 
+            and if subItem.linkUrl is not same as(menuItemUrl) %}
+                {% set submenuItemLabel = subItem.label %}
+                {% set submenuItemUrl = subItem.linkUrl %}
             {% endif %}
         {% endfor %}
     {% endif %}
@@ -39,9 +41,9 @@
         {% set url = link.path is defined ? path(link.path) : link.url ?? null %}
         {% set isNotFirst = index is not same as('level0') ? true : false %}
         {% set hasLink = true %}
-        {% if index is same as 'level2' 
+        {% if index is same as('level2') 
             or (breadcrumbs.level2.label is null 
-            and index is same as 'level1')
+            and index is same as('level1'))
         %}
             {% set hasLink = false %}
         {% endif %}
