@@ -4,40 +4,25 @@ namespace App\Controller\Admin;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use App\Controller\Admin\AbstractEntityCrudController;
 
 abstract class AbstractCategoryCrudController extends AbstractEntityCrudController
 {
+    const MANDATORY_PROPERTIES_IN_CHILD = ['route'];
+
+    protected $route;
 
     abstract public static function getEntityFqcn(): string;
 
-    public function setFields(): array
-    {
-        $fields = [
-            IdField::new('id')
-                ->onlyOnDetail(),
-
-            FormField::addPanel()->setCssClass('col-md-8'),
-            TextField::new('label'),
-            FormField::addPanel()->setCssClass('col-md-4'),
-            SlugField::new('slug')
-                ->setTargetFieldName('label')
-                ->hideOnIndex(),
-        ];
-        return $this->mergeFields($fields);
-    }
+    abstract public function setFields(): array;
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
             ->setEntityLabelInPlural('Categories')
             ->setEntityLabelInSingular('Category')
-            ->setDefaultSort(['label' => 'ASC']);
+            ->setDefaultSort(['label' => 'ASC'])
+            ->setEntityPermission('ROLE_ADMIN');
     }
 
     public function configureActions(Actions $actions): Actions
@@ -52,7 +37,13 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
                 Crud::PAGE_INDEX,
                 Action::DELETE,
                 fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
-            );
+            )
+            ->setPermissions([
+                Action::DELETE => 'ROLE_ADMIN',
+                Action::EDIT => 'ROLE_ADMIN',
+                Action::NEW => 'ROLE_ADMIN',
+                Action::INDEX => 'ROLE_ADMIN'
+            ]);
         return $actions;
     }
 }

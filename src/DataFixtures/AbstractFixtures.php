@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 abstract class AbstractFixtures extends Fixture
 {
@@ -18,15 +19,18 @@ abstract class AbstractFixtures extends Fixture
     protected $slugger;
     protected $faker;
     protected $entityManager;
+    protected $urlGenerator;
 
     public function __construct(
         UserPasswordHasherInterface $hasher,
         SluggerInterface $slugger,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->hasher = $hasher;
         $this->slugger = $slugger;
         $this->entityManager = $entityManager;
+        $this->urlGenerator = $urlGenerator;
 
         $this->faker = \Faker\Factory::create();
         $this->faker->addProvider(new PicsumPhotosProvider($this->faker));

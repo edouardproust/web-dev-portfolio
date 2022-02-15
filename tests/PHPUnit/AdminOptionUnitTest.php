@@ -13,7 +13,7 @@ class AdminOptionUnitTest extends PHPUnitEntityAbstract
     public function testBasic(): void
     {
         $properties = [
-            'slug' => 'option',
+            'constant' => 'option',
             'value' => 'Option'
         ];
         $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);

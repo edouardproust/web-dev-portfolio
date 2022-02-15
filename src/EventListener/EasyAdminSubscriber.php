@@ -48,7 +48,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         if (property_exists($entity, 'author')) {
             /** @var User $user */
             $user = $this->security->getUser();
-            $author = $this->authorRepository->findByUserId($user->getId());
+            $author = $this->authorRepository->findOneByUser($user);
             $entity->setAuthor($author);
         }
     }
