@@ -55,4 +55,12 @@ class AdminOption
 
         return $this;
     }
+
+    public function getLabel(): ?string
+    {
+        $slug = $this->constant;
+        $slug = str_replace('_', ' ', $slug);
+        $slug = ucfirst(strtolower($slug));
+        return $slug;
+    }
 }

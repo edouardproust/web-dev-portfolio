@@ -108,7 +108,7 @@ class AppFixtures extends AbstractFixtures
             ->setWebsite($this->urlGenerator->generate('home'));
         $this->authors[] = $author;
 
-        // more authors
+        // others
         for ($a = 0; $a < self::AUTHORS_NB - 1; $a++) {
             $firstname = $this->faker->firstName();
             $author = (new Author)
@@ -122,6 +122,7 @@ class AppFixtures extends AbstractFixtures
                 return $this->faker->randomElement($users);
             });
             $author->setUser($user);
+            $user->setRoles(['ROLE_AUTHOR']);
             // optional fields
             foreach ([
                 [$author, 'contactEmail', strtolower($firstname) . '@' . Config::SITE_DOMAIN, 70],
@@ -285,14 +286,15 @@ class AppFixtures extends AbstractFixtures
 
         // users
         for ($u = 0; $u < self::USERS_NB; $u++) {
+            $firstname = $this->faker->firstName();
             $user = (new User)
                 ->setEmail(
                     strtolower(
-                        $this->faker->firstName() . '.' . $this->faker->lastName()
+                        $firstname . '.' . $this->faker->lastName()
                     ) . '@' . $this->faker->freeEmailDomain()
                 )
                 ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
-            $user->setPassword($this->hasher->hashPassword($user, strtolower($this->faker->firstName())));
+            $user->setPassword($this->hasher->hashPassword($user, strtolower($firstname)));
             $this->users[] = $user;
         }
     }

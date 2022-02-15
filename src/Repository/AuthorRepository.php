@@ -24,13 +24,8 @@ class AuthorRepository extends ServiceEntityRepository
      * @param User $user
      * @return Author  Returns an Author object
      */
-    public function findByUserId(User $user)
+    public function findOneByUser(User $user)
     {
-        $query = $this->createQueryBuilder('a')
-            ->andWhere('a.user = :val')
-            ->setParameter('val', $user)
-            ->getQuery();
-        dd($query->getResult());
         return $this->createQueryBuilder('a')
             ->andWhere('a.user = :val')
             ->setParameter('val', $user)

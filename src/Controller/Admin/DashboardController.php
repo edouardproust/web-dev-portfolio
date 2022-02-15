@@ -13,6 +13,7 @@ use App\Entity\PostCategory;
 use App\Entity\CodingLanguage;
 use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
+use App\Repository\AuthorRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -25,6 +26,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
+
+    private $authorRepository;
+
+    public function __construct(AuthorRepository $authorRepository)
+    {
+        $this->authorRepository = $authorRepository;
+    }
+
     /**
      * @Route("/admin", name="admin")
      */
@@ -47,34 +56,40 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToUrl('View website', 'far fa-eye', '/');
+        yield MenuItem::linkToDashboard('Dashboard', 'fas fa-tachometer-alt');
+        yield MenuItem::linkToUrl('View website', 'fas fa-eye', '/')
+            ->setPermission('ROLE_ADMIN');
 
         yield MenuItem::section('Content');
-        yield MenuItem::subMenu('Portfolio', 'fa fa-images')->setSubItems([
+        yield MenuItem::subMenu('Portfolio', 'fas fa-images')->setSubItems([
             MenuItem::linkToCrud('Projects', 'fas fa-list', Project::class),
             MenuItem::linkToCrud('New', 'fas fa-plus', Project::class)
                 ->setAction('new'),
-            MenuItem::linkToCrud('Categories', 'fas fa-tags', ProjectCategory::class),
+            MenuItem::linkToCrud('Categories', 'fas fa-tags', ProjectCategory::class)
+                ->setPermission('ROLE_ADMIN')
         ]);
         yield MenuItem::subMenu('Learn', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('Lessons', 'fas fa-list', Lesson::class),
             MenuItem::linkToCrud('New', 'fas fa-plus', Lesson::class)
                 ->setAction('new'),
-            MenuItem::linkToCrud('Categories', 'fas fa-tags', LessonCategory::class),
+            MenuItem::linkToCrud('Categories', 'fas fa-tags', LessonCategory::class)
+                ->setPermission('ROLE_ADMIN')
         ]);
         yield MenuItem::subMenu('Blog', 'fas fa-newspaper')->setSubItems([
             MenuItem::linkToCrud('Posts', 'fas fa-list', Post::class),
             MenuItem::linkToCrud('New post', 'fas fa-plus', Post::class)
                 ->setAction('new'),
-            MenuItem::linkToCrud('Categories', 'fas fa-tags', PostCategory::class),
+            MenuItem::linkToCrud('Categories', 'fas fa-tags', PostCategory::class)
+                ->setPermission('ROLE_ADMIN')
         ]);
 
-        yield MenuItem::section('Settings');
-        yield MenuItem::linkToCrud('Options', 'fas fa-cog', AdminOption::class);
-        yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
-        yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Coding languages', 'fas fa-code', CodingLanguage::class);
+        if ($this->isGranted('ROLE_ADMIN')) {
+            yield MenuItem::section('Settings');
+            yield MenuItem::linkToCrud('Options', 'fas fa-cog', AdminOption::class);
+            yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
+            yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+            yield MenuItem::linkToCrud('Coding languages', 'fas fa-code', CodingLanguage::class);
+        }
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu
@@ -83,6 +98,7 @@ class DashboardController extends AbstractDashboardController
         // create the user menu from scratch: return UserMenu::new()->...
         return parent::configureUserMenu($user)
             // you can use any type of menu item, except submenus
+            ->setName($this->authorRepository->findOneByUser($user)->getFullName())
             ->addMenuItems([
                 MenuItem::linkToRoute('My Profile', 'fas fa-user', '...')
             ]);
