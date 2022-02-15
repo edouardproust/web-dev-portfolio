@@ -7,8 +7,7 @@ use App\Repository\UserRepository;
 
 class EasyAdminService
 {
-
-    private $urlGenerator;
+    private $userRepository;
 
     public function __construct(UserRepository $userRepository)
     {
@@ -16,8 +15,8 @@ class EasyAdminService
     }
 
     /**
-     * @param User $user 
-     * @return bool 
+     * @param User $user
+     * @return bool
      */
     public function isCurrentUser(User $user): bool
     {

@@ -9,16 +9,15 @@ use App\Repository\AuthorRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Event\AbstractLifecycleEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
-
     private $security;
     private $authorRepository;
+    private $userRepository;
 
     public function __construct(
         Security $security,
@@ -50,7 +49,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     /**
      * Set CreatedAt when creating a new entity ($entity->createdAt)
      * @param BeforeEntityPersistedEvent $event EasyAmdin Action::NEW
-     * @return void 
+     * @return void
      */
     public function setCreatedAtOnEntityNew(BeforeEntityPersistedEvent $event)
     {
@@ -63,7 +62,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     /**
      * Set Author when creating a new Project, Lesson or Post ($posttype->author)
      * @param BeforeEntityPersistedEvent $event Fired on Action::NEW
-     * @return void 
+     * @return void
      */
     public function setAuthorOnPosttypeNew(BeforeEntityPersistedEvent $event)
     {
@@ -80,7 +79,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     /**
      * Set User when creating a new Author ($user->role, $user->isAuthor)
      * @param BeforeEntityPersistedEvent $event Fired on Action::NEW
-     * @return void 
+     * @return void
      */
     public function setUserOnAuthorNew(BeforeEntityPersistedEvent $event)
     {
@@ -95,7 +94,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     /**
      * Update User ($author->user) when editing an Author ($user->role, $user->isAuthor)
      * @param BeforeEntityUpdatedEvent $event Fired on Action::EDIT
-     * @return void 
+     * @return void
      */
     public function setUserOnAuthorEdit(BeforeEntityUpdatedEvent $event)
     {
@@ -111,7 +110,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     /**
      * - Remove User ($author->user) when Deleting an Author ($user->role, $user->isAuthor)
      * @param BeforeEntityDeletedEvent $event Fired on Action::DELETE
-     * @return void 
+     * @return void
      */
     public function removeUserOnAuthorDelete(BeforeEntityDeletedEvent $event)
     {
