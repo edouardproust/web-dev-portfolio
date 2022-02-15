@@ -3,7 +3,7 @@
 {% set menuItem = '' %}
 {% set menuItemLabel, menuItemUrl, submenuItemLabel, submenuItemUrl = null, null, null, null %}
 {% for item in ea.mainMenu.items %}
-    {% if item.index is same as (eaConst('MENU_INDEX', ea.request)|int) %}
+    {% if item.index is same as(eaConst('MENU_INDEX', ea.request)|int) %}
         {% set menuItem = item %}
         {% set menuItemLabel = item.label %}
         {% set menuItemUrl = item.linkUrl is not empty ? item.linkUrl : null %}
