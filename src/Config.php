@@ -5,7 +5,7 @@ namespace App;
 use ReflectionClass;
 
 /** @package App
- * Constants are defined in order to set them in the database if needed. 
+ * Constants are defined in order to set them in the database if needed.
  * You must set them using this pattern:
  * const MY_CONSTANT = ['slug' => value]
  */
@@ -34,7 +34,7 @@ class Config
 
     const HEADLINE_MAX_LENGTH = 255;
 
-    static function getConstants()
+    public static function getConstants()
     {
         $class = new ReflectionClass(__CLASS__);
         return $class->getConstants();
