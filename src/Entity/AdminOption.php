@@ -20,7 +20,7 @@ class AdminOption
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $slug;
+    private $constant;
 
     /**
      * @ORM\Column(type="json")
@@ -32,14 +32,14 @@ class AdminOption
         return $this->id;
     }
 
-    public function getSlug(): ?string
+    public function getConstant(): ?string
     {
-        return $this->slug;
+        return $this->constant;
     }
 
-    public function setSlug(string $slug): self
+    public function setConstant(string $constant): self
     {
-        $this->slug = $slug;
+        $this->constant = $constant;
 
         return $this;
     }

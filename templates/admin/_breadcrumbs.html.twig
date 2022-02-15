@@ -14,11 +14,11 @@
             %}
         {% endif %}
         {% for subItem in item.subItems %}
-            {% if subItem.subIndex is same as(eaConst('SUBMENU_INDEX', ea.request)|int)
-                and subItem.linkUrl is not same as(menuItemUrl)
-            %}
-                {% set submenuItemLabel = subItem.label %}
-                {% set submenuItemUrl = subItem.linkUrl %}
+            {% if subItem.subIndex is same as(eaConst('SUBMENU_INDEX', ea.request)|int) %}
+                {% if subItem.linkUrl is not same as(menuItemUrl) %}
+                    {% set submenuItemLabel = subItem.label %}
+                    {% set submenuItemUrl = subItem.linkUrl %}
+                {% endif %}
             {% endif %}
         {% endfor %}
     {% endif %}

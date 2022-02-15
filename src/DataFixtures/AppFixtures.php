@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Config;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Author;
@@ -17,12 +18,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends AbstractFixtures
 {
-    const ADMIN_OPTIONS = [
-        'siteName' => 'Edouard Proust Portfolio',
-    ];
     const AUTHORS_NB = 2;
     const AUTHOR_DEFAUT = [
-        'contactEmail' => 'contact@edouardproust.dev',
         'github' => 'www.github.com',
         'linkedin' => 'www.linkedin.com',
         'stackoverflow' => 'www.stackoverflow.com',
@@ -89,9 +86,9 @@ class AppFixtures extends AbstractFixtures
 
     protected function createAdminOptions()
     {
-        foreach (self::ADMIN_OPTIONS as $slug => $value) {
+        foreach (Config::getConstants() as $constant => $value) {
             $option = (new AdminOption)
-                ->setSlug($slug)
+                ->setConstant($constant)
                 ->setValue($value);
             $this->adminOptions[] = $option;
         }
@@ -99,22 +96,35 @@ class AppFixtures extends AbstractFixtures
 
     protected function createAuthors()
     {
-        for ($a = 0; $a < self::AUTHORS_NB; $a++) {
+        // admin
+        $author = (new Author)
+            ->setUser($this->users[0])
+            ->setAvatar($this->faker->imageUrl(60, 60, true))
+            ->setBio($this->faker->paragraph(5, true))
+            ->setFullName(Config::CONTACT_NAME)
+            ->setGithub(Config::SOCIAL_GITHUB)
+            ->setLinkedin(Config::SOCIAL_LINKEDIN)
+            ->setStackoverflow(Config::SOCIAL_STACKOVERFLOW)
+            ->setWebsite($this->urlGenerator->generate('home'));
+        $this->authors[] = $author;
+
+        // more authors
+        for ($a = 0; $a < self::AUTHORS_NB - 1; $a++) {
+            $firstname = $this->faker->firstName();
             $author = (new Author)
                 ->setAvatar($this->faker->imageUrl(60, 60, true))
                 ->setBio($this->faker->paragraph(5, true))
-                ->setFullName(
-                    $this->faker->firstName() . ' ' . $this->faker->lastName()
-                );
+                ->setFullName($firstname . ' ' . $this->faker->lastName());
+            // user
             $users = $this->users;
+            unset($users[0]); // remove admin as it is already used as an author
             $user = $this->uniqueValue('authors', function () use ($users) {
                 return $this->faker->randomElement($users);
             });
             $author->setUser($user);
-
             // optional fields
             foreach ([
-                [$author, 'contactEmail', self::AUTHOR_DEFAUT['contactEmail'], 70],
+                [$author, 'contactEmail', strtolower($firstname) . '@' . Config::SITE_DOMAIN, 70],
                 [$author, 'github', self::AUTHOR_DEFAUT['github'], 90],
                 [$author, 'linkedin', self::AUTHOR_DEFAUT['linkedin'], 50],
                 [$author, 'stackoverflow', self::AUTHOR_DEFAUT['stackoverflow'], 70],

@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Author;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Author|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,14 +21,19 @@ class AuthorRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $id
+     * @param User $user
      * @return Author  Returns an Author object
      */
-    public function findByUserId(int $id)
+    public function findByUserId(User $user)
     {
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.user = :val')
+            ->setParameter('val', $user)
+            ->getQuery();
+        dd($query->getResult());
         return $this->createQueryBuilder('a')
             ->andWhere('a.user = :val')
-            ->setParameter('val', $id)
+            ->setParameter('val', $user)
             ->getQuery()
             ->getSingleResult();
     }

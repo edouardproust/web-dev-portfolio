@@ -3,23 +3,24 @@
 namespace App\Controller\Admin;
 
 use App\Entity\AdminOption;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use App\Controller\Admin\AbstractEntityCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
-class AdminOptionCrudController extends AbstractCrudController
+class AdminOptionCrudController extends AbstractCategoryCrudController
 {
     public static function getEntityFqcn(): string
     {
         return AdminOption::class;
     }
 
-    /*
-    public function configureFields(string $pageName): iterable
+    public function setFields(): array
     {
         return [
             IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('constant'),
+            TextareaField::new('value'),
         ];
     }
-    */
 }
