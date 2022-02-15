@@ -60,7 +60,8 @@ class Author
     private $linkedin;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $user;
 

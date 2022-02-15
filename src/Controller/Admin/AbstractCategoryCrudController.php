@@ -27,7 +27,7 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
 
     public function configureActions(Actions $actions): Actions
     {
-        $actions
+        return $actions
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
@@ -38,12 +38,6 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
                 Action::DELETE,
                 fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
             )
-            ->setPermissions([
-                Action::DELETE => 'ROLE_ADMIN',
-                Action::EDIT => 'ROLE_ADMIN',
-                Action::NEW => 'ROLE_ADMIN',
-                Action::INDEX => 'ROLE_ADMIN'
-            ]);
-        return $actions;
+            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);
     }
 }

@@ -86,8 +86,8 @@ class DashboardController extends AbstractDashboardController
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::section('Settings');
             yield MenuItem::linkToCrud('Options', 'fas fa-cog', AdminOption::class);
-            yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
             yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
+            yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
             yield MenuItem::linkToCrud('Coding languages', 'fas fa-code', CodingLanguage::class);
         }
     }
