@@ -3,6 +3,7 @@
 namespace App;
 
 use ReflectionClass;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
 
 /** @package App
  * Constants are defined in order to set them in the database if needed.
@@ -13,6 +14,12 @@ class Config
 {
     const SITE_NAME = 'Edouard Proust Portfolio';
     const SITE_DOMAIN = 'edouardproust.dev';
+
+    const ROLES = [
+        'User' => 'ROLE_USER',
+        'Author' => 'ROLE_AUTHOR',
+        'Admin' => 'ROLE_ADMIN'
+    ];
 
     const CONTACT_NAME = 'Edouard Proust';
     const CONTACT_EMAIL = 'contact@edouardproust.dev';
@@ -38,5 +45,10 @@ class Config
     {
         $class = new ReflectionClass(__CLASS__);
         return $class->getConstants();
+    }
+
+    public static function getJson(string $constant)
+    {
+        return json_encode(constant('self::' . $constant));
     }
 }

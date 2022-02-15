@@ -89,7 +89,7 @@ class AppFixtures extends AbstractFixtures
         foreach (Config::getConstants() as $constant => $value) {
             $option = (new AdminOption)
                 ->setConstant($constant)
-                ->setValue($value);
+                ->setValue(Config::getJson($constant));
             $this->adminOptions[] = $option;
         }
     }
@@ -97,8 +97,9 @@ class AppFixtures extends AbstractFixtures
     protected function createAuthors()
     {
         // admin
+        $admin = $this->users[0];
         $author = (new Author)
-            ->setUser($this->users[0])
+            ->setUser($admin)
             ->setAvatar($this->faker->imageUrl(60, 60, true))
             ->setBio($this->faker->paragraph(5, true))
             ->setFullName(Config::CONTACT_NAME)
@@ -106,6 +107,7 @@ class AppFixtures extends AbstractFixtures
             ->setLinkedin(Config::SOCIAL_LINKEDIN)
             ->setStackoverflow(Config::SOCIAL_STACKOVERFLOW)
             ->setWebsite($this->urlGenerator->generate('home'));
+        $admin->setIsAuthor(true);
         $this->authors[] = $author;
 
         // others
@@ -122,7 +124,9 @@ class AppFixtures extends AbstractFixtures
                 return $this->faker->randomElement($users);
             });
             $author->setUser($user);
-            $user->setRoles(['ROLE_AUTHOR']);
+            $user
+                ->setRoles(['ROLE_AUTHOR'])
+                ->setIsAuthor(true);
             // optional fields
             foreach ([
                 [$author, 'contactEmail', strtolower($firstname) . '@' . Config::SITE_DOMAIN, 70],

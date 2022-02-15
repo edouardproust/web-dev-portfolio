@@ -2,13 +2,21 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
 use App\Entity\Author;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use App\Controller\Admin\AbstractEntityCrudController;
+use Doctrine\ORM\QueryBuilder;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use App\Controller\Admin\AbstractEntityCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class AuthorCrudController extends AbstractEntityCrudController
 {
@@ -19,17 +27,60 @@ class AuthorCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setEntityPermission('ROLE_ADMIN');
+        return $crud
+            ->setEntityPermission('ROLE_ADMIN')
+            ->setDefaultSort(['fullName' => 'ASC']);
     }
 
     public function setFields(): array
     {
-        return [
-            IdField::new('id'),
-            SlugField::new('slug')
-                ->setTargetFieldName('label'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+        $fields = [
+            IdField::new('id')->onlyOnDetail(),
+
+            FormField::addPanel()->setCssClass('col-md-8'),
+            TextField::new('fullName'),
+            AssociationField::new('user')
+                ->hideWhenUpdating()
+                ->setQueryBuilder(
+                    function (QueryBuilder $builder) {
+                        return $builder
+                            ->select('u')
+                            ->from(User::class, 'u')
+                            ->where('u.isAuthor IS NULL');
+                    }
+                ),
+            TextareaField::new('bio')->hideOnIndex(),
+            // ImageField::new('avatar')
+            //     ->setSortable(false),
+
+            FormField::addPanel()->setCssClass('col-md-4'),
+            EmailField::new('contactEmail')->hideOnIndex(),
+            UrlField::new('website')->hideOnIndex(),
+            Urlfield::new('github')
+                ->hideOnIndex()
+                ->setLabel('GitHub profile Url'),
+            Urlfield::new('stackoverflow')
+                ->hideOnIndex()
+                ->setLabel('StackOverflow profile Url'),
+            Urlfield::new('LinkedIn')
+                ->hideOnIndex()
+                ->setLabel('LinkedIn profile Url'),
+
+            AssociationField::new('projects')->hideOnForm(),
+            AssociationField::new('lessons')->hideOnForm(),
+            AssociationField::new('posts')->hideOnForm()
         ];
+
+        return $fields;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $actions
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
+            ->add(Crud::PAGE_EDIT, Action::DELETE)
+            ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::DELETE]);
+        return $actions;
     }
 }

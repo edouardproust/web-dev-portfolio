@@ -37,10 +37,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
+    public function __toString(): string
+    {
+        return $this->getEmail();
+    }
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isAuthor;
 
     public function getId(): ?int
     {
@@ -96,6 +106,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function addRole(string $role): self
+    {
+        if (!in_array($role, $this->roles)) {
+            $this->roles[] = $role;
+        }
+        return $this;
+    }
+
+    public function removeRole(string $role): self
+    {
+        if (in_array($role, $this->roles)) {
+            foreach ($this->roles as $key => $existingRole) {
+                if ($existingRole === $role) {
+                    unset($this->roles[$key]);
+                }
+            }
+            $this->roles = array_values($this->roles); // reindex array
+        }
+        return $this;
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -139,6 +170,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getIsAuthor(): ?bool
+    {
+        return $this->isAuthor;
+    }
+
+    public function setIsAuthor(?bool $isAuthor): self
+    {
+        $this->isAuthor = $isAuthor;
 
         return $this;
     }

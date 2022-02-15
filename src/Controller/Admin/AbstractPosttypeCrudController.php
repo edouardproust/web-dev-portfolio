@@ -35,8 +35,9 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
             ->linkToRoute($this->route . '_show', function (object $entity) {
                 return ['id' => $entity->getId(), 'slug' => $entity->getSlug()];
             });
+        $actions
+            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER);
         return $this->setActionsOnIndex($actions, $view);
-        return $actions;
     }
 
     private function setActionsOnIndex(Actions $actions, Action ...$newActions): Actions

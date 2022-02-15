@@ -14,7 +14,6 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('config', [$this, 'getConfigConstant']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
-            new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
         ];
     }
 
