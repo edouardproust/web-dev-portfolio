@@ -12,21 +12,25 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
     private $security;
     private $authorRepository;
     private $userRepository;
+    private $hasher;
 
     public function __construct(
         Security $security,
         AuthorRepository $authorRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UserPasswordHasherInterface $hasher
     ) {
         $this->security = $security;
         $this->authorRepository = $authorRepository;
         $this->userRepository = $userRepository;
+        $this->hasher = $hasher;
     }
 
     public static function getSubscribedEvents()
@@ -38,7 +42,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 ['setUserOnAuthorNew']
             ],
             BeforeEntityUpdatedEvent::class => [
-                'setUserOnAuthorEdit'
+                ['setUserOnAuthorEdit'],
+                ['encodeUserPasswordOnUserEdit']
             ],
             BeforeEntityDeletedEvent::class => [
                 'removeUserOnAuthorDelete'
@@ -108,7 +113,22 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * - Remove User ($author->user) when Deleting an Author ($user->role, $user->isAuthor)
+     * Update User when editing a User ($user->password)
+     * @param BeforeEntityUpdatedEvent $event Fired on Action::EDIT
+     * @return void
+     */
+    public function encodeUserPasswordOnUserEdit(BeforeEntityUpdatedEvent $event)
+    {
+        $user = $event->getEntityInstance();
+        if ($user instanceof User) {
+            $user->setPassword(
+                $this->hasher->hashPassword($user, $user->getPassword())
+            );
+        }
+    }
+
+    /**
+     * Remove User ($author->user) when Deleting an Author ($user->role, $user->isAuthor)
      * @param BeforeEntityDeletedEvent $event Fired on Action::DELETE
      * @return void
      */

@@ -24,7 +24,8 @@ class PostCategoryCrudController extends AbstractCategoryCrudController
             FormField::addPanel()->setCssClass('col-md-8'),
             TextField::new('label'),
             TextareaField::new('description')
-                ->hideOnIndex(),
+                ->hideOnIndex()
+                ->setMaxLength(255),
 
             FormField::addPanel()->setCssClass('col-md-4'),
             SlugField::new('slug')

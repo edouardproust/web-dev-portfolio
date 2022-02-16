@@ -22,34 +22,38 @@
 		{% endif %}
 	</div>
 
-	<div class="show_pills">
-		<div class="pills-list">
-			<span>In:
-			</span>
-			{% for category in project.categories %}
-				<a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
-			{% endfor %}
+	{% if project.categories|length > 0 %}
+		<div class="show_pills">
+			<div class="pills-list">
+				<span>In:
+				</span>
+				{% for category in project.categories %}
+					<a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">
+						{{ category.label }}
+					</a>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 
-	<div class="card_pills">
-		<div class="pills-list">
-			<span>
-				{% if project.codingLanguages|length > 1 %}
-					Languages:
-				{% else %}
-					Language:
-				{% endif %}
-			</span>
-			{% for codingLanguage in project.codingLanguages %}
-				<a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}">
-					{{ codingLanguage.label }}
-				</a>
-			{% endfor %}
+	{% if project.codingLanguages|length > 0 %}
+		<div class="card_pills">
+			<div class="pills-list">
+				<span>
+					{% if project.codingLanguages|length > 1 %}
+						Languages:
+					{% else %}
+						Language:
+					{% endif %}
+				</span>
+				{% for codingLanguage in project.codingLanguages %}
+					<a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}">
+						{{ codingLanguage.label }}
+					</a>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 	
 	{% if project.headline is not null %}
 		<div class="show_headline">

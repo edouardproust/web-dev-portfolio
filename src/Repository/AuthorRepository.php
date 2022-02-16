@@ -30,6 +30,6 @@ class AuthorRepository extends ServiceEntityRepository
             ->andWhere('a.user = :val')
             ->setParameter('val', $user)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 }

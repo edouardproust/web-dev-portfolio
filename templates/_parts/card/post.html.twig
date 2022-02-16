@@ -14,23 +14,25 @@
 
 	<div class="card_data">
 		<span>{{ post.createdAt|date('m/d/Y') }}</span>
-		<span>
-			| By
-		</span>
-		<a href="{{ path('author_posts', {'id': post.author.id}) }}">
-			{{ post.author.fullName }}
-		</a>
+		{% if post.author is not null %}
+			<span> | By </span>
+			<a href="{{ path('author_posts', {'id': post.author.id}) }}">
+				{{ post.author.fullName }}
+			</a>
+		{% endif %}
 	</div>
 
-	<div class="card_pills">
-		<div class="pills-list">
-			{% for category in post.categories %}
-			<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
-				{{ category.label }}
-			</a>
-			{% endfor %}
+	{% if post.categories|length > 0 %}
+		<div class="card_pills">
+			<div class="pills-list">
+				{% for category in post.categories %}
+				<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
+					{{ category.label }}
+				</a>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 
 	<div class="card_extract">
 		{% if post.headline is not null %}

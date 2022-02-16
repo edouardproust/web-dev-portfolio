@@ -10,22 +10,16 @@ abstract class AbstractEntityCrudController extends AbstractCrudController
 {
     abstract public static function getEntityFqcn(): string;
 
-    abstract public function setFields(): array;
+    abstract public function setFields(): iterable;
 
     public function configureFields(string $pageName): iterable
     {
-        $fields = $this->setFields();
-
-        // hide FormField on Crud::DETAIL
-        foreach ($fields as $field) {
+        foreach ($this->setFields() as $field) {
             $field->setColumns(12);
-            /** @var FieldInterface $field */
             if ($field->getAsDto()->getFieldFqcn() === FormField::class) {
-                /** @var FormField $field */
                 $field->hideOnDetail();
             }
+            yield $field;
         }
-
-        return $fields;
     }
 }

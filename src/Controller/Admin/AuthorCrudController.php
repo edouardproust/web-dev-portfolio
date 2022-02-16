@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Author;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
+use App\Repository\AuthorRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -20,6 +21,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class AuthorCrudController extends AbstractEntityCrudController
 {
+    private  $authorRepository;
+
+    public function __construct(AuthorRepository $authorRepository)
+    {
+        $this->authorRepository = $authorRepository;
+    }
+
     public static function getEntityFqcn(): string
     {
         return Author::class;
@@ -27,9 +35,17 @@ class AuthorCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
+        $crud
             ->setEntityPermission('ROLE_ADMIN')
+            ->setEntityLabelInPlural('Authors')
             ->setDefaultSort(['fullName' => 'ASC']);
+        // page title
+        $currentAuthor = $this->authorRepository->findOneByUser($this->getUser());
+        $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
+        if ($currentAuthor->getId() == $entityId) {
+            $crud->setPageTitle(Crud::PAGE_EDIT, 'My Author Profile');
+        }
+        return $crud;
     }
 
     public function setFields(): array
@@ -49,7 +65,8 @@ class AuthorCrudController extends AbstractEntityCrudController
                             ->where('u.isAuthor IS NULL');
                     }
                 ),
-            TextareaField::new('bio')->hideOnIndex(),
+            TextareaField::new('bio')
+                ->hideOnIndex(),
             // ImageField::new('avatar')
             //     ->setSortable(false),
 

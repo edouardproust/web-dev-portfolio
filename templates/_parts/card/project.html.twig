@@ -1,55 +1,60 @@
 <div class="card project">
 
-    <div class="show_img">
-        <img src="{{ project.mainImage }}" alt="Image for project: {{ project.title }}">
-    </div>
+	<div class="show_img">
+		<img src="{{ project.mainImage }}" alt="Image for project: {{ project.title }}">
+	</div>
 
-    <div class="card_title">
-        <a href="{{ path('project_show', {id: project.id, slug: project.slug}) }}">
-            <h3>{{ project.title }}</h3>
-        </a>
-    </div>
+	<div class="card_title">
+		<a href="{{ path('project_show', {id: project.id, slug: project.slug}) }}">
+			<h3>{{ project.title }}</h3>
+		</a>
+	</div>
 
-    <div class="card_data">
-        <span>{{ project.createdAt|date('m/d/Y') }}</span>
-        <span> | By </span>
-        <a href="{{ path('author_projects', {'id': project.author.id}) }}">
-            {{ project.author.fullName }}
-        </a>
-    </div>
+	<div class="card_data">
+		<span>{{ project.createdAt|date('m/d/Y') }}</span>
+		{% if project.author is not null %}
+			<span>
+				| By
+			</span>
+			<a href="{{ path('author_projects', {'id': project.author.id}) }}"> {{ project.author.fullName }}
+			</a>
+		{% endif %}
+	</div>
 
-    <div class="card_pills">
-        <div class="pills-list">
-            {% for category in project.categories %}
-                <a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">
-                    {{ category.label }}
-                </a>
-            {% endfor %}
-        </div>
-    </div>
+	{% if project.categories|length > 0 %}
+		<div class="card_pills">
+			<div class="pills-list">
+				{% if project.codingLanguages|length > 0 %}
+					{% for category in project.categories %}
+						<a class="pill" href="{{ path('project_category', {slug:category.slug}) }}"> {{ category.label }}
+						</a>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+	{% endif %}
 
-    <div class="card_pills">
-        <div class="pills-list">
-            {% for codingLanguage in project.codingLanguages %}
-                <a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}">
-                    {{ codingLanguage.label }}
-                </a>
-            {% endfor %}
-        </div>
-    </div>
-    
-    <div class="card_extract">
-        {% if project.headline is not null %}
-            {{ project.headline }}
-        {% else %}
-            {{ project.content|extract }}
-        {% endif %}
-    </div>
+	{% if project.codingLanguages|length > 0 %}
+		<div class="card_pills">
+			<div class="pills-list">
+				{% for codingLanguage in project.codingLanguages %}
+					<a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}"> {{ codingLanguage.label }}
+					</a>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
 
-    <div class="card_btn">
-        <a href="{{ path('project_show', {id: project.id, slug: project.slug}) }}">
-            <button class="btn-primary">See More</button>
-        </a>
-    </div>
+	<div class="card_extract">
+		{% if project.headline is not null %} {{ project.headline }}
+		{% else %} {{ project.content|extract }}
+		{% endif %}
+	</div>
+
+	<div class="card_btn">
+		<a href="{{ path('project_show', {id: project.id, slug: project.slug}) }}">
+			<button class="btn-primary">See More</button>
+		</a>
+	</div>
 
 </div>
