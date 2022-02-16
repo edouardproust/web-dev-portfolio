@@ -57,7 +57,7 @@ class UserCrudController extends AbstractEntityCrudController
             /** @var ChoiceField $formField */
             $fields['roles']
                 ->setDisabled(true)
-                ->setHelp('Connected users can\'t update their own roles.');
+                ->setHelp('This your account. You can\'t update your own roles.');
         }
         return $fields;
     }

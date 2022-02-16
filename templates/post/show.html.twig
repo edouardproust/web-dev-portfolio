@@ -10,13 +10,14 @@
 </div>
 {% endif %}
 
-
 <h1>{{ post.title }}</h1>
 
 <div class="show_data">
 	<span>{{ post.createdAt|date('m/d/Y') }}</span>
-	<span> | By </span>
-	<a href="{{ path('author_posts', {'id': post.author.id}) }}">{{ post.author.fullName }}</a>
+	{% if  post.author is not null %}
+		<span> | By </span>
+		<a href="{{ path('author_posts', {'id': post.author.id}) }}">{{ post.author.fullName }}</a>
+	{% endif %}
 </div>
 
 <div class="show_pills">
@@ -32,7 +33,7 @@
 
 {% if post.headline is not null %}
 <div class="show_headline">
-	{{ project.headline }}
+	{{ post.headline }}
 </div>
 {% endif %}
 
@@ -42,11 +43,13 @@
 	{{ post.content }}
 </div>
 
-<div class="show_author">
-	{% include "_parts/card/author.html.twig" with {
-	'author': post.author
-	} %}
-</div>
+{% if  post.author is not null %}
+	<div class="show_author">
+		{% include "_parts/card/author.html.twig" with {
+		'author': post.author
+		} %}
+	</div>
+{% endif %}
 
 {% if post.comments|length > 0 %}
 <div class="show_comments">

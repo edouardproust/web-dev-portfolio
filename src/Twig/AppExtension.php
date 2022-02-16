@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use Twig\TwigFilter;
+use App\Entity\Author;
 use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('config', [$this, 'getConfigConstant']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
+            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
         ];
     }
 
@@ -23,6 +25,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('extract', [$this, 'getExtract']),
             new TwigFilter('safeEmail', [$this, 'getAntiScrappingEmailString']),
             new TwigFilter('int', [$this, 'convertToInteger']),
+            new TwigFilter('higherRole', [$this, 'getHigherRoleOfUser'])
         ];
     }
 
@@ -73,5 +76,28 @@ class AppExtension extends AbstractExtension
     public function convertToInteger(string $str)
     {
         return (int)$str;
+    }
+
+    public function getHigherRoleOfUser(array $roles, bool $capitalizeOutput = false): ?string
+    {
+        $role = null;
+        if (in_array('ROLE_ADMIN', $roles)) {
+            $role = 'admin';
+        } else if (in_array('ROLE_AUTHOR', $roles)) {
+            $role = 'author';
+        }
+        if ($role && $capitalizeOutput) {
+            $role = ucfirst($role);
+        }
+        return $role;
+    }
+
+    public function getEasyAdminAuthorFullname(?Author $author, string $defaultName = 'Admin'): string
+    {
+        if ($author) {
+            return $author->getFullName();
+        } else {
+            return $defaultName;
+        }
     }
 }

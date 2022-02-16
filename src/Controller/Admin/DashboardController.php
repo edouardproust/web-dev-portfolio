@@ -44,7 +44,8 @@ class DashboardController extends AbstractDashboardController
         //     $this->adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl()
         // );
         return $this->render('admin/dashboard.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'author' => $this->authorRepository->findOneByUser($this->getUser())
         ]);
     }
 

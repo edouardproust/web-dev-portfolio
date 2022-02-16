@@ -65,11 +65,6 @@ class Lesson
     private $codingLanguage;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="lessons")
-     */
-    private $author;
-
-    /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="lesson")
      */
     private $comments;
@@ -78,6 +73,12 @@ class Lesson
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $headline;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="lessons")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $author;
 
     public function __construct()
     {
@@ -210,18 +211,6 @@ class Lesson
         return $this;
     }
 
-    public function getAuthor(): ?Author
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?Author $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Comment[]
      */
@@ -260,6 +249,18 @@ class Lesson
     public function setHeadline(?string $headline): self
     {
         $this->headline = $headline;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
