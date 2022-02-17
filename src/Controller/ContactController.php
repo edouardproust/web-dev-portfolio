@@ -29,7 +29,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->contactService->sendMessage($form->getData());
+            $this->contactService->sendEmailNotif($form->getData());
         }
 
         return $this->render('contact/index.html.twig', [

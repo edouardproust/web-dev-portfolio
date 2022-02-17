@@ -2,12 +2,17 @@
 
 namespace App\Service;
 
+use App\Config;
 use App\Entity\User;
 use App\Entity\Author;
+use Symfony\Component\Mime\Address;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class AuthorService
@@ -17,17 +22,24 @@ class AuthorService
     private $paginator;
     private $userService;
     private $entityManager;
+    private $security;
 
     public function __construct(
         AuthorRepository $authorRepository,
         PaginatorInterface $paginator,
         UserService $userService,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer,
+        FlashBagInterface $flash,
+        Security $security
     ) {
         $this->authorRepository = $authorRepository;
         $this->paginator = $paginator;
         $this->userService = $userService;
         $this->entityManager = $entityManager;
+        $this->mailer = $mailer;
+        $this->flash = $flash;
+        $this->security = $security;
     }
 
     public function getCollection(
@@ -47,12 +59,23 @@ class AuthorService
         return [$author, $entities];
     }
 
+    public function buildRegisterFormData(): array
+    {
+        $data = [];
+        /** @var User $user */
+        if ($user = $this->security->getUser()) {
+            $data['email'] = $user->getEmail();
+            $data['password'] = $user->getPassword();
+        }
+        return $data;
+    }
+
     /**
      * @param array $data Data of the form submitted by user
      * @param null|User $user An Author should alway be attached to a User account
      * @return Author The generated Author
      */
-    public function setAuthor(array $data, ?User $user = null): Author
+    public function buildAuthor(array $data, ?User $user = null): Author
     {
         $user
             ->setIsAuthor(true)
@@ -80,12 +103,26 @@ class AuthorService
         $success = true;
 
         // user
-        $user = $this->userService->setUser($data);
+        $user = $this->userService->buildUser($data);
         $success = $this->userService->persistUser($user);
         // author
-        $author = $this->setAuthor($data, $user);
+        $author = $this->buildAuthor($data, $user);
         $this->entityManager->persist($author);
 
         return $success;
+    }
+
+    /**
+     * Send a notification email to Admin on Author registration
+     * @return void  
+     */
+    public function sendEmailNotif()
+    {
+        $email = (new TemplatedEmail)
+            ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
+            ->from(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
+            ->subject('New Author registration on ' . Config::SITE_NAME)
+            ->htmlTemplate('email/author_registration.html.twig');
+        $this->mailer->send($email);
     }
 }

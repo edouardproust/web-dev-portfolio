@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\User;
 use Twig\TwigFilter;
 use App\Entity\Author;
 use Twig\TwigFunction;
@@ -78,8 +79,12 @@ class AppExtension extends AbstractExtension
         return (int)$str;
     }
 
-    public function getHigherRoleOfUser(array $roles, bool $capitalizeOutput = false): ?string
+    public function getHigherRoleOfUser(?User $user, bool $capitalizeOutput = false): ?string
     {
+        if (!$user) {
+            return null;
+        }
+        $roles = $user->getRoles();
         $role = null;
         if (in_array('ROLE_ADMIN', $roles)) {
             $role = 'admin';

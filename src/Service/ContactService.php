@@ -23,7 +23,12 @@ class ContactService
         $this->flash = $flash;
     }
 
-    public function sendMessage(array $data)
+    /**
+     * Send an notification email to Admin on contact form submission
+     * @param array $data FromTo informations
+     * @return void 
+     */
+    public function sendEmailNotif(array $data)
     {
         try {
             $email = (new TemplatedEmail)

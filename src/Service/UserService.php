@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -15,26 +16,35 @@ class UserService
     private $userRepository;
     private $entityManager;
     private $flash;
+    private $security;
 
     public function __construct(
         UserPasswordHasherInterface $hasher,
         UserRepository $userRepository,
         EntityManagerInterface $entityManager,
-        FlashBagInterface $flash
+        FlashBagInterface $flash,
+        Security $security
     ) {
         $this->hasher = $hasher;
         $this->userRepository = $userRepository;
         $this->entityManager = $entityManager;
         $this->flash = $flash;
+        $this->security = $security;
     }
 
-    public function setUser(array $data): User
+    public function buildUser(array $data): User
     {
-        $user = new User;
-        return $user
+        $user = (new User)
             ->setEmail($data['email'])
-            ->setCreatedAt(new \DateTime())
-            ->setPassword($this->hasher->hashPassword($user, $data['password']));
+            ->setCreatedAt(new \DateTime());
+        // password
+        if ($this->security->getUser()) // check if user is already connected
+            $user->setPassword($data['password']);
+        else {
+            $user->setPassword($this->hasher->hashPassword($user, $data['password']));
+        }
+        dd($user);
+        return $user;
     }
 
     /**

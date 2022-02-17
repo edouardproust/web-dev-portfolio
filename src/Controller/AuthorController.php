@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Config;
 use App\Service\AuthorService;
 use App\Form\AuthorRegisterType;
-use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,16 +14,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AuthorController extends AbstractController
 {
     private $authorService;
-    private $userService;
     private $entityManager;
 
     public function __construct(
         AuthorService $authorService,
-        UserService $userService,
         EntityManagerInterface $entityManager
     ) {
         $this->authorService = $authorService;
-        $this->userService = $userService;
         $this->entityManager = $entityManager;
     }
 
@@ -84,12 +80,15 @@ class AuthorController extends AbstractController
      */
     public function register(Request $request): Response
     {
-        $form = $this->createForm(AuthorRegisterType::class);
+
+        $data = $this->authorService->buildRegisterFormData();
+        $form = $this->createForm(AuthorRegisterType::class, $data);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $isPersisted = $this->authorService->persistAuthor($form->getData());
             if ($isPersisted) {
                 $this->entityManager->flush();
+                $this->authorService->sendEmailNotif();
                 $this->addFlash('success', 'Your registration has been sent to the admin. 
                 You will receive a confirmation email once your request is reviewed.');
                 return $this->redirectToRoute('home');
