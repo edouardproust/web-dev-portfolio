@@ -28,18 +28,19 @@ class AuthorRegisterType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('email', EmailType::class, [
-            'label' => 'Email*',
-            'constraints' => [
-                new Email,
-                new Length(['max' => 255])
-            ],
-        ]);
-        if (!$this->security->getUser()) {
-            $builder->add('password', PasswordType::class, [
-                'label' => 'Password*',
-                'constraints' => [new Length(['max' => 255])],
-            ]);
+        if (!$this->security->getUser()) { // hide these fields if is a connected user
+            $builder
+                ->add('email', EmailType::class, [
+                    'label' => 'Email*',
+                    'constraints' => [
+                        new Email,
+                        new Length(['max' => 255])
+                    ],
+                ])
+                ->add('password', PasswordType::class, [
+                    'label' => 'Password*',
+                    'constraints' => [new Length(['max' => 255])],
+                ]);
         }
         $builder
             ->add('fullName', TextType::class, [

@@ -34,17 +34,11 @@ class UserService
 
     public function buildUser(array $data): User
     {
-        $user = (new User)
+        $user = new User;
+        return $user
             ->setEmail($data['email'])
-            ->setCreatedAt(new \DateTime());
-        // password
-        if ($this->security->getUser()) // check if user is already connected
-            $user->setPassword($data['password']);
-        else {
-            $user->setPassword($this->hasher->hashPassword($user, $data['password']));
-        }
-        dd($user);
-        return $user;
+            ->setCreatedAt(new \DateTime())
+            ->setPassword($this->hasher->hashPassword($user, $data['password']));
     }
 
     /**

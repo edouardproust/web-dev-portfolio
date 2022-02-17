@@ -80,15 +80,12 @@ class AuthorController extends AbstractController
      */
     public function register(Request $request): Response
     {
-
-        $data = $this->authorService->buildRegisterFormData();
-        $form = $this->createForm(AuthorRegisterType::class, $data);
+        $form = $this->createForm(AuthorRegisterType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $isPersisted = $this->authorService->persistAuthor($form->getData());
             if ($isPersisted) {
                 $this->entityManager->flush();
-                $this->authorService->sendEmailNotif();
                 $this->addFlash('success', 'Your registration has been sent to the admin. 
                 You will receive a confirmation email once your request is reviewed.');
                 return $this->redirectToRoute('home');

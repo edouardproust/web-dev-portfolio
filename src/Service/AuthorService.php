@@ -59,17 +59,6 @@ class AuthorService
         return [$author, $entities];
     }
 
-    public function buildRegisterFormData(): array
-    {
-        $data = [];
-        /** @var User $user */
-        if ($user = $this->security->getUser()) {
-            $data['email'] = $user->getEmail();
-            $data['password'] = $user->getPassword();
-        }
-        return $data;
-    }
-
     /**
      * @param array $data Data of the form submitted by user
      * @param null|User $user An Author should alway be attached to a User account
@@ -101,28 +90,34 @@ class AuthorService
     public function persistAuthor(array $data): bool
     {
         $success = true;
-
         // user
-        $user = $this->userService->buildUser($data);
-        $success = $this->userService->persistUser($user);
+        $user = $this->security->getUser();
+        if (!$user) { // if is a new user
+            $user = $this->userService->buildUser($data);
+            $success = $this->userService->persistUser($user);
+        }
         // author
         $author = $this->buildAuthor($data, $user);
         $this->entityManager->persist($author);
-
+        $this->sendEmailNotif($author);
         return $success;
     }
 
     /**
      * Send a notification email to Admin on Author registration
+     * @var Author $authorRequest Data from the Author Registration form, reformated into a Author object
      * @return void  
      */
-    public function sendEmailNotif()
+    public function sendEmailNotif(Author $authorRequest)
     {
         $email = (new TemplatedEmail)
             ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
             ->from(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
             ->subject('New Author registration on ' . Config::SITE_NAME)
-            ->htmlTemplate('email/author_registration.html.twig');
+            ->htmlTemplate('email/author_registration.html.twig')
+            ->context([
+                'authorRequest' => $authorRequest
+            ]);
         $this->mailer->send($email);
     }
 }
