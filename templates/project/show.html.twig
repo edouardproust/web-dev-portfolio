@@ -14,10 +14,8 @@
 
 	<div class="show_data">
 		<span>{{ project.createdAt|date('m/d/Y') }}</span>
-		{% if project.author is not null %}
-			<span>
-				| By
-			</span>
+		{% if project|hasApprovedAuthor %}
+			<span> | By </span>
 			<a href="{{ path('author_projects', {'id': project.author.id}) }}">{{ project.author.fullName }}</a>
 		{% endif %}
 	</div>
@@ -64,10 +62,10 @@
 	<hr>
 
 	<div class="show_content">
-		{{ project.content }}
+		{{ project.content|raw }}
 	</div>
 
-	{% if project.author is not null %}
+	{% if project|hasApprovedAuthor %}
 		<div class="show_author">
 			{% include "_parts/card/author.html.twig" with {
 			'author': project.author

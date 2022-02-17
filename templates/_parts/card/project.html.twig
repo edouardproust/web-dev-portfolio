@@ -12,7 +12,7 @@
 
 	<div class="card_data">
 		<span>{{ project.createdAt|date('m/d/Y') }}</span>
-		{% if project.author is not null %}
+		{% if project|hasApprovedAuthor %}
 			<span>
 				| By
 			</span>

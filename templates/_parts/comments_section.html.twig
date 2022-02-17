@@ -1,7 +1,7 @@
 {% if config('SHOW_COMMENTS_ON_POST') %}
 	<div class="comments_section">
     
-		{% if hasCommentsVisible(postType) %}
+		{% if postType|hasVisibleComments %}
             <h2>Comments</h2>
             <div class="list">
                 {% for comment in postType.comments %}
@@ -12,7 +12,7 @@
             </div>
         {% endif %}
 
-        {% if hasCommentsVisible(postType) %}
+        {% if postType|hasVisibleComments %}
             <h3>Leave a comment</h3>
         {% else %}
             <h2>Leave a comment</h2>

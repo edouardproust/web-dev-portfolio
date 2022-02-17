@@ -42,7 +42,7 @@ class PostCrudController extends AbstractPosttypeCrudController
         //     ->setLabel('Featured image')
         //     ->setSortable(false);
         yield AssociationField::new('categories')->hideOnIndex();
-        yield AssociationField::new('author')->hideWhenCreating();
+        yield $this->associationFieldAuthor();
         yield DateTimeField::new('createdAt')
             ->hideWhenCreating()
             ->setFormat('medium')

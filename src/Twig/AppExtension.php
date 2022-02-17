@@ -4,9 +4,9 @@ namespace App\Twig;
 
 use App\Entity\User;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 use App\Entity\Author;
 use App\Helper\StringHelper;
-use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,8 +17,7 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('config', [$this, 'getConfigConstant']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
-            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
-            new TwigFunction('hasCommentsVisible', [$this, 'hasPosttypeCommentsVisible'])
+            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
         ];
     }
 
@@ -28,7 +27,9 @@ class AppExtension extends AbstractExtension
             new TwigFilter('extract', [$this, 'getExtract']),
             new TwigFilter('safeEmail', [$this, 'getAntiScrappingEmailString']),
             new TwigFilter('int', [$this, 'convertToInteger']),
-            new TwigFilter('higherRole', [$this, 'getHigherRoleOfUser'])
+            new TwigFilter('higherRole', [$this, 'getHigherRoleOfUser']),
+            new TwigFilter('hasVisibleComments', [$this, 'hasVisibleComments']),
+            new TwigFilter('hasApprovedAuthor', [$this, 'hasApprovedAuthor'])
         ];
     }
 
@@ -52,17 +53,6 @@ class AppExtension extends AbstractExtension
             return $request->query->get($constant);
         }
         return constant('\EasyCorp\Bundle\EasyAdminBundle\Config\\' . $constantBag . '::' . $option);
-    }
-
-    public function hasPosttypeCommentsVisible(object $postType)
-    {
-        $hasCommentsVisible = false;
-        foreach ($postType->getComments() as $comment) {
-            if ($comment->getIsVisible()) {
-                $hasCommentsVisible = true;
-            }
-        }
-        return $hasCommentsVisible;
     }
 
     public function getExtract(
@@ -112,5 +102,25 @@ class AppExtension extends AbstractExtension
         } else {
             return $defaultName;
         }
+    }
+
+    public function hasVisibleComments(object $postType)
+    {
+        $hasVisibleComments = false;
+        foreach ($postType->getComments() as $comment) {
+            if ($comment->getIsVisible()) {
+                $hasVisibleComments = true;
+            }
+        }
+        return $hasVisibleComments;
+    }
+
+    public function hasApprovedAuthor(object $postType)
+    {
+        $author = $postType->getAuthor();
+        if ($author && $author->getIsApproved()) {
+            return true;
+        }
+        return false;
     }
 }

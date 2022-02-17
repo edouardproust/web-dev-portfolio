@@ -14,7 +14,7 @@
 
 	<div class="card_data">
 		<span>{{ post.createdAt|date('m/d/Y') }}</span>
-		{% if post.author is not null %}
+		{% if post|hasApprovedAuthor %}
 			<span> | By </span>
 			<a href="{{ path('author_posts', {'id': post.author.id}) }}">
 				{{ post.author.fullName }}

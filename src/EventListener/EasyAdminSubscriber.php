@@ -39,8 +39,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             BeforeEntityPersistedEvent::class => [
                 ['setCreatedAtOnEntityNew'],
                 ['setAuthorOnPosttypeNew'],
-                ['setUserOnAuthorNew'],
-                ['setVisibleOnCommentNew']
+                ['onAuthorNew'],
+                ['setVisibleOnCommentNew'],
             ],
             BeforeEntityUpdatedEvent::class => [
                 ['setUserOnAuthorEdit'],
@@ -83,17 +83,20 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Set User when creating a new Author ($user->role, $user->isAuthor)
+     * Misc actions to process when creating a new Author
      * @param BeforeEntityPersistedEvent $event Fired on Action::NEW
      * @return void
      */
-    public function setUserOnAuthorNew(BeforeEntityPersistedEvent $event)
+    public function onAuthorNew(BeforeEntityPersistedEvent $event)
     {
         $author = $event->getEntityInstance();
         if ($author instanceof Author) {
+            // user
             $user = $this->userRepository->find($author->getUser());
             $user->addRole('ROLE_AUTHOR');
             $user->setIsAuthor(true);
+            // approve
+            $author->setIsApproved(true);
         }
     }
 

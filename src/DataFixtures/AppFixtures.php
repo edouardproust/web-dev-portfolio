@@ -103,6 +103,7 @@ class AppFixtures extends AbstractFixtures
             ->setAvatar($this->faker->imageUrl(60, 60, true))
             ->setBio($this->faker->paragraph(5, true))
             ->setFullName(Config::CONTACT_NAME)
+            ->setIsApproved(true)
             ->setGithub(Config::SOCIAL_GITHUB)
             ->setLinkedin(Config::SOCIAL_LINKEDIN)
             ->setStackoverflow(Config::SOCIAL_STACKOVERFLOW)
@@ -116,7 +117,8 @@ class AppFixtures extends AbstractFixtures
             $author = (new Author)
                 ->setAvatar($this->faker->imageUrl(60, 60, true))
                 ->setBio($this->faker->paragraph(5, true))
-                ->setFullName($firstname . ' ' . $this->faker->lastName());
+                ->setFullName($firstname . ' ' . $this->faker->lastName())
+                ->setIsApproved(true);
             // user
             $users = $this->users;
             unset($users[0]); // remove admin as it is already used as an author
@@ -128,15 +130,17 @@ class AppFixtures extends AbstractFixtures
                 ->setRoles(['ROLE_AUTHOR'])
                 ->setIsAuthor(true);
             // optional fields
-            foreach ([
-                [$author, 'contactEmail', strtolower($firstname) . '@' . Config::SITE_DOMAIN, 70],
-                [$author, 'github', self::AUTHOR_DEFAUT['github'], 90],
-                [$author, 'linkedin', self::AUTHOR_DEFAUT['linkedin'], 50],
-                [$author, 'stackoverflow', self::AUTHOR_DEFAUT['stackoverflow'], 70],
-                [$author, 'website', self::AUTHOR_DEFAUT['website'], 30]
-            ] as $data) {
-                $this->setOptional($data[0], $data[1], $data[2], $data[3]);
-            }
+            $this->setOptional(
+                $author,
+                'contactEmail',
+                strtolower($firstname) . '@' . Config::SITE_DOMAIN,
+                70
+            );
+            $this->setOptional($author, 'github', self::AUTHOR_DEFAUT['github'], 90);
+            $this->setOptional($author, 'linkedin', self::AUTHOR_DEFAUT['linkedin'], 50);
+            $this->setOptional($author, 'stackoverflow', self::AUTHOR_DEFAUT['stackoverflow'], 70);
+            $this->setOptional($author, 'website', self::AUTHOR_DEFAUT['website'], 30);
+
             $this->authors[] = $author;
         }
     }
@@ -311,7 +315,8 @@ class AppFixtures extends AbstractFixtures
                 ->$setterFn($entity)
                 ->setCreatedAt($this->faker->dateTimeBetween($entity->getCreatedAt(), '-1 hour'))
                 ->setContent($this->faker->paragraph(5, true))
-                ->setFullName($this->faker->firstName());
+                ->setFullName($this->faker->firstName())
+                ->setIsVisible(true);
             $this->entityManager->persist($comment);
             $entity->addComment($comment);
         }

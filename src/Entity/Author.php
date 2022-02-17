@@ -80,6 +80,11 @@ class Author
      */
     private $posts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isApproved;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -291,6 +296,18 @@ class Author
                 $post->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
+
+    public function setIsApproved(?bool $isApproved): self
+    {
+        $this->isApproved = $isApproved;
 
         return $this;
     }

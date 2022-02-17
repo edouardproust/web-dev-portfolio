@@ -53,7 +53,9 @@ class CommentCrudController extends AbstractEntityCrudController
         yield TextareaField::new('content')->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
-        yield BooleanField::new('isVisible')->hideWhenCreating();
+        yield BooleanField::new('isVisible')
+            ->hideWhenCreating()
+            ->setLabel('Visible');
         yield AssociationField::new('project')
             ->hideOnIndex()
             ->setLabel('On project');
@@ -73,6 +75,7 @@ class CommentCrudController extends AbstractEntityCrudController
     {
         return $actions
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
+            ->add(Crud::PAGE_EDIT, Action::DELETE)
             ->addBatchAction(
                 Action::new('bulkHide', 'Hide')
                     ->linkToCrudAction('hideComments')
@@ -84,7 +87,8 @@ class CommentCrudController extends AbstractEntityCrudController
                     ->linkToCrudAction('makeCommentsVisible')
                     ->addCssClass('btn btn-primary')
                     ->setIcon('fas fa-eye')
-            );
+            )
+            ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::DELETE]);
     }
 
     public function makeCommentsVisible(BatchActionDto $batchActionDto)

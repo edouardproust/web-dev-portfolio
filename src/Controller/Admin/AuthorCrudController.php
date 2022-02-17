@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use App\Controller\Admin\AbstractEntityCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
 class AuthorCrudController extends AbstractEntityCrudController
 {
@@ -67,6 +68,9 @@ class AuthorCrudController extends AbstractEntityCrudController
         // yield ImageField::new('avatar')->setSortable(false);
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield BooleanField::new('isApproved')
+            ->hideWhenCreating()
+            ->setLabel('Approved');
         yield EmailField::new('contactEmail')->hideOnIndex();
         yield UrlField::new('website')->hideOnIndex();
         yield Urlfield::new('github')

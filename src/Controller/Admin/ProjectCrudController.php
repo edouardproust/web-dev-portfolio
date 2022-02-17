@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Config;
+use App\Entity\Author;
 use App\Entity\Project;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -51,7 +53,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield AssociationField::new('codingLanguages')
             ->hideOnIndex()
             ->setLabel('Languages');
-        yield AssociationField::new('author')->hideWhenCreating();
+        yield $this->associationFieldAuthor();
         yield DateTimeField::new('createdAt')
             ->hideWhenCreating()
             ->setFormat('medium')

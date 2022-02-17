@@ -8,7 +8,7 @@
 
 	<div class="card_data">
 		<span>{{ lesson.createdAt|date('m/d/Y') }}</span>
-		{% if lesson.author is not null %}
+		{% if lesson|hasApprovedAuthor %}
 			<span> | By </span>
 			<a href="{{ path('author_lessons', {'id': lesson.author.id}) }}">
 				{{ lesson.author.fullName }}

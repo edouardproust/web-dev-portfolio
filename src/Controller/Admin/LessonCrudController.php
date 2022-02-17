@@ -49,7 +49,7 @@ class LessonCrudController extends AbstractPosttypeCrudController
         yield UrlField::new('repository')->hideOnIndex();
         yield AssociationField::new('codingLanguage')->hideOnIndex();
         yield AssociationField::new('categories')->hideOnIndex();
-        yield AssociationField::new('author')->hideWhenCreating();
+        yield $this->associationFieldAuthor();
         yield DateTimeField::new('createdAt')
             ->hideWhenCreating()
             ->setFormat('medium')

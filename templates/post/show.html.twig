@@ -14,7 +14,7 @@
 
 	<div class="show_data">
 		<span>{{ post.createdAt|date('m/d/Y') }}</span>
-		{% if  post.author is not null %}
+		{% if post|hasApprovedAuthor %}
 			<span> | By </span>
 			<a href="{{ path('author_posts', {'id': post.author.id}) }}">{{ post.author.fullName }}</a>
 		{% endif %}
@@ -42,10 +42,10 @@
 	<hr>
 
 	<div class="show_content">
-		{{ post.content }}
+		{{ post.content|raw }}
 	</div>
 
-	{% if  post.author is not null %}
+	{% if  post|hasApprovedAuthor %}
 		<div class="show_author">
 			{% include "_parts/card/author.html.twig" with {
 			'author': post.author
