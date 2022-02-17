@@ -2,14 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use App\Entity\AdminOption;
+use App\Repository\AdminOptionRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractEntityCrudController;
-use App\Repository\AdminOptionRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 
@@ -44,17 +46,14 @@ class AdminOptionCrudController extends AbstractEntityCrudController
             ->setEntityPermission('ROLE_ADMIN');
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
-            TextField::new('label')
-                ->hideOnForm()
-                ->setLabel('Option'),
-            TextareaField::new('value')
-                ->setSortable(false),
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield IdField::new('id')->onlyOnDetail();
+        yield TextField::new('label')
+            ->hideOnForm()
+            ->setLabel('Option');
+        yield TextareaField::new('value')->setSortable(false);
     }
 
     public function configureActions(Actions $actions): Actions

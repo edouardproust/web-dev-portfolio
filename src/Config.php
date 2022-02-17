@@ -39,7 +39,12 @@ class Config
     const HOME_LESSONS = 3;
     const HOME_POSTS = 3;
 
+    const NOTIFICATION_NEW_COMMENT = true;
+    const NOTIFICATION_NEW_AUTHOR = true;
+
     const HEADLINE_MAX_LENGTH = 255;
+    const ADMIN_FORM_MAIN_CSS_CLASS = 'col-md-8';
+    const ADMIN_FORM_SIDE_CSS_CLASS = Config::ADMIN_FORM_SIDE_CSS_CLASS;
 
     public static function getConstants()
     {

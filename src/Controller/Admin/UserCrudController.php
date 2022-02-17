@@ -55,7 +55,7 @@ class UserCrudController extends AbstractEntityCrudController
             ->hideOnForm();
 
         // row 1
-        yield FormField::addPanel()->setCssClass('col-md-8');
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield TextField::new('email');
         // password (only for current user)
         $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
@@ -68,7 +68,7 @@ class UserCrudController extends AbstractEntityCrudController
         }
 
         // row 2
-        yield FormField::addPanel()->setCssClass('col-md-4');
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         $rolesField = ChoiceField::new('roles')
             ->setChoices(Config::ROLES)
             ->allowMultipleChoices();

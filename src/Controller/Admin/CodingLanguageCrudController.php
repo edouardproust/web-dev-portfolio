@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use App\Entity\CodingLanguage;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -31,9 +32,9 @@ class CodingLanguageCrudController extends AbstractCategoryCrudController
             IdField::new('id')
                 ->onlyOnDetail(),
 
-            FormField::addPanel()->setCssClass('col-md-8'),
+            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS),
             TextField::new('label'),
-            FormField::addPanel()->setCssClass('col-md-4'),
+            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS),
             SlugField::new('slug')
                 ->setTargetFieldName('label')
                 ->hideOnIndex(),

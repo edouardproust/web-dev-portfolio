@@ -7,6 +7,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Author;
 use App\Entity\Lesson;
+use App\Entity\Comment;
 use App\Entity\Project;
 use App\Entity\AdminOption;
 use App\Entity\PostCategory;
@@ -108,6 +109,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Categories', 'fas fa-tags', PostCategory::class)
                 ->setPermission('ROLE_ADMIN')
         ]);
+        yield MenuItem::linkToCrud('Comments', 'fas fa-comment', Comment::class)
+            ->setPermission('ROLE_ADMIN');
 
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::section('Settings');

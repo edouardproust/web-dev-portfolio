@@ -47,6 +47,11 @@ class Comment
      */
     private $lesson;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isVisible;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class Comment
     public function setLesson(?Lesson $lesson): self
     {
         $this->lesson = $lesson;
+
+        return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(?bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }

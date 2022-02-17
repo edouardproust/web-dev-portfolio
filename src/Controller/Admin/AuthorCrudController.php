@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use App\Entity\User;
 use App\Entity\Author;
 use Doctrine\ORM\QueryBuilder;
-use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -48,47 +48,38 @@ class AuthorCrudController extends AbstractEntityCrudController
         return $crud;
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        $fields = [
-            IdField::new('id')->onlyOnDetail(),
+        yield IdField::new('id')->onlyOnDetail();
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('fullName');
+        yield AssociationField::new('user')
+            ->hideWhenUpdating()
+            ->setQueryBuilder(function (QueryBuilder $builder) {
+                return $builder
+                    ->select('u')
+                    ->from(User::class, 'u')
+                    ->where('u.isAuthor IS NULL');
+            });
+        yield TextareaField::new('bio')
+            ->hideOnIndex();
+        // yield ImageField::new('avatar')->setSortable(false);
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield EmailField::new('contactEmail')->hideOnIndex();
+        yield UrlField::new('website')->hideOnIndex();
+        yield Urlfield::new('github')
+            ->hideOnIndex()
+            ->setLabel('GitHub profile Url');
+        yield Urlfield::new('stackoverflow')
+            ->hideOnIndex()
+            ->setLabel('StackOverflow profile Url');
+        yield Urlfield::new('LinkedIn')
+            ->hideOnIndex()
+            ->setLabel('LinkedIn profile Url');
 
-            FormField::addPanel()->setCssClass('col-md-8'),
-            TextField::new('fullName'),
-            AssociationField::new('user')
-                ->hideWhenUpdating()
-                ->setQueryBuilder(
-                    function (QueryBuilder $builder) {
-                        return $builder
-                            ->select('u')
-                            ->from(User::class, 'u')
-                            ->where('u.isAuthor IS NULL');
-                    }
-                ),
-            TextareaField::new('bio')
-                ->hideOnIndex(),
-            // ImageField::new('avatar')
-            //     ->setSortable(false),
-
-            FormField::addPanel()->setCssClass('col-md-4'),
-            EmailField::new('contactEmail')->hideOnIndex(),
-            UrlField::new('website')->hideOnIndex(),
-            Urlfield::new('github')
-                ->hideOnIndex()
-                ->setLabel('GitHub profile Url'),
-            Urlfield::new('stackoverflow')
-                ->hideOnIndex()
-                ->setLabel('StackOverflow profile Url'),
-            Urlfield::new('LinkedIn')
-                ->hideOnIndex()
-                ->setLabel('LinkedIn profile Url'),
-
-            AssociationField::new('projects')->hideOnForm(),
-            AssociationField::new('lessons')->hideOnForm(),
-            AssociationField::new('posts')->hideOnForm()
-        ];
-
-        return $fields;
+        yield AssociationField::new('projects')->hideOnForm();
+        yield AssociationField::new('lessons')->hideOnForm();
+        yield AssociationField::new('posts')->hideOnForm();
     }
 
     public function configureActions(Actions $actions): Actions

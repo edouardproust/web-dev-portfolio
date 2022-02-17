@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use App\Entity\ProjectCategory;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -21,13 +22,13 @@ class ProjectCategoryCrudController extends AbstractCategoryCrudController
         return [
             IdField::new('id')
                 ->onlyOnDetail(),
-            FormField::addPanel()->setCssClass('col-md-8'),
+            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS),
             TextField::new('label'),
             TextareaField::new('description')
                 ->hideOnIndex()
                 ->setMaxLength(255),
 
-            FormField::addPanel()->setCssClass('col-md-4'),
+            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS),
             SlugField::new('slug')
                 ->setTargetFieldName('label')
                 ->hideOnIndex(),
