@@ -25,35 +25,27 @@ class PostCrudController extends AbstractPosttypeCrudController
         return Post::class;
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
+        yield IdField::new('id')->onlyOnDetail();
 
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS),
-            TextField::new('title'),
-            TextareaField::new('headline')
-                ->hideOnIndex(),
-            TextEditorField::new('content')
-                ->hideOnIndex(),
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('title');
+        yield TextareaField::new('headline')->hideOnIndex();
+        yield TextEditorField::new('content')->hideOnIndex();
 
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS),
-            SlugField::new('slug')
-                ->setTargetFieldName('title')
-                ->hideOnIndex(),
-            DateTimeField::new('createdAt')
-                ->hideOnForm()
-                ->setFormat('medium')
-                ->setLabel('Creation date'),
-            // ImageField::new('mainImage')
-            //     ->setLabel('Featured image')
-            //     ->setSortable(false),
-            AssociationField::new('categories')
-                ->hideOnIndex(),
-            AssociationField::new('author')
-                ->hideWhenCreating()
-
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield SlugField::new('slug')
+            ->setTargetFieldName('title')
+            ->hideOnIndex();
+        // yield ImageField::new('mainImage')
+        //     ->setLabel('Featured image')
+        //     ->setSortable(false);
+        yield AssociationField::new('categories')->hideOnIndex();
+        yield AssociationField::new('author')->hideWhenCreating();
+        yield DateTimeField::new('createdAt')
+            ->hideWhenCreating()
+            ->setFormat('medium')
+            ->setLabel('Creation date');
     }
 }

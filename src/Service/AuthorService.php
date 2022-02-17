@@ -110,14 +110,16 @@ class AuthorService
      */
     public function sendEmailNotif(Author $authorRequest)
     {
-        $email = (new TemplatedEmail)
-            ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
-            ->from(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
-            ->subject('New Author registration on ' . Config::SITE_NAME)
-            ->htmlTemplate('email/author_registration.html.twig')
-            ->context([
-                'authorRequest' => $authorRequest
-            ]);
-        $this->mailer->send($email);
+        if (Config::NOTIFICATION_NEW_AUTHOR) {
+            $email = (new TemplatedEmail)
+                ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
+                ->from(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
+                ->subject('New Author registration on ' . Config::SITE_NAME)
+                ->htmlTemplate('email/author_registration.html.twig')
+                ->context([
+                    'authorRequest' => $authorRequest
+                ]);
+            $this->mailer->send($email);
+        }
     }
 }

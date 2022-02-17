@@ -5,6 +5,7 @@ namespace App\Twig;
 use App\Entity\User;
 use Twig\TwigFilter;
 use App\Entity\Author;
+use App\Helper\StringHelper;
 use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,8 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('config', [$this, 'getConfigConstant']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
-            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
+            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
+            new TwigFunction('hasCommentsVisible', [$this, 'hasPosttypeCommentsVisible'])
         ];
     }
 
@@ -52,17 +54,23 @@ class AppExtension extends AbstractExtension
         return constant('\EasyCorp\Bundle\EasyAdminBundle\Config\\' . $constantBag . '::' . $option);
     }
 
+    public function hasPosttypeCommentsVisible(object $postType)
+    {
+        $hasCommentsVisible = false;
+        foreach ($postType->getComments() as $comment) {
+            if ($comment->getIsVisible()) {
+                $hasCommentsVisible = true;
+            }
+        }
+        return $hasCommentsVisible;
+    }
+
     public function getExtract(
         string $content,
         int $maxCharacters = 100,
         $replacer = '...'
     ): string {
-        if (strlen($content) > $maxCharacters) {
-            return (preg_match('/^(.*)\W.*$/', substr($content, 0, $maxCharacters + 1), $matches)
-                ? $matches[1]
-                : substr($content, 0, $maxCharacters)) . $replacer;
-        }
-        return $content;
+        return StringHelper::extract($content, $maxCharacters, $replacer);
     }
 
     public function getAntiScrappingEmailString(string $email, bool $enabled = true): string

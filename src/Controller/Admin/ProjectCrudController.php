@@ -26,42 +26,35 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         return Project::class;
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
+        yield IdField::new('id')->onlyOnDetail();
 
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS),
-            TextField::new('title'),
-            TextareaField::new('headline')
-                ->hideOnIndex(),
-            TextEditorField::new('content')
-                ->hideOnIndex(),
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS),
-            SlugField::new('slug')
-                ->setTargetFieldName('title')
-                ->hideOnIndex(),
-            DateTimeField::new('createdAt')
-                ->hideOnForm()
-                ->setFormat('medium')
-                ->setLabel('Creation date'),
-            // ImageField::new('mainImage')
-            //     ->setLabel('Featured image')
-            //     ->setSortable(false),
-            UrlField::new('url')
-                ->setLabel('Project link')
-                ->hideOnIndex(),
-            UrlField::new('repository')
-                ->hideOnIndex(),
-            BooleanField::new('featured'),
-            AssociationField::new('categories')
-                ->hideOnIndex(),
-            AssociationField::new('codingLanguages')
-                ->hideOnIndex()
-                ->setLabel('Languages'),
-            AssociationField::new('author')
-                ->hideWhenCreating()
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('title');
+        yield TextareaField::new('headline')->hideOnIndex();
+        yield TextEditorField::new('content')->hideOnIndex();
+
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield SlugField::new('slug')
+            ->setTargetFieldName('title')
+            ->hideOnIndex();
+        yield TextField::new('mainImage')
+            ->setLabel('Featured image')
+            ->setSortable(false);
+        yield UrlField::new('url')
+            ->setLabel('Project link')
+            ->hideOnIndex();
+        yield UrlField::new('repository')->hideOnIndex();
+        yield BooleanField::new('featured');
+        yield AssociationField::new('categories')->hideOnIndex();
+        yield AssociationField::new('codingLanguages')
+            ->hideOnIndex()
+            ->setLabel('Languages');
+        yield AssociationField::new('author')->hideWhenCreating();
+        yield DateTimeField::new('createdAt')
+            ->hideWhenCreating()
+            ->setFormat('medium')
+            ->setLabel('Creation date');
     }
 }

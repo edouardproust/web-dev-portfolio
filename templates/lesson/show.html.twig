@@ -41,7 +41,7 @@
 
 	{% if lesson.headline is not null %}
 		<div class="show_headline">
-			{{ project.headline }}
+			{{ lesson.headline }}
 		</div>
 	{% endif %}
 
@@ -59,14 +59,6 @@
 		</div>
 	{% endif %}
 
-
-	{% if lesson.comments|length > 0 %}
-		<div class="show_comments">
-			<h3>Comments</h3>
-			{% for comment in lesson.comments %}
-			{% include "_parts/card/comment.html.twig" %}
-			{% endfor %}
-		</div>
-	{% endif %}
+	{% include "_parts/comments_section.html.twig" with {postType: lesson} %}
 
 {% endblock %}

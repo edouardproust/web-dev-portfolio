@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helper\StringHelper;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -139,5 +140,10 @@ class Comment
         $this->isVisible = $isVisible;
 
         return $this;
+    }
+
+    public function getExtract(): string
+    {
+        return StringHelper::extract($this->getContent());
     }
 }

@@ -51,6 +51,7 @@ class AuthorCrudController extends AbstractEntityCrudController
     public function setFields(): iterable
     {
         yield IdField::new('id')->onlyOnDetail();
+
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield TextField::new('fullName');
         yield AssociationField::new('user')
@@ -64,6 +65,7 @@ class AuthorCrudController extends AbstractEntityCrudController
         yield TextareaField::new('bio')
             ->hideOnIndex();
         // yield ImageField::new('avatar')->setSortable(false);
+
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield EmailField::new('contactEmail')->hideOnIndex();
         yield UrlField::new('website')->hideOnIndex();

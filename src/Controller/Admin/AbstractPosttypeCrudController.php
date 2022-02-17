@@ -14,7 +14,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
 
     abstract public static function getEntityFqcn(): string;
 
-    abstract public function setFields(): array;
+    abstract public function setFields(): iterable;
 
     public function __construct()
     {

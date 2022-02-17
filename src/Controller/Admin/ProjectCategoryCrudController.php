@@ -17,21 +17,19 @@ class ProjectCategoryCrudController extends AbstractCategoryCrudController
         return ProjectCategory::class;
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS),
-            TextField::new('label'),
-            TextareaField::new('description')
-                ->hideOnIndex()
-                ->setMaxLength(255),
+        yield IdField::new('id')
+            ->onlyOnDetail();
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('label');
+        yield TextareaField::new('description')
+            ->hideOnIndex()
+            ->setMaxLength(255);
 
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS),
-            SlugField::new('slug')
-                ->setTargetFieldName('label')
-                ->hideOnIndex(),
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield SlugField::new('slug')
+            ->setTargetFieldName('label')
+            ->hideOnIndex();
     }
 }

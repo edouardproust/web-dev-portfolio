@@ -26,18 +26,16 @@ class CodingLanguageCrudController extends AbstractCategoryCrudController
             ->setEntityPermission('ROLE_ADMIN');
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
+        yield IdField::new('id')->onlyOnDetail();
 
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS),
-            TextField::new('label'),
-            FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS),
-            SlugField::new('slug')
-                ->setTargetFieldName('label')
-                ->hideOnIndex(),
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('label');
+
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield SlugField::new('slug')
+            ->setTargetFieldName('label')
+            ->hideOnIndex();
     }
 }

@@ -54,7 +54,6 @@ class UserCrudController extends AbstractEntityCrudController
             ->setLabel('Registered on')
             ->hideOnForm();
 
-        // row 1
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield TextField::new('email');
         // password (only for current user)
@@ -67,7 +66,6 @@ class UserCrudController extends AbstractEntityCrudController
                 ->onlyWhenUpdating();
         }
 
-        // row 2
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         $rolesField = ChoiceField::new('roles')
             ->setChoices(Config::ROLES)

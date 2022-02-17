@@ -39,7 +39,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             BeforeEntityPersistedEvent::class => [
                 ['setCreatedAtOnEntityNew'],
                 ['setAuthorOnPosttypeNew'],
-                ['setUserOnAuthorNew']
+                ['setUserOnAuthorNew'],
+                ['setVisibleOnCommentNew']
             ],
             BeforeEntityUpdatedEvent::class => [
                 ['setUserOnAuthorEdit'],
@@ -93,6 +94,19 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $user = $this->userRepository->find($author->getUser());
             $user->addRole('ROLE_AUTHOR');
             $user->setIsAuthor(true);
+        }
+    }
+
+    /**
+     * Set visible on TRUE when creating a new comment ($entity->isVisible)
+     * @param BeforeEntityPersistedEvent $event EasyAmdin Action::NEW
+     * @return void
+     */
+    public function setVisibleOnCommentNew(BeforeEntityPersistedEvent $event)
+    {
+        $entity = $event->getEntityInstance();
+        if (property_exists($entity, 'isVisible')) {
+            $entity->setIsVisible(true);
         }
     }
 
