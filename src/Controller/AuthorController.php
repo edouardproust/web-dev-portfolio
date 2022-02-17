@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Config;
-use App\Repository\AuthorRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\AuthorService;
+use App\Form\AuthorRegisterType;
+use App\Service\UserService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,18 +14,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AuthorController extends AbstractController
 {
-    /** @var AuthorRepository */
-    private $authorRepository;
-
-    /** @var PaginatorInterface */
-    private $paginator;
+    private $authorService;
+    private $userService;
+    private $entityManager;
 
     public function __construct(
-        AuthorRepository $authorRepository,
-        PaginatorInterface $paginator
+        AuthorService $authorService,
+        UserService $userService,
+        EntityManagerInterface $entityManager
     ) {
-        $this->authorRepository = $authorRepository;
-        $this->paginator = $paginator;
+        $this->authorService = $authorService;
+        $this->userService = $userService;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -31,11 +33,11 @@ class AuthorController extends AbstractController
      */
     public function projects($id, Request $request): Response
     {
-        [$author, $projects] = $this->getCollection(
+        [$author, $projects] = $this->authorService->getCollection(
             $id,
             $request,
             'getProjects',
-            COnfig::PROJECTS_PER_PAGE
+            Config::PROJECTS_PER_PAGE
         );
         return $this->render('author/projects.html.twig', [
             'author' => $author,
@@ -48,7 +50,7 @@ class AuthorController extends AbstractController
      */
     public function lessons($id, Request $request): Response
     {
-        [$author, $lessons] = $this->getCollection(
+        [$author, $lessons] = $this->authorService->getCollection(
             $id,
             $request,
             'getLessons',
@@ -65,7 +67,7 @@ class AuthorController extends AbstractController
      */
     public function posts($id, Request $request): Response
     {
-        [$author, $posts] = $this->getCollection(
+        [$author, $posts] = $this->authorService->getCollection(
             $id,
             $request,
             'getPosts',
@@ -77,20 +79,24 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    private function getCollection(
-        int $id,
-        Request $request,
-        string $getterFn,
-        int $limit
-    ): array {
-        $author = $this->authorRepository->findOneBy([
-            'id' => $id
+    /**
+     * @Route("/register/author", name="author_register")
+     */
+    public function register(Request $request): Response
+    {
+        $form = $this->createForm(AuthorRegisterType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $isPersisted = $this->authorService->persistAuthor($form->getData());
+            if ($isPersisted) {
+                $this->entityManager->flush();
+                $this->addFlash('success', 'Your registration has been sent to the admin. 
+                You will receive a confirmation email once your request is reviewed.');
+                return $this->redirectToRoute('home');
+            }
+        }
+        return $this->render('author/register.html.twig', [
+            'registerForm' => $form->createView()
         ]);
-        $entities = $this->paginator->paginate(
-            $author->$getterFn(),
-            $request->query->getInt('page', 1),
-            $limit
-        );
-        return [$author, $entities];
     }
 }
