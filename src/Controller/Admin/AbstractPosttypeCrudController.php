@@ -43,7 +43,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
         return $this->setActionsOnIndex($actions, $view);
     }
 
-    protected function  associationFieldAuthor(): AssociationField
+    protected function associationFieldAuthor(): AssociationField
     {
         return AssociationField::new('author')
             ->hideWhenCreating()
@@ -76,6 +76,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
             ->reorder(Crud::PAGE_INDEX, $reorder);
         return $actions;
     }
+
 
     private function checkProperties()
     {

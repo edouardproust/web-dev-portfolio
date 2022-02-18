@@ -25,7 +25,7 @@ class EmailService
     /**
      * Send a notification email to Admin on Author registration
      * @var Author $authorRequest Data from the Author Registration form, reformated into a Author object
-     * @return void  
+     * @return void
      */
     public function sendEmailOnAuthorRegistration(Author $authorRequest)
     {
@@ -45,7 +45,7 @@ class EmailService
     /**
      * Send an notification email to Admin on contact form submission
      * @param array $data FromTo informations
-     * @return void 
+     * @return void
      */
     public function sendEmailOnContactSubmit(array $data)
     {
@@ -79,9 +79,15 @@ class EmailService
                     'author' => $author
                 ]);
             $this->mailer->send($email);
-            $this->flash->add('success', 'The author request has been approved. A confirmation email has been sent to him/her.');
+            $this->flash->add(
+                'success',
+                'The author request has been approved. A confirmation email has been sent to him/her.'
+            );
         } catch (\Exception $e) {
-            $this->flash->add('danger', 'Failed to send confirmation email to the author. Error: ' . $e->getMessage());
+            $this->flash->add(
+                'danger',
+                'Failed to send confirmation email to the author. Error: ' . $e->getMessage()
+            );
         }
     }
 }

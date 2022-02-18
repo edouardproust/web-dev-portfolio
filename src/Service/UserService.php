@@ -10,7 +10,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserService
 {
-
     private $hasher;
     private $userRepository;
     private $entityManager;
@@ -38,7 +37,7 @@ class UserService
     }
 
     /**
-     * @param User $user 
+     * @param User $user
      * @return bool TRUE on success / FALSE on failure
      */
     public function persistUser(User $user): bool

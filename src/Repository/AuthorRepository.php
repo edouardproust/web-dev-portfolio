@@ -33,9 +33,9 @@ class AuthorRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    /** 
+    /**
      * Get list of Authors registrations waiting for approval
-     * @return Author[]  
+     * @return Author[]
      */
     public function findIsNotApproved()
     {

@@ -112,7 +112,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         // Author entity
         if ($entity instanceof Author) {
-
             $entity->setUser($entity->getUser()); // hidden 'user' field on Crud::EDIT
             $user = $this->userRepository->find($entity->getUser());
             $user->addRole('ROLE_AUTHOR');

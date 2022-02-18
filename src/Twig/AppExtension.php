@@ -86,7 +86,7 @@ class AppExtension extends AbstractExtension
         $role = null;
         if (in_array('ROLE_ADMIN', $roles)) {
             $role = 'admin';
-        } else if (in_array('ROLE_AUTHOR', $roles)) {
+        } elseif (in_array('ROLE_AUTHOR', $roles)) {
             $role = 'author';
         }
         if ($role && $capitalizeOutput) {

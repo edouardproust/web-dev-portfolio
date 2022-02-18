@@ -13,12 +13,12 @@ use Symfony\Component\Security\Core\Security;
 
 class AuthorService
 {
-
     private $authorRepository;
     private $paginator;
     private $userService;
     private $entityManager;
     private $security;
+    private $emailService;
 
     public function __construct(
         AuthorRepository $authorRepository,
@@ -78,8 +78,8 @@ class AuthorService
     /**
      * Process all actions in order to persist an Author.
      * Note that this action does not flush it.
-     * @param array $data 
-     * @return bool 
+     * @param array $data
+     * @return bool
      */
     public function persistAuthor(array $data): bool
     {

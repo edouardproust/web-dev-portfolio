@@ -22,17 +22,18 @@
     {{ author.bio|nl2br }}
 </p><p>
 	<b>Contact email:</b>
-	{{ author.contactEmail ?? '/' }}
+	{% if author.contactEmail %}{% endif %}
+	{{ author.contactEmail ?: '/' }}
 </p><p>
 	<b>Website:</b>
-	{{ author.contactEmail ?? '/' }}
+	{{ author.contactEmail ?: '/' }}
 </p><p>
 	<b>GitHub:</b>
-	{{ author.github ?? '/' }}
+	{{ author.github ?: '/' }}
 </p><p>
 	<b>StackOverflow:</b>
-	{{ author.stackoverflow ?? '/' }}
+	{{ author.stackoverflow ?: '/' }}
 </p><p>
 	<b>LinkedIn:</b>
-	{{ author.linkedIn ?? '/' }}
+	{{ author.linkedIn ?: '/' }}
 </p>
