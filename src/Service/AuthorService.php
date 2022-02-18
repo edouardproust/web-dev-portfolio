@@ -2,18 +2,14 @@
 
 namespace App\Service;
 
-use App\Config;
 use App\Entity\User;
 use App\Entity\Author;
-use Symfony\Component\Mime\Address;
+use App\Service\EmailService;
 use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class AuthorService
 {
@@ -29,17 +25,15 @@ class AuthorService
         PaginatorInterface $paginator,
         UserService $userService,
         EntityManagerInterface $entityManager,
-        MailerInterface $mailer,
-        FlashBagInterface $flash,
-        Security $security
+        Security $security,
+        EmailService $emailService
     ) {
         $this->authorRepository = $authorRepository;
         $this->paginator = $paginator;
         $this->userService = $userService;
         $this->entityManager = $entityManager;
-        $this->mailer = $mailer;
-        $this->flash = $flash;
         $this->security = $security;
+        $this->emailService = $emailService;
     }
 
     public function getCollection(
@@ -99,27 +93,7 @@ class AuthorService
         // author
         $author = $this->buildAuthor($data, $user);
         $this->entityManager->persist($author);
-        $this->sendEmailNotif($author);
+        $this->emailService->sendEmailOnAuthorRegistration($author);
         return $success;
-    }
-
-    /**
-     * Send a notification email to Admin on Author registration
-     * @var Author $authorRequest Data from the Author Registration form, reformated into a Author object
-     * @return void  
-     */
-    public function sendEmailNotif(Author $authorRequest)
-    {
-        if (Config::NOTIFICATION_NEW_AUTHOR) {
-            $email = (new TemplatedEmail)
-                ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
-                ->from(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
-                ->subject('New Author registration on ' . Config::SITE_NAME)
-                ->htmlTemplate('email/author_registration.html.twig')
-                ->context([
-                    'authorRequest' => $authorRequest
-                ]);
-            $this->mailer->send($email);
-        }
     }
 }

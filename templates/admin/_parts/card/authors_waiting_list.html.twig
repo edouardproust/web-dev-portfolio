@@ -1,0 +1,17 @@
+{% extends "admin/_parts/card.html.twig" %}
+
+{% block card_title %}Author Registrations waiting for approval{% endblock %}
+
+{% block card_text %}
+    {% for author in data.authors %}
+        <div>
+            {{ author.fullName }}
+            <span class="text-muted"> | Registered on </span>
+            <span class="text-muted">{{ author.user.createdAt|date('m/d/Y') }}</span>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block card_btn %}
+    <a href="{{ data.link }}" class="btn btn-primary">Manage authors</a>
+{% endblock %}

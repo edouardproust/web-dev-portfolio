@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
-use App\Service\ContactService;
+use App\Service\EmailService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,12 +12,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ContactController extends AbstractController
 {
 
-    /** @var ContactService */
-    private $contactService;
+    /** @var EmailService */
+    private $emailService;
 
-    public function __construct(ContactService $contactService)
+    public function __construct(EmailService $emailService)
     {
-        $this->contactService = $contactService;
+        $this->emailService = $emailService;
     }
 
     /**
@@ -28,7 +28,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->contactService->sendEmailNotif($form->getData());
+            $this->emailService->sendEmailOnContactSubmit($form->getData());
         }
 
         return $this->render('contact/index.html.twig', [

@@ -12,10 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CodingLanguageController extends AbstractController
 {
-    /** @var CodingLanguageRepository */
     private $codingLanguageRepository;
-
-    /** @var PaginatorInterface */
     private $paginator;
 
     public function __construct(

@@ -16,6 +16,7 @@ use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
 use App\Repository\AuthorRepository;
 use App\Controller\Admin\AuthorCrudController;
+use App\Service\EasyAdminDashboardService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -47,13 +48,13 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        // return parent::index();
-        // return $this->redirect(
-        //     $this->adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl()
-        // );
         return $this->render('admin/dashboard.html.twig', [
             'user' => $this->getUser(),
-            'author' => $this->authorRepository->findOneByUser($this->getUser())
+            'author' => $this->authorRepository->findOneByUser($this->getUser()),
+            'cardApproveAuthors' => [
+                'authors' => $this->authorRepository->findIsNotApproved(),
+                'link' => $this->adminUrlGenerator->setController(AuthorCrudController::class)->generateUrl()
+            ]
         ]);
     }
 
