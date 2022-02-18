@@ -61,14 +61,14 @@ class Author
 
     /**
      * @ORM\OneToOne(targetEntity=User::class, cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", onDelete="SET NULL")
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="author")
      */
-    private $posts;
+    private $projects;
 
     /**
      * @ORM\OneToMany(targetEntity=Lesson::class, mappedBy="author")
@@ -76,15 +76,20 @@ class Author
     private $lessons;
 
     /**
-     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="author")
      */
-    private $projects;
+    private $posts;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isApproved;
 
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
-        $this->lessons = new ArrayCollection();
         $this->projects = new ArrayCollection();
+        $this->lessons = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -198,7 +203,7 @@ class Author
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
@@ -206,29 +211,29 @@ class Author
     }
 
     /**
-     * @return Collection|Post[]
+     * @return Collection|Project[]
      */
-    public function getPosts(): Collection
+    public function getProjects(): Collection
     {
-        return $this->posts;
+        return $this->projects;
     }
 
-    public function addPost(Post $post): self
+    public function addProject(Project $project): self
     {
-        if (!$this->posts->contains($post)) {
-            $this->posts[] = $post;
-            $post->setAuthor($this);
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removePost(Post $post): self
+    public function removeProject(Project $project): self
     {
-        if ($this->posts->removeElement($post)) {
+        if ($this->projects->removeElement($project)) {
             // set the owning side to null (unless already changed)
-            if ($post->getAuthor() === $this) {
-                $post->setAuthor(null);
+            if ($project->getAuthor() === $this) {
+                $project->setAuthor(null);
             }
         }
 
@@ -266,31 +271,43 @@ class Author
     }
 
     /**
-     * @return Collection|Project[]
+     * @return Collection|Post[]
      */
-    public function getProjects(): Collection
+    public function getPosts(): Collection
     {
-        return $this->projects;
+        return $this->posts;
     }
 
-    public function addProject(Project $project): self
+    public function addPost(Post $post): self
     {
-        if (!$this->projects->contains($project)) {
-            $this->projects[] = $project;
-            $project->setAuthor($this);
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeProject(Project $project): self
+    public function removePost(Post $post): self
     {
-        if ($this->projects->removeElement($project)) {
+        if ($this->posts->removeElement($post)) {
             // set the owning side to null (unless already changed)
-            if ($project->getAuthor() === $this) {
-                $project->setAuthor(null);
+            if ($post->getAuthor() === $this) {
+                $post->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
+
+    public function setIsApproved(?bool $isApproved): self
+    {
+        $this->isApproved = $isApproved;
 
         return $this;
     }

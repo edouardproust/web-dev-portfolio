@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helper\StringHelper;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,6 +47,11 @@ class Comment
      * @ORM\ManyToOne(targetEntity=Lesson::class, inversedBy="comments")
      */
     private $lesson;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isVisible;
 
     public function getId(): ?int
     {
@@ -122,5 +128,22 @@ class Comment
         $this->lesson = $lesson;
 
         return $this;
+    }
+
+    public function getIsVisible(): ?bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(?bool $isVisible): self
+    {
+        $this->isVisible = $isVisible;
+
+        return $this;
+    }
+
+    public function getExtract(): string
+    {
+        return StringHelper::extract($this->getContent());
     }
 }

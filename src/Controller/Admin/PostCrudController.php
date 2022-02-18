@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use App\Entity\Post;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
@@ -10,10 +11,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use App\Controller\Admin\AbstractPosttypeCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class PostCrudController extends AbstractPosttypeCrudController
 {
@@ -24,35 +25,27 @@ class PostCrudController extends AbstractPosttypeCrudController
         return Post::class;
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
+        yield IdField::new('id')->onlyOnDetail();
 
-            FormField::addPanel()->setCssClass('col-md-8'),
-            TextField::new('title'),
-            TextareaField::new('headline')
-                ->hideOnIndex(),
-            TextEditorField::new('content')
-                ->hideOnIndex(),
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('title');
+        yield TextareaField::new('headline')->hideOnIndex();
+        yield TextEditorField::new('content')->hideOnIndex();
 
-            FormField::addPanel()->setCssClass('col-md-4'),
-            SlugField::new('slug')
-                ->setTargetFieldName('title')
-                ->hideOnIndex(),
-            DateTimeField::new('createdAt')
-                ->hideOnForm()
-                ->setFormat('medium')
-                ->setLabel('Creation date'),
-            // ImageField::new('mainImage')
-            //     ->setLabel('Featured image')
-            //     ->setSortable(false),
-            AssociationField::new('categories')
-                ->hideOnIndex(),
-            AssociationField::new('author')
-                ->hideWhenCreating()
-
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield SlugField::new('slug')
+            ->setTargetFieldName('title')
+            ->hideOnIndex();
+        // yield ImageField::new('mainImage')
+        //     ->setLabel('Featured image')
+        //     ->setSortable(false);
+        yield AssociationField::new('categories')->hideOnIndex();
+        yield $this->associationFieldAuthor();
+        yield DateTimeField::new('createdAt')
+            ->hideWhenCreating()
+            ->setFormat('medium')
+            ->setLabel('Creation date');
     }
 }

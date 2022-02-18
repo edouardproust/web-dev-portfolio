@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Become an author{% endblock %}
+
+{% block body %}
+
+    <h1>Become an author</h1>
+
+    <div class="page_headline">
+        <span>Complete this form to submit you request to become an author on this website. </span>
+        <span>Authors can write blog posts and lessons.</span>
+    </div>
+
+    <div>After submitted, your request will be reviewed by the administrator.</div>
+    <div>Mandatory fields are mrked with a *.</div>
+
+	{{ form_start(registerForm) }}
+    {{ form_widget(registerForm) }}
+    <button type="submit" class="primary">Submit registration</button>
+    {{ form_end(registerForm) }}
+
+
+{% endblock %}

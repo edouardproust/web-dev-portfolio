@@ -14,7 +14,7 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
 
     abstract public static function getEntityFqcn(): string;
 
-    abstract public function setFields(): array;
+    abstract public function setFields(): iterable;
 
     public function configureCrud(Crud $crud): Crud
     {

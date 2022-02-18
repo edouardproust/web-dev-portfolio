@@ -14,40 +14,44 @@
 
 	<div class="show_data">
 		<span>{{ project.createdAt|date('m/d/Y') }}</span>
-		<span>
-			| By
-		</span>
-		<a href="{{ path('author_projects', {'id': project.author.id}) }}">{{ project.author.fullName }}</a>
+		{% if project|hasApprovedAuthor %}
+			<span> | By </span>
+			<a href="{{ path('author_projects', {'id': project.author.id}) }}">{{ project.author.fullName }}</a>
+		{% endif %}
 	</div>
 
-	<div class="show_pills">
-		<div class="pills-list">
-			<span>In:
-			</span>
-			{% for category in project.categories %}
-				<a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
-			{% endfor %}
+	{% if project.categories|length > 0 %}
+		<div class="show_pills">
+			<div class="pills-list">
+				<span>In:
+				</span>
+				{% for category in project.categories %}
+					<a class="pill" href="{{ path('project_category', {slug:category.slug}) }}">
+						{{ category.label }}
+					</a>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 
-	<div class="card_pills">
-		<div class="pills-list">
-			<span>
-				{% if project.codingLanguages|length > 1 %}
-					Languages:
-				{% else %}
-					Language:
-				{% endif %}
-			</span>
-			{% for codingLanguage in project.codingLanguages %}
-				<a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}">
-					{{ codingLanguage.label }}
-				</a>
-			{% endfor %}
+	{% if project.codingLanguages|length > 0 %}
+		<div class="card_pills">
+			<div class="pills-list">
+				<span>
+					{% if project.codingLanguages|length > 1 %}
+						Languages:
+					{% else %}
+						Language:
+					{% endif %}
+				</span>
+				{% for codingLanguage in project.codingLanguages %}
+					<a class="pill" href="{{ path('coding_language_projects', {'slug': codingLanguage.slug}) }}">
+						{{ codingLanguage.label }}
+					</a>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 	
 	{% if project.headline is not null %}
 		<div class="show_headline">
@@ -58,22 +62,17 @@
 	<hr>
 
 	<div class="show_content">
-		{{ project.content }}
+		{{ project.content|raw }}
 	</div>
 
-	<div class="show_author">
-		{% include "_parts/card/author.html.twig" with {
-        'author': project.author
-    } %}
-	</div>
-
-	{% if project.comments|length > 0 %}
-		<div class="show_comments">
-			<h3>Comments</h3>
-			{% for comment in project.comments %}
-				{% include "_parts/card/comment.html.twig" %}
-			{% endfor %}
+	{% if project|hasApprovedAuthor %}
+		<div class="show_author">
+			{% include "_parts/card/author.html.twig" with {
+			'author': project.author
+		} %}
 		</div>
 	{% endif %}
+
+	{% include "_parts/comments_section.html.twig" with {postType: project} %}
 
 {% endblock %}

@@ -6,14 +6,22 @@
 
     <section class="content-header">
         <div class="title">
-            <h1>Welcome
-                {% if user.firstname is defined and not null %} {{ user.firstname}}{% endif %}
+            <h1>Welcome {{ eaAuthorName(author) }}
             </h1>
         </div>
     </section>
 
     <section class="content-body">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quis quisquam ipsum reiciendis pariatur ea saepe, accusantium adipisci exercitationem blanditiis molestias commodi error consectetur. Et voluptates eveniet veniam at illum nulla!
+        This is your {{ user|higherRole }} dashboard.
+
+        <div class="row mt-4">
+            {% if cardApproveAuthors.authors|length > 0 %}
+                {% include "admin/_parts/card/authors_waiting_list.html.twig" with {
+                    data: cardApproveAuthors
+                } %}
+            {% endif %}
+        </div>
+
     </section>
     
 </article>

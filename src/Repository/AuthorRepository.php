@@ -30,6 +30,19 @@ class AuthorRepository extends ServiceEntityRepository
             ->andWhere('a.user = :val')
             ->setParameter('val', $user)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * Get list of Authors registrations waiting for approval
+     * @return Author[]
+     */
+    public function findIsNotApproved()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.isApproved = 0')
+            ->orWhere('a.isApproved IS NULL')
+            ->getQuery()
+            ->getResult();
     }
 }

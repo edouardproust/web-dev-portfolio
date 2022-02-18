@@ -8,6 +8,10 @@
 
 	<h1>"{{ category.label }}" Projects</h1>
 
+	{% if category.description is not null %}
+		<div class="page_headline"> {{ category.description }}
+		</div>
+	{% endif %}
 
 	<div class="collection">
 

@@ -50,11 +50,6 @@ class Post
     private $categories;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="posts")
-     */
-    private $author;
-
-    /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post")
      */
     private $comments;
@@ -64,10 +59,21 @@ class Post
      */
     private $headline;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="posts")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $author;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 
     public function getId(): ?int
@@ -159,18 +165,6 @@ class Post
         return $this;
     }
 
-    public function getAuthor(): ?Author
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?Author $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Comment[]
      */
@@ -209,6 +203,18 @@ class Post
     public function setHeadline(?string $headline): self
     {
         $this->headline = $headline;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

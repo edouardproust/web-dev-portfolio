@@ -2,9 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Author;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 abstract class AbstractPosttypeCrudController extends AbstractEntityCrudController
 {
@@ -14,7 +17,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
 
     abstract public static function getEntityFqcn(): string;
 
-    abstract public function setFields(): array;
+    abstract public function setFields(): iterable;
 
     public function __construct()
     {
@@ -40,6 +43,18 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
         return $this->setActionsOnIndex($actions, $view);
     }
 
+    protected function associationFieldAuthor(): AssociationField
+    {
+        return AssociationField::new('author')
+            ->hideWhenCreating()
+            ->setQueryBuilder(function (QueryBuilder $builder) {
+                return $builder
+                    ->select('a')
+                    ->from(Author::class, 'a')
+                    ->where('a.isApproved = 1');
+            });
+    }
+
     private function setActionsOnIndex(Actions $actions, Action ...$newActions): Actions
     {
         $reorder = [Action::EDIT, Action::DELETE];
@@ -61,6 +76,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
             ->reorder(Crud::PAGE_INDEX, $reorder);
         return $actions;
     }
+
 
     private function checkProperties()
     {

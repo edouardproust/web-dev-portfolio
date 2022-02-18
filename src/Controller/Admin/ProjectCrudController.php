@@ -2,19 +2,21 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
+use App\Entity\Author;
 use App\Entity\Project;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ProjectCrudController extends AbstractPosttypeCrudController
 {
@@ -26,42 +28,35 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         return Project::class;
     }
 
-    public function setFields(): array
+    public function setFields(): iterable
     {
-        return [
-            IdField::new('id')
-                ->onlyOnDetail(),
+        yield IdField::new('id')->onlyOnDetail();
 
-            FormField::addPanel()->setCssClass('col-md-8'),
-            TextField::new('title'),
-            TextareaField::new('headline')
-                ->hideOnIndex(),
-            TextEditorField::new('content')
-                ->hideOnIndex(),
-            FormField::addPanel()->setCssClass('col-md-4'),
-            SlugField::new('slug')
-                ->setTargetFieldName('title')
-                ->hideOnIndex(),
-            DateTimeField::new('createdAt')
-                ->hideOnForm()
-                ->setFormat('medium')
-                ->setLabel('Creation date'),
-            // ImageField::new('mainImage')
-            //     ->setLabel('Featured image')
-            //     ->setSortable(false),
-            UrlField::new('url')
-                ->setLabel('Project link')
-                ->hideOnIndex(),
-            UrlField::new('repository')
-                ->hideOnIndex(),
-            BooleanField::new('featured'),
-            AssociationField::new('categories')
-                ->hideOnIndex(),
-            AssociationField::new('codingLanguages')
-                ->hideOnIndex()
-                ->setLabel('Languages'),
-            AssociationField::new('author')
-                ->hideWhenCreating()
-        ];
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield TextField::new('title');
+        yield TextareaField::new('headline')->hideOnIndex();
+        yield TextEditorField::new('content')->hideOnIndex();
+
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
+        yield SlugField::new('slug')
+            ->setTargetFieldName('title')
+            ->hideOnIndex();
+        yield TextField::new('mainImage')
+            ->setLabel('Featured image')
+            ->setSortable(false);
+        yield UrlField::new('url')
+            ->setLabel('Project link')
+            ->hideOnIndex();
+        yield UrlField::new('repository')->hideOnIndex();
+        yield BooleanField::new('featured');
+        yield AssociationField::new('categories')->hideOnIndex();
+        yield AssociationField::new('codingLanguages')
+            ->hideOnIndex()
+            ->setLabel('Languages');
+        yield $this->associationFieldAuthor();
+        yield DateTimeField::new('createdAt')
+            ->hideWhenCreating()
+            ->setFormat('medium')
+            ->setLabel('Creation date');
     }
 }

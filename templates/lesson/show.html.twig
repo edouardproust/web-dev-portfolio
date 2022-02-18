@@ -4,62 +4,61 @@
 
 {% block body %}
 
-<h1>{{ lesson.title }}</h1>
+	<h1>{{ lesson.title }}</h1>
 
-<div class="show_data">
-	<span>{{ lesson.createdAt|date('m/d/Y') }}</span>
-	<span>
-			| By
-		</span>
-	<a href="{{ path('author_lessons', {'id': lesson.author.id}) }}">{{ lesson.author.fullName }}</a>
-</div>
-
-<div class="show_pills">
-	<div class="pills-list">
-		<span>In:
-			</span>
-		{% for category in lesson.categories %}
-		<a class="pill" href="{{ path('lesson_category', {slug:category.slug}) }}">
-			{{ category.label }}
-		</a>
-		{% endfor %}
+	<div class="show_data">
+		<span>{{ lesson.createdAt|date('m/d/Y') }}</span>
+		{% if lesson|hasApprovedAuthor %}
+			<span> | By </span>
+			<a href="{{ path('author_lessons', {'id': lesson.author.id}) }}">{{ lesson.author.fullName }}</a>
+		{% endif %}
 	</div>
-</div>
 
-<div class="card_pills">
-	<div class="pills-list">
-		Language:
-		<a class="pill" href="{{ path('coding_language_lessons', {'slug': lesson.codingLanguage.slug}) }}">
-			{{ lesson.codingLanguage.label }}
-		</a>
+	{% if lesson.categories|length > 0 %}
+		<div class="show_pills">
+			<div class="pills-list">
+				<span>In:
+					</span>
+				{% for category in lesson.categories %}
+				<a class="pill" href="{{ path('lesson_category', {slug:category.slug}) }}">
+					{{ category.label }}
+				</a>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+	{% if lesson.codingLanguage is not null %}
+		<div class="card_pills">
+			<div class="pills-list">
+				Language:
+				<a class="pill" href="{{ path('coding_language_lessons', {'slug': lesson.codingLanguage.slug}) }}">
+					{{ lesson.codingLanguage.label }}
+				</a>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if lesson.headline is not null %}
+		<div class="show_headline">
+			{{ lesson.headline }}
+		</div>
+	{% endif %}
+
+	<hr>
+
+	<div class="show_content">
+		{{ lesson.content|raw }}
 	</div>
-</div>
 
-{% if post.headline is not null %}
-<div class="show_headline">
-	{{ project.headline }}
-</div>
-{% endif %}
+	{% if lesson|hasApprovedAuthor %}
+		<div class="show_author">
+			{% include "_parts/card/author.html.twig" with {
+			'author': lesson.author
+			} %}
+		</div>
+	{% endif %}
 
-<hr>
-
-<div class="show_content">
-	{{ lesson.content }}
-</div>
-
-<div class="show_author">
-	{% include "_parts/card/author.html.twig" with {
-	'author': lesson.author
-	} %}
-</div>
-
-{% if lesson.comments|length > 0 %}
-<div class="show_comments">
-	<h3>Comments</h3>
-	{% for comment in lesson.comments %}
-	{% include "_parts/card/comment.html.twig" %}
-	{% endfor %}
-</div>
-{% endif %}
+	{% include "_parts/comments_section.html.twig" with {postType: lesson} %}
 
 {% endblock %}
