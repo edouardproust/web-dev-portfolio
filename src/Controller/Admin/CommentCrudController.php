@@ -19,7 +19,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class CommentCrudController extends AbstractEntityCrudController
 {
-
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
@@ -47,27 +46,16 @@ class CommentCrudController extends AbstractEntityCrudController
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield TextField::new('fullName')->setLabel('Author name');
-        yield TextField::new('extract')
-            ->onlyOnIndex()
-            ->setLabel('Comment');
+        yield TextField::new('extract', 'Comment')->onlyOnIndex();
         yield TextareaField::new('content')->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
-        yield BooleanField::new('isVisible')
+        yield BooleanField::new('isVisible', 'Visible')->hideWhenCreating();
+        yield AssociationField::new('project', 'On project')->hideOnIndex();
+        yield AssociationField::new('lesson', 'On lesson')->hideOnIndex();
+        yield AssociationField::new('post', 'On post')->hideOnIndex();
+        yield DateTimeField::new('createdAt', 'Posted on')
             ->hideWhenCreating()
-            ->setLabel('Visible');
-        yield AssociationField::new('project')
-            ->hideOnIndex()
-            ->setLabel('On project');
-        yield AssociationField::new('lesson')
-            ->hideOnIndex()
-            ->setLabel('On lesson');
-        yield AssociationField::new('post')
-            ->hideOnIndex()
-            ->setLabel('On post');
-        yield DateTimeField::new('createdAt')
-            ->hideWhenCreating()
-            ->setLabel('Posted on')
             ->setFormat('medium');
     }
 

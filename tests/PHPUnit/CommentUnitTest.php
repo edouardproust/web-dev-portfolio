@@ -7,7 +7,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class CommentUnitTest extends PHPUnitEntityAbstract
 {
-    
     private $entityClass = Comment::class;
 
     public function testBasic(): void
@@ -26,5 +25,4 @@ class CommentUnitTest extends PHPUnitEntityAbstract
     //     ];
     //     $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     // }
-
 }

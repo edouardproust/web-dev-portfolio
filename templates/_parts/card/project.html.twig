@@ -1,7 +1,7 @@
 <div class="card project">
 
 	<div class="show_img">
-		<img src="{{ project.mainImage }}" alt="Image for project: {{ project.title }}">
+		<img src="{{ vich_uploader_asset(project, 'mainImageFile') | imagine_filter('thumbnail') }}" alt="Image for project: {{ project.title }}">
 	</div>
 
 	<div class="card_title">

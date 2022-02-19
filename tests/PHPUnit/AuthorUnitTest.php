@@ -8,7 +8,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class AuthorUnitTest extends PHPUnitEntityAbstract
 {
-
     private $entityClass = Author::class;
 
     public function testBasic(): void
@@ -32,5 +31,4 @@ class AuthorUnitTest extends PHPUnitEntityAbstract
         ];
         $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     }
-
 }

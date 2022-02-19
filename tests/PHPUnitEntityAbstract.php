@@ -13,16 +13,20 @@ abstract class PHPUnitEntityAbstract extends TestCase
 
     private function setNow(): void
     {
-        if(!$this->now) $this->now = new DateTime();
+        if (!$this->now) {
+            $this->now = new DateTime();
+        }
     }
 
     protected function getNow(): DateTime
     {
-        if(!$this->now) $this->setNow();
+        if (!$this->now) {
+            $this->setNow();
+        }
         return $this->now;
     }
 
-    protected function processTrueFalseAndEmptyTests(string $entityClass, array $properties)     
+    protected function processTrueFalseAndEmptyTests(string $entityClass, array $properties)
     {
         $this->processIsTrue(new $entityClass, $properties);
         $this->processIsFalse(new $entityClass, $properties);
@@ -35,7 +39,7 @@ abstract class PHPUnitEntityAbstract extends TestCase
             [$setterFn, $getterFn] = $this->getGetterAndSetter($key);
             $entity->$setterFn($value);
             $this->assertTrue($entity->$getterFn() === $value);
-        } 
+        }
     }
 
     public function processIsFalse(object $entity, array $properties)
@@ -44,7 +48,7 @@ abstract class PHPUnitEntityAbstract extends TestCase
             [$setterFn, $getterFn] = $this->getGetterAndSetter($key);
             $entity->$setterFn($value);
             $this->assertFalse($entity->$getterFn() === 'false');
-        } 
+        }
     }
 
     public function processIsEmpty(object $entity, array $properties)
@@ -63,5 +67,4 @@ abstract class PHPUnitEntityAbstract extends TestCase
             $getterFn = 'get' . $formatedProperty,
         ];
     }
-
 }

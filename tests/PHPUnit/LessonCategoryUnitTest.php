@@ -7,7 +7,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class LessonCategoryUnitTest extends PHPUnitEntityAbstract
 {
-    
     private $entityClass = LessonCategory::class;
 
     public function testBasic(): void
@@ -27,5 +26,4 @@ class LessonCategoryUnitTest extends PHPUnitEntityAbstract
     //     ];
     //     $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     // }
-
 }

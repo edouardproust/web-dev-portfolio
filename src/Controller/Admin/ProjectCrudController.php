@@ -2,10 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Path;
 use App\Config;
 use App\Entity\Author;
 use App\Entity\Project;
 use Doctrine\ORM\QueryBuilder;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -20,7 +22,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ProjectCrudController extends AbstractPosttypeCrudController
 {
-
     protected $route = 'project';
 
     public static function getEntityFqcn(): string
@@ -33,7 +34,8 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield IdField::new('id')->onlyOnDetail();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
-        yield TextField::new('title');
+        yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
+        yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
         yield TextEditorField::new('content')->hideOnIndex();
 
@@ -41,22 +43,21 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
-        yield TextField::new('mainImage')
-            ->setLabel('Featured image')
+        yield ImageField::new('mainImage', 'Featured image')
+            ->setBasePath(Path::UPLOADS_PROJECTS)
+            ->onlyOnIndex()
             ->setSortable(false);
-        yield UrlField::new('url')
-            ->setLabel('Project link')
-            ->hideOnIndex();
+        yield TextField::new('mainImageFile')
+            ->setFormType(VichImageType::class)
+            ->onlyOnForms();
+        yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();
         yield BooleanField::new('featured');
         yield AssociationField::new('categories')->hideOnIndex();
-        yield AssociationField::new('codingLanguages')
-            ->hideOnIndex()
-            ->setLabel('Languages');
+        yield AssociationField::new('codingLanguages', 'Languages')->hideOnIndex();
         yield $this->associationFieldAuthor();
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', 'Creation date')
             ->hideWhenCreating()
-            ->setFormat('medium')
-            ->setLabel('Creation date');
+            ->setFormat('medium');
     }
 }

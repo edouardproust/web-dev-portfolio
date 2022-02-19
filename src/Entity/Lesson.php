@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\LessonRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Config;
+use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LessonRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=LessonRepository::class)
@@ -23,6 +25,11 @@ class Lesson
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -104,6 +111,18 @@ class Lesson
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUdpatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -268,5 +287,13 @@ class Lesson
         $this->author = $author;
 
         return $this;
+    }
+
+    public function getTitleExtract()
+    {
+        return StringHelper::extract(
+            $this->getTitle(),
+            Config::ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH
+        );
     }
 }

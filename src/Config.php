@@ -5,21 +5,18 @@ namespace App;
 use ReflectionClass;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 
-/** @package App
+/**
  * Constants are defined in order to set them in the database if needed.
  * You must set them using this pattern:
  * const MY_CONSTANT = ['slug' => value]
  */
 class Config
 {
+
+    // AdminOptions (Fixtures)
+
     const SITE_NAME = 'Edouard Proust Portfolio';
     const SITE_DOMAIN = 'edouardproust.dev';
-
-    const ROLES = [
-        'User' => 'ROLE_USER',
-        'Author' => 'ROLE_AUTHOR',
-        'Admin' => 'ROLE_ADMIN'
-    ];
 
     const CONTACT_NAME = 'Edouard Proust';
     const CONTACT_EMAIL = 'contact@edouardproust.dev';
@@ -39,14 +36,24 @@ class Config
     const HOME_LESSONS = 3;
     const HOME_POSTS = 3;
 
-    const NOTIFICATION_NEW_CONTACT_MESSAGE = true;
     const NOTIFICATION_NEW_COMMENT = true;
     const NOTIFICATION_NEW_AUTHOR = true;
     const SHOW_COMMENTS_ON_POST = true;
 
+    // Config
+
+    const ROLES = [
+        'User' => 'ROLE_USER',
+        'Author' => 'ROLE_AUTHOR',
+        'Admin' => 'ROLE_ADMIN'
+    ];
+
     const HEADLINE_MAX_LENGTH = 255;
     const ADMIN_FORM_MAIN_CSS_CLASS = 'col-md-8';
     const ADMIN_FORM_SIDE_CSS_CLASS = 'col-md-4';
+
+    const ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH = 40;
+
 
     public static function getConstants()
     {

@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Config;
+use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
+ * @Vich\Uploadable
  */
 class Project
 {
@@ -23,6 +28,11 @@ class Project
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -48,6 +58,11 @@ class Project
      * @ORM\Column(type="string", length=255)
      */
     private $mainImage;
+
+    /**
+     * @Vich\UploadableField(mapping="projects", fileNameProperty="mainImage")
+     */
+    private $mainImageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -114,6 +129,17 @@ class Project
         return $this;
     }
 
+    public function getUdpatedAt(): ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -172,6 +198,24 @@ class Project
         $this->mainImage = $mainImage;
 
         return $this;
+    }
+
+    public function setMainImageFile(File $mainImageFile = null)
+    {
+        $this->mainImageFile = $mainImageFile;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($mainImageFile) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getMainImageFile()
+    {
+        return $this->mainImageFile;
     }
 
     public function getUrl(): ?string
@@ -298,5 +342,13 @@ class Project
         $this->author = $author;
 
         return $this;
+    }
+
+    public function getTitleExtract()
+    {
+        return StringHelper::extract(
+            $this->getTitle(),
+            Config::ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH
+        );
     }
 }

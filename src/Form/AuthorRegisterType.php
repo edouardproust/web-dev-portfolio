@@ -6,11 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Url;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AuthorRegisterType extends AbstractType
 {
-
     private $security;
 
     public function __construct(Security $security)
@@ -55,8 +54,9 @@ class AuthorRegisterType extends AbstractType
                     'max' => 500
                 ])],
             ])
-            ->add('avatar', FileType::class, [
+            ->add('avatar', VichImageType::class, [
                 'required' => false,
+                'label' => 'Avatar',
                 'help' => 'Your favorite photo of yourself! (jpeg or png, 500Ko max)',
                 'constraints' => [new File([
                     'maxSize' => '500k',

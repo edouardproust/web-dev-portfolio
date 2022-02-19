@@ -4,6 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    uploads_authors_path: !php/const App\Path::UPLOADS_AUTHORS
+    uploads_projects_path: !php/const App\Path::UPLOADS_PROJECTS
+    uploads_posts_path: !php/const App\Path::UPLOADS_POSTS
+    uploads_lessons_path: !php/const App\Path::UPLOADS_LESSONS
 
 services:
     # default configuration for services in *this* file
@@ -22,24 +26,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-easy_admin:
-    entities:
-        User:
-            edit:
-                - { property: 'password', type: 'text', type_options: { required: false, empty_data: '' } }    
-
-knp_paginator:
-    page_range: 5                      # number of links shown in the pagination menu (e.g: you have 10 pages, a page_range of 3, on the 5th page you'll see links to page 4, 5, 6)
-    default_options:
-        page_name: page                 # page query parameter name
-        sort_field_name: sort           # sort field query parameter name
-        sort_direction_name: direction  # sort direction query parameter name
-        distinct: true                  # ensure distinct results, useful when ORM queries are using GROUP BY statements
-        filter_field_name: filterField  # filter field query parameter name
-        filter_value_name: filterValue  # filter value query parameter name
-    template:
-        # @KnpPaginator: vendor/knplabs/knp-paginator-bundle/templates
-        pagination: '@KnpPaginator/Pagination/sliding.html.twig'     # sliding pagination controls template
-        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
-        filtration: '@KnpPaginator/Pagination/filtration.html.twig'  # filters template

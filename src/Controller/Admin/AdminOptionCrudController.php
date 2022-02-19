@@ -17,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 
 class AdminOptionCrudController extends AbstractEntityCrudController
 {
-
     private $adminOptionRepository;
 
     public function __construct(AdminOptionRepository $adminOptionRepository)
@@ -50,9 +49,7 @@ class AdminOptionCrudController extends AbstractEntityCrudController
     {
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield IdField::new('id')->onlyOnDetail();
-        yield TextField::new('label')
-            ->hideOnForm()
-            ->setLabel('Option');
+        yield TextField::new('label', 'Option')->hideOnForm();
         yield TextareaField::new('value')->setSortable(false);
     }
 

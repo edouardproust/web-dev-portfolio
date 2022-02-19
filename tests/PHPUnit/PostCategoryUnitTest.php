@@ -7,7 +7,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class PostCategoryUnitTest extends PHPUnitEntityAbstract
 {
-    
     private $entityClass = PostCategory::class;
 
     public function testBasic(): void
@@ -27,5 +26,4 @@ class PostCategoryUnitTest extends PHPUnitEntityAbstract
     //     ];
     //     $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     // }
-
 }

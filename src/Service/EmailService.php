@@ -49,21 +49,19 @@ class EmailService
      */
     public function sendEmailOnContactSubmit(array $data)
     {
-        if (Config::NOTIFICATION_NEW_CONTACT_MESSAGE) {
-            try {
-                $email = (new TemplatedEmail)
-                    ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
-                    ->from(new Address($data['email'], $data['fullName']))
-                    ->subject('New contact message from ' . Config::SITE_NAME)
-                    ->htmlTemplate('email/contact.html.twig')
-                    ->context([
-                        'contactMessage' => $data
-                    ]);
-                $this->mailer->send($email);
-                $this->flash->add('success', 'Your message has been sent. I will answer you as soon as possible.');
-            } catch (\Exception $e) {
-                $this->flash->add('danger', 'Failed to send your message. Error: ' . $e->getMessage());
-            }
+        try {
+            $email = (new TemplatedEmail)
+                ->to(new Address(Config::CONTACT_EMAIL, Config::CONTACT_NAME))
+                ->from(new Address($data['email'], $data['fullName']))
+                ->subject('New contact message from ' . Config::SITE_NAME)
+                ->htmlTemplate('email/contact.html.twig')
+                ->context([
+                    'contactMessage' => $data
+                ]);
+            $this->mailer->send($email);
+            $this->flash->add('success', 'Your message has been sent. I will answer you as soon as possible.');
+        } catch (\Exception $e) {
+            $this->flash->add('danger', 'Failed to send your message. Error: ' . $e->getMessage());
         }
     }
 

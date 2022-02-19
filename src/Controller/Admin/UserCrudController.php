@@ -48,34 +48,15 @@ class UserCrudController extends AbstractEntityCrudController
 
     public function setFields(): iterable
     {
-        $isCurrentUser = $this->easyAdminService->isCurrentUser($this->getUser());
         yield IdField::new('id')->onlyOnDetail();
-        yield DateField::new('createdAt')
-            ->setLabel('Registered on')
-            ->hideOnForm();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield TextField::new('email');
-        // password (only for current user)
-        $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-        if ($entityId == $currentUser->getId()) {
-            yield TextField::new('password')
-                ->setFormType(PasswordType::class)
-                ->onlyWhenUpdating();
-        }
+        yield $this->easyAdminService->userPasswordField();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
-        $rolesField = ChoiceField::new('roles')
-            ->setChoices(Config::ROLES)
-            ->allowMultipleChoices();
-        if ($isCurrentUser) {
-            $rolesField
-                ->setDisabled(true)
-                ->setHelp('This field is disabled: connected user can\'t update their own roles.');
-        }
-        yield $rolesField;
+        yield $this->easyAdminService->userRolesField();
+        yield DateField::new('createdAt', 'Registered on')->hideOnForm();
     }
 
     public function configureActions(Actions $actions): Actions
