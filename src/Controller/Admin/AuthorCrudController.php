@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Path;
 use App\Config;
 use App\Entity\Author;
 use App\Service\EasyAdminService;
@@ -15,10 +16,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use App\Controller\Admin\AbstractEntityCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class AuthorCrudController extends AbstractEntityCrudController
 {
@@ -72,11 +73,13 @@ class AuthorCrudController extends AbstractEntityCrudController
         yield TextField::new('fullName');
         yield $this->easyAdminService->authorUserField();
         yield TextareaField::new('bio')->hideOnIndex();
-        yield ImageField::new('avatar', 'Photo')->setBasePath('/uploads/authors/')->onlyOnIndex();
-        yield TextField::new('avatarFile', 'Photo')
-            ->setFormType(VichImageType::class)
+        yield ImageField::new('avatar', 'Photo')
+            ->setBasePath(Path::UPLOADS_AUTHORS)
+            ->onlyOnIndex()
             ->setSortable(false);
-
+        yield TextField::new('avatarFile')
+            ->setFormType(VichImageType::class)
+            ->onlyOnForms();
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield EmailField::new('contactEmail')->hideOnIndex();
         yield UrlField::new('website')->hideOnIndex();

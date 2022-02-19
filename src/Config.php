@@ -52,6 +52,8 @@ class Config
     const ADMIN_FORM_MAIN_CSS_CLASS = 'col-md-8';
     const ADMIN_FORM_SIDE_CSS_CLASS = 'col-md-4';
 
+    const ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH = 40;
+
 
     public static function getConstants()
     {

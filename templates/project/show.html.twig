@@ -7,7 +7,7 @@
 {% block body %}
 
 	<div class="show_img">
-		<img src="{{ project.mainImage }}" alt="Image for project: {{ project.title }}">
+		<img src="{{ vich_uploader_asset(project, 'mainImageFile') }}" alt="Image for project: {{ project.title }}">
 	</div>
 
 	<h1>{{ project.title }}</h1>

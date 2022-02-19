@@ -30,7 +30,8 @@ class LessonCrudController extends AbstractPosttypeCrudController
         yield IdField::new('id')->onlyOnDetail();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
-        yield TextField::new('title');
+        yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
+        yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
         yield TextEditorField::new('content')->hideOnIndex();
 

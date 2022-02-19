@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Config;
+use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
@@ -340,5 +342,13 @@ class Project
         $this->author = $author;
 
         return $this;
+    }
+
+    public function getTitleExtract()
+    {
+        return StringHelper::extract(
+            $this->getTitle(),
+            Config::ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH
+        );
     }
 }

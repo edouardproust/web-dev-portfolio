@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Path;
 use App\Config;
 use App\Entity\Author;
 use App\Entity\Project;
@@ -34,7 +35,8 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield IdField::new('id')->onlyOnDetail();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
-        yield TextField::new('title');
+        yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
+        yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
         yield TextEditorField::new('content')->hideOnIndex();
 
@@ -42,9 +44,13 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
-        yield TextField::new('mainImageFile', 'Featured image')
-            ->setFormType(VichImageType::class)
+        yield ImageField::new('mainImage', 'Featured image')
+            ->setBasePath(Path::UPLOADS_PROJECTS)
+            ->onlyOnIndex()
             ->setSortable(false);
+        yield TextField::new('mainImageFile')
+            ->setFormType(VichImageType::class)
+            ->onlyOnForms();
         yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();
         yield BooleanField::new('featured');

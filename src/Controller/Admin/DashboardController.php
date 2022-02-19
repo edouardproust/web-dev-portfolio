@@ -86,7 +86,8 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fas fa-tachometer-alt');
         yield MenuItem::linkToUrl('View website', 'fas fa-eye', '/')
-            ->setPermission('ROLE_ADMIN');
+            ->setPermission('ROLE_ADMIN')
+            ->setLinkTarget('_blank');
 
         yield MenuItem::section('Content');
         yield MenuItem::subMenu('Portfolio', 'fas fa-images')->setSubItems([

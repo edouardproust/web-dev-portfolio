@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\LessonRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Config;
+use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LessonRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=LessonRepository::class)
@@ -285,5 +287,13 @@ class Lesson
         $this->author = $author;
 
         return $this;
+    }
+
+    public function getTitleExtract()
+    {
+        return StringHelper::extract(
+            $this->getTitle(),
+            Config::ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH
+        );
     }
 }

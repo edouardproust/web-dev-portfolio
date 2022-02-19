@@ -79,7 +79,7 @@ class EasyAdminService
         if (isset($_GET['crudAction']) && $_GET['crudAction'] === Action::INDEX) {
             $isApproveField
                 ->setDisabled(true)
-                ->setLabel('');
+                ->setLabel('<i class="fas fa-user-check"></i>');
         }
         return $isApproveField;
     }
