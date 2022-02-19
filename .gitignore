@@ -38,3 +38,7 @@ public/uploads/lessons/*
 public/uploads/authors/*
 !public/uploads/authors/placeholder.png
 ###< uploads ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

@@ -31,7 +31,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
-
     private $authorRepository;
     private $adminUrlGenerator;
 

@@ -19,7 +19,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class CommentCrudController extends AbstractEntityCrudController
 {
-
     private $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)

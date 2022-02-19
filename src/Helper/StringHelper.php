@@ -4,7 +4,6 @@ namespace App\Helper;
 
 class StringHelper
 {
-
     public static function extract(
         string $content,
         int $maxCharacters = 100,

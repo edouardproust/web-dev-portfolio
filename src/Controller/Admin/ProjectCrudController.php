@@ -22,7 +22,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ProjectCrudController extends AbstractPosttypeCrudController
 {
-
     protected $route = 'project';
 
     public static function getEntityFqcn(): string

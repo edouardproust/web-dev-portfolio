@@ -5,7 +5,7 @@ namespace App;
 use ReflectionClass;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 
-/** 
+/**
  * This class allow to store paths used in the project as constants
  */
 class Path

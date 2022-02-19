@@ -17,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class LessonCrudController extends AbstractPosttypeCrudController
 {
-
     protected $route = 'lesson';
 
     public static function getEntityFqcn(): string

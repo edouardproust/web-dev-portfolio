@@ -5,7 +5,7 @@ namespace App;
 use ReflectionClass;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 
-/** 
+/**
  * Constants are defined in order to set them in the database if needed.
  * You must set them using this pattern:
  * const MY_CONSTANT = ['slug' => value]

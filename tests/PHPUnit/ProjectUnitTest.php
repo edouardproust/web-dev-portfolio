@@ -7,7 +7,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class ProjectUnitTest extends PHPUnitEntityAbstract
 {
-
     private $entityClass = Project::class;
 
     public function testBasic(): void
@@ -32,5 +31,4 @@ class ProjectUnitTest extends PHPUnitEntityAbstract
     //     ];
     //     $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     // }
-
 }

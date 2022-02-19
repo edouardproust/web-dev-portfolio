@@ -4,7 +4,7 @@
 
 	{% if author.avatar is not null %}
 		<div class="card_avatar">
-			<img src="{{ vich_uploader_asset(author, 'avatarFile') }}" alt="Avatar of author: {{ author.fullName }}">
+			<img src="{{ vich_uploader_asset(author, 'avatarFile') | imagine_filter('avatar')  }}" alt="Avatar of author: {{ author.fullName }}">
 		</div>
 	{% endif %}
 

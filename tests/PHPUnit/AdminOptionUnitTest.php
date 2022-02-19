@@ -7,7 +7,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class AdminOptionUnitTest extends PHPUnitEntityAbstract
 {
-
     private $entityClass = AdminOption::class;
 
     public function testBasic(): void
@@ -26,5 +25,4 @@ class AdminOptionUnitTest extends PHPUnitEntityAbstract
     //     ];
     //     $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     // }
-
 }

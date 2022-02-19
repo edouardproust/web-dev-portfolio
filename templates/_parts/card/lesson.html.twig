@@ -40,9 +40,9 @@
 
 	<div class="card_extract">
 		{% if lesson.headline is not null %}
-		{{ lesson.headline }}
+			{{ lesson.headline }}
 		{% else %}
-		{{ lesson.content|extract }}
+			{{ lesson.content|extract }}
 		{% endif %}
 	</div>
 

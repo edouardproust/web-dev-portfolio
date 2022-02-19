@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AuthorRegisterType extends AbstractType
 {
-
     private $security;
 
     public function __construct(Security $security)

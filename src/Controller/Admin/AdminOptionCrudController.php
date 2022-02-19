@@ -17,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 
 class AdminOptionCrudController extends AbstractEntityCrudController
 {
-
     private $adminOptionRepository;
 
     public function __construct(AdminOptionRepository $adminOptionRepository)

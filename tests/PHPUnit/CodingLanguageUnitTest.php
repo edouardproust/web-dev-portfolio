@@ -7,7 +7,6 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class CodingLanguageUnitTest extends PHPUnitEntityAbstract
 {
-
     private $entityClass = CodingLanguage::class;
 
     public function testBasic(): void
@@ -26,5 +25,4 @@ class CodingLanguageUnitTest extends PHPUnitEntityAbstract
     //     ];
     //     $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
     // }
-
 }
