@@ -19,8 +19,7 @@ class ProjectCategoryCrudController extends AbstractCategoryCrudController
 
     public function setFields(): iterable
     {
-        yield IdField::new('id')
-            ->onlyOnDetail();
+        yield IdField::new('id')->onlyOnDetail();
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield TextField::new('label');
         yield TextareaField::new('description')

@@ -33,7 +33,6 @@ abstract class AbstractFixtures extends Fixture
         $this->urlGenerator = $urlGenerator;
 
         $this->faker = \Faker\Factory::create();
-        $this->faker->addProvider(new PicsumPhotosProvider($this->faker));
     }
 
     public function load(ObjectManager $manager): void

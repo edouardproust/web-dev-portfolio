@@ -6,6 +6,7 @@ use App\Config;
 use App\Entity\Author;
 use App\Entity\Project;
 use Doctrine\ORM\QueryBuilder;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -41,22 +42,17 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
-        yield TextField::new('mainImage')
-            ->setLabel('Featured image')
+        yield TextField::new('mainImageFile', 'Featured image')
+            ->setFormType(VichImageType::class)
             ->setSortable(false);
-        yield UrlField::new('url')
-            ->setLabel('Project link')
-            ->hideOnIndex();
+        yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();
         yield BooleanField::new('featured');
         yield AssociationField::new('categories')->hideOnIndex();
-        yield AssociationField::new('codingLanguages')
-            ->hideOnIndex()
-            ->setLabel('Languages');
+        yield AssociationField::new('codingLanguages', 'Languages')->hideOnIndex();
         yield $this->associationFieldAuthor();
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', 'Creation date')
             ->hideWhenCreating()
-            ->setFormat('medium')
-            ->setLabel('Creation date');
+            ->setFormat('medium');
     }
 }

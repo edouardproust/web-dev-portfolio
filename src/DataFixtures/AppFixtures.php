@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Path;
 use App\Config;
 use App\Entity\Post;
 use App\Entity\User;
@@ -51,10 +52,6 @@ class AppFixtures extends AbstractFixtures
     ];
     const PROJECT_CATEGORIES_NB = 5;
     const USERS_NB = 3;
-    const IMAGE_DEFAULT = [
-        'width' => 800,
-        'height' => 400,
-    ];
 
     protected $adminOptions = [];
     protected $authors = [];
@@ -100,7 +97,7 @@ class AppFixtures extends AbstractFixtures
         $admin = $this->users[0];
         $author = (new Author)
             ->setUser($admin)
-            ->setAvatar($this->faker->imageUrl(60, 60, true))
+            ->setAvatar(Path::AUTHOR_DEFAULT_IMG)
             ->setBio($this->faker->paragraph(5, true))
             ->setFullName(Config::CONTACT_NAME)
             ->setIsApproved(true)
@@ -115,7 +112,7 @@ class AppFixtures extends AbstractFixtures
         for ($a = 0; $a < self::AUTHORS_NB - 1; $a++) {
             $firstname = $this->faker->firstName();
             $author = (new Author)
-                ->setAvatar($this->faker->imageUrl(60, 60, true))
+                ->setAvatar(Path::AUTHOR_DEFAULT_IMG)
                 ->setBio($this->faker->paragraph(5, true))
                 ->setFullName($firstname . ' ' . $this->faker->lastName())
                 ->setIsApproved(true);
@@ -208,12 +205,7 @@ class AppFixtures extends AbstractFixtures
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title);
             // optional fields
-            $mainImage = $this->faker->imageUrl(
-                self::IMAGE_DEFAULT['width'],
-                self::IMAGE_DEFAULT['height'],
-                true,
-            );
-            $this->setOptional($post, 'mainImage', $mainImage, 70);
+            $this->setOptional($post, 'mainImage', Path::POST_DEFAULT_IMG, 70);
 
             $this->setHeadline($post, 90);
             $post->addCategory($this->faker->randomElement($this->postCategories));
@@ -247,9 +239,7 @@ class AppFixtures extends AbstractFixtures
                 ->setAuthor($this->faker->randomElement($this->authors))
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
-                ->setMainImage(
-                    $this->faker->imageUrl(self::IMAGE_DEFAULT['width'], self::IMAGE_DEFAULT['height'], true)
-                )
+                ->setMainImage(Path::PROJECT_DEFAULT_IMG)
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)

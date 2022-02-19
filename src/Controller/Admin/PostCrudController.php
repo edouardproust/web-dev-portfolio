@@ -4,12 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Config;
 use App\Entity\Post;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use App\Controller\Admin\AbstractPosttypeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -38,14 +37,13 @@ class PostCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
-        // yield ImageField::new('mainImage')
-        //     ->setLabel('Featured image')
-        //     ->setSortable(false);
+        yield TextField::new('mainImageFile', 'Featured image')
+            ->setFormType(VichImageType::class)
+            ->setSortable(false);
         yield AssociationField::new('categories')->hideOnIndex();
         yield $this->associationFieldAuthor();
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', 'Creation date')
             ->hideWhenCreating()
-            ->setFormat('medium')
-            ->setLabel('Creation date');
+            ->setFormat('medium');
     }
 }

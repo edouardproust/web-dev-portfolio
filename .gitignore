@@ -25,3 +25,16 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> uploads ###
+public/uploads/projects/*
+!public/uploads/projects/placeholder.png
+
+public/uploads/posts/*
+!public/uploads/posts/placeholder.png
+
+public/uploads/lessons/*
+
+public/uploads/authors/*
+!public/uploads/authors/placeholder.png
+###< uploads ###

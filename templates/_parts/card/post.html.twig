@@ -2,7 +2,7 @@
 
 	{% if post.mainImage is not null %}
 	<div class="show_img">
-		<img src="{{ post.mainImage }}" alt="Image for post: {{ post.title }}">
+		<img src="{{ vich_uploader_asset(post, 'mainImageFile') }}" alt="Image for post: {{ post.title }}">
 	</div>
 	{% endif %}
 

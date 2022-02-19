@@ -2,26 +2,34 @@
 
 namespace App\Service;
 
+use App\Config;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
+use Symfony\Component\Security\Core\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class EasyAdminService
 {
     private $userRepository;
     private $authorRepository;
+    private $security;
 
     public function __construct(
         UserRepository $userRepository,
-        AuthorRepository $authorRepository
+        AuthorRepository $authorRepository,
+        Security $security
     ) {
         $this->userRepository = $userRepository;
         $this->authorRepository = $authorRepository;
+        $this->security = $security;
     }
 
     /**
@@ -53,7 +61,7 @@ class EasyAdminService
         return $isAdmin;
     }
 
-    public function authorIsApprovedField()
+    public function authorIsApprovedField(): BooleanField
     {
         $isApproveField = BooleanField::new('isApproved')
             ->setLabel('Approve this author')
@@ -76,7 +84,7 @@ class EasyAdminService
         return $isApproveField;
     }
 
-    public function authorUserField()
+    public function authorUserField(): AssociationField
     {
         return AssociationField::new('user')
             ->hideWhenUpdating()
@@ -86,5 +94,36 @@ class EasyAdminService
                     ->from(User::class, 'u')
                     ->where('u.isAuthor IS NULL');
             });
+    }
+
+    public function userPasswordField(): ?TextField
+    {
+        $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
+
+        $textField = TextField::new('password')
+            ->setFormType(PasswordType::class)
+            ->onlyOnDetail();
+
+        /** @var User $currentUser */
+        $currentUser = $this->security->getUser();
+        if ($entityId == $currentUser->getId()) {
+            return $textField->onlyWhenUpdating();
+        }
+        return $textField;
+    }
+
+    public function userRolesField(): ChoiceField
+    {
+        $isCurrentUser = $this->isCurrentUser($this->security->getUser());
+
+        $rolesField = ChoiceField::new('roles')
+            ->setChoices(Config::ROLES)
+            ->allowMultipleChoices();
+        if ($isCurrentUser) {
+            $rolesField
+                ->setDisabled(true)
+                ->setHelp('This field is disabled: connected user can\'t update their own roles.');
+        }
+        return $rolesField;
     }
 }

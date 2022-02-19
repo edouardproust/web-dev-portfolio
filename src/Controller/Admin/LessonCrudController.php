@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use App\Controller\Admin\AbstractPosttypeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -39,20 +38,14 @@ class LessonCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
-        // yield ImageField::new('mainImage')
-        //     ->setLabel('Featured image')
-        //     ->setSortable(false);
         yield UrlField::new('videoUrl')->hideOnIndex();
-        yield UrlField::new('url')
-            ->setLabel('Project link')
-            ->hideOnIndex();
+        yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();
         yield AssociationField::new('codingLanguage')->hideOnIndex();
         yield AssociationField::new('categories')->hideOnIndex();
         yield $this->associationFieldAuthor();
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', 'Creation date')
             ->hideWhenCreating()
-            ->setFormat('medium')
-            ->setLabel('Creation date');
+            ->setFormat('medium');
     }
 }
