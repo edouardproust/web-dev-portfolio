@@ -12,16 +12,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractEntityCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
+use App\Service\EasyAdminService;
 
 class AdminOptionCrudController extends AbstractEntityCrudController
 {
     private $adminOptionRepository;
+    private $easyAdminService;
 
-    public function __construct(AdminOptionRepository $adminOptionRepository)
-    {
+    public function __construct(
+        AdminOptionRepository $adminOptionRepository,
+        EasyAdminService $easyAdminService
+    ) {
         $this->adminOptionRepository = $adminOptionRepository;
+        $this->easyAdminService = $easyAdminService;
     }
 
     public static function getEntityFqcn(): string
@@ -31,26 +34,27 @@ class AdminOptionCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        $entityLabelSingular = 'Option';
-        if (!empty($_GET["entityId"])) {
-            /** @var AdminOption */
-            $option = $this->adminOptionRepository->findOneBy(
-                ['id' => $_GET["entityId"]]
-            );
-            $entityLabelSingular = $option->getLabel();
-        }
         return $crud
             ->setEntityLabelInPlural('Options')
-            ->setEntityLabelInSingular($entityLabelSingular)
+            ->setEntityLabelInSingular(
+                $this->easyAdminService->getEntityLabelSingular(false, 'Option')
+            )
             ->setEntityPermission('ROLE_ADMIN');
     }
 
     public function setFields(): iterable
     {
-        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
         yield IdField::new('id')->onlyOnDetail();
-        yield TextField::new('label', 'Option')->hideOnForm();
-        yield TextareaField::new('value')->setSortable(false);
+
+        // index
+        yield TextField::new('label', 'Option')
+            ->hideOnForm()
+            ->setSortable(false);
+        yield TextField::new('unifiedValue', 'Value')->onlyOnIndex();
+
+        // form
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield $this->easyAdminService->adminOptionValueField();
     }
 
     public function configureActions(Actions $actions): Actions

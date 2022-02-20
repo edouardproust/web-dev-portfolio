@@ -35,3 +35,14 @@ To build Encore files automatically:
 ```bash
 yarn watch
 ```
+
+## Config
+
+- **Add or Edit a global dir or file path to be used anywhere in the project:** 
+Add or Edit a const in Path.php and then call it where you need: Path::MY_PATH
+- **Add or Edit a global config value to be used anywhere in the project:** 
+Add or Edit a const in Config.php and then call it where you need: Config::MY_VALUE
+- **Add an new option (AdminOption) in Admin dahsboard:** 
+Add a new const in src/DataFixtures/AdminOptions.php
+- **Change fixtures default values:** 
+Edit const in src/DataFixtures/AppFixtures.php

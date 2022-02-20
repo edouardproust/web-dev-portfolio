@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Path;
-use App\Config;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Author;
@@ -83,10 +82,14 @@ class AppFixtures extends AbstractFixtures
 
     protected function createAdminOptions()
     {
-        foreach (Config::getConstants() as $constant => $value) {
+        foreach (AdminOptions::getConstants() as $name => $array) {
             $option = (new AdminOption)
-                ->setConstant($constant)
-                ->setValue(Config::getJson($constant));
+                ->setConstant($name)
+                ->setType(AdminOptions::get($array, 'type'))
+                ->setLabel(AdminOptions::get($array, 'label'))
+                ->setHelp(AdminOptions::get($array, 'help'))
+                ->setValue(AdminOptions::get($array, 'value'))
+                ->setIsActive(AdminOptions::get($array, 'isActive'));
             $this->adminOptions[] = $option;
         }
     }
@@ -99,11 +102,11 @@ class AppFixtures extends AbstractFixtures
             ->setUser($admin)
             ->setAvatar(Path::AUTHOR_DEFAULT_IMG)
             ->setBio($this->faker->paragraph(5, true))
-            ->setFullName(Config::CONTACT_NAME)
+            ->setFullName(AdminOptions::get('CONTACT_NAME', 'value'))
             ->setIsApproved(true)
-            ->setGithub(Config::SOCIAL_GITHUB)
-            ->setLinkedin(Config::SOCIAL_LINKEDIN)
-            ->setStackoverflow(Config::SOCIAL_STACKOVERFLOW)
+            ->setGithub(AdminOptions::get('SOCIAL_GITHUB', 'value'))
+            ->setLinkedin(AdminOptions::get('SOCIAL_LINKEDIN', 'value'))
+            ->setStackoverflow(AdminOptions::get('SOCIAL_STACKOVERFLOW', 'value'))
             ->setWebsite($this->urlGenerator->generate('home'));
         $admin->setIsAuthor(true);
         $this->authors[] = $author;
@@ -130,7 +133,7 @@ class AppFixtures extends AbstractFixtures
             $this->setOptional(
                 $author,
                 'contactEmail',
-                strtolower($firstname) . '@' . Config::SITE_DOMAIN,
+                strtolower($firstname) . '@' . AdminOptions::get('SITE_DOMAIN', 'value'),
                 70
             );
             $this->setOptional($author, 'github', self::AUTHOR_DEFAUT['github'], 90);

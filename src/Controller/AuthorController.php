@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Config;
 use App\Service\AuthorService;
 use App\Form\AuthorRegisterType;
+use App\Service\AdminOptionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,13 +16,16 @@ class AuthorController extends AbstractController
 {
     private $authorService;
     private $entityManager;
+    private $adminOptionService;
 
     public function __construct(
         AuthorService $authorService,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        AdminOptionService $adminOptionService
     ) {
         $this->authorService = $authorService;
         $this->entityManager = $entityManager;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**
@@ -33,7 +37,7 @@ class AuthorController extends AbstractController
             $id,
             $request,
             'getProjects',
-            Config::PROJECTS_PER_PAGE
+            $this->adminOptionService->get('PROJECTS_PER_PAGE')
         );
         return $this->render('author/projects.html.twig', [
             'author' => $author,
@@ -50,7 +54,7 @@ class AuthorController extends AbstractController
             $id,
             $request,
             'getLessons',
-            Config::LESSONS_PER_PAGE
+            $this->adminOptionService->get('LESSONS_PER_PAGE')
         );
         return $this->render('author/lessons.html.twig', [
             'author' => $author,
@@ -67,7 +71,7 @@ class AuthorController extends AbstractController
             $id,
             $request,
             'getPosts',
-            Config::POSTS_PER_PAGE
+            $this->adminOptionService->get('POSTS_PER_PAGE')
         );
         return $this->render('author/posts.html.twig', [
             'author' => $author,

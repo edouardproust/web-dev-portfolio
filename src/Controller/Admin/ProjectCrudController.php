@@ -4,9 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Path;
 use App\Config;
-use App\Entity\Author;
 use App\Entity\Project;
-use Doctrine\ORM\QueryBuilder;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;

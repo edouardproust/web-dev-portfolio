@@ -19,32 +19,16 @@ class AdminOptionRepository extends ServiceEntityRepository
         parent::__construct($registry, AdminOption::class);
     }
 
-    // /**
-    //  * @return AdminOption[] Returns an array of AdminOption objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $constant 'constant' field of the admin_option table in database'
+     * @return AdminOption Returns an array of AdminOption objects
+     */
+    public function findOneByConstant(string $constant): ?AdminOption
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('ao')
+            ->andWhere('ao.constant = :val')
+            ->setParameter('val', $constant)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?AdminOption
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

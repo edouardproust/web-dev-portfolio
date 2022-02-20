@@ -13,8 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractEntityCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserCrudController extends AbstractEntityCrudController
 {

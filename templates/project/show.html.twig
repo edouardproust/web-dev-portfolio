@@ -73,6 +73,8 @@
 		</div>
 	{% endif %}
 
-	{% include "_parts/comments_section.html.twig" with {postType: project} %}
+	{% if config('SHOW_COMMENTS_ON_PROJECT') %}
+		{% include "_parts/comments_section.html.twig" with {postType: project} %}
+	{% endif %}
 
 {% endblock %}

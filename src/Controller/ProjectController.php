@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Config;
 use App\Repository\ProjectRepository;
+use App\Service\AdminOptionService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,19 +13,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProjectController extends AbstractController
 {
-
-    /** @var ProjectRepository */
     private $projectRepository;
-
-    /** @var PaginatorInterface */
     private $paginator;
+    private $adminOptionService;
 
     public function __construct(
         ProjectRepository $projectRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        AdminOptionService $adminOptionService
     ) {
         $this->projectRepository = $projectRepository;
         $this->paginator = $paginator;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**
@@ -36,7 +36,7 @@ class ProjectController extends AbstractController
         $projects = $this->paginator->paginate(
             $this->projectRepository->findAll(),
             $request->query->getInt('page', 1),
-            Config::PROJECTS_PER_PAGE
+            $this->adminOptionService->get('PROJECTS_PER_PAGE')
         );
 
         return $this->render('project/index.html.twig', [

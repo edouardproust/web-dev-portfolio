@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Config;
 use App\Repository\LessonRepository;
+use App\Service\AdminOptionService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,19 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LessonController extends AbstractController
 {
-
-    /** @var LessonRepository */
     private $lessonRepository;
-
-    /** @var PaginatorInterface */
     private $paginator;
+    private $adminOptionService;
 
     public function __construct(
         LessonRepository $lessonRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        AdminOptionService $adminOptionService
     ) {
         $this->lessonRepository = $lessonRepository;
         $this->paginator = $paginator;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**
@@ -36,7 +35,7 @@ class LessonController extends AbstractController
         $lessons = $this->paginator->paginate(
             $this->lessonRepository->findAll(),
             $request->query->getInt('page', 1),
-            Config::LESSONS_PER_PAGE
+            $this->adminOptionService->get('LESSONS_PER_PAGE')
         );
 
         return $this->render('lesson/index.html.twig', [
