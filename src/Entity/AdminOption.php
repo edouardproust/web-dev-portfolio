@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use App\Config;
 use App\Helper\StringHelper;
-use App\Repository\AdminOptionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AdminOptionRepository;
 
 /**
  * @ORM\Entity(repositoryClass=AdminOptionRepository::class)
@@ -67,7 +68,7 @@ class AdminOption
 
     public function getValue()
     {
-        if ($this->type === 'boolean' && $this->value === null) {
+        if ($this->type === Config::FIELD_BOOL && $this->value === null) {
             return $this->isActive ? 'Active' : 'Inactive';
         }
         return $this->value;

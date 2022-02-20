@@ -59,6 +59,8 @@
 		</div>
 	{% endif %}
 
-	{% include "_parts/comments_section.html.twig" with {postType: lesson} %}
+	{% if config('SHOW_COMMENTS_ON_LESSON') %}
+		{% include "_parts/comments_section.html.twig" with {postType: lesson} %}
+	{% endif %}
 
 {% endblock %}

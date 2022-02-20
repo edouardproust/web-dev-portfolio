@@ -34,17 +34,11 @@ class AdminOptionCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        $entityLabelSingular = 'Option';
-        if (!empty($_GET["entityId"])) {
-            /** @var AdminOption */
-            $option = $this->adminOptionRepository->findOneBy(
-                ['id' => $_GET["entityId"]]
-            );
-            $entityLabelSingular = $option->getLabel();
-        }
         return $crud
             ->setEntityLabelInPlural('Options')
-            ->setEntityLabelInSingular($entityLabelSingular)
+            ->setEntityLabelInSingular(
+                $this->easyAdminService->getEntityLabelSingular(false, 'Option')
+            )
             ->setEntityPermission('ROLE_ADMIN');
     }
 
@@ -52,15 +46,15 @@ class AdminOptionCrudController extends AbstractEntityCrudController
     {
         yield IdField::new('id')->onlyOnDetail();
 
-        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        // index
         yield TextField::new('label', 'Option')
             ->hideOnForm()
             ->setSortable(false);
         yield TextField::new('unifiedValue', 'Value')->onlyOnIndex();
-        // yield BooleanField::new('isActive', 'Value')->onlyOnIndex();
-        if (!empty($_GET['entityId'])) {
-            yield $this->easyAdminService->adminOptionValueField();
-        }
+
+        // form
+        yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_MAIN_CSS_CLASS);
+        yield $this->easyAdminService->adminOptionValueField();
     }
 
     public function configureActions(Actions $actions): Actions

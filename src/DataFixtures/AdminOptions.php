@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Config;
 use ReflectionClass;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
 
@@ -13,37 +14,131 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
  * - The type is mandatory. Other options are optionnal:
  * >const MY_CONSTANT = [type] will work / const MY_CONSTANT = [] won't work 
  * - Index of the array: 
- * >'type' = The type of the field (eg. 'text', 'boolean', 'url', 'email' or 'number')
+ * >'type' = The type of the field 
+ * (eg. Config::FIELD_TEXT, Config::FIELD_BOOL, Config::FIELD_URL, 
+ * Config::FIELD_EMAIL or Config::FIELD_NUMBER)
  * 'value' = The default value of thie option
  * 'label' = Custom label on top of the field (if null, it will)
  * 'help' = Help message below the field
  */
 class AdminOptions
 {
-    const SITE_NAME = ['text', 'Edouard Proust Portfolio'];
-    const SITE_DOMAIN = ['text', 'edouardproust.dev'];
+    const SITE_NAME =  [
+        Config::FIELD_TEXT, 'Edouard Proust Portfolio', null,
+        'Site: Title',
+        'The site\'s name, displayed on top, and on several locations of the website and in emails.'
+    ];
+    const SITE_DOMAIN = [
+        Config::FIELD_TEXT, 'edouardproust.dev', null,
+        'Site: Domaine name',
+        'The website domaine name (without "https://www"). Eg. "mysite.com"'
+    ];
 
-    const CONTACT_NAME = ['text', 'Edouard Proust'];
-    const CONTACT_EMAIL = ['email', 'contact@edouardproust.dev'];
-    const CONTACT_PHONE = ['text', '(+48) 727 775 824'];
-    const CONTACT_ADDRESS = ['text', 'Helclów 9/5A, 31-148 Kraków (Polska)'];
+    const CONTACT_NAME = [
+        Config::FIELD_TEXT, 'Edouard Proust', null,
+        'Contact: Website owner\'s name',
+        'The name displayed in the "from" field in the emails you send.'
+    ];
+    const CONTACT_EMAIL = [
+        Config::FIELD_EMAIL, 'contact@edouardproust.dev', null,
+        'Contact: Email',
+        'The email the visitors will use to send you emails. 
+        It is displayed on Contact page and in the "from" field of the email you send.'
+    ];
+    const CONTACT_PHONE = [
+        Config::FIELD_TEXT, '(+48) 727 775 824', null,
+        'Contact: Phone',
+        'The phone number the visitors can use to call you or your company. 
+        It is displayed on Contact page.'
+    ];
+    const CONTACT_ADDRESS = [
+        Config::FIELD_TEXT, 'Helclów 9/5A, 31-148 Kraków (Polska)', null,
+        'Contact: Address',
+        'The address of your company / where you live. It is displayed on Contact page.'
+    ];
 
-    const SOCIAL_LINKEDIN = ['url', '#'];
-    const SOCIAL_GITHUB = ['url', '#'];
-    const SOCIAL_STACKOVERFLOW = ['url', '#'];
+    const SOCIAL_LINKEDIN = [
+        Config::FIELD_URL, 'https://fr.linkedin.com/in/edouardproust', null,
+        'Social: LinkedIn profile',
+        'Link to you LinkedIn profile (eg. https://www.linkedin.com/pub/dir/myname)'
+    ];
+    const SOCIAL_GITHUB = [
+        Config::FIELD_URL, 'https://github.com/edouardproust', null,
+        'Social: GitHub profile',
+        'Link to you LinkedIn profile (eg. https://github.com/myname)'
+    ];
+    const SOCIAL_STACKOVERFLOW = [
+        Config::FIELD_URL, 'https://stackoverflow.com/users/13865643/edouard', null,
+        'Social: StackOverflow profile',
+        'Link to you LinkedIn profile (eg. https://stackoverflow.com/users/12345678/myname)'
+    ];
 
-    const PROJECTS_PER_PAGE = ['number', 6];
-    const LESSONS_PER_PAGE = ['number', 6];
-    const POSTS_PER_PAGE = ['number', 6];
+    const NOTIFICATION_NEW_COMMENT = [
+        Config::FIELD_BOOL, null, true,
+        'Notification: New comment published',
+        'Do you want to receive an email each time a comment is published 
+        by a visitor on a project, post or lesson? 
+        (You need to validate comments before them to be published on the website.'
+    ];
+    const NOTIFICATION_NEW_AUTHOR = [
+        Config::FIELD_BOOL, null, true,
+        'Notification: New author registration',
+        'Do you want to receive an email each time a visitor submit a registration to become an author? 
+        (You need to validate them before they can write lessons or posts.)'
+    ];
 
-    const HOME_PROJECTS = ['number', 3];
-    const HOME_FEATURED_PROJECTS = ['number', 3];
-    const HOME_LESSONS = ['number', 3];
-    const HOME_POSTS = ['number', 3];
+    const SHOW_COMMENTS_ON_PROJECT = [
+        Config::FIELD_BOOL, null, true,
+        'Comments: Show on Projects',
+        'Do you want to show comments at the bottom on a project page, and allow visitors to write one?'
+    ];
+    const SHOW_COMMENTS_ON_LESSON = [
+        Config::FIELD_BOOL, null, true,
+        'Comments: Show on Pessons',
+        'Do you want to show comments at the bottom on a lesson page, and allow visitors to write one?'
+    ];
+    const SHOW_COMMENTS_ON_POST = [
+        Config::FIELD_BOOL, null, true,
+        'Comments: Show on Posts',
+        'Do you want to show comments at the bottom on a post page, and allow visitors to write one?'
+    ];
 
-    const NOTIFICATION_NEW_COMMENT = ['boolean', null, true];
-    const NOTIFICATION_NEW_AUTHOR = ['boolean', null, true];
-    const SHOW_COMMENTS_ON_POST = ['boolean', null, true];
+    const PROJECTS_PER_PAGE = [
+        Config::FIELD_NUM, 6, null,
+        'Collection: Projects per page',
+        'How many projects do you want to display per collection page?'
+    ];
+    const LESSONS_PER_PAGE = [
+        'number', 6, null,
+        'Collection: Lessons per page',
+        'How many lessons do you want to display per collection page?'
+    ];
+    const POSTS_PER_PAGE = [
+        Config::FIELD_NUM, 6, null,
+        'Collection: posts per page',
+        'How many posts do you want to display per collection page?'
+    ];
+
+    const HOME_PROJECTS = [
+        Config::FIELD_NUM, 3, null,
+        'Homepage: Projects to show',
+        'How many projects do you want to display in the "Last projects" section on homepage?'
+    ];
+    const HOME_FEATURED_PROJECTS = [
+        'number', 3, null,
+        'Homepage: Featured projects to show',
+        'How many projects do you want to display in the "Featured projects" section on homepage?'
+    ];
+    const HOME_LESSONS = [
+        Config::FIELD_NUM, 3, null,
+        'Homepage: lessons to show',
+        'How many lessons do you want to display in the "Last lessons" section on homepage?'
+    ];
+    const HOME_POSTS = [
+        Config::FIELD_NUM, 3, null,
+        'Homepage: Posts to show',
+        'How many posts do you want to display in the "Last posts" section on homepage?'
+    ];
 
     /**
      * Get the index's value of a given option. The input can be either an array or an index.

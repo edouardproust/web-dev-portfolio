@@ -14,11 +14,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class EasyAdminService
 {
@@ -66,6 +69,35 @@ class EasyAdminService
             }
         }
         return $isAdmin;
+    }
+
+    /**
+     * Generate a dynamic label for Crud controller
+     * 
+     * @param bool $dynamicLabel Do you want the label to auto-generate based on the entity label or title? 
+     * Default: FALSE
+     * @param null|string $fallbackLabel The non-dynamic label to display if dynamicLabel is on FALSE. 
+     * Default: NULL
+     * @param null|ServiceEntityRepository $repository If dynamicLabel on TRUE: the Entity Repository. 
+     * Default: NULL
+     * @param null|string $getterFn If dynamicLabel on TRUE: the getter function. Default: getLabel'
+     * @return null|string The entity label
+     */
+    public function getEntityLabelSingular(
+        bool $dynamicLabel = false,
+        ?string $fallbackLabel = null,
+        ?ServiceEntityRepository $repository = null,
+        ?string $getterFn = 'getLabel'
+    ): ?string {
+        $labelSingular = $fallbackLabel;
+        if ($dynamicLabel) {
+            if (!empty($_GET["entityId"])) {
+                /** @var AdminOption */
+                $entity = $repository->findOneBy(['id' => $_GET["entityId"]]);
+                $labelSingular = $entity->$getterFn();
+            }
+        }
+        return $labelSingular;
     }
 
     public function authorIsApprovedField(): BooleanField
@@ -136,26 +168,30 @@ class EasyAdminService
 
     public function adminOptionValueField()
     {
-        $adminOption = $this->adminOptionRepository->find($_GET['entityId']);
-        $type = $adminOption->getType();
-        $label = $adminOption->getLabel();
-        $allowedTypes = [
-            'text' => TextField::class,
-            'email' => EmailField::class,
-            'boolean' => BooleanField::class,
-            'number' => IntegerField::class,
-            'url' => UrlField::class
-        ];
-        foreach ($allowedTypes as $fieldType => $fieldClass) {
-            if ($type === $fieldType) {
-                $valueField = $fieldClass::new('value', $label);
-                if ($type = 'boolean') {
-                    $valueField = $fieldClass::new('isActive', $label);
+        if (!empty($_GET['entityId'])) {
+            $adminOption = $this->adminOptionRepository->find($_GET['entityId']);
+            $type = $adminOption->getType();
+            $label = $adminOption->getLabel();
+            $allowedTypes = [
+                Config::FIELD_TEXT => TextField::class,
+                Config::FIELD_EMAIL => EmailField::class,
+                Config::FIELD_BOOL => BooleanField::class,
+                Config::FIELD_NUM => IntegerField::class,
+                Config::FIELD_URL => UrlField::class
+            ];
+            foreach ($allowedTypes as $fieldType => $fieldClass) {
+                if ($type === $fieldType) {
+                    $valueField = $fieldClass::new('value', $label);
+                    if ($type === Config::FIELD_BOOL) {
+                        $valueField = $fieldClass::new('isActive', $label);
+                    }
                 }
             }
+            return $valueField
+                ->onlyOnForms()
+                ->setHelp($adminOption->getHelp())
+                ->setSortable(false);
         }
-        return $valueField
-            ->onlyOnForms()
-            ->setSortable(false);
+        return HiddenField::new('id')->onlyOnDetail();
     }
 }
