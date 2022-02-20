@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 abstract class AbstractEntityCrudController extends AbstractCrudController
 {
-
     abstract public static function getEntityFqcn(): string;
 
     abstract public function setFields(): iterable;

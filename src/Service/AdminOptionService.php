@@ -6,7 +6,6 @@ use App\Repository\AdminOptionRepository;
 
 class AdminOptionService
 {
-
     private $adminOptionRepository;
 
     public function __construct(AdminOptionRepository $adminOptionRepository)
@@ -17,7 +16,7 @@ class AdminOptionService
     /**
      * Get the value of an AdminOption stored in database
      * @param string $constant 'constant' field of the admin_option table in database'
-     * @return string 
+     * @return string
      */
     public function get(string $constant)
     {

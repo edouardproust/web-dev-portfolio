@@ -12,10 +12,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
  * - You must set them using this pattern:
  * >const MY_CONSTANT = [type, value, isActive, label, help]
  * - The type is mandatory. Other options are optionnal:
- * >const MY_CONSTANT = [type] will work / const MY_CONSTANT = [] won't work 
- * - Index of the array: 
- * >'type' = The type of the field 
- * (eg. Config::FIELD_TEXT, Config::FIELD_BOOL, Config::FIELD_URL, 
+ * >const MY_CONSTANT = [type] will work / const MY_CONSTANT = [] won't work
+ * - Index of the array:
+ * >'type' = The type of the field
+ * (eg. Config::FIELD_TEXT, Config::FIELD_BOOL, Config::FIELD_URL,
  * Config::FIELD_EMAIL or Config::FIELD_NUMBER)
  * 'value' = The default value of thie option
  * 'label' = Custom label on top of the field (if null, it will)
@@ -160,9 +160,9 @@ class AdminOptions
         return null;
     }
 
-    /** 
+    /**
      * Get an array containing all constants: ['CONSTANT1' => [index1, index2, ... ], ... ]
-     * @return array  
+     * @return array
      */
     public static function getConstants()
     {

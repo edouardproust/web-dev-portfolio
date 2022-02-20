@@ -20,7 +20,7 @@ class StringHelper
     /**
      * Convert a string value into a boolean value (true or false)
      * @param string $str The string to convert
-     * @return bool 
+     * @return bool
      */
     public static function toBool(string $str)
     {
@@ -34,7 +34,9 @@ class StringHelper
     public static function toString($value)
     {
         if (is_bool($value)) {
-            if ($value) return '1';
+            if ($value) {
+                return '1';
+            }
             return '0';
         }
     }

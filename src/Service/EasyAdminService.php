@@ -73,12 +73,12 @@ class EasyAdminService
 
     /**
      * Generate a dynamic label for Crud controller
-     * 
-     * @param bool $dynamicLabel Do you want the label to auto-generate based on the entity label or title? 
+     *
+     * @param bool $dynamicLabel Do you want the label to auto-generate based on the entity label or title?
      * Default: FALSE
-     * @param null|string $fallbackLabel The non-dynamic label to display if dynamicLabel is on FALSE. 
+     * @param null|string $fallbackLabel The non-dynamic label to display if dynamicLabel is on FALSE.
      * Default: NULL
-     * @param null|ServiceEntityRepository $repository If dynamicLabel on TRUE: the Entity Repository. 
+     * @param null|ServiceEntityRepository $repository If dynamicLabel on TRUE: the Entity Repository.
      * Default: NULL
      * @param null|string $getterFn If dynamicLabel on TRUE: the getter function. Default: getLabel'
      * @return null|string The entity label
