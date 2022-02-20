@@ -4,18 +4,26 @@ namespace App\Twig;
 
 use App\Entity\User;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 use App\Entity\Author;
+use Twig\TwigFunction;
 use App\Helper\StringHelper;
+use App\Service\AdminOptionService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
 class AppExtension extends AbstractExtension
 {
+    private $adminOptionService;
+
+    public function __construct(AdminOptionService $adminOptionService)
+    {
+        $this->adminOptionService = $adminOptionService;
+    }
+
     public function getFunctions()
     {
         return [
-            new TwigFunction('config', [$this, 'getConfigConstant']),
+            new TwigFunction('config', [$this, 'getAdminOptionValue']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
             new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
         ];
@@ -33,9 +41,9 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function getConfigConstant(string $constant)
+    public function getAdminOptionValue(string $constant)
     {
-        return constant('\App\Config::' . $constant);
+        return $this->adminOptionService->get($constant);
     }
 
     /**

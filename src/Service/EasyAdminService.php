@@ -7,29 +7,36 @@ use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
+use App\Repository\AdminOptionRepository;
 use Symfony\Component\Security\Core\Security;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 
 class EasyAdminService
 {
     private $userRepository;
     private $authorRepository;
     private $security;
+    private $adminOptionRepository;
 
     public function __construct(
         UserRepository $userRepository,
         AuthorRepository $authorRepository,
-        Security $security
+        Security $security,
+        AdminOptionRepository $adminOptionRepository
     ) {
         $this->userRepository = $userRepository;
         $this->authorRepository = $authorRepository;
         $this->security = $security;
+        $this->adminOptionRepository = $adminOptionRepository;
     }
 
     /**
@@ -125,5 +132,30 @@ class EasyAdminService
                 ->setHelp('This field is disabled: connected user can\'t update their own roles.');
         }
         return $rolesField;
+    }
+
+    public function adminOptionValueField()
+    {
+        $adminOption = $this->adminOptionRepository->find($_GET['entityId']);
+        $type = $adminOption->getType();
+        $label = $adminOption->getLabel();
+        $allowedTypes = [
+            'text' => TextField::class,
+            'email' => EmailField::class,
+            'boolean' => BooleanField::class,
+            'number' => IntegerField::class,
+            'url' => UrlField::class
+        ];
+        foreach ($allowedTypes as $fieldType => $fieldClass) {
+            if ($type === $fieldType) {
+                $valueField = $fieldClass::new('value', $label);
+                if ($type = 'boolean') {
+                    $valueField = $fieldClass::new('isActive', $label);
+                }
+            }
+        }
+        return $valueField
+            ->onlyOnForms()
+            ->setSortable(false);
     }
 }

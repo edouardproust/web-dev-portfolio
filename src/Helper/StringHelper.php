@@ -16,4 +16,26 @@ class StringHelper
         }
         return $content;
     }
+
+    /**
+     * Convert a string value into a boolean value (true or false)
+     * @param string $str The string to convert
+     * @return bool 
+     */
+    public static function toBool(string $str)
+    {
+        if (in_array($str, ['true', '1'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function toString($value)
+    {
+        if (is_bool($value)) {
+            if ($value) return '1';
+            return '0';
+        }
+    }
 }

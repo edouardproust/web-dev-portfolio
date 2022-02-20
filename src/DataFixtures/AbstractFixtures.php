@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Config;
-use Bluemmb\Faker\PicsumPhotosProvider;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Config;
 use App\Repository\CodingLanguageRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +31,7 @@ class CodingLanguageController extends AbstractController
             $slug,
             $request,
             'getProjects',
-            Config::PROJECTS_PER_PAGE
+            $this->adminOptionService->get('PROJECTS_PER_PAGE')
         );
         return $this->render('coding_language/projects.html.twig', [
             'codingLanguage' => $codingLanguage,
@@ -49,7 +48,7 @@ class CodingLanguageController extends AbstractController
             $slug,
             $request,
             'getLessons',
-            Config::LESSONS_PER_PAGE
+            $this->adminOptionService->get('LESSONS_PER_PAGE')
         );
         return $this->render('coding_language/lessons.html.twig', [
             'codingLanguage' => $codingLanguage,

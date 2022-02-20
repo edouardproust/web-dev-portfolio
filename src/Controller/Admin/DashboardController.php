@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Config;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Author;
@@ -16,7 +15,7 @@ use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
 use App\Repository\AuthorRepository;
 use App\Controller\Admin\AuthorCrudController;
-use App\Service\EasyAdminDashboardService;
+use App\Service\AdminOptionService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -33,13 +32,16 @@ class DashboardController extends AbstractDashboardController
 {
     private $authorRepository;
     private $adminUrlGenerator;
+    private $adminOptionService;
 
     public function __construct(
         AuthorRepository $authorRepository,
-        AdminUrlGenerator $adminUrlGenerator
+        AdminUrlGenerator $adminUrlGenerator,
+        AdminOptionService $adminOptionService
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**
@@ -78,7 +80,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle(Config::SITE_NAME);
+            ->setTitle($this->adminOptionService->get('SITE_NAME'));
     }
 
     public function configureMenuItems(): iterable

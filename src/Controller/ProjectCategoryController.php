@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Config;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\ProjectCategoryRepository;
+use App\Service\AdminOptionService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,19 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProjectCategoryController extends AbstractController
 {
-
-    /** @var ProjectCategoryRepository */
     private $projectCategoryRepository;
-
-    /** @var PaginatorInterface */
     private $paginator;
+    private $adminOptionService;
 
     public function __construct(
         ProjectCategoryRepository $projectCategoryRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        AdminOptionService $adminOptionService
     ) {
         $this->projectCategoryRepository = $projectCategoryRepository;
         $this->paginator = $paginator;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**
@@ -38,7 +37,7 @@ class ProjectCategoryController extends AbstractController
         $projects = $this->paginator->paginate(
             $category->getProjects(),
             $request->query->getInt('page', 1),
-            Config::PROJECTS_PER_PAGE
+            $this->adminOptionService->get('PROJECTS_PER_PAGE')
         );
 
         return $this->render('project_category/index.html.twig', [

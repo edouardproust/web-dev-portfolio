@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Config;
 use App\Repository\PostRepository;
+use App\Service\AdminOptionService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,19 +12,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PostController extends AbstractController
 {
-
-    /** @var PostRepository */
     private $postRepository;
-
-    /** @var PaginatorInterface */
     private $paginator;
+    private $adminOptionService;
 
     public function __construct(
         PostRepository $postRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        AdminOptionService $adminOptionService
     ) {
         $this->postRepository = $postRepository;
         $this->paginator = $paginator;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**
@@ -36,7 +35,7 @@ class PostController extends AbstractController
         $posts = $this->paginator->paginate(
             $this->postRepository->findAll(),
             $request->query->getInt('page', 1),
-            Config::POSTS_PER_PAGE
+            $this->adminOptionService->get('POSTS_PER_PAGE')
         );
 
         return $this->render('post/index.html.twig', [
