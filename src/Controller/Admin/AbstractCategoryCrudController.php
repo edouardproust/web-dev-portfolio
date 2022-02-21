@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Config;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -22,7 +23,7 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
             ->setEntityLabelInPlural('Categories')
             ->setEntityLabelInSingular('Category')
             ->setDefaultSort(['label' => 'ASC'])
-            ->setEntityPermission('ROLE_ADMIN');
+            ->setEntityPermission(Config::ROLE_ADMIN);
     }
 
     public function configureActions(Actions $actions): Actions

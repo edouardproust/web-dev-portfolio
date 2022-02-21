@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Config;
 use App\Entity\User;
 use App\Service\EasyAdminService;
+use Symfony\Component\Security\Core\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -18,10 +19,18 @@ class UserCrudController extends AbstractEntityCrudController
 {
     private $easyAdminService;
 
+    private $entityId;
+    private $currentUserId;
+
     public function __construct(
-        EasyAdminService $easyAdminService
+        EasyAdminService $easyAdminService,
+        Security $security
     ) {
         $this->easyAdminService = $easyAdminService;
+        $this->entityId = (int)$_GET['entityId'];
+        /** @var User $user */
+        $user = $security->getUser();
+        $this->currentUserId = $user->getId();
     }
 
     public static function getEntityFqcn(): string
@@ -32,13 +41,14 @@ class UserCrudController extends AbstractEntityCrudController
     public function configureCrud(Crud $crud): Crud
     {
         $crud
-            ->setEntityPermission('ROLE_ADMIN')
-            ->setEntityLabelInPlural('Users');
+            ->setEntityLabelInPlural('Users')
+            ->setDefaultSort(['createdAt' => 'ASC']);
+        // permission
+        if ($this->entityId && $this->entityId !== $this->currentUserId) {
+            $crud->setEntityPermission(Config::ROLE_ADMIN);
+        }
         // page title
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-        $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
-        if ($currentUser->getId() == $entityId) {
+        if ($this->currentUserId === $this->entityId) {
             $crud->setPageTitle(Crud::PAGE_EDIT, 'My Account');
         }
         return $crud;
@@ -67,6 +77,13 @@ class UserCrudController extends AbstractEntityCrudController
             $actions
                 ->add(Crud::PAGE_EDIT, Action::DELETE)
                 ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::DELETE]);
+        }
+        // On Author panel only: if current user is editing his own account
+        if ($this->entityId && $this->entityId === $this->currentUserId) {
+            $actions
+                ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)
+                ->add(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
+                ->remove(Crud::PAGE_EDIT, Action::DELETE);
         }
         return $actions;
     }

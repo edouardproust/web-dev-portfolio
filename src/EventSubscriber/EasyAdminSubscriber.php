@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use DateTime;
 use App\Entity\User;
@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityBuiltEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
@@ -23,6 +24,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     private $userRepository;
     private $hasher;
     private $emailService;
+    private $flash;
 
     private $dataContainer = [];
 
@@ -31,13 +33,15 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         AuthorRepository $authorRepository,
         UserRepository $userRepository,
         UserPasswordHasherInterface $hasher,
-        EmailService $emailService
+        EmailService $emailService,
+        FlashBagInterface $flash
     ) {
         $this->security = $security;
         $this->authorRepository = $authorRepository;
         $this->userRepository = $userRepository;
         $this->hasher = $hasher;
         $this->emailService = $emailService;
+        $this->flash = $flash;
     }
 
     public static function getSubscribedEvents()
@@ -100,6 +104,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         if (property_exists($entity, 'isVisible')) {
             $entity->setIsVisible(true);
         }
+
+        // flash
+        $this->flash->add('success', 'New item created.');
     }
 
     /**
@@ -109,6 +116,11 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     public function onBeforeEntityUpdated(BeforeEntityUpdatedEvent $event)
     {
         $entity = $event->getEntityInstance();
+
+        // All entities with 'updatedAt' property
+        if (property_exists($entity, 'updatedAt')) {
+            $entity->setUpdatedAt(new DateTime());
+        }
 
         // Author entity
         if ($entity instanceof Author) {
@@ -133,6 +145,9 @@ class EasyAdminSubscriber implements EventSubscriberInterface
                 $this->hasher->hashPassword($entity, $entity->getPassword())
             );
         }
+
+        // flash
+        $this->flash->add('success', 'Item updated.');
     }
 
     /**
@@ -147,5 +162,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $user->removeRole('ROLE_AUTHOR');
             $user->setIsAuthor(null);
         }
+
+        // flash
+        $this->flash->add('success', 'Item deleted.');
     }
 }

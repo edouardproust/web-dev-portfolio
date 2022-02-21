@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Path;
 use App\Config;
 use App\Entity\Project;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
@@ -25,6 +26,15 @@ class ProjectCrudController extends AbstractPosttypeCrudController
     public static function getEntityFqcn(): string
     {
         return Project::class;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular(ucfirst($this->route))
+            ->setEntityLabelInPlural(ucfirst($this->route) . 's')
+            ->setDefaultSort(['createdAt' => 'DESC'])
+            ->setEntityPermission(Config::ROLE_ADMIN);
     }
 
     public function setFields(): iterable

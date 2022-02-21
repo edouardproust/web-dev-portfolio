@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Author;
-use App\Service\AdminOptionService;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -25,14 +24,6 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
         $this->checkProperties();
     }
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setEntityLabelInSingular(ucfirst($this->route))
-            ->setEntityLabelInPlural(ucfirst($this->route) . 's')
-            ->setDefaultSort(['createdAt' => 'DESC']);
-    }
-
     public function configureActions(Actions $actions): Actions
     {
         $view = Action::new('VIEW', false, 'fa fa-eye')
@@ -49,6 +40,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     {
         return AssociationField::new('author')
             ->hideWhenCreating()
+            ->hideOnIndex()
             ->setQueryBuilder(function (QueryBuilder $builder) {
                 return $builder
                     ->select('a')

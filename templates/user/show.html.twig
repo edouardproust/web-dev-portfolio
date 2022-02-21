@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My account{% endblock %}
+
+{% block body %}
+
+    <h1>My account</h1>
+
+    <p>Authors can publish blog posts and lessons on this website.</p>
+    <a href="{{ path('author_register') }}">
+        <button type="submit" class="primary">Become an author</button>
+    </a>
+
+    <h2>My informations</h2>
+    <p>Registered on {{ app.user.createdAt|date('F j, Y') }}</p>
+    {{ form_start(userForm) }}
+    {{ form_widget(userForm) }}
+    <button type="submit" class="primary">Update my account</button>
+    {{ form_end(userForm) }}
+
+{% endblock %}

@@ -38,8 +38,7 @@ class AdminOptionCrudController extends AbstractEntityCrudController
             ->setEntityLabelInPlural('Options')
             ->setEntityLabelInSingular(
                 $this->easyAdminService->getEntityLabelSingular(false, 'Option')
-            )
-            ->setEntityPermission('ROLE_ADMIN');
+            )->setEntityPermission(Config::ROLE_ADMIN);
     }
 
     public function setFields(): iterable

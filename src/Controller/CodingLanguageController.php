@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CodingLanguageRepository;
+use App\Service\AdminOptionService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,13 +14,16 @@ class CodingLanguageController extends AbstractController
 {
     private $codingLanguageRepository;
     private $paginator;
+    private $adminOptionService;
 
     public function __construct(
         CodingLanguageRepository $codingLanguageRepository,
-        PaginatorInterface $paginator
+        PaginatorInterface $paginator,
+        AdminOptionService $adminOptionService
     ) {
         $this->codingLanguageRepository = $codingLanguageRepository;
         $this->paginator = $paginator;
+        $this->adminOptionService = $adminOptionService;
     }
 
     /**

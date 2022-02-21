@@ -13,9 +13,9 @@ use App\Entity\PostCategory;
 use App\Entity\CodingLanguage;
 use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
+use App\Service\AdminOptionService;
 use App\Repository\AuthorRepository;
 use App\Controller\Admin\AuthorCrudController;
-use App\Service\AdminOptionService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -96,10 +96,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('New', 'fas fa-plus', Project::class)
                 ->setAction(Action::NEW),
             MenuItem::linkToCrud('Categories', 'fas fa-tags', ProjectCategory::class)
-                ->setPermission('ROLE_ADMIN')
-        ]);
-        yield MenuItem::subMenu('Learn', 'fas fa-book')->setSubItems([
-            MenuItem::linkToCrud('Lessons', 'fas fa-list', Lesson::class),
+        ])->setPermission('ROLE_ADMIN');
+        yield MenuItem::subMenu('Lessons', 'fas fa-book')->setSubItems([
+            MenuItem::linkToCrud('List', 'fas fa-list', Lesson::class),
             MenuItem::linkToCrud('New', 'fas fa-plus', Lesson::class)
                 ->setAction(Action::NEW),
             MenuItem::linkToCrud('Categories', 'fas fa-tags', LessonCategory::class)

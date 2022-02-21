@@ -9,6 +9,7 @@ use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
 use App\Repository\AdminOptionRepository;
 use Symfony\Component\Security\Core\Security;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -17,10 +18,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class EasyAdminService
@@ -193,5 +192,17 @@ class EasyAdminService
                 ->setSortable(false);
         }
         return HiddenField::new('id')->onlyOnDetail();
+    }
+
+    public function isAdminPanelAccessGranted()
+    {
+        $isGranted = false;
+        $user = $this->security->getUser();
+        foreach ($user->getRoles() as $role) {
+            if (in_array($role, Config::EASY_ADMIN_ROLES)) {
+                $isGranted = true;
+            }
+        }
+        return $isGranted;
     }
 }
