@@ -1,0 +1,23 @@
+{# 
+    Variables:
+    - contactLink: Target url on click
+    - contactLabel: Button label. Default: 'Contact Me'
+    - contactLink: Target url onclick
+    - socials: (optional)
+        - slug: eg. 'facebook', 'twitter',...
+        - link: eg. 'https://twitter.com/myname' (open a new tab: traget=_blank)
+#}
+
+<div class="d-flex align-items-center mt-4">
+    <a href="{{ contactLink }}" class="button button-change button-large button-rounded nott fw-light m-0 overflow-hidden">
+        <span><i class="icon-line2-envelope"></i>{{ contactLabel is defined ? contactLabel : 'Contact us'}}</span>
+    </a>
+    {% if socials is defined %}
+        {% for social in socials %}
+            <a href="{{ social.link }}" target="_blank" class="my-0 me-0 ms-3 social-icon inline-block si-small si-borderless si-{{ social.slug }}">
+                <i class="icon-{{ social.slug }}"></i>
+                <i class="icon-{{ social.slug }}"></i>
+            </a>
+        {% endfor %}
+    {% endif %}
+</div>

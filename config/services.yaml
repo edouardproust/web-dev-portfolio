@@ -8,7 +8,7 @@ parameters:
     uploads_projects_path: !php/const App\Path::UPLOADS_PROJECTS
     uploads_posts_path: !php/const App\Path::UPLOADS_POSTS
     uploads_lessons_path: !php/const App\Path::UPLOADS_LESSONS
-
+    
 services:
     # default configuration for services in *this* file
     _defaults:

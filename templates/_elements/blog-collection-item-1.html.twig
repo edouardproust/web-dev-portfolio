@@ -1,0 +1,69 @@
+{# Mandatory variables:
+    - title: <string>
+    - img: <string|array> url of an image or array of images urls
+    - zoom: <string> url to an image of video
+    - link: <string> Target url on click
+    - categories: <array[]> [[<string> label, <string> url>, <array: [<string> class, <string> label]> filter ]]
+#}
+
+{# Optionnal variables:
+    - author: <Author>
+    - date: <Datetime>
+    - comments: <int> Comments number
+#}
+
+{# Icons list: https://themes.semicolonweb.com/html/canvas/icons.html #}
+
+{# Settings #}
+{% set viewIcon = 'icon-line2-eye' %}
+{% set dateFormat = 'medium' %}
+{% set showAuthor = true %}
+{% set showDate = true %}
+
+{# Set #}
+
+{#% set link = path('blog_show', {id: post.id}) %#}
+{% set categoriesClasses %}{% for category in post.categories %}{{ ' ' ~ category.2 }}{% endfor %}{% endset %}
+{% set hasCategories = post.categories is defined and post.categories|length > 0 ? true : false %}
+{% set showComments = post.comments is defined and post.comments is same as(true) ? true : false %}
+
+{# Render #}
+
+<article class="portfolio-item col-md-4 col-sm-6 col-12{{ categoriesClasses }}">
+    <div class="grid-inner">
+        <div class="portfolio-image">
+            <a href="{# {{ path('post_show', {id: post.id, slug: post.slug}) }} #}">
+                <img src="{{ post.mainImage }}" alt="{{ post.title }}">
+            </a>
+            <div class="bg-overlay">
+                <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                    <a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item"><i class="{{ viewIcon }}"></i></a>
+                </div>
+                <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+            </div>
+        </div>
+        <div class="portfolio-desc">
+            <h3><a href="{# {{ path('post_show', {id: post.id, slug: post.slug}) }} #}">{{ post.title }}</a></h3>
+            <div class="entry-meta">
+                <ul>
+                    {% if hasCategories %}
+                        <li>
+                            {% for index, category in post.categories %}
+                                <a href="{{ category.1 }}">{{ category.0 }}</a>{% if index < (post.categories|length - 1) %}, {% endif %}
+                            {% endfor %}
+                        </li>
+                    {% endif %}
+                    {% if showDate %}
+                        <li><i class="icon-calendar3"></i>{{ post.createdAt }}</li>
+                    {% endif %}
+                    {% if showAuthor %}
+                        <li><a href="{# {{ path('author_index', {id: post.author.id}) }} #}"><i class="icon-user-alt"></i>{{ post.author.name }}</a></li>
+                    {% endif %}
+                    {% if showComments %}
+                        <li><i class="icon-comments"></i>{{ post.comments }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>

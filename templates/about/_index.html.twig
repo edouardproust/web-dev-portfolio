@@ -1,0 +1,331 @@
+{# Ref: 
+- https://themes.semicolonweb.com/html/canvas/about.html
+- Carousel in bottom of page: https://themes.semicolonweb.com/html/canvas/about-me.html 
+#}
+
+{% extends '_layout/page.html.twig' %}
+
+{% block title %}About{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('content') }}
+	{{ encore_entry_script_tags('slider') }}
+	{{ encore_entry_script_tags('animation') }}
+	{{ encore_entry_script_tags('collection') }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('content') }}
+{% endblock %}
+
+{% set page_title = 'About' %}
+{# {% set page_desc = "Let's keep in touch." %} #}
+{% set page_breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'About', active: true}
+] %}
+		
+{% block page_content %}
+
+    <section id="content">
+        <div class="content-wrap">
+
+            {# portrait & skills #}
+            <div class="row align-items-stretch bottommargin-lg">
+
+                <div class="col-lg-3 col-md-5 col-padding{# order-md-last #}" style="background: url('{{ asset('build/images/about/team/3.jpg') }}') center center no-repeat; background-size: cover;"></div>
+
+                <div class="col-lg-9 col-md-7 col-padding">
+                    <div>
+                        <div class="heading-block">
+                            <span class="before-heading color">CEO &amp; Co-Founder</span>
+                            <h3>John Doe</h3>
+                        </div>
+
+                        <div class="row col-mb-50">
+
+                            <div class="col-lg-6">
+                                <p>Employment respond committed meaningful fight against oppression social challenges rural legal aid governance. Meaningful work, implementation, process cooperation, campaign inspire.</p>
+                                <p>Advancement, promising development John Lennon, our ambitions involvement underprivileged billionaire philanthropy save the world transform. Carbon rights maintain healthcare emergent, implementation inspire social change solve clean water livelihoods.</p>
+                                <a href="#" class="social-icon inline-block si-small si-light si-rounded si-facebook">
+                                    <i class="icon-facebook"></i>
+                                    <i class="icon-facebook"></i>
+                                </a>
+                                <a href="#" class="social-icon inline-block si-small si-light si-rounded si-twitter">
+                                    <i class="icon-twitter"></i>
+                                    <i class="icon-twitter"></i>
+                                </a>
+                                <a href="#" class="social-icon inline-block si-small si-light si-rounded si-gplus">
+                                    <i class="icon-gplus"></i>
+                                    <i class="icon-gplus"></i>
+                                </a>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <ul class="skills">
+                                    <li data-percent="80">
+                                        <span>Wordpress</span>
+                                        <div class="progress">
+                                            <div class="progress-percent"><div class="counter counter-inherit counter-instant"><span data-from="0" data-to="80" data-refresh-interval="30" data-speed="1100"></span>%</div></div>
+                                        </div>
+                                    </li>
+                                    <li data-percent="60">
+                                        <span>CSS3</span>
+                                        <div class="progress">
+                                            <div class="progress-percent"><div class="counter counter-inherit counter-instant"><span data-from="0" data-to="60" data-refresh-interval="30" data-speed="1100"></span>%</div></div>
+                                        </div>
+                                    </li>
+                                    <li data-percent="90">
+                                        <span>HTML5</span>
+                                        <div class="progress">
+                                            <div class="progress-percent"><div class="counter counter-inherit counter-instant"><span data-from="0" data-to="90" data-refresh-interval="30" data-speed="1100"></span>%</div></div>
+                                        </div>
+                                    </li>
+                                    <li data-percent="70">
+                                        <span>jQuery</span>
+                                        <div class="progress">
+                                            <div class="progress-percent"><div class="counter counter-inherit counter-instant"><span data-from="0" data-to="70" data-refresh-interval="30" data-speed="1100"></span>%</div></div>
+                                        </div>
+                                    </li>
+                                    <li data-percent="85">
+                                        <span>Ruby</span>
+                                        <div class="progress">
+                                            <div class="progress-percent"><div class="counter counter-inherit counter-instant"><span data-from="0" data-to="85" data-refresh-interval="30" data-speed="1100"></span>%</div></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            {# columns #}
+            <div class="container clearfix">
+
+                <div class="row col-mb-50 mb-0">
+
+                    <div class="col-lg-4">
+
+                        <div class="heading-block fancy-title border-bottom-0 title-bottom-border">
+                            <h4>Why choose <span>Us</span>.</h4>
+                        </div>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quidem minus id omnis, nam expedita, ea fuga commodi voluptas iusto, hic autem deleniti dolores explicabo labore enim repellat earum perspiciatis.</p>
+
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="heading-block fancy-title border-bottom-0 title-bottom-border">
+                            <h4>Our <span>Mission</span>.</h4>
+                        </div>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quidem minus id omnis, nam expedita, ea fuga commodi voluptas iusto, hic autem deleniti dolores explicabo labore enim repellat earum perspiciatis.</p>
+
+                    </div>
+
+                    <div class="col-lg-4">
+
+                        <div class="heading-block fancy-title border-bottom-0 title-bottom-border">
+                            <h4>What we <span>Do</span>.</h4>
+                        </div>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quidem minus id omnis, nam expedita, ea fuga commodi voluptas iusto, hic autem deleniti dolores explicabo labore enim repellat earum perspiciatis.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {# counters #}
+            <div class="section m-0">
+                <div class="container clearfix">
+
+                    <div class="row col-mb-50">
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn">
+                            <i class="i-plain i-xlarge mx-auto icon-line2-directions"></i>
+                            <div class="counter counter-lined"><span data-from="100" data-to="846" data-refresh-interval="50" data-speed="2000"></span>K+</div>
+                            <h5>Lines of Codes</h5>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="200">
+                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-graph"></i>
+                            <div class="counter counter-lined"><span data-from="3000" data-to="15360" data-refresh-interval="100" data-speed="2500"></span>+</div>
+                            <h5>KBs of HTML Files</h5>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="400">
+                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-layers"></i>
+                            <div class="counter counter-lined"><span data-from="10" data-to="408" data-refresh-interval="25" data-speed="3500"></span>*</div>
+                            <h5>No. of Templates</h5>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="600">
+                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-clock"></i>
+                            <div class="counter counter-lined"><span data-from="60" data-to="1200" data-refresh-interval="30" data-speed="2700"></span>+</div>
+                            <h5>Hours of Coding</h5>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            {# somme projects #}
+            <div>
+                <div class="section mb-0">
+                    <div class="container">
+                        <div class="heading-block center border-bottom-0 mb-0">
+                            <h3>Some of my Projects</h3>
+                            <span>Awesome Works that I've contibuted to. Proudly.!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="portfolio" class="portfolio row grid-container portfolio-reveal g-0">
+
+                    <article class="portfolio-item col-3">
+                        <div class="grid-inner">
+                            <div class="portfolio-image">
+                                <a href="portfolio-single.html">
+                                    <img src="{{ asset('build/images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
+                                </a>
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                                        <a href="{{ asset('build/images/portfolio/full/2.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item"><i class="icon-line-ellipsis"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                                </div>
+                            </div>
+                            <div class="portfolio-desc">
+                                <h3><a href="portfolio-single.html">Locked Steel Gate</a></h3>
+                                <span><a href="#">Illustrations</a></span>
+                            </div>
+                        </div>
+                    </article>
+                                    <article class="portfolio-item col-3">
+                        <div class="grid-inner">
+                            <div class="portfolio-image">
+                                <a href="portfolio-single.html">
+                                    <img src="{{ asset('build/images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
+                                </a>
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                                        <a href="{{ asset('build/images/portfolio/full/2.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item"><i class="icon-line-ellipsis"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                                </div>
+                            </div>
+                            <div class="portfolio-desc">
+                                <h3><a href="portfolio-single.html">Locked Steel Gate</a></h3>
+                                <span><a href="#">Illustrations</a></span>
+                            </div>
+                        </div>
+                    </article>
+                                    <article class="portfolio-item col-3">
+                        <div class="grid-inner">
+                            <div class="portfolio-image">
+                                <a href="portfolio-single.html">
+                                    <img src="{{ asset('build/images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
+                                </a>
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                                        <a href="{{ asset('build/images/portfolio/full/2.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item"><i class="icon-line-ellipsis"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                                </div>
+                            </div>
+                            <div class="portfolio-desc">
+                                <h3><a href="portfolio-single.html">Locked Steel Gate</a></h3>
+                                <span><a href="#">Illustrations</a></span>
+                            </div>
+                        </div>
+                    </article>
+                                    <article class="portfolio-item col-3">
+                        <div class="grid-inner">
+                            <div class="portfolio-image">
+                                <a href="portfolio-single.html">
+                                    <img src="{{ asset('build/images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
+                                </a>
+                                <div class="bg-overlay">
+                                    <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                                        <a href="{{ asset('build/images/portfolio/full/2.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item"><i class="icon-line-ellipsis"></i></a>
+                                    </div>
+                                    <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                                </div>
+                            </div>
+                            <div class="portfolio-desc">
+                                <h3><a href="portfolio-single.html">Locked Steel Gate</a></h3>
+                                <span><a href="#">Illustrations</a></span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+            
+            {# testimonials #}
+            <div class="section footer-stick">
+
+                <h4 class="text-uppercase center">What <span>Clients</span> Say?</h4>
+
+                <div class="fslider testimonial testimonial-full" data-animation="fade" data-arrows="false">
+                    <div class="flexslider">
+                        <div class="slider-wrap">
+                            <div class="slide">
+                                <div class="testi-image">
+                                    <a href="#"><img src="{{ asset('build/images/about/testimonials/3.jpg') }}" alt="Customer Testimonails"></a>
+                                </div>
+                                <div class="testi-content">
+                                    <p>Similique fugit repellendus expedita excepturi iure perferendis provident quia eaque. Repellendus, vero numquam?</p>
+                                    <div class="testi-meta">
+                                        Steve Jobs
+                                        <span>Apple Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slide">
+                                <div class="testi-image">
+                                    <a href="#"><img src="{{ asset('build/images/about/testimonials/2.jpg') }}" alt="Customer Testimonails"></a>
+                                </div>
+                                <div class="testi-content">
+                                    <p>Natus voluptatum enim quod necessitatibus quis expedita harum provident eos obcaecati id culpa corporis molestias.</p>
+                                    <div class="testi-meta">
+                                        Collis Ta'eed
+                                        <span>Envato Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slide">
+                                <div class="testi-image">
+                                    <a href="#"><img src="{{ asset('build/images/about/testimonials/1.jpg') }}" alt="Customer Testimonails"></a>
+                                </div>
+                                <div class="testi-content">
+                                    <p>Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero illo rerum!</p>
+                                    <div class="testi-meta">
+                                        John Doe
+                                        <span>XYZ Inc.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

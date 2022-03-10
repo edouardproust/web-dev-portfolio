@@ -1,0 +1,8 @@
+{% set linksLength = 40 %}
+
+{# render #}
+
+<div class="d-flex justify-content-between small post-navigation mb-5">
+    <a href="{{ prevPost.url }}">&lArr; {{ prevPost.title|extract(linksLength) }}</a>
+    <a class="ml-auto" href="{{ nextPost.url }}">{{ nextPost.title|extract(linksLength) }} &rArr;</a>
+</div>

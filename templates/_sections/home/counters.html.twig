@@ -1,0 +1,25 @@
+<div style="background: #FFF url('{{ asset('build/images/dots.png') }}') 170% 0% no-repeat; background-size: 60% auto">
+
+    <div class="container">
+        <div class="row justify-content-between">
+            {% include "_elements/counter.html.twig" with {
+                from: 1, to: 7, interval: 90,
+                title: "Years of Experience",
+                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora.",
+            } %}
+            {% include "_elements/counter.html.twig" with {
+                from: 10, to: 114,
+                title: "Posted Travel Blogs",
+                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora.",
+                after: '+'
+            } %}
+            {% include "_elements/counter.html.twig" with {
+                from: 100, to: 1034,
+                title: "Photos Published",
+                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora.",
+                after: '+'
+            } %}
+        </div>
+    </div>
+    
+</div>

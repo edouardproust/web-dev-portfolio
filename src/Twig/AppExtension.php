@@ -24,6 +24,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('config', [$this, 'getAdminOptionValue']),
+            new TwigFunction('uploadUrl', [$this, 'getUploadUrlFromPublicDir']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
             new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
         ];
@@ -44,6 +45,11 @@ class AppExtension extends AbstractExtension
     public function getAdminOptionValue(string $constant)
     {
         return $this->adminOptionService->get($constant);
+    }
+
+    public function getUploadUrlFromPublicDir(string $constant, string $fileName): ?string
+    {
+        return constant('\App\Path' . '::' . $constant) . '/' . $fileName;
     }
 
     /**

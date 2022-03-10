@@ -1,0 +1,51 @@
+{# Ref: https://themes.semicolonweb.com/html/canvas/block-blog-single-2.html #}
+
+{% extends '_layout/project.html.twig' %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('content') }}
+
+	{{ encore_entry_script_tags('slider') }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
+{% endblock %}
+ 
+{% set page_title = 'This is a standard project' %}
+{% set page_breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Portfolio', url: path('portfolio')},
+    {label: page_title, active: true}
+] %}
+{% set page_project = {
+    mainImage: asset('build/images/blog/show/1.jpg'),
+    createdAt: '10th July 2021',
+    author: 'admin',
+    comments: [
+        {
+            author: 'Edouard Proust',
+            createdAt: date(),
+            content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde nulla accusantium similique. Impedit deleniti velit unde aut! Itaque labore hic dolore, incidunt pariatur, neque, quam error temporibus ullam qui animi!'
+        },{
+            author: 'Edouard Proust',
+            createdAt: date(),
+            content: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde nulla accusantium similique. Impedit deleniti velit unde aut! Itaque labore hic dolore, incidunt pariatur, neque, quam error temporibus ullam qui animi!'
+        },
+    ]
+} %}
+{% set project_showPostNavigation = true %}
+{% set project_showAuthor = true %}
+{% set project_showComments = true %}
+
+{% block page_content %}
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, labore deserunt ex cupiditate est blanditiis dignissimos nesciunt doloremque laboriosam ullam necessitatibus voluptatum tempora itaque quia porro voluptates quo excepturi veritatis!</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, sed.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, soluta explicabo sunt aliquam officiis autem.</p>
+
+{% endblock %}

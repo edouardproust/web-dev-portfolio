@@ -14,27 +14,34 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProjectCategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private $projectRepository;
+
+    public function __construct(ManagerRegistry $registry, ProjectRepository $projectRepository)
     {
         parent::__construct($registry, ProjectCategory::class);
+        $this->projectRepository = $projectRepository;
     }
 
-    // /**
-    //  * @return ProjectCategory[] Returns an array of ProjectCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get list of all categories that contain projects
+     * @return ProjectCategory[] Returns an array of ProjectCategory objects
+     */
+    public function findNotEmpty(): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $projectCategories = $this->findAll();
+
+        $notEmptyCategories = [];
+        foreach ($projectCategories as $category) {
+            foreach ($category->getProjects() as $project) {
+                dump($category->getLabel() . ': ' . $project->getTitle());
+            }
+            if (!empty($category->getProjects())) {
+                $notEmptyCategories[] = $category;
+            }
+        }
+        return $notEmptyCategories;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?ProjectCategory

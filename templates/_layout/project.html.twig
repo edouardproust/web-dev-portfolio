@@ -1,0 +1,324 @@
+{% extends "base.html.twig" %}
+
+{% set showPostNavigation = project_showPostNavigation is defined and project_showPostNavigation is same as(true) ? true : false %}
+{% set showAuthor = project_showAuthor is defined and project_showAuthor is same as(true) ? true : false %}
+{% set showComments = project_showComments is defined and project_showComments is same as(true) ? true : false %}
+{% set hasAfterContent = showPostNavigation or showAuthor or showComments ? true : false %}
+
+{% block hero %}
+
+	{% include "_sections/title-page.html.twig" %}
+	
+{% endblock %}
+
+{% block main %}
+
+	<section id="content" class="project-show">
+		<div class="content-wrap">
+			<div class="container clearfix">
+
+			{% if hasAfterContent %}
+				<div class="entry clearfix">
+					<div class="clear"></div>
+					<div class="entry-content mt-3">
+			{% endif %}
+
+					<div class="row col-mb-50">
+
+						{# Carousel #}
+						<div class="col-12 portfolio-single-image">
+							<div class="fslider project-show" data-arrows="true" data-animation="slide">
+								<div class="flexslider">
+									<div class="slider-wrap">
+										<div class="slide shadow"><a href="#"><img src="{{ asset('build/images/portfolio/single/1.jpg') }}" alt="Image"></a></div>
+										<div class="slide shadow"><a href="#"><img src="{{ asset('build/images/portfolio/single/7.jpg') }}" alt="Image"></a></div>
+										<div class="slide shadow"><a href="#"><img src="{{ asset('build/images/portfolio/single/10.jpg') }}" alt="Image"></a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+
+							{# Data #}
+							<div class="card event-meta">
+								<div class="card-body">
+									<ul class="portfolio-meta mb-0">
+										<li><span><i class="icon-user"></i>Created by:</span> John Doe</li>
+										<li><span><i class="icon-calendar3"></i>Completed on:</span> 17th March 2021</li>
+										<li><span><i class="icon-lightbulb"></i>Skills:</span> HTML5 / PHP / CSS3</li>
+										<li><span><i class="icon-link"></i>Client:</span> <a href="#">Google</a></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+
+						{# Content #}
+						<div class="col-md-8 portfolio-single-content">
+
+							{# Portfolio Single - Description #}
+							<div class="fancy-title title-border">
+								<h2>Project Info:</h2>
+							</div>
+
+							{% block page_content %}{% endblock %}
+
+						</div>
+					</div>
+
+					<div class="divider divider-center"><i class="icon-circle"></i></div>
+
+					{# Related Portfolio Items #}
+					<h4>Related Projects:</h4>
+
+					<div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="30" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="4">
+
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="{{ path('portfolio_show') }}">
+										<img src="{{ asset('build/images/portfolio/4/1.jpg') }}" alt="Open Imagination">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+											<a href="images/portfolio/full/1.jpg" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{{ path('portfolio_show') }}">Open Imagination</a></h3>
+									<span><a href="#">Media</a>, <a href="#">Icons</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="{{ path('portfolio_show') }}">
+										<img src="{{ asset('build/images/portfolio/4/2.jpg') }}" alt="Locked Steel Gate">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+											<a href="{{ asset('build/images/portfolio/full/2.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image"><i class="icon-line-plus"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{{ path('portfolio_show') }}">Locked Steel Gate</a></h3>
+									<span><a href="#">Illustrations</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="#">
+										<img src="{{ asset('build/images/portfolio/4/3.jpg') }}" alt="Mac Sunglasses">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
+											<a href="https://vimeo.com/89396394" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="portfolio-single-video.html">Mac Sunglasses</a></h3>
+									<span><a href="#">Graphics</a>, <a href="#">UI Elements</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="#">
+										<img src="{{ asset('build/images/portfolio/4/4.jpg') }}" alt="Morning Dew">
+									</a>
+									<div class="bg-overlay" data-lightbox="gallery">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="{{ asset('build/images/portfolio/full/4.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+											<a href="{{ asset('build/images/portfolio/full/4-1.jpg') }}" class="d-none" data-lightbox="gallery-item"></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="portfolio-single-gallery.html">Morning Dew</a></h3>
+									<span><a href="#">Icons</a>, <a href="#">Illustrations</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="{{ path('portfolio_show') }}">
+										<img src="{{ asset('build/images/portfolio/4/5.jpg') }}" alt="Console Activity">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="{{ asset('build/images/portfolio/full/5.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{{ path('portfolio_show') }}">Console Activity</a></h3>
+									<span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="portfolio-single-gallery.html">
+										<img src="{{ asset('build/images/portfolio/4/6.jpg') }}" alt="Shake It!">
+									</a>
+									<div class="bg-overlay" data-lightbox="gallery">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="{{ asset('build/images/portfolio/full/6.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+											<a href="{{ asset('build/images/portfolio/full/6-1.jpg') }}" class="d-none" data-lightbox="gallery-item"></a>
+											<a href="{{ asset('build/images/portfolio/full/6-2.jpg') }}" class="d-none" data-lightbox="gallery-item"></a>
+											<a href="{{ asset('build/images/portfolio/full/6-3.jpg') }}" class="d-none" data-lightbox="gallery-item"></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="portfolio-single-gallery.html">Shake It!</a></h3>
+									<span><a href="#">Illustrations</a>, <a href="#">Graphics</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="portfolio-single-video.html">
+										<img src="{{ asset('build/images/portfolio/4/7.jpg') }}" alt="Backpack Contents">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="https://www.youtube.com/watch?v=kuceVNBTJio" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="portfolio-single-video.html">Backpack Contents</a></h3>
+									<span><a href="#">UI Elements</a>, <a href="#">Icons</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="{{ path('portfolio_show') }}">
+										<img src="{{ asset('build/images/portfolio/4/8.jpg') }}" alt="Sunset Bulb Glow">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="{{asset('build/images/portfolio/full/8.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{{ path('portfolio_show') }}">Sunset Bulb Glow</a></h3>
+									<span><a href="#">Graphics</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="{{ path('portfolio_show') }}">
+										<img src="{{ asset('build/images/portfolio/4/9.jpg') }}" alt="Bridge Side">
+									</a>
+									<div class="bg-overlay" data-lightbox="gallery">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="{{ asset('build/images/portfolio/full/9.jpg') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+											<a href="{{ asset('build/images/portfolio/full/9-1.jpg') }}" class="d-none" data-lightbox="gallery-item"></a>
+											<a href="{{ asset('build/images/portfolio/full/9-2.jpg') }}" class="d-none" data-lightbox="gallery-item"></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="{{ path('portfolio_show') }}">Bridge Side</a></h3>
+									<span><a href="#">Illustrations</a>, <a href="#">Icons</a></span>
+								</div>
+							</div>
+						</div>
+						<div class="oc-item">
+							<div class="portfolio-item">
+								<div class="portfolio-image">
+									<a href="portfolio-single-video.html">
+										<img src="{{ asset('build/images/portfolio/4/10.jpg') }}" alt="Study Table">
+									</a>
+									<div class="bg-overlay">
+										<div class="bg-overlay-content dark" data-hover-animate="fadeIn">
+											<a href="https://vimeo.com/91973305" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-lightbox="iframe"><i class="icon-line-play"></i></a>
+											<a href="{{ path('portfolio_show') }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
+										</div>
+										<div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
+									</div>
+								</div>
+								<div class="portfolio-desc">
+									<h3><a href="portfolio-single-video.html">Study Table</a></h3>
+									<span><a href="#">Graphics</a>, <a href="#">Media</a></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+			{% if hasAfterContent %}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if hasAfterContent %}
+
+				<div class="single-post mw-xs mx-auto">
+
+					{% if showPostNavigation %}
+						{% include "_sections/posttype/post-navigation.html.twig" with {
+							prevPost: {
+								title: 'Pariatur aspernatur debitis neque',
+								url: path('blog_show')
+							},
+							nextPost: {
+								title: 'Totam hic molestias facilis odio eligendi',
+								url: path('blog_show')
+							}
+						} %}
+					{% endif %}
+					
+					{% if showAuthor %}
+						{% include "_sections/posttype/author-box.html.twig" %}
+					{% endif %}
+
+					{% if showComments %}
+						{% include "_sections/posttype/comments.html.twig" %}
+					{% endif %}
+
+				</div>
+
+			{% endif %}
+
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

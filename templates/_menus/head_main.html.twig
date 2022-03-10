@@ -1,0 +1,25 @@
+{# Settings #}
+
+{% set animation_overlays = 4 %}
+
+
+{# Header menu =============================================== #}
+
+<div>
+    <div class="primary-menu-trigger hamburger">
+        <i class="icon-line-menu"></i>
+        <i class="icon-line-cross"></i>
+    </div>
+    <div class="global-menu">
+        <div class="global-menu__wrap">
+            {% for link in menu %}
+                <a class="global-menu__item" href="{{ link.url }}">{{ link.label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <svg class="shape-overlays" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {% for i in 1..animation_overlays %}
+            <path class="shape-overlays__path" d=""></path>
+        {% endfor %}
+    </svg>
+</div>

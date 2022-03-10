@@ -1,0 +1,29 @@
+{% set hasComments = post.comments is defined and post.comments > 0 ? true : false %}
+{% set categoriesClasses = '' %}
+{% if post.categories is defined and post.categories|length > 0 %}
+    {% set categoriesClasses %}{% for category in post.categories %}{{ ' ' ~ category.2 }}{% endfor %}{% endset %}
+{% endif %}
+
+<article class="col-md-4 g-1 grid-item{{ categoriesClasses }}">
+    <a href="{{ path('blog_show') }}">
+        <div style="background: linear-gradient(to bottom, transparent, rgba(0,0,0,.3) 75%, rgba(0,0,0,0.9) 100%), url('{{ post.mainImage }}') no-repeat center center / cover; height: 400px">
+            <div class="bg-overlay position-relative">
+                <div class="bg-overlay-content flex-column justify-content-end align-items-start px-5 py-4 dark">
+                    <div class="entry-meta mb-3">
+                        <ul>
+                            <li>{{ post.author }}</li>
+                            <li>{{ post.createdAt|date('M j, Y') }}</li>
+                            {% if hasComments %}
+                                <li><i class="icon-comments"></i>{{ post.comments }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="entry-title title-sm">
+                        <h3>{{ post.title }}</h3>
+                    </div>
+                    <i class="icon-line-arrow-right btn-more"></i>
+                </div>
+            </div>
+        </div>
+    </a>
+</article>

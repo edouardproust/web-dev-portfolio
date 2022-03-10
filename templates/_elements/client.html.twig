@@ -1,0 +1,5 @@
+<div class="col-md-3 col-6">
+    {% if link is defined %}<a href="{{ link }}">{% endif %}
+        <img class="p-4" src="{{ img }}" alt="{{ alt is defined ? alt : 'Client' }}">
+    {% if link is defined %}</a>{% endif %}
+</div>

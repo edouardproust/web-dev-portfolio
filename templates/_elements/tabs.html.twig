@@ -1,0 +1,29 @@
+{# Examples: https://themes.semicolonweb.com/html/canvas/tabs.html #}
+
+{#
+Mandatory variables:
+    - tabs: <array> Array of objects: [ { title: <string>, content: <string> },... ]
+        html is allowed for 'title' and 'content' attributes
+#}
+
+<div class="tabs clearfix">
+
+    <ul class="tab-nav clearfix" role="tablist">
+        {% for i, tab in tabs %}
+            <li role="tab" aria-controls="tabs-1">
+                <a href="#tabs-{{ i }}" role="presentation">
+                    {{ tab.title|raw }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="tab-container">
+        {% for i, tab in tabs %}
+        <div class="tab-content" id="tabs-{{ i }}" role="tabpanel">
+            {{ tab.content|raw }}
+        </div>
+        {% endfor %}
+    </div>
+
+</div>

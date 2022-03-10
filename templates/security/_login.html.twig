@@ -1,0 +1,93 @@
+{# Ref: 
+- https://themes.semicolonweb.com/html/canvas/login-register-2.html
+- https://themes.semicolonweb.com/html/canvas/login-2.html 
+#}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('content') }}
+    {{ encore_entry_script_tags('video') }}
+{% endblock %}
+
+{% block page %}
+
+    <section class="slider-element min-vh-60 min-vh-md-100 include-header">
+		<div class="slider-inner">
+
+			<div class="vertical-middle">
+				<div class="container py-5 py-md-0">
+
+					<div class="tabs mx-auto clearfix" id="tab-login-register" style="max-width: 500px;">
+
+						<ul class="tab-nav tab-nav2 center clearfix">
+							<li class="inline-block"><a href="#tab-login">Login</a></li>
+							<li class="inline-block"><a href="#tab-register">Register</a></li>
+						</ul>
+
+						<div class="tab-container">
+
+							<div class="tab-content" id="tab-login">
+								<div class="card">
+									<div class="card-body" style="padding: 40px;">
+
+                                        <h3>Login to your Account</h3>
+										<form id="login-form" name="login-form" class="mb-0" action="#" method="post">
+
+											<div class="row">
+                                                <div class="col-12 form-group"><label for="login-form-username">Username:</label><input type="text" id="login-form-username" name="login-form-username" value="" class="form-control" /></div>
+												<div class="col-12 form-group"><label for="login-form-password">Password:</label><input type="password" id="login-form-password" name="login-form-password" value="" class="form-control" /></div>
+												<div class="col-12 form-group"><button class="button button-3d button-black m-0" id="login-form-submit" name="login-form-submit" value="login">Login</button><a href="#" class="float-end">Forgot Password?</a></div>
+											</div>
+
+										</form>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="tab-content" id="tab-register">
+								<div class="card mb-0">
+									<div class="card-body" style="padding: 40px;">
+
+										<h3>Register for an Account</h3>
+										<form id="register-form" name="register-form" class="row mb-0" action="#" method="post">
+
+											<div class="col-12 form-group"><label for="register-form-name">Name:</label><input type="text" id="register-form-name" name="register-form-name" value="" class="form-control" /></div>
+											<div class="col-12 form-group"><label for="register-form-email">Email Address:</label><input type="text" id="register-form-email" name="register-form-email" value="" class="form-control" /></div>
+											<div class="col-12 form-group"><label for="register-form-username">Choose a Username:</label><input type="text" id="register-form-username" name="register-form-username" value="" class="form-control" /></div>
+											<div class="col-12 form-group"><label for="register-form-phone">Phone:</label><input type="text" id="register-form-phone" name="register-form-phone" value="" class="form-control" /></div>
+											<div class="col-12 form-group"><label for="register-form-password">Choose Password:</label><input type="password" id="register-form-password" name="register-form-password" value="" class="form-control" /></div>
+											<div class="col-12 form-group"><label for="register-form-repassword">Re-enter Password:</label><input type="password" id="register-form-repassword" name="register-form-repassword" value="" class="form-control" /></div>
+											<div class="col-12 form-group">
+												<button class="button button-3d button-black m-0" id="register-form-submit" name="register-form-submit" value="register">Register Now</button>
+											</div>
+
+										</form>
+                                        
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="video-wrap">
+				<video poster="{{ asset('build/images/videos/deskwork.jpg') }}" preload="auto" loop autoplay muted>
+					<source src='{{ asset('build/images/videos/deskwork.mp4') }}' type='video/mp4' />
+					<source src='{{ asset('build/images/videos/deskwork.webm') }}' type='video/webm' />
+				</video>
+				<div class="video-overlay" style="background-color: rgba(0,0,0,0.3);"></div>
+			</div>
+
+		</div>
+	</section>
+
+{% endblock %}

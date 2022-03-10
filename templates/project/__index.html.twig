@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Portfolio
+{% endblock %}
+
+{% block body %}
+
+	<h1>Portfolio</h1>
+
+	<div class="collection">
+
+		{% for project in projects %}
+			{% include "_parts/card/project.html.twig" %}
+		{% endfor %}
+
+		<div class="pagination">
+			{{ knp_pagination_render(projects) }}
+		</div>
+
+	</div>
+
+{% endblock %}

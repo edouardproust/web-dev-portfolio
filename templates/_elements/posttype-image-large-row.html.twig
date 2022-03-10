@@ -1,0 +1,31 @@
+<div class="row align-wide-xl mb-4 text-center">
+
+    {% if image is defined and image is iterable %}
+
+        {% for img in image %}
+            {% set hasCaption = img.caption is defined and not null ? true : false %}
+            {% set alt = hasCaption ? img.caption : 'Image' %}
+
+            <div class="{{ colsNb(image|length, 'lg') }}">
+                <img src="{{ img.src }}" alt="{{ alt }}">
+                {% set hasCaption = img.caption is defined and not null ? true : false %}
+                {% if hasCaption %}
+                    <figcaption class="text-center mt-2 text-muted text-smaller">{{ img.caption }}</figcaption>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+        
+        {% set hasCaption = caption is defined and not null ? true : false %}
+        {% set alt = hasCaption ? caption : 'Image' %}
+
+        <img src="{{ src }}" alt="{{ alt }}">
+        {% if hasCaption %}
+            <figcaption class="text-center mt-2 text-muted text-smaller">{{ caption }}</figcaption>
+        {% endif %}
+
+    {% endif %}
+ 
+</div>

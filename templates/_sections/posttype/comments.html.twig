@@ -1,0 +1,20 @@
+{% set comments = page_blogpost.comments ?? page_project.comments %}
+
+<div id="comments" class="clearfix">
+
+    <h3 id="comments-title"><span>{{ comments|length }}</span> Comments</h3>
+
+    {# Comments List #}
+
+    <ol class="commentlist clearfix">
+        {% for i, comment in comments %}
+            {% include "_elements/posttype-comment.html.twig" with { comment: comment } %}
+        {% endfor %}
+    </ol>
+    <div class="clear"></div>
+
+    {# Leave a comment #}
+
+    {% include "_elements/posttype-comment-form.html.twig" %}
+
+</div>

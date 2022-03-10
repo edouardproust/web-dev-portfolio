@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% set whiteLogo = true %}
+{% set showPostNavigation = blogpost_showPostNavigation is defined and blogpost_showPostNavigation is same as(true) ? true : false %}
+{% set showAuthor = blogpost_showAuthor is defined and blogpost_showAuthor is same as(true) ? true : false %}
+{% set showComments = blogpost_showComments is defined and blogpost_showComments is same as(true) ? true : false %}
+{% set hasAfterContent = showPostNavigation or showAuthor or showComments ? true : false %}
+
+{% block hero %}
+
+    {% include "_sections/title-page.html.twig" %}
+    
+{% endblock %}
+
+{% block main %}
+
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+
+                <div class="single-post mw-xs mx-auto">
+
+                    {% if hasAfterContent %}
+                        <div class="entry clearfix">
+                            <div class="clear"></div>
+                            <div class="entry-content mt-3">
+                    {% endif %}
+
+                                {% block page_content %}{% endblock %}
+
+                    {% if hasAfterContent %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if hasAfterContent %}
+
+                        {% if showPostNavigation %}
+                            {% include "_sections/posttype/post-navigation.html.twig" with {
+                                prevPost: {
+                                    title: 'Pariatur aspernatur debitis neque',
+                                    url: path('blog_show')
+                                },
+                                nextPost: {
+                                    title: 'Totam hic molestias facilis odio eligendi',
+                                    url: path('blog_show')
+                                }
+                            } %}
+                        {% endif %}
+
+                        {% if showAuthor %}
+                            {% include "_sections/posttype/author-box.html.twig" %}
+                        {% endif %}
+
+                        {% if showComments %}
+                            {% include "_sections/posttype/comments.html.twig" %}
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

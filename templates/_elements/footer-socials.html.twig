@@ -1,0 +1,16 @@
+{# Mandatory variables:
+    - socials: <object> {
+        link: <string> Url (href attribute)
+        icon: <string> Icon class. Eg 'icon-linkedin' (list of icons: https://themes.semicolonweb.com/html/canvas/icons.html)
+    }
+#}
+
+
+{% for social in socials %}
+
+    <a href="{{ social.link }}" target="_blank" class="social-icon inline-block si-small si-borderless mb-0 si-facebook">
+        <i class="{{ social.icon }}"></i>
+        <i class="{{ social.icon }}"></i>
+    </a>
+
+{% endfor %}

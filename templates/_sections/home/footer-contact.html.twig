@@ -1,0 +1,48 @@
+{# 
+    Inherited variables from:
+        _elements/section-title.html.twig
+        _elements/contact-button.html.twig
+        _elements/testimonials-slider-small.html.twig
+#}
+
+<div class="section mb-0 bg-transparent">
+    <div class="container">
+
+        <div class="row justify-content-between mt-5">
+
+            {% set additionalHtml %}
+                {% include "_elements/contact-button.html.twig" with {
+                    contactLabel: 'Contact Me!',
+                    contactLink: '#',
+                    socials: [ 
+                        { slug: 'facebook', link: 'https://facebook.com' },
+                        { slug: 'twitter', link: 'https://twitter.com' },
+                        { slug: 'instagram', link: 'https://instagram.com' }
+                    ]
+                } %}
+            {% endset %}
+
+            {% include "_elements/section-title.html.twig" with {
+                section: section,
+                title: title,
+                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae sunt dolor cum, maxime excepturi alias rem numquam iure laborum, amet, vero quam nulla nostrum ipsum deserunt maiores voluptatem animi cupiditate.",
+                additionalHtml: additionalHtml,
+                titleSize: '64px',
+                titleLineHeight: '4.4rem',
+                removeVerticalMargins: true
+            } %}
+
+            {% include "_elements/testimonials-slider-small.html.twig"  with {
+                title: 'What Clients Says:',
+                slides: [{ 
+                        content: 'Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero illo rerum repellendus!',
+                        name: 'Fig Nelson'
+                    },{
+                        content: 'Completely e-enable premier infomediaries and long-term high-impact process improvements. Completely provide access to B2C.',
+                        name: 'Bailey Wonger'
+                    }]
+            } %}
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+@import './sass/variables';
+@import './sass/mixins';
+
+
+@import './sass/typography';
+@import './sass/fonts/fonts';
+@import './sass/custom-fonts';
+
+@import './sass/layouts';
+@import './sass/topbar';
+@import './sass/header';
+@import './sass/footer';
+@import './sass/menu';
+
+@import './sass/pagetitle';
+@import './sass/content';
+@import './sass/portfolio';
+@import './sass/blog';
+
+@import '~bootstrap/scss/bootstrap';
+@import './sass/utilities';
+
+
+@import './sass/collection';
+@import 'sass/magnific-popup';
+@import './sass/sliders';
+
+@import './sass/shortcodes';
+@import './sass/widgets';
+
+@import './sass/events';
+@import './sass/animate';
+@import './sass/extras';
+
+
+@import './sass/dark';
+
+@import './sass/fonts/font-icons';
+
+@import './sass/custom';
+
+
+// @import './sass/paginations';
+// @import './sass/page-loaders';
+// @import './sass/style-rtl';

@@ -1,0 +1,96 @@
+{# Mandatory variables:
+    - page_title: <string>
+
+Optionnal variables:
+    - page_desc: <string> Page description
+    - page_breadcrumbs: <array{}> Array of link objects (see pattern below)
+    - blogPostMainImage: only if is a blogpost (image url)
+
+Set breadcrumb in a page:
+            {% set breadcrumb = [
+                { label: 'Home', url: '#'},
+                { ... },
+                { label: 'Portfolio', active: true},
+            ] %} 
+#}
+
+{# Settings =========================== #}
+
+{% set animation = 'fadeInUp' %}
+{% set shapeDivider = 'slant' %} {# Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html #}
+{% set shapeDividerReverse = true %}
+{% set h2LineHeight = '3.2rem' %}
+
+
+{# Set ===========================#} 
+
+{% set animationClass = animation is defined ? ' ' ~ animation ~ ' animated' : '' %}
+{% set animationAttr = animation is defined ? ' data-animate="' ~ animation ~ '"' : '' %}
+{% set shapeDividerExtraClass = shapeDividerReverse is defined and shapeDividerReverse is same as(true) ? ' reverse' : '' %}
+{% set isBlogpost = page_blogpost is defined ? true : false %}
+{% set isProjectClass = page_project is defined ? ' project-show' : '' %}
+{% set textLightClass = isBlogpost ? ' text-light' : '' %}
+{% set overlayColor = isBlogpost and page_blogpost.overlayColor is defined ? page_blogpost.overlayColor : 'rgba(0, 0, 0, 0.5)' %}
+
+
+{# Render ===========================#} 
+
+{% if isBlogpost %}
+    <section id="page-title" 
+        class="page-title-pattern bg-image-title" 
+        style="background-image:url({{ page_blogpost.mainImage }}) !important"
+    >
+        <div class="bg-overlay-bg" 
+            style="background: 
+                radial-gradient({{ overlayColor }}, {{ overlayColor }}), 
+                url({{ page_blogpost.mainImage }}) center center / cover no-repeat fixed">
+        </div>
+{% else %}
+    <section id="page-title" class="page-title-pattern{{ isProjectClass }}">
+{% endif %}
+
+    <div class="container clearfix{{ textLightClass }}">
+
+        <div class="col-lg-8{{ animationClass }}"
+            {{ animationAttr }}{# data-delay="200" #}
+            {# style="animation-duration: 600ms" #}
+        >
+            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >
+                {{ page_title }}
+            </h2>
+            {% if isBlogpost or page_desc is defined %}
+                {% if page_blogpost is defined %}
+                    <ol class="page-description">
+                        <li><i class="icon-calendar3"></i>{{ ' ' ~ page_blogpost.createdAt }}</li>
+                        <li class="sep"><a href="#" class="meta-separator"><i class="icon-user"></i>{{ ' ' ~ page_blogpost.author }}</a>
+                        <li class="sep"><a href="#" class="meta-separator"><i class="icon-comments"></i>{{ ' ' ~ page_blogpost.comments|length ~ ' Comments' }}</a>
+                    </ol>
+                {% else %}
+                    <div class="page-description" style="opacity: .7">
+                        {{ page_desc }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        
+        {% if page_breadcrumb is defined %}
+            {% include "_elements/breadcrumb.html.twig" with {
+                links: page_breadcrumb
+            } %}
+        {% endif %}
+        
+    </div>
+
+    {% if shapeDivider is defined %}
+        <div class="shape-divider{{ shapeDividerExtraClass }}" 
+            data-shape="{{ shapeDivider }}" 
+            data-position="bottom" 
+            data-height="70"
+        >
+            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none" class="op-ts op-1">
+                <path class="shape-divider-fill" d="M0,6V0h1000v100L0,6z"></path>
+            </svg>
+        </div>
+    {% endif %}
+
+</section>

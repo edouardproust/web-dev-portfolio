@@ -1,0 +1,19 @@
+{# Mandatory variables:
+    - filters: <object> {<string> class: <string> label, ...}
+ #}
+
+<div class="grid-filter-wrap">
+
+    {# Collection Filter #}
+    <ul class="grid-filter" data-container="#collection">
+        <li class="activeFilter"><a href="#" data-filter="*">Show All</a></li>
+        {% for filter in filters %}
+            <li><a href="#" data-filter=".{{ filter.slug }}">{{ filter.label }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <div class="grid-shuffle rounded" data-container="#collection">
+        <i class="icon-random"></i>
+    </div>
+
+</div>

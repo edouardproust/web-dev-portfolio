@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Config;
+use App\Repository\ProjectCategoryRepository;
 use App\Repository\ProjectRepository;
 use App\Service\AdminOptionService;
 use Knp\Component\Pager\PaginatorInterface;
@@ -16,15 +16,18 @@ class ProjectController extends AbstractController
     private $projectRepository;
     private $paginator;
     private $adminOptionService;
+    private $projectCategoryRepository;
 
     public function __construct(
         ProjectRepository $projectRepository,
         PaginatorInterface $paginator,
-        AdminOptionService $adminOptionService
+        AdminOptionService $adminOptionService,
+        ProjectCategoryRepository $projectCategoryRepository
     ) {
         $this->projectRepository = $projectRepository;
         $this->paginator = $paginator;
         $this->adminOptionService = $adminOptionService;
+        $this->projectCategoryRepository = $projectCategoryRepository;
     }
 
     /**
@@ -33,14 +36,11 @@ class ProjectController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $projects = $this->paginator->paginate(
-            $this->projectRepository->findAll(),
-            $request->query->getInt('page', 1),
-            $this->adminOptionService->get('PROJECTS_PER_PAGE')
-        );
+        $projects = $this->projectRepository->findAll();
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
+            'categories' => $this->projectCategoryRepository->findNotEmpty()
         ]);
     }
 
