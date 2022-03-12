@@ -1,8 +1,46 @@
-{% set linksLength = 40 %}
+{# Config
 
-{# render #}
+    Mandatory variables:
+        - prevNextLinks: <array[]> Array containing data for each link (previous and next):
+            [
+                'prev' => ['url' => string, 'title' => string], 
+                'next' => ['url' => string, 'title' => string] 
+            ]
+
+    Optionnal variables:
+        - linksLength: <int|null> Max characters length for the link label. null to desactivate
+#}
+
+{% set linksLength = 30 %}
+
+
+{# Prepare #}
+
+{% set hasPrevLink = prevNextLinks.prev is defined and prevNextLinks.prev is not null %}
+{% set hasNextLink = prevNextLinks.next is defined and prevNextLinks.next is not null %}
+{% set isExtract = linksLength is defined and linksLength is not null %}
+
+{% if hasPrevLink %}
+    {% set prevUrl = prevNextLinks.prev.url %}
+    {% set prevTitle = isExtract ? prevNextLinks.prev.title|extract(linksLength) : prevNextLinks.prev.title  %}
+{% endif %}
+
+{% if hasNextLink %}
+    {% set nextUrl = prevNextLinks.next.url %}
+    {% set nextTitle = isExtract ? prevNextLinks.next.title|extract(linksLength) : prevNextLinks.next.title %}
+{% endif %}
+
+{# Post Navigation section ================================================= #}
 
 <div class="d-flex justify-content-between small post-navigation mb-5">
-    <a href="{{ prevPost.url }}">&lArr; {{ prevPost.title|extract(linksLength) }}</a>
-    <a class="ml-auto" href="{{ nextPost.url }}">{{ nextPost.title|extract(linksLength) }} &rArr;</a>
+    {% if hasPrevLink %}
+        <a href="{{ prevUrl }}">&lArr; {{ prevTitle }}</a>
+    {% else %}
+        <div></div>
+    {% endif %}
+    {% if hasNextLink %}
+        <a class="ml-auto" href="{{ nextUrl }}">{{ nextTitle }} &rArr;</a>
+    {% else %}
+        <div></div>
+    {% endif %}
 </div>

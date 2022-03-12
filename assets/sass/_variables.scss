@@ -265,7 +265,7 @@ $header-misc-icons-color: darken($text-color, 6.67);
 //-------------------- Page Title -------------------- //
 
 $page-title-base-color: darken($text-color, 6.67%);
-$page-title-padding: 4rem;
+$page-title-padding: 10rem;
 $page-title-parallax-padding: $page-title-padding * 1.5625;
 $page-title-mini-padding: 20px;
 
@@ -890,7 +890,6 @@ $portfolio-ajax-width: 1200px;
 // Portfolio Meta
 $portfolio-meta-font-size: 0.875rem;
 $portfolio-meta-color: lighten($text-color, 13.33);
-$portfolio-meta-row-1: 150px;
 $portfolio-meta-row-1-color: darken($text-color, 6.67);
 $portfolio-meta-icon: 14px;
 $portfolio-meta-border: 1px solid darken($body-bg, 10.2);

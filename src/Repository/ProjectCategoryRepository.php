@@ -33,9 +33,6 @@ class ProjectCategoryRepository extends ServiceEntityRepository
 
         $notEmptyCategories = [];
         foreach ($projectCategories as $category) {
-            foreach ($category->getProjects() as $project) {
-                dump($category->getLabel() . ': ' . $project->getTitle());
-            }
             if (!empty($category->getProjects())) {
                 $notEmptyCategories[] = $category;
             }

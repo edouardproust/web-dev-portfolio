@@ -2,22 +2,32 @@
 
 namespace App\Twig;
 
+use App\Entity\Post;
 use App\Entity\User;
 use Twig\TwigFilter;
 use App\Entity\Author;
 use Twig\TwigFunction;
 use App\Helper\StringHelper;
+use App\Repository\PostRepository;
 use App\Service\AdminOptionService;
+use App\Service\PostTypeService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
 class AppExtension extends AbstractExtension
 {
     private $adminOptionService;
+    private $postRepository;
+    private $postTypeService;
 
-    public function __construct(AdminOptionService $adminOptionService)
-    {
+    public function __construct(
+        AdminOptionService $adminOptionService,
+        PostRepository $postRepository,
+        PostTypeService $postTypeService
+    ) {
         $this->adminOptionService = $adminOptionService;
+        $this->postRepository = $postRepository;
+        $this->postTypeService = $postTypeService;
     }
 
     public function getFunctions()
@@ -47,8 +57,9 @@ class AppExtension extends AbstractExtension
         return $this->adminOptionService->get($constant);
     }
 
-    public function getUploadUrlFromPublicDir(string $constant, string $fileName): ?string
+    public function getUploadUrlFromPublicDir(?string $constant, ?string $fileName): ?string
     {
+        if (!$constant || !$fileName) return null;
         return constant('\App\Path' . '::' . $constant) . '/' . $fileName;
     }
 

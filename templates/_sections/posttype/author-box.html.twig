@@ -1,9 +1,38 @@
+{# Config
+
+    Mandatory variables:
+        - author: <Author> The Author of the post|lesson|project
+        - defaultAvatar: <string> File name of the default avatar image (used if author does not have avatar)
+
+    Optionnal variables:
+        - author_routeName: <string|null> Route name for the author collection of posts|projects|lessons (set in 'show' and 'index' templates)
+#}
+
+{% set defaultAvatar = 'placeholder.png'  %}
+
+{# Prepare #}
+
+{% set hasAuthorLink = author_routeName is defined and author_routeName is not null ? true : false %}
+{% set authorCollectionUrl = hasAuthorLink ? path(author_routeName, {id: author.id}) %}
+{% set avatarUrl = author.avatar is defined and author.avatar is not null
+    ? uploadUrl('UPLOADS_AUTHORS', author.avatar)
+    : uploadUrl('UPLOADS_AUTHORS', defaultAvatar)
+%}
+
+{# Author Box component =================================================== #}
+
 <div class="card">
-    <div class="card-header"><strong>Posted by <a href="#">John Doe</a></strong></div>
+    <div class="card-header">
+        <strong><span>Posted by </span>
+        {% if hasAuthorLink %}<a href="{{ authorCollectionUrl }}">{% endif %}
+                {{ author.fullname }}
+        {% if hasAuthorLink %}</a>{% endif %}
+        </strong>
+    </div>
     <div class="card-body">
         <div class="author-image">
-            <img src="{{ asset('build/images/blog/show/author.jpg') }}" alt="Image" class="rounded-circle">
+            <img src="{{ avatarUrl }}" alt="Image" class="rounded-circle">
         </div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, eveniet, eligendi et nobis neque minus mollitia sit repudiandae ad repellendus recusandae blanditiis praesentium vitae ab sint earum voluptate velit beatae alias fugit accusantium laboriosam nisi reiciendis deleniti tenetur molestiae maxime id quaerat consequatur fugiat aliquam laborum nam aliquid. Consectetur, perferendis?
+        {{ author.bio|raw }}
     </div>
 </div>

@@ -79,7 +79,7 @@ abstract class AbstractFixtures extends Fixture
     protected function setOptional(object $entity, string $fieldName, $value, int $probability = 100)
     {
         $setterFn = 'set' . ucFirst($fieldName);
-        if (random_int(1, 100) < $probability) {
+        if ($this->faker->boolean($probability)) {
             $entity->$setterFn($value);
         }
     }

@@ -4,13 +4,15 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('collection') }}
+	{{ encore_entry_script_tags('animation') }}
 	{{ encore_entry_script_tags('slider') }}
 {% endblock %}
 
 {% set page_title = 'Portfolio' %}
 {% set page_desc = 'Showcase of Our Awesome Works in 3 Columns' %}
 {% set breadcrumb = [
-    {label: 'Home', url: '/'},
+    {label: 'Home', url: path('home')},
     {label: 'Portfolio', active: true}
 ] %}
 {% set collection_filters = {

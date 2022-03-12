@@ -25,7 +25,7 @@ function masonryThumbs() {
 
 		let firstElementWidth = element.children().eq(0).outerWidth();
 
-		element.filter('.has-init-isotope').isotope({
+		element.isotope({
 			masonry: {
 				columnWidth: firstElementWidth
 			}
@@ -44,7 +44,7 @@ function masonryThumbs() {
 		element.find('.grid-item-big').css({ width: firstElementWidth*2 + 'px' });
 
 		setTimeout( function(){
-			element.filter('.has-init-isotope').isotope( 'layout' );
+			element.isotope( 'layout' );
 		}, 500);
 	});
 

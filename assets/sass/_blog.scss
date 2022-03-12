@@ -440,8 +440,8 @@ body:not(.device-touch) .entry-link {
 		height: $author-image;
 		margin-right: 15px;
 		img {
-			width: $author-image;
 			height: $author-image;
+			object-fit: cover;
 		}
 	}
 	&-desc {

@@ -1,11 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block hero %}
-    {% include "_sections/title-page.html.twig" %}
-{% endblock %}
-
 {% block javascripts %}
-    
+	{{ parent() }}
+	{{ encore_entry_script_tags('gallery') }}
 {% endblock %}
 
 {% block main %}
@@ -19,13 +16,6 @@
                 {# Collection Items #}
                 {% block content %}{% endblock %}
                 
-                {# Pagination #}
-                {% include "_elements/collection-pagination.html.twig" with {
-                    pages: [ [1, '#1'], [2, '#2'], [3, '#3'], [4, '#4'], [5, '#5'] ],
-                    prevUrl: '#',
-                    nextUrl: '#'
-                } %}
-
             </div>
         </div>
     </section>

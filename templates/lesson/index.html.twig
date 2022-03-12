@@ -1,23 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	Lessons
-{% endblock %}
+{# Config #}
 
-{% block body %}
+{% block title %}Lessons{% endblock %}
 
-	<h1>Lessons</h1>
+{% set page_title = 'Lessons' %}
+{% set page_desc = 'Lessons to learn web developement or improve your skills.' %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Lessons', active: true}
+] %}
+{% set collection_filters = categories %}
 
-	<div class="collection">
 
-		{% for lesson in lessons %}
-			{% include "_parts/card/lesson.html.twig" %}
-		{% endfor %}
+{# Collection of Posts =============================================== #}
 
-		<div class="pagination">
-			{{ knp_pagination_render(lessons) }}
-		</div>
+{% block content %}
 
-	</div>
+    <ul>
+    {% for lesson in lessons %}
+        <li><a href="{{ path('lesson_show', {id: lesson.id, slug: lesson.slug}) }}">{{ lesson.title }}</a></li>
+    {% endfor %}
+    </ul>
+    
+    {# <div id="collection" class="row grid-container block-gallery-9">
+        {% for lesson in lessons %}
+            {% include "_elements/blog-collection-item-2.html.twig" with { post: lesson } %}
+        {% endfor %}
+    </div> #}
 
 {% endblock %}

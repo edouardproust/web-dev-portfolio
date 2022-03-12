@@ -23,7 +23,6 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('admin', './assets/admin.js')
     .addEntry('animation', './assets/animation.js')
-    .addEntry('collection', './assets/collection.js')
     .addEntry('ui', './assets/ui.js')
     .addEntry('gallery', './assets/gallery.js')
     .addEntry('slider', './assets/slider.js')

@@ -11,8 +11,8 @@
 	{{ parent() }}
 	{{ encore_entry_script_tags('content') }}
 	{{ encore_entry_script_tags('slider') }}
-	{{ encore_entry_script_tags('animation') }}
-	{{ encore_entry_script_tags('collection') }}
+	{# {{ encore_entry_script_tags('animation') }} #}
+	{{ encore_entry_script_tags('gallery') }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -22,7 +22,7 @@
 
 {% set page_title = 'About' %}
 {# {% set page_desc = "Let's keep in touch." %} #}
-{% set page_breadcrumb = [
+{% set breadcrumb = [
     {label: 'Home', url: '/'},
     {label: 'About', active: true}
 ] %}

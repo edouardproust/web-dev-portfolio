@@ -1,20 +1,59 @@
-{% set comments = page_blogpost.comments ?? page_project.comments %}
+{# Mandatory variables:
+    - comments: <Comment[]> Array of Comment objects
+#}
+
+
+{# Comments section (on 'show' template) ============================================ #}
 
 <div id="comments" class="clearfix">
 
-    <h3 id="comments-title"><span>{{ comments|length }}</span> Comments</h3>
+    <h3 id="comments-title" class="mb-3">
+        <span>{{ comments|length }}</span> Comments
+    </h3>
 
     {# Comments List #}
 
     <ol class="commentlist clearfix">
         {% for i, comment in comments %}
-            {% include "_elements/posttype-comment.html.twig" with { comment: comment } %}
+            {% include "_elements/card-comment.html.twig" with { comment: comment } %}
         {% endfor %}
     </ol>
     <div class="clear"></div>
 
-    {# Leave a comment #}
+    {# Form #}
 
-    {% include "_elements/posttype-comment-form.html.twig" %}
+    <div id="respond">
+
+    <h3>Leave a <span>Comment</span></h3>
+
+    <form class="row" action="#" method="post" id="commentform">
+        <div class="col-md-4 form-group">
+            <label for="author">Name</label>
+            <input type="text" name="author" id="author" value="" size="22" tabindex="1" class="sm-form-control" />
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" value="" size="22" tabindex="2" class="sm-form-control" />
+        </div>
+
+        <div class="col-md-4 form-group">
+            <label for="url">Website</label>
+            <input type="text" name="url" id="url" value="" size="22" tabindex="3" class="sm-form-control" />
+        </div>
+
+        <div class="w-100"></div>
+
+        <div class="col-12 form-group">
+            <label for="comment">Comment</label>
+            <textarea name="comment" cols="58" rows="7" tabindex="4" class="sm-form-control"></textarea>
+        </div>
+
+        <div class="col-12 form-group">
+            <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0">Submit Comment</button>
+        </div>
+    </form>
+
+</div>
 
 </div>

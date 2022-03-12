@@ -5,52 +5,26 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\Author;
 use App\Service\EmailService;
-use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
 class AuthorService
 {
-    private $authorRepository;
-    private $paginator;
     private $userService;
     private $entityManager;
     private $security;
     private $emailService;
 
     public function __construct(
-        AuthorRepository $authorRepository,
-        PaginatorInterface $paginator,
         UserService $userService,
         EntityManagerInterface $entityManager,
         Security $security,
         EmailService $emailService
     ) {
-        $this->authorRepository = $authorRepository;
-        $this->paginator = $paginator;
         $this->userService = $userService;
         $this->entityManager = $entityManager;
         $this->security = $security;
         $this->emailService = $emailService;
-    }
-
-    public function getCollection(
-        int $id,
-        Request $request,
-        string $getterFn,
-        int $limit
-    ): array {
-        $author = $this->authorRepository->findOneBy([
-            'id' => $id
-        ]);
-        $entities = $this->paginator->paginate(
-            $author->$getterFn(),
-            $request->query->getInt('page', 1),
-            $limit
-        );
-        return [$author, $entities];
     }
 
     /**

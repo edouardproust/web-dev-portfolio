@@ -19,32 +19,20 @@ class PostCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, PostCategory::class);
     }
 
-    // /**
-    //  * @return PostCategory[] Returns an array of PostCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get list of all categories that contain posts
+     * @return PostCategory[] Returns an array of PostCategory objects
+     */
+    public function findNotEmpty(): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $postCategories = $this->findAll();
 
-    /*
-    public function findOneBySomeField($value): ?PostCategory
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $notEmptyCategories = [];
+        foreach ($postCategories as $category) {
+            if (!empty($category->getPosts())) {
+                $notEmptyCategories[] = $category;
+            }
+        }
+        return $notEmptyCategories;
     }
-    */
 }

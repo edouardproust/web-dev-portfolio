@@ -5,7 +5,6 @@ const SELECTOR = '.grid-container';
 
 function exec() {
 	gridContainerInit();
-	gridFilterInit(); 
 }
 export default { exec };
 
@@ -17,7 +16,7 @@ function gridContainerInit() {
 	if( $elements.length < 1 ){
 		return;
 	}
-	console.log('gallery::ridContainerInit executed');
+	console.log('gallery::gridContainerInit executed');
 
 	$elements.each( function(){
 		let element			= $(this),
@@ -51,14 +50,10 @@ function gridContainerInit() {
 			});
 		}
 
-		if( element.data('isotope') ) {
-			element.addClass('has-init-isotope');
-		}
-
 		let elementInterval = setInterval( function(){
 			if( element.find('.lazy.lazy-loaded').length == element.find('.lazy').length ) {
 				setTimeout( function(){
-					element.filter('.has-init-isotope').isotope('layout');
+					element.isotope('layout');
 				}, 800 );
 				clearInterval( elementInterval );
 			}
@@ -69,54 +64,13 @@ function gridContainerInit() {
 		$(window).on( 'resize', function() {
 			clearTimeout(resizeTimer);
 			resizeTimer = setTimeout(function() {
-				element.filter('.has-init-isotope').isotope('layout');
+				element.isotope('layout');
 			}, 250);
 		});
 
 		$(window).on( 'lazyLoadLoaded', function(){
-			element.filter('.has-init-isotope').isotope('layout');
+			element.isotope('layout');
 		});
 
-	});
-}
-
-function gridFilterInit(){
-
-	let $elements = $('.grid-filter,.custom-filter');
-	$elements = $elements.filter(':not(.customjs)');
-
-	if( $elements.length < 1 ){
-		return;
-	}
-	console.log('gallery::gridFilterInit executed');
-
-	$elements.each( function(){
-		let element		= $(this),
-			elCon		= element.attr('data-container'),
-			elActClass	= element.attr('data-active-class'),
-			elDefFilter	= element.attr('data-default');
-
-		if( !elActClass ) { elActClass = 'activeFilter'; }
-
-		element.find('a').off( 'click' ).on( 'click', function(){
-			element.find('li').removeClass( elActClass );
-			$(this).parent('li').addClass( elActClass );
-			let selector = $(this).attr('data-filter');
-			$(elCon).isotope({ filter: selector });
-			return false;
-		});
-
-		if( elDefFilter ) {
-			element.find('li').removeClass( elActClass );
-			element.find('[data-filter="'+ elDefFilter +'"]').parent('li').addClass( elActClass );
-			$(elCon).isotope({ filter: elDefFilter });
-		}
-	});
-
-	$('.grid-shuffle').off( 'click' ).on( 'click', function(){
-		let element = $(this),
-			elCon = element.attr('data-container');
-
-		$(elCon).isotope('shuffle');
 	});
 }

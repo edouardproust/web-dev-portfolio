@@ -43,4 +43,31 @@ class ProjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Get "Related Projects" = projects with at least 1 category in common
+     * @param Project $project 
+     * @return void 
+     */
+    public function findRelated(Project $project)
+    {
+        $projectCategories = [];
+        $relatedProjects = [];
+
+        // get project categories
+        $categories = $project->getCategories();
+        foreach ($categories as $category) {
+            $projectCategories[] = $category;
+        }
+        // get related projects
+        foreach ($this->findAll() as $p) {
+            $categories = $p->getCategories();
+            foreach ($categories as $c) {
+                if (in_array($c, $projectCategories)) {
+                    $relatedProjects[] = $p;
+                }
+            }
+        }
+        return $relatedProjects;
+    }
 }

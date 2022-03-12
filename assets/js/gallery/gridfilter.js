@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import '../_lib/isotope';
+import '../_lib/isotope.js';
 
 const SELECTOR = '.grid-filter,.custom-filter';
 

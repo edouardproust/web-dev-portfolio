@@ -12,12 +12,17 @@ $page_title-prefix: page-title;
 
 ##{$page_title-prefix} {
 	position: relative;
-	padding: $page-title-padding 0;
+	padding: $page-title-padding 0 6rem;
+	margin-top: -105px;
+	border-bottom: none;
 	background-color: $page-title-bg;
 	border-bottom: $page-title-border;
 	@include media-breakpoint-down(sm) {
 		padding: 2rem 0;
 		text-align: center;
+	}
+	&.project-show {
+		padding-bottom: 300px;
 	}
 	.container {
 		position: relative;
@@ -45,7 +50,7 @@ $page_title-prefix: page-title;
 	}
 
 	.breadcrumb {
-		position: absolute !important;
+		// position: absolute !important;
 		width: auto !important;
 		top: 50% !important;
 		left: auto !important;
@@ -132,6 +137,7 @@ $page_title-prefix: page-title;
 		background-image: url('../images/theme/pattern.png');
 		background-repeat: repeat;
 		background-attachment: fixed;
+		padding-top: 180px;
 	}
 
 	/* Page Title - Parallax Background

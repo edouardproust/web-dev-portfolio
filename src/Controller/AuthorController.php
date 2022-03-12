@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Config;
 use App\Service\AuthorService;
 use App\Form\AuthorRegisterType;
-use App\Service\AdminOptionService;
+use App\Repository\AuthorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,67 +14,52 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AuthorController extends AbstractController
 {
     private $authorService;
+    private $authorRepository;
     private $entityManager;
-    private $adminOptionService;
 
     public function __construct(
         AuthorService $authorService,
-        EntityManagerInterface $entityManager,
-        AdminOptionService $adminOptionService
+        AuthorRepository $authorRepository,
+        EntityManagerInterface $entityManager
     ) {
         $this->authorService = $authorService;
+        $this->authorRepository = $authorRepository;
         $this->entityManager = $entityManager;
-        $this->adminOptionService = $adminOptionService;
     }
 
     /**
      * @Route("/projects/author/{id<\d+>}", name="author_projects")
      */
-    public function projects($id, Request $request): Response
+    public function projects($id): Response
     {
-        [$author, $projects] = $this->authorService->getCollection(
-            $id,
-            $request,
-            'getProjects',
-            $this->adminOptionService->get('PROJECTS_PER_PAGE')
-        );
+        $author = $this->authorRepository->find($id);
         return $this->render('author/projects.html.twig', [
             'author' => $author,
-            'projects' => $projects
+            'projects' => $author->getProjects()
         ]);
     }
 
     /**
      * @Route("/lessons/author/{id<\d+>}", name="author_lessons")
      */
-    public function lessons($id, Request $request): Response
+    public function lessons($id): Response
     {
-        [$author, $lessons] = $this->authorService->getCollection(
-            $id,
-            $request,
-            'getLessons',
-            $this->adminOptionService->get('LESSONS_PER_PAGE')
-        );
+        $author = $this->authorRepository->find($id);
         return $this->render('author/lessons.html.twig', [
             'author' => $author,
-            'lessons' => $lessons
+            'lessons' => $author->getLessons()
         ]);
     }
 
     /**
      * @Route("/blog/author/{id<\d+>}", name="author_posts")
      */
-    public function posts($id, Request $request): Response
+    public function posts($id): Response
     {
-        [$author, $posts] = $this->authorService->getCollection(
-            $id,
-            $request,
-            'getPosts',
-            $this->adminOptionService->get('POSTS_PER_PAGE')
-        );
+        $author = $this->authorRepository->find($id);
         return $this->render('author/posts.html.twig', [
             'author' => $author,
-            'posts' => $posts
+            'posts' => $author->getPosts()
         ]);
     }
 

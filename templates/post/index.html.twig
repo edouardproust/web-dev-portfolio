@@ -1,23 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	Blog
+{# Config #}
+
+{% block javascripts %}
+    {{ parent() }}
+	{# {{ encore_entry_script_tags('gallery') }} #}
 {% endblock %}
 
-{% block body %}
+{% block title %}Blog{% endblock %}
 
-	<h1>Blog</h1>
+{% set page_title = 'Blog' %}
+{% set page_desc = 'The lastest news from the world currated by experts.' %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Blog', active: true}
+] %}
+{% set collection_filters = categories %}
 
-	<div class="collection">
 
-		{% for post in posts %}
-			{% include "_parts/card/post.html.twig" %}
-		{% endfor %}
+{# Collection of Posts =============================================== #}
 
-		<div class="pagination">
-			{{ knp_pagination_render(posts) }}
-		</div>
+{% block hero %}
 
-	</div>
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Blog',
+        subtitle: 'Latest article, curated by world experts.'
+    } %}
+    
+{% endblock %}
+
+{% block content %}
+
+<div id="collection" class="row grid-container block-gallery-9">
+    {% for post in posts %}
+        {% include "_elements/blog-collection-item-2.html.twig" with { post: post} %}
+    {% endfor %}
+</div>
 
 {% endblock %}

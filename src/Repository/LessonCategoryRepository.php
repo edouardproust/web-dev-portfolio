@@ -19,32 +19,20 @@ class LessonCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, LessonCategory::class);
     }
 
-    // /**
-    //  * @return LessonCategory[] Returns an array of LessonCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get list of all categories that contain lessons
+     * @return LessonCategory[] Returns an array of LessonCategory objects
+     */
+    public function findNotEmpty(): array
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $lessonCategories = $this->findAll();
 
-    /*
-    public function findOneBySomeField($value): ?LessonCategory
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $notEmptyCategories = [];
+        foreach ($lessonCategories as $category) {
+            if (!empty($category->getLessons())) {
+                $notEmptyCategories[] = $category;
+            }
+        }
+        return $notEmptyCategories;
     }
-    */
 }

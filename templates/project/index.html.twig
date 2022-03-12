@@ -2,8 +2,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('collection') }}
-	{{ encore_entry_script_tags('animation') }}
 	{{ encore_entry_script_tags('slider') }}
 	{{ encore_entry_script_tags('gallery') }}
 {% endblock %}
@@ -14,22 +12,29 @@
 
 {% set page_title = 'Portfolio' %}
 {% set page_desc = 'Showcase of Our Awesome Works in 3 Columns' %}
-{% set page_breadcrumb = [
-    {label: 'Home', url: '/'},
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
     {label: 'Portfolio', active: true}
 ] %}
 {% set collection_filters = categories %}
 
 
-{# Collection of projects =============================================== #}
+{# Collection of Projects =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Portfolio',
+        subtitle: null
+    } %}
+    
+{% endblock %}
 
 {% block content %}
     
     <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
         {% for project in projects %}
-            {% include "_elements/portfolio-collection-item.html.twig" with {
-                project: project
-            } %}
+            {% include "_elements/portfolio-collection-item.html.twig" with {project: project} %}
         {% endfor %}
     </div>
     

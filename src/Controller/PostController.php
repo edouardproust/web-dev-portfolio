@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\PostCategoryRepository;
 use App\Repository\PostRepository;
-use App\Service\AdminOptionService;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\PostTypeService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,33 +12,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PostController extends AbstractController
 {
     private $postRepository;
-    private $paginator;
-    private $adminOptionService;
+    private $postCategoryRepository;
+    private $postTypeService;
 
     public function __construct(
         PostRepository $postRepository,
-        PaginatorInterface $paginator,
-        AdminOptionService $adminOptionService
+        PostCategoryRepository $postCategoryRepository,
+        PostTypeService $postTypeService
     ) {
         $this->postRepository = $postRepository;
-        $this->paginator = $paginator;
-        $this->adminOptionService = $adminOptionService;
+        $this->postCategoryRepository = $postCategoryRepository;
+        $this->postTypeService = $postTypeService;
     }
 
     /**
      * @Route("/blog", name="posts")
-     * @see https://github.com/KnpLabs/KnpPaginatorBundle
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $posts = $this->paginator->paginate(
-            $this->postRepository->findAll(),
-            $request->query->getInt('page', 1),
-            $this->adminOptionService->get('POSTS_PER_PAGE')
-        );
-
+        $posts = $this->postRepository->findAll();
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
+            'categories' => $this->postCategoryRepository->findNotEmpty(),
         ]);
     }
 
@@ -48,8 +42,13 @@ class PostController extends AbstractController
      */
     public function show(int $id): Response
     {
+        $post = $this->postRepository->find($id);
+        $prevNextLinks = $this->postTypeService
+            ->getPrevNextLinks($post, $this->postRepository, 'post_show');
+
         return $this->render('post/show.html.twig', [
-            'post' => $this->postRepository->find($id),
+            'post' => $post,
+            'prevNextLinks' => $prevNextLinks
         ]);
     }
 }

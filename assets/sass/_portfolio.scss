@@ -527,9 +527,12 @@ $masonry-prefix: masonry;
 
 .#{$portfolio-prefix}-meta li span {
 	display: inline-block;
-	width: $portfolio-meta-row-1;
 	font-weight: bold;
 	color: $portfolio-meta-row-1-color;
+	margin-right: $portfolio-meta-icon / 2;
+	&.not-bold {
+		font-weight: normal !important;
+	}
 }
 
 .#{$portfolio-prefix}-meta li span i {

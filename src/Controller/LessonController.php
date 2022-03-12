@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\LessonCategoryRepository;
 use App\Repository\LessonRepository;
-use App\Service\AdminOptionService;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
+use App\Service\PostTypeService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,33 +12,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LessonController extends AbstractController
 {
     private $lessonRepository;
-    private $paginator;
-    private $adminOptionService;
+    private $lessonCategoryRepository;
+    private $postTypeService;
 
     public function __construct(
         LessonRepository $lessonRepository,
-        PaginatorInterface $paginator,
-        AdminOptionService $adminOptionService
+        LessonCategoryRepository $lessonCategoryRepository,
+        PostTypeService $postTypeService
     ) {
         $this->lessonRepository = $lessonRepository;
-        $this->paginator = $paginator;
-        $this->adminOptionService = $adminOptionService;
+        $this->lessonCategoryRepository = $lessonCategoryRepository;
+        $this->postTypeService = $postTypeService;
     }
 
     /**
      * @Route("/lessons", name="lessons")
-     * @see https://github.com/KnpLabs/KnpPaginatorBundle
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $lessons = $this->paginator->paginate(
-            $this->lessonRepository->findAll(),
-            $request->query->getInt('page', 1),
-            $this->adminOptionService->get('LESSONS_PER_PAGE')
-        );
+        $lessons = $this->lessonRepository->findAll();
 
         return $this->render('lesson/index.html.twig', [
             'lessons' => $lessons,
+            'categories' => $this->lessonCategoryRepository->findNotEmpty()
         ]);
     }
     /**
@@ -47,8 +42,13 @@ class LessonController extends AbstractController
      */
     public function show(int $id): Response
     {
+        $lesson = $this->lessonRepository->find($id);
+        $prevNextLinks = $this->postTypeService
+            ->getprevNextLinks($lesson, $this->lessonRepository, 'lesson_show');
+
         return $this->render('lesson/show.html.twig', [
-            'lesson' => $this->lessonRepository->find($id),
+            'lesson' => $lesson,
+            'prevNextLinks' => $prevNextLinks
         ]);
     }
 }
