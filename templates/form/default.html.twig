@@ -1,0 +1,11 @@
+{% use 'bootstrap_5_layout.html.twig' %}
+
+{% block button_widget %}
+    {% set label_html = true %}
+    {{ parent() }}
+{% endblock %}
+
+{% block widget_attributes %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' sm-form-control')|trim}) %}
+    {{ parent() }}
+{% endblock %}

@@ -19,32 +19,18 @@ class CodingLanguageRepository extends ServiceEntityRepository
         parent::__construct($registry, CodingLanguage::class);
     }
 
-    // /**
-    //  * @return CodingLanguage[] Returns an array of CodingLanguage objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get list of all categories of a group of lessons or projects
+     * @var Collection|Lesson[]|Project[] Lessons or Projects collection/array
+     * @return PostCategory[] Returns an array of PostCategory objects
+     */
+    public function findNotEmpty($entities): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $entitiesLanguages = [];
+        foreach ($entities as $entity) {
+            $language = $entity->getCodingLanguage();
+            $entitiesLanguages[$language->getSlug()] = $language;
+        }
+        return $entitiesLanguages;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CodingLanguage
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

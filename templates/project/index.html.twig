@@ -11,7 +11,6 @@
 {% block title %}Portfolio{% endblock %}
 
 {% set page_title = 'Portfolio' %}
-{% set page_desc = 'Showcase of Our Awesome Works in 3 Columns' %}
 {% set breadcrumb = [
     {label: 'Home', url: path('home')},
     {label: 'Portfolio', active: true}
@@ -25,16 +24,19 @@
 
     {% include "_sections/page-title/default.html.twig" with { 
         title: 'Portfolio',
-        subtitle: null
+        subtitle: 'Showcase of My Awesome Works'
     } %}
     
 {% endblock %}
 
 {% block content %}
-    
+
     <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
         {% for project in projects %}
-            {% include "_elements/portfolio-collection-item.html.twig" with {project: project} %}
+            {% include "_elements/portfolio-collection-item.html.twig" with {
+                project: project,
+                featuredProjects: featuredProjects
+            } %}
         {% endfor %}
     </div>
     

@@ -199,13 +199,19 @@ $masonry-prefix: masonry;
 			position: relative;
 			overflow: hidden;
 		}
-
 		.#{$portfolio-prefix}-image,
 		.#{$portfolio-prefix}-image > a,
 		.#{$portfolio-prefix}-image img {
 			display: block;
 			width: 100%;
 			height: auto;
+		}
+		&:not(.no-min-height) {
+			min-height: $portfolio-item-min-height;
+			.#{$portfolio-prefix}-image img {
+				min-height: $portfolio-item-min-height;
+				object-fit: cover;
+			}
 		}
 	}
 	&-rounded &-image {
@@ -240,7 +246,7 @@ $masonry-prefix: masonry;
 	z-index: 6;
 	padding: $Portfolio_desc-padding;
 	h3 {
-		margin: 0;
+		margin: 0 0 0.4rem 0;
 		padding: 0;
 		font-size: $Portfolio_desc-title-size;
 		.col-md-9 & {
@@ -255,7 +261,7 @@ $masonry-prefix: masonry;
 		}
 	}
 	span {
-		display: block;
+		padding-top: 10px;
 		.col-md-9 & {
 			font-size: decimal-round($Portfolio_desc-title-size / 1.428, 3);
 		}

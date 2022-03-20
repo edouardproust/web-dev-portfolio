@@ -71,7 +71,9 @@
 											<li><span><i class="icon-line-github"></i><a href="{{ project.repository }}" target="_blank">Github repository</a></span></li>
 											
 											{% if project|hasApprovedAuthor %}
-												<li><span><i class="icon-user1"></i>Created by:</span>{{ project.author.fullname }}</li>
+												<li><span><i class="icon-user1"></i>Created by:</span>
+													<a href="{{ path('author_projects', {id: project.author.id}) }}">{{ project.author.fullname }}</a>
+												</li>
 											{% endif %}
 
 											{% if hasCompletedOn %}
@@ -124,11 +126,7 @@
 
 						{% if showRelatedProjects %}
 							<h4>Related Projects:</h4>
-							<div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="30" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="3" data-items-xl="4">
-								{% for project in relatedProjects %}
-									{% include "_elements/related-project.html.twig" with {project: project} %}
-								{% endfor %}
-							</div>
+							{% include "_elements/projects-carousel.html.twig" with {projects: relatedProjects} %}
 						{% endif %}
 
 					</div>
@@ -146,7 +144,7 @@
 					{% if showAuthor %}
 						{% include "_sections/posttype/author-box.html.twig" with {
 							author: project.author,
-							author_routeName: 'author_projects'
+							author_routeName: author_routeName
 						} %}
 					{% endif %}
 

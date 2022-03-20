@@ -30,10 +30,15 @@ class ProjectController extends AbstractController
      */
     public function index(): Response
     {
-        $projects = $this->projectRepository->findAll();
+        $projects = $this->projectRepository->findBy([], ['createdAt' => 'DESC']);
+
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
-            'categories' => $this->projectCategoryRepository->findNotEmpty()
+            'categories' => $this->projectCategoryRepository->findNotEmpty($projects),
+            'featuredProjects' => $this->projectRepository->findBy(
+                ['featured' => true],
+                ['createdAt' => 'DESC']
+            )
         ]);
     }
 

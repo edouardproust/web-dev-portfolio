@@ -1,6 +1,6 @@
 {# 
     Variables:
-    - title: hidden if not defined
+    - title: hidden if not defined. Html allowed (add <span> tags around words to color them)
     - titelSize: Default: '34px'
 	- titleLineHeight: Eg. '3.6rem'
 	- offsetLeft: true to apply a left offset
@@ -18,12 +18,12 @@
 {% set parallaxClass = parallax.top is defined and parallax.bottom is defined ? ' parallax' : '' %}
 {% set parallaxData = parallaxClass is not same as('') ? ' data-bottom-top=margin-top:' ~ parallax.top ~ ' data-top-bottom=margin-top:' ~ parallax.bottom : '' %}
 
-{% set verticalMargins = removeVerticalMargins is defined and removeVerticalMargins is same as(true) ? '' : ' my-5' %}
+{% set verticalMargins = removeVerticalMargins is defined and removeVerticalMargins is same as(true) ? '' : ' mb-5' %}
 
 <div class="{{ width }}{{ offset }}{{ verticalMargins }}{{ parallaxClass }}"{{ parallaxData }}>
 	<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">{{ section }}</small>
 	<h2 class="fw-bold ls0 mb-4" style="font-size: {{ titleSize is defined ? titleSize : '46px' }}{{ titleLineHeight is defined ? '; line-height: ' ~ titleLineHeight : '' }}">
-		{{ title }}
+		{{ title|raw }}
 	</h2>
 	{% if content is defined %}
 		{% if content is iterable %}

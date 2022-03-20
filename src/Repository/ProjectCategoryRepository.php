@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\ProjectCategory;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method ProjectCategory|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,31 +25,18 @@ class ProjectCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get list of all categories that contain projects
+     * Get list of all categories of a group of projects
+     * @var Collection|Project[] Projects in collection
      * @return ProjectCategory[] Returns an array of ProjectCategory objects
      */
-    public function findNotEmpty(): array
+    public function findNotEmpty($projects): array
     {
-        $projectCategories = $this->findAll();
-
-        $notEmptyCategories = [];
-        foreach ($projectCategories as $category) {
-            if (!empty($category->getProjects())) {
-                $notEmptyCategories[] = $category;
+        $projectsCategories = [];
+        foreach ($projects as $project) {
+            foreach ($project->getCategories() as $category) {
+                $projectsCategories[$category->getSlug()] = $category;
             }
         }
-        return $notEmptyCategories;
+        return $projectsCategories;
     }
-
-    /*
-    public function findOneBySomeField($value): ?ProjectCategory
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

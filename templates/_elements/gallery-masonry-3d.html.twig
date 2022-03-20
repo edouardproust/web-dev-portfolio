@@ -1,0 +1,46 @@
+<div class="row grid-container gutter-30" style="overflow: visible;">
+
+	{% for card in cards %}
+
+		{% set img = card.img %}
+
+		{% set lightbox = lightbox is defined and lightbox is same as 0 ? false : true %}
+		{% set alt = alt is defined and alt is same as 0 ? false : true %}
+
+		{% set altTag %}
+			{% if title is defined %}
+				alt="{% if title is defined %}{{ category }}: {% endif %}{% if title %}{{ title }}{% endif %}"
+			{% else %}
+				alt="Photo"
+			{% endif %}
+		{% endset %}
+
+
+		<div class="col-lg-4 col-sm-6 rounded img-hover-wrap">
+			<div class="img-hover-card">
+				{% if lightbox %}
+					<a href="{{ img }}" data-lightbox="image">
+				{% endif %}
+						<img src="{{ img }}"{{ altTag }}>
+				{% if lightbox %}</a>{% endif %}
+				{% if category is defined or title is defined %}
+					<div class="img-hover-detail">
+						{% if category is defined %}
+							<small class="text-light ls1 fw-light">{{ category }}Travel</small>
+						{% endif %}
+						{% if title is defined %}
+							<h3 class="img-hover-title">
+								<a href="#">{{ title }}</a>
+							</h3>
+						{% endif %}
+						<div class="img-link">
+							<a href="#"><i class="{{ icon is defined ? icon : 'icon-line-arrow-right' }}"></i></a>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+
+	{% endfor %}
+
+</div>

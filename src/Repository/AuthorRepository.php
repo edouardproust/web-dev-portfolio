@@ -45,4 +45,21 @@ class AuthorRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Get list of all categories that contain posts
+     * @return PostCategory[] Returns an array of PostCategory objects
+     */
+    public function findNotEmptyProjectCategories(Author $author): array
+    {
+        $authorCategories = $this->findBy([], ['author_id' => (string)$author->getId()]);
+
+        $notEmptyCategories = [];
+        foreach ($authorCategories as $category) {
+            if (!empty($category->getPosts())) {
+                $notEmptyCategories[] = $category;
+            }
+        }
+        return $notEmptyCategories;
+    }
 }

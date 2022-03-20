@@ -11,6 +11,7 @@
 -----------------------------------------------------------------*/
 #footer {
 	position: relative;
+	z-index: 2;
 	background-color: $footer-bg;
 	border-top: $footer-top-border;
 }

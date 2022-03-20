@@ -1,47 +1,70 @@
-{# Mandatory variables:
-    - title: <string>
-    - img: <string|array> url of an image or array of images urls
-    - zoom: <string> url to an image of video
-    - link: <string> Target url on click
-    - categories: <array[]> [[<string> label, <string> url>, <array: [<string> class, <string> label]> filter ]]
+{# Config
+
+    Mandatory variables:
+        - title: <string>
+        - img: <string|array> url of an image or array of images urls
+        - zoom: <string> url to an image of video
+        - link: <string> Target url on click
+        - categories: <array[]> [[<string> label, <string> url>, <array: [<string> class, <string> label]> filter ]]
+
+        - overlayAnimation: <string> Eg. 'fadeIn'
+        - iconAnimationIn: <string> Eg. 'fadeInDownSmall'
+        - iconAnimationOut: <string> Eg. 'fadeOutUpSmall'
+        - sliderDataSpeed: <int> Eg. 400
+        - sliderDataPause: <int> Eg. 4000
+
+    Optionnal variables:
+        - video: <bool> true if is 'zoom' a video
+        - data: <array|object>: Customize the item. Default (if not defined, all values below are set on their default)
+            {
+                categories: <bool> Display Category? Default: true
+                codingLanguages: <bool> Display CodingLanguage ? Default: true
+            }
 #}
-
-{# Optionnal variables:
-    - video: <bool> true if is 'zoom' a video
-#}
-
-{# Config #}
-
-{% set zoomIcon = 'icon-line-zoom-in' %}
-{% set viewProjectIcon = 'icon-line-eye' %}
+    {% set zoomIcon = 'icon-line-zoom-in' %}
+    {% set viewProjectIcon = 'icon-line-eye' %}
+    {% set overlayAnimation = 'fadeIn' %}
+    {% set iconAnimationIn = 'fadeInDownSmall' %}
+    {% set iconAnimationOut = 'fadeOutUpSmall' %}
+    {% set sliderDataSpeed = 400 %}
+    {% set sliderDataPause = 4000 %}
 
 {# Prepare #}
 
-{% set mainImage = project.mainImage %}
-{% set mainImage = uploadUrl('UPLOADS_PROJECTS', mainImage) %}
-{% set projectUrl = path('project_show', {id: project.id, slug: project.slug}) %}
+    {% set mainImage = project.mainImage %}
+    {% set mainImage = uploadUrl('UPLOADS_PROJECTS', mainImage) %}
+    {% set projectUrl = path('project_show', {id: project.id, slug: project.slug}) %}
 
-{% set isGallery = false %}
-{% set dataLightbox = 'image' %}
-{% if project.video is defined and project.video is same as(true) %}
-    {% set zoomIcon = 'play' %}
-    {% set dataLightbox = 'iframe' %}
-    {% set zoomTitle = 'Show video' %}
-{% elseif mainImage is iterable %}
-    {% if project.zoom is iterable %}
-        {% set isGallery = true %}
-        {% set zoomIcon = 'stack-2' %}
-        {% set dataLightbox = 'gallery-item' %}
-        {% set zoomTitle = 'View diaporama' %}
-    {% else %}
-        {% set mainImage = mainImage.0 %}
+    {% set data = data ?? null %}
+    {% set showCategories = project.categories|length > 0 ? true : false %}
+    {% set showCodingLanguages = project.codingLanguages is defined and project.codingLanguages|length > 0 ? true : false %}
+    {% if data is not null %}
+        {% set showCategories = data.categories is defined and data.categories is same as(true) ? true : false %}
+        {% set showCodingLanguages = data.codingLanguages is defined and data.codingLanguages is same as(true) ? true : false %}
     {% endif %}
-{% endif %}
 
-{% set categoriesClasses = '' %}
-{% if project.categories is defined and project.categories|length > 0 %}
-    {% set categoriesClasses %}{% for category in project.categories %}{{ ' ' ~ category.slug }}{% endfor %}{% endset %}
-{% endif %}
+
+    {% set isGallery = false %}
+    {% set dataLightbox = 'image' %}
+    {% if project.video is defined and project.video is same as(true) %}
+        {% set zoomIcon = 'play' %}
+        {% set dataLightbox = 'iframe' %}
+        {% set zoomTitle = 'Show video' %}
+    {% elseif mainImage is iterable %}
+        {% if project.zoom is iterable %}
+            {% set isGallery = true %}
+            {% set zoomIcon = 'stack-2' %}
+            {% set dataLightbox = 'gallery-item' %}
+            {% set zoomTitle = 'View diaporama' %}
+        {% else %}
+            {% set mainImage = mainImage.0 %}
+        {% endif %}
+    {% endif %}
+
+    {% set categoriesClasses = '' %}
+    {% if project.categories is defined and project.categories|length > 0 %}
+        {% set categoriesClasses %}{% for category in project.categories %}{{ ' ' ~ category.slug }}{% endfor %}{% endset %}
+    {% endif %}
 
 
 {# Portfolio Collection Item ============================================================ #}
@@ -52,7 +75,7 @@
 
             {% if isGallery %}
 
-                <div class="fslider" data-arrows="false" data-speed="400" data-pause="4000">
+                <div class="fslider" data-arrows="false" data-speed="{{ sliderDataSpeed }}" data-pause="{{ sliderDataPause }}">
                     <div class="flexslider">
                         <div class="slider-wrap">
 
@@ -74,35 +97,52 @@
 
             <div class="bg-overlay"{{ isGallery ? '  data-lightbox="gallery"' : '' }}>
                 <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
-                    <a href="{{ mainImage }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="{{ dataLightbox }}">
+                    <a href="{{ mainImage }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="{{ dataLightbox }}">
                         <i class="{{ zoomIcon }}"></i>
                     </a>
                     
                     {% if isGallery %}
                         {% for image in project.gallery %}
-                            {% if image is not same as(project.gallery|first) %} {# avoid to repeat the 1st slide#}
+                            {% if image is not same as(project.gallery|first) %}{# avoid to repeat the 1st slide#}
                                 <a href="{{ image }}" class="d-none" data-lightbox="gallery-item"></a>
                             {% endif %}
                         {% endfor %}
 
                     {% endif %}
 
-                    <a href="{{ projectUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item">
+                    <a href="{{ projectUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item">
                         <i class="{{ viewProjectIcon }}"></i>
                     </a>
                 </div>
-                <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                <div class="bg-overlay-bg dark" data-hover-animate="{{ overlayAnimation }}" data-hover-parent=".portfolio-item"></div>
             </div>
         </div>
+
         <div class="portfolio-desc">
             <h3><a href="{{ projectUrl }}">{{ project.title }}</a></h3>
-            <span>
 
-                {% for index, category in project.categories %}
-                    <a href="{{ path('project_category', {slug: category.slug}) }}">{{ category.label }}</a>{% if index < (project.categories|length - 1) %}, {% endif %}
-                {% endfor %}
+            <div class="small">
 
-            </span>
+                {% if showCodingLanguages %}
+                    <span>
+                        {% for index, language in project.codingLanguages %}
+                            <a href="{{ path('coding_language_projects', {slug: language.slug}) }}">{{ language.label }}</a>{% if index < (project.codingLanguages|length - 1) %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                {% endif %}
+
+                {% if showCategories %}
+                    {% if showCodingLanguages %}<span>/</span>{% endif %}
+                    <span>
+                        {% for index, category in project.categories %}
+                            <a href="{{ path('project_category', {slug: category.slug}) }}">{{ category.label }}</a>{% if index < (project.categories|length - 1) %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                {% endif %}
+
+            </div>
+
         </div>
+
     </div>
 </article>

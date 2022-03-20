@@ -135,7 +135,15 @@ table,
 fieldset,
 form { margin-bottom: 30px; }
 
-small { font-family: $body-font; }
+small { 
+	font-family: $body-font; 
+}
+
+small > span.sep-before::before {
+	content: "|";
+	padding: 0 0.2rem;
+	color: $gray-400 !important;
+}
 
 .page_headline {
 	font-weight: 300;

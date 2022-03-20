@@ -4,29 +4,29 @@
 
 {% block title %}Lessons{% endblock %}
 
-{% set page_title = 'Lessons' %}
-{% set page_desc = 'Lessons to learn web developement or improve your skills.' %}
 {% set breadcrumb = [
     {label: 'Home', url: path('home')},
     {label: 'Lessons', active: true}
 ] %}
-{% set collection_filters = categories %}
-
+{% set collection_filters = {double: [codingLanguagesFilter, categoriesFilter]} %}
 
 {# Collection of Posts =============================================== #}
 
-{% block content %}
+{% block hero %}
 
-    <ul>
-    {% for lesson in lessons %}
-        <li><a href="{{ path('lesson_show', {id: lesson.id, slug: lesson.slug}) }}">{{ lesson.title }}</a></li>
-    {% endfor %}
-    </ul>
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Lessons',
+        subtitle: 'Learn coding or improve your skills.'
+    } %}
     
-    {# <div id="collection" class="row grid-container block-gallery-9">
+{% endblock %}
+
+{% block content %}
+    
+    <div id="collection" class="row grid-container">
         {% for lesson in lessons %}
-            {% include "_elements/blog-collection-item-2.html.twig" with { post: lesson } %}
+            {% include "_elements/lesson-collection-item.html.twig" %}
         {% endfor %}
-    </div> #}
+    </div>
 
 {% endblock %}

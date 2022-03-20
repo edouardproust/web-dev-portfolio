@@ -20,19 +20,20 @@ class LessonCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get list of all categories that contain lessons
+     * Get list of all categories of a group of lessons
+     * @var Collection|Lesson[] Lessons in collection
      * @return LessonCategory[] Returns an array of LessonCategory objects
      */
-    public function findNotEmpty(): array
+    public function findNotEmpty($lessons): array
     {
-        $lessonCategories = $this->findAll();
-
-        $notEmptyCategories = [];
-        foreach ($lessonCategories as $category) {
-            if (!empty($category->getLessons())) {
-                $notEmptyCategories[] = $category;
+        $lessonsCategories = [];
+        foreach ($lessons as $lesson) {
+            foreach ($lesson->getCategories() as $category) {
+                if (!empty($category->getLessons())) {
+                    $lessonsCategories[$category->getSlug()] = $category;
+                }
             }
         }
-        return $notEmptyCategories;
+        return $lessonsCategories;
     }
 }

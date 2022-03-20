@@ -1,17 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	{{ author.fullName }}'s Posts
+{# Config #}
+
+{% block title %}Blog: {{ author.fullName }}{% endblock %}
+
+{% set page_title = 'Portfolio: ' %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Blog', url: path('projects')},
+    {label: author.fullname, active: true}
+] %}
+{% set collection_filters = categories %}
+
+
+{# Collection of Projects =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Blog: ' ~ author.fullname,
+        subtitle: author.bio|extract(200, '...')
+    } %}
+    
 {% endblock %}
 
-{% block body %}
-
-	<h1>{{ author.fullName }}'s Posts</h1>
-
-	{% for post in posts %}
-		<div class="collection">
-			{% include "_parts/card/post.html.twig" %}
-		</div>
-	{% endfor %}
-
+{% block content %}
+    
+	<div id="collection" class="row grid-container block-gallery-9">
+		{% for post in posts %}
+			{% include "_elements/blog-collection-item-2.html.twig" with { post: post } %}
+		{% endfor %}
+	</div>
+    
 {% endblock %}

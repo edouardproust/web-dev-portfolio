@@ -1,4 +1,4 @@
-{% extends '_layout/post.html.twig' %}
+{% extends '_layout/lesson.html.twig' %}
 {% set post = lesson %}{# <-- Make template compatible with lessons #}
 
 {% block javascripts %}
@@ -37,11 +37,12 @@
     {label: 'Lessons', url: path('lessons')},
     {label: lesson.title, active: true}
 ] %}
-{% set author_routeName = 'author_lessons' %}
 {% set showPostNavigation = true %}
 {% set showAuthor = true %}
 {% set showComments = true %}
 {% set prevNextLinks = prevNextLinks %}
+{% set author_routeName = 'author_lessons' %}
+
 
 {# Show one Lesson ================================================================== #}
 

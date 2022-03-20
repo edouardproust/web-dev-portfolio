@@ -76,12 +76,6 @@ function sliderDimensions(){
     }
 }
 
-// function sliderRun(element){
-//     let settings = {
-//         default: '.swiper_wrapper',
-//         file: 'swiper.js',
-// }
-
 function sliderParallaxOffset(){
     let sliderParallaxOffsetTop = 0,
         headerHeight = $header.outerHeight();
@@ -182,66 +176,3 @@ function sliderElementsFade(){
         $sliderParallaxEl.find('.slider-arrow-left,.slider-arrow-right,.slider-caption,.slider-element-fade').css({'opacity': 1});
     }
 }
-
-
-// function swiperSliderMenu(onWinLoad){
-//     onWinLoad = typeof onWinLoad !== 'undefined' ? onWinLoad : false;
-//     if( $body.hasClass('device-xl') || $body.hasClass('device-lg') || ( $header.hasClass('transparent-header-responsive') && !$body.hasClass('primary-menu-open') ) ) {
-//         let activeSlide = $slider.find('.swiper-slide.swiper-slide-active');
-//         slider.headerSchemeChanger(activeSlide, onWinLoad);
-//     }
-// }
-
-// function revolutionSliderMenu(onWinLoad){
-//     onWinLoad = typeof onWinLoad !== 'undefined' ? onWinLoad : false;
-//     if( $body.hasClass('device-xl') || $body.hasClass('device-lg') || ( $header.hasClass('transparent-header-responsive') && !$body.hasClass('primary-menu-open') ) ) {
-//         let activeSlide = $slider.find('.active-revslide');
-//         slider.headerSchemeChanger(activeSlide, onWinLoad);
-//     }
-// }
-
-// import header from './header';
-
-// function headerSchemeChanger(activeSlide, onWinLoad){
-//     if( activeSlide.length > 0 ) {
-//         let darkExists = false,
-//             oldClassesArray, noOfOldClasses;
-//         if( activeSlide.hasClass('dark') ){
-//             if( oldHeaderClasses ) {
-//                 oldClassesArray = oldHeaderClasses.split(/ +/);
-//             } else {
-//                 oldClassesArray = '';
-//             }
-
-//             noOfOldClasses = oldClassesArray.length;
-
-//             if( noOfOldClasses > 0 ) {
-//                 let i = 0;
-//                 for( i=0; i<noOfOldClasses; i++ ) {
-//                     if( oldClassesArray[i] == 'dark' && onWinLoad == true ) {
-//                         darkExists = true;
-//                         break;
-//                     }
-//                 }
-//             }
-//             $('#header.transparent-header:not(.sticky-header,.semi-transparent,.floating-header)').addClass('dark');
-//             if( !darkExists ) {
-//                 $('#header.transparent-header.sticky-header,#header.transparent-header.semi-transparent.sticky-header,#header.transparent-header.floating-header.sticky-header').removeClass('dark');
-//             }
-//             $headerWrap.removeClass('not-dark');
-//         } else {
-//             if( $body.hasClass('dark') ) {
-//                 activeSlide.addClass('not-dark');
-//                 $('#header.transparent-header:not(.semi-transparent,.floating-header)').removeClass('dark');
-//                 $('#header.transparent-header:not(.sticky-header,.semi-transparent,.floating-header)').find('#header-wrap').addClass('not-dark');
-//             } else {
-//                 $('#header.transparent-header:not(.semi-transparent,.floating-header)').removeClass('dark');
-//                 $headerWrap.removeClass('not-dark');
-//             }
-//         }
-//         if( $header.hasClass('sticky-header') ) {
-//             header.stickyMenuClass();
-//         }
-//         header.logo();
-//     }
-// }

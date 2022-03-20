@@ -1,58 +1,192 @@
+{# Ref: 
+- https://themes.semicolonweb.com/html/canvas/about.html
+- Carousel in bottom of page: https://themes.semicolonweb.com/html/canvas/about-me.html 
+#}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}About
+{% block title %}About{% endblock %}
+
+{# Layout #}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('content') }}
+        {{ encore_entry_script_tags('slider') }}
+        {# {{ encore_entry_script_tags('animation') }} #}
+        {{ encore_entry_script_tags('gallery') }}
+    {% endblock %}
+
+    {% block stylesheets %}
+        {{ parent() }}
+        {{ encore_entry_link_tags('content') }}
+    {% endblock %}
+
+    {% set breadcrumb = [
+        {label: 'Home', url: '/'},
+        {label: 'About', active: true}
+    ] %}
+
+{# Page sections #}
+
+    {% set socials = [
+        {icon: 'icon-facebook', link: config('SOCIAL_GITHUB'), color: null},
+        {icon: 'icon-twitter', link: config('SOCIAL_STACKOVERFLOW'), color: null}
+    ] %}
+    {% set skillColumns = [
+        {
+            title: 'languages & Frameworks',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, libero perspiciatis. Ipsa, incidunt?',
+            skills: [
+                ['PHP', 80],
+                ['Object-oriented Programming', 60],
+                ['Symfony', 85],
+                ['Javascript', 90],
+                ['CSS + Sass', 70],
+                ['SQL', 85],
+            ] 
+        },{
+            title: 'Libraries & Tools',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi iure molestiae, beatae corrupti maiores iste. Quibusdam, animi quasi.',
+            skills: [
+                ['Docker', 85],
+                ['WebPack Encore', 85],
+                ['Git / GitHub / GitLab', 85],
+                ['Trello', 85]
+            ]
+        },{
+            title: 'No code',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod tempore ipsam repellendus tenetur sunt neque.',
+            skills: [
+                ['Wordpress', 90],
+                ['Shopify', 70],
+                ['Webflow', 85]
+            ]
+        },{
+            title: 'Knowledge & Methodology',
+            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, amet.',
+            skills: [
+                ['UX & UI Design', 80],
+                ['Marketing & online sales (e-commerce)', 60],
+                ['ULM Schemes', 85]
+            ] 
+        } 
+    ] %}
+
+
+{# About page ======================================================================== #}
+		
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'About',
+        subtitle: null
+    } %}
+
 {% endblock %}
 
-{% block body %}
-	<h1>About</h1>
+{% block main %}
 
-	<div class="section container">
-		<h2>Bio</h2>
-		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cupiditate quae, ullam quibusdam sit non maiores ad, odio, commodi in autem officiis eos excepturi neque iure inventore! Temporibus error ex tenetur!</p>
-		<div class="social-links about">
-			<a href="{{ config('SOCIAL_GITHUB') }}" title="My GitHub page">GitHub</a>
-			<a href="{{ config('SOCIAL_STACKOVERFLOW') }}" title="My StackOverflow account">StackOverflow</a>
-			<a href="{{ path('contact') }}">Contact me</a>
-		</div>
-	</div>
+    <section id="content">
+        <div class="content-wrap">
 
-	<div class="section container">
-		<h2>Coding skills</h2>
-		<ul>
-			<li>CV: Embed / Download / View on LinkedIn</li>
-			<li>PHP</li>
-			<li>Object-oriented Programming</li>
-			<li>Javascript</li>
-			<li>CSS + Sass</li>
-			<li>SQL</li>
-			<li>Symfony
-				<ul>
-					<li>WebPack Encore</li>
-				</ul>
-			</li>
-			<li>Docker</li>
-			<li>Methodology
-				<ul>
-					<li>Git / GitHub / GitLab</li>
-					<li>Trello</li>
-					<li>ULM Schemes</li>
-				</ul>
-			</li>
-		</ul>
+            {# portrait #}
+            <div class="section bg-transparent py-0">
+                <div class="container clearfix">
 
-		<h2>More skills</h2>
-		<ul>
-			<li>UX & UI Design</li>
-			<li>Marketing & online sales (e-commerce)</li>
-			<li>No code:
-				<ul>
-					<li>Wordpress</li>
-					<li>Shopify</li>
-					<li>Webflow</li>
-				</ul>
-			</li>
+                    <div class="row">
 
-		</ul>
-	</div>
+                        <div class="col-lg-3 col-md-5 col-padding{# order-md-last #}" style="background: url('{{ asset('build/images/about/team/3.jpg') }}') center center no-repeat; background-size: cover;"></div>
+
+                        <div class="col-lg-9 col-md-7 col-padding">
+                            <div class="heading-block">
+                                <span class="before-heading color">CEO &amp; Co-Founder</span>
+                                <h3>John Doe</h3>
+                            </div>
+
+                            <div class="col">
+                                <p>Employment respond committed meaningful fight against oppression social challenges rural legal aid governance. Meaningful work, implementation, process cooperation, campaign inspire.</p>
+                                <p>Advancement, promising development John Lennon, our ambitions involvement underprivileged billionaire philanthropy save the world transform. Carbon rights maintain healthcare emergent, implementation inspire social change solve clean water livelihoods.</p>
+                                
+                                <a href="{{ path('contact') }}">Contact me</a>
+                                <div>CV: Embed / Download / View on LinkedIn</div>
+                                {% include "_elements/social-icons.html.twig" with { 
+                                    type: 'default',
+                                    socials: socials 
+                                } %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {# skills columns #}
+            <div class="section bg-transparent">
+            <div class="container clearfix">
+
+                <div class="row col-mb-50">
+                    {% for column in skillColumns %}
+                        {% set colWidth = skillColumns|length <= 3 ? 12 / skillColumns|length : 6 %}
+                        <div class="col-lg-{{ colWidth }}">
+                            {% include "_elements/skill-counters.html.twig" with { skills: column } %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            </div>
+
+            {# some projects #}
+            <div class="section">
+				<div class="container">
+					{% include "_elements/section-title.html.twig" with {
+						section: null,
+						title: 'Some of my <span>Projects</span>',
+						offsetLeft: false,
+						content: "Awesome Works that I've contibuted to. Proudly!"
+					} %}
+                    {% include "_elements/projects-carousel.html.twig" with {projects: projects} %}
+                </div>
+            </div>
+
+            {# counters #}
+            <div class="section bg-transparent footer-stick">
+                <div class="container clearfix">
+
+                    <div class="row col-mb-50">
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn">
+                            <i class="i-plain i-xlarge mx-auto icon-line2-directions"></i>
+                            <div class="counter counter-lined"><span data-from="100" data-to="846" data-refresh-interval="50" data-speed="2000"></span>K+</div>
+                            <h5>Lines of Codes</h5>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="200">
+                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-graph"></i>
+                            <div class="counter counter-lined"><span data-from="3000" data-to="15360" data-refresh-interval="100" data-speed="2500"></span>+</div>
+                            <h5>KBs of HTML Files</h5>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="400">
+                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-layers"></i>
+                            <div class="counter counter-lined"><span data-from="10" data-to="408" data-refresh-interval="25" data-speed="3500"></span>*</div>
+                            <h5>No. of Templates</h5>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="600">
+                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-clock"></i>
+                            <div class="counter counter-lined"><span data-from="60" data-to="1200" data-refresh-interval="30" data-speed="2700"></span>+</div>
+                            <h5>Hours of Coding</h5>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </section>
 
 {% endblock %}

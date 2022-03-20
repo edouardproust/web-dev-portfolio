@@ -7,18 +7,22 @@
 
 <div id="comments" class="clearfix">
 
-    <h3 id="comments-title" class="mb-3">
-        <span>{{ comments|length }}</span> Comments
-    </h3>
+    {% if comments|length > 0 %}
+        
+        <h3 id="comments-title" class="mb-3">
+            <span>{{ comments|length }}</span> Comments
+        </h3>
 
-    {# Comments List #}
+        {# Comments List #}
 
-    <ol class="commentlist clearfix">
-        {% for i, comment in comments %}
-            {% include "_elements/card-comment.html.twig" with { comment: comment } %}
-        {% endfor %}
-    </ol>
-    <div class="clear"></div>
+        <ol class="commentlist clearfix">
+            {% for i, comment in comments %}
+                {% include "_elements/card-comment.html.twig" with { comment: comment } %}
+            {% endfor %}
+        </ol>
+        <div class="clear"></div>
+        
+    {% endif %}
 
     {# Form #}
 

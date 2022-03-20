@@ -14,7 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AuthorRegisterType extends AbstractType
 {
@@ -32,41 +34,56 @@ class AuthorRegisterType extends AbstractType
                 ->add('email', EmailType::class, [
                     'label' => 'Email*',
                     'constraints' => [
+                        new NotBlank(),
                         new Email,
                         new Length(['max' => 255])
                     ],
+                    'mapped' => false,
                 ])
                 ->add('password', PasswordType::class, [
                     'label' => 'Password*',
-                    'constraints' => [new Length(['max' => 255])],
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(['max' => 255])
+                    ],
+                    'mapped' => false
                 ]);
         }
         $builder
             ->add('fullName', TextType::class, [
                 'label' => 'Your name*',
-                'constraints' => [new Length(['max' => 255])],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length(['max' => 255])
+                ],
             ])
             ->add('bio', TextareaType::class, [
                 'label' => 'Bio*',
                 'help' => 'Describe yourself a bit (50 to 500 characters).',
-                'constraints' => [new Length([
-                    'min' => 50,
-                    'max' => 500
-                ])],
+                'constraints' => [
+                    new NotBlank(),
+                    new Length([
+                        'min' => 50,
+                        'max' => 500
+                    ])
+                ],
             ])
-            ->add('avatar', VichImageType::class, [
+            ->add('avatarFile', VichImageType::class, [
                 'required' => false,
                 'label' => 'Avatar',
                 'help' => 'Your favorite photo of yourself! (jpeg or png, 500Ko max)',
-                'constraints' => [new File([
-                    'maxSize' => '500k',
-                    'mimeTypes' => ['image/jpeg', 'image/png']
-                ])],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '500k',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                        'mimeTypesMessage' => 'Image format {{ type }} is not allowed. Please use one of the following: {{ types }}.'
+                    ])
+                ]
             ])
             ->add('contactEmail', EmailType::class, [
                 'required' => false,
                 'label' => 'Contact email',
-                'help' => 'An address where readers of your psots can write to you.',
+                'help' => 'An address where readers of your posts can write to you.',
                 'constraints' => [
                     new Email,
                     new Length(['max' => 255])
@@ -106,6 +123,9 @@ class AuthorRegisterType extends AbstractType
                     new Url,
                     new Length(['max' => 255])
                 ],
+            ])
+            ->add('submitRegister', SubmitType::class, [
+                'label' => "<i class='icon-line-check'></i> Register"
             ]);
     }
 }

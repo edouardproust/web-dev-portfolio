@@ -8,16 +8,16 @@
         - author_routeName: <string|null> Route name for the author collection of posts|projects|lessons (set in 'show' and 'index' templates)
 #}
 
-{% set defaultAvatar = 'placeholder.png'  %}
+    {% set defaultAvatar = 'placeholder.png'  %}
 
 {# Prepare #}
 
-{% set hasAuthorLink = author_routeName is defined and author_routeName is not null ? true : false %}
-{% set authorCollectionUrl = hasAuthorLink ? path(author_routeName, {id: author.id}) %}
-{% set avatarUrl = author.avatar is defined and author.avatar is not null
-    ? uploadUrl('UPLOADS_AUTHORS', author.avatar)
-    : uploadUrl('UPLOADS_AUTHORS', defaultAvatar)
-%}
+    {% set hasAuthorLink = author_routeName is defined and author_routeName is not null ? true : false %}
+    {% set authorCollectionUrl = hasAuthorLink ? path(author_routeName, {id: author.id}) %}
+    {% set avatarUrl = author.avatar is defined and author.avatar is not null
+        ? uploadUrl('UPLOADS_AUTHORS', author.avatar)
+        : uploadUrl('UPLOADS_AUTHORS', defaultAvatar)
+    %}
 
 {# Author Box component =================================================== #}
 

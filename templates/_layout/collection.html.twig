@@ -5,13 +5,46 @@
 	{{ encore_entry_script_tags('gallery') }}
 {% endblock %}
 
+{# Prepare #}
+    {% set hasFeaturedSection = featuredProjects is defined 
+        and featuredProjects is iterable 
+        and featuredProjects|length > 0 
+            ? true : false
+    %}
+
+
+{# Collection layout ================================================ #}
+
 {% block main %}
 
     <section id="content">
         <div class="content-wrap">
             <div class="container clearfix">
 
-                {% include "_elements/collection-filters.html.twig" with {filters: collection_filters} %}
+                {# Featured projects #}
+                {% if hasFeaturedSection %}
+                <div class="section bg-transparent pt-0">
+                    <h2>Featured</h2>
+                    {% include "_elements/projects-carousel.html.twig" with {
+                        projects: featuredProjects,
+                        cols: 3
+                    } %}
+                </div>
+
+                <h2>All projects</h2>
+                {% endif %}
+
+                {% if collection_filters is defined and collection_filters is not null %}
+                    {% if collection_filters.double is defined and collection_filters.double is iterable %}
+                        {% include "_elements/collection-filters-double.html.twig" with {
+                            filters: collection_filters.double
+                        } %}
+                    {% else %}
+                        {% include "_elements/collection-filters.html.twig" with {
+                            filters: collection_filters
+                        } %}
+                    {% endif %}
+                {% endif %}
 
                 {# Collection Items #}
                 {% block content %}{% endblock %}

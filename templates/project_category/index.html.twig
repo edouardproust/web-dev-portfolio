@@ -1,28 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	"{{ category.label }}" Projects
+{% block title %}Portfolio: {{ category.label }}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('slider') }}
 {% endblock %}
 
-{% block body %}
+{% set breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'Portfolio', url: path('projects')},
+	{label: category.label, active: true}
+] %}
+{% set collection_filters = null %}
+{% set collection_items = projects %}
 
-	<h1>"{{ category.label }}" Projects</h1>
 
-	{% if category.description is not null %}
-		<div class="page_headline"> {{ category.description }}
-		</div>
-	{% endif %}
+{# Collection of Projects =============================================== #}
 
-	<div class="collection">
+{% block hero %}
 
-		{% for project in projects %}
-			{% include "_parts/card/project.html.twig" %}
-		{% endfor %}
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Portfolio: ' ~ category.label,
+        subtitle: category.description
+    } %}
+    
+{% endblock %}
 
-		<div class="pagination">
-			{{ knp_pagination_render(projects) }}
-		</div>
-
-	</div>
-
+{% block content %}
+    
+    <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
+        {% for projects in collection_items %}
+            {% include "_elements/portfolio-collection-item.html.twig" with {
+                project: projects,
+				data: { 
+					categories: false,
+					codingLanguages: true }
+            } %}
+        {% endfor %}
+    </div>
+    
 {% endblock %}

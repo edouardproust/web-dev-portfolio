@@ -1,0 +1,77 @@
+{# Config
+
+    Mandatory variables:
+        - lesson: <Lesson> The lesson
+        - icon: <object> {php: <string>, js: <string>, ...} Icons list: https://themes.semicolonweb.com/html/canvas/icons.html
+        - iconAnimation: <string> Eg. 'swing' Animations list: https://themes.semicolonweb.com/html/canvas/animations.html
+#}
+    
+    {% set iconAnimation = 'swing' %}
+    {% set showAuthor = false %}
+    {% set showCreatedAt = false %}
+        {% set dateFormat = 'F d, Y' %}
+    {% set icon = {
+        php: 'icon-php',
+        js: 'icon-js',
+        css: 'icon-css3-alt',
+        html: 'icon-html5',
+        other: 'icon-code1'
+    }  %}
+
+
+{# Prepare #}
+
+    {% set categoriesClasses = '' %}
+    {% set hasCategories = lesson.categories is defined and lesson.categories|length > 0 ? true : false %}
+    {% if hasCategories %}
+        {% set categoriesClasses %}{% for category in lesson.categories %}{{ ' ' ~ category.slug }}{% endfor %}{% endset %}
+    {% endif %}
+
+    {# icon #}
+    {% set lang = lesson.codingLanguage.slug %}
+    {% set icon = lang is same as('php') or lang is same as('php-oop') ? icon.php
+        : lang is same as('js') ? icon.js
+        : lang is same as('css') ? icon.css
+        : lang is same as('html') ? icon.html
+        : icon.other
+    %}
+
+    {# {% set hasComments = lesson.comments is defined and lesson.comments|length > 0 ? true : false %} #}
+    {# {% set hasAuthor = '' %} #}
+        
+
+{# Lesson collection Item ======================================================= #}
+
+<article class="col-12 grid-item {{ lesson.codingLanguage.slug }}{{ categoriesClasses }}">
+    <a href="{{ path('lesson_show', {id: lesson.id, slug: lesson.slug}) }}"
+        class="feature-box fbox-plain mb-3 bg-light align-items-center p-3"
+    >
+        <div class="fbox-icon animated display"
+            data-hover-animate="{{ iconAnimation }}"
+            data-hover-parent=".feature-box"
+            data-hover-animate-out="none" 
+        >
+            <i class="{{ icon }}"></i>
+        </div>
+        <div class="fbox-content">
+            <h3 class="nott fw-medium pb-1">{{ lesson.title }}</h3>
+            <div class="small text-muted">
+
+                {% if hasCategories %}
+                    {% for category in lesson.categories %}
+                        {% if category is not same as(lesson.categories|first) %} / {% endif %}
+                        <span>{{ category }}</span>
+                    {% endfor %}
+                {% endif %}
+                {% if showAuthor is defined and showAuthor is same as(true) %}
+                    <span{{ hasCategories ? ' class="sep-before"' : ''}}>
+                        {{ lesson.author.fullname }}
+                    </span>
+                {% endif %}
+                {% if showCreatedAt is defined and showCreatedAt is same as(true) %}
+                    <span class="sep-before">{{ lesson.createdAt|date(dateFormat) }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </a>
+</article>

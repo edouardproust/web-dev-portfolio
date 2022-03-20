@@ -1,40 +1,47 @@
-{# Settings #}
+{# Config #}
 
-{% set isHeaderSticky = false %}
-{% set headerAnimation = null %} {# eg. 'fadeInDown' or null to desactivate. Animations list: https://themes.semicolonweb.com/html/canvas/animations.html #}
-{% set headerLogoHeight = 100 %}
-{% set logoAsText = "{edouard<b>proust</b>}" %} {# To replace logo by simple text. null to use logo instead. Html allowed #}
+    {% set isHeaderSticky = false %}
+    {% set headerAnimation = null %} {# eg. 'fadeInDown' or null to desactivate. Animations list: https://themes.semicolonweb.com/html/canvas/animations.html #}
+    {% set headerLogoHeight = 100 %}
+    {% set logoAsText = "{edouard<b>proust</b>}" %} {# To replace logo by simple text. null to use logo instead. Html allowed #}
 
-{% set headerMenu = [
-    {label: 'Home', url: path('home')},
-    {label: 'Portfolio', url: path('projects')},
-    {label: 'Lessons', url: path('lessons')},
-    {label: 'Blog', url: path('posts')},
-    {label: 'About', url: path('about')},
-    {label: 'Contact', url: path('contact')}
- ] %}
-
-{% set footerMenu = [
-    {label: app.user|higherRole(true) ~ ' dashboard', url: path('admin'), isVisible: app.user|higherRole(true) is null ? false : true},
-	{label: 'Login', url: path('app_login'), isVisible: app.user is null ? true : false},
-	{label: 'Logout', url: path('app_logout'), isVisible: app.user is null ? false : true},
-	{label: 'Become an author', url: path('author_register'), isVisible: app.user is null or adminVisible is same as(false) ? true : false}
-] %}  
+    {% set headerMenu = [
+        {label: 'Home', url: path('home')},
+        {label: 'Portfolio', url: path('projects')},
+        {label: 'Lessons', url: path('lessons')},
+        {label: 'Blog', url: path('posts')},
+        {label: 'About', url: path('about')},
+        {label: 'Contact', url: path('contact')}
+    ] %}
+    {% set footerMenu = [
+        {label: app.user|higherRole(true) ~ ' dashboard', url: path('admin'), isVisible: isAdminAccessGranted() ? true : false},
+        {label: 'Login', url: path('app_login'), isVisible: app.user is null ? true : false},
+        {label: 'Logout', url: path('app_logout'), isVisible: app.user is null ? false : true},
+        {label: 'Become an author', url: path('author_register'), isVisible: app.user is null or (adminVisible is defined and adminVisible is same as(false)) ? true : false}
+    ] %}  
+    {% set footerSocials = [
+        { link: '#', icon: 'icon-linkedin', color: null},
+        { link: '#', icon: 'icon-github', color: null},
+        { link: '#', icon: 'icon-stackoverflow', color: null}
+] %}
 
 {# Prepare (Don't modify!) #}
 
-{% set logoAsTextStyle = '' %}
-{% set logo = asset('build/images/logo@2x.png') %}
-{% if whiteLogo is defined %} {# whiteLogo can be defined on each layout (or static pages) #}
-    {% set logo = asset('build/images/logo-dark@2x.png') %}
-    {% set logoAsTextStyle = ' style=color:white' %}
-{% endif %}
+    {% set logoAsTextStyle = '' %}
+    {% set logo = asset('build/images/logo@2x.png') %}
+    {% if whiteLogo is defined %} {# whiteLogo can be defined on each layout (or static pages) #}
+        {% set logo = asset('build/images/logo-dark@2x.png') %}
+        {% set logoAsTextStyle = ' style=color:white' %}
+    {% endif %}
 
-{% set stickyClass = isHeaderSticky ? ' sticky' : ' no-sticky' %}
-{% set isHeaderAnimated = headerAnimation is defined and headerAnimation is not null ? true : false %}
-{% set animationClass = isHeaderAnimated ? ' ' + headerAnimation + ' animated' : '' %}
-{% set animationAttr = isHeaderAnimated ? ' data-animate="fadeInDown"' : '' %}
-{% set isTextLogo = logoAsText is defined and logoAsText is not null ? true : false %}
+    {% set stickyClass = isHeaderSticky ? ' sticky' : ' no-sticky' %}
+    {% set isHeaderAnimated = headerAnimation is defined and headerAnimation is not null ? true : false %}
+    {% set animationClass = isHeaderAnimated ? ' ' + headerAnimation + ' animated' : '' %}
+    {% set animationAttr = isHeaderAnimated ? ' data-animate="fadeInDown"' : '' %}
+    {% set isTextLogo = logoAsText is defined and logoAsText is not null ? true : false %}
+
+
+
 
 {# Header ===================================================== #}
 
@@ -83,12 +90,6 @@
 
 {# View ===================================================== #}
 
-			{% for type, messages in app.flashes %}
-				{% for message in messages %}
-					<div class="alert alert-{{ type }}">{{ message|raw }}</div>
-				{% endfor %}
-			{% endfor %}
-
 			{% block hero %}{% endblock %}
 
 			{% block main %}{% endblock %}
@@ -117,11 +118,10 @@
                                     {% include "_elements/footer-menu.html.twig" with { menu: headerMenu } %}
                                     {% include "_elements/footer-menu.html.twig" with { menu: footerMenu } %}
 
-                                    {% include "_elements/footer-socials.html.twig" with { socials: [
-                                        { link: '#', icon: 'icon-linkedin' },
-                                        { link: '#', icon: 'icon-github' },
-                                        { link: '#', icon: 'icon-stackoverflow' }
-                                    ]} %}
+                                    {% include "_elements/social-icons.html.twig" with { 
+                                        type: 'footer',
+                                        socials: footerSocials
+                                    } %}
                                     
                                 </div>
                             </div>

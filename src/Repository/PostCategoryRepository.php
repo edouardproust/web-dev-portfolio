@@ -20,19 +20,20 @@ class PostCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get list of all categories that contain posts
+     * Get list of all categories of a group of posts
+     * @var Collection|Post[] Posts in collection
      * @return PostCategory[] Returns an array of PostCategory objects
      */
-    public function findNotEmpty(): array
+    public function findNotEmpty($posts): array
     {
-        $postCategories = $this->findAll();
-
-        $notEmptyCategories = [];
-        foreach ($postCategories as $category) {
-            if (!empty($category->getPosts())) {
-                $notEmptyCategories[] = $category;
+        $postsCategories = [];
+        foreach ($posts as $post) {
+            foreach ($post->getCategories() as $category) {
+                if (!empty($category->getPosts())) {
+                    $postsCategories[$category->getSlug()] = $category;
+                }
             }
         }
-        return $notEmptyCategories;
+        return $postsCategories;
     }
 }

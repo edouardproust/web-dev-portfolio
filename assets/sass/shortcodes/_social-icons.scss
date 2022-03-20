@@ -86,6 +86,7 @@ $sicon-prefix: social-icon;
 	&:hover {
 		color: $social-icon-color;
 		border-color: transparent;
+		background-color: $theme-color; // Default bg-color if no bg-color class is defined (eg. si-facebook, si-gplus, etc.)
 	}
 	&.si-colored { border-color: transparent; }
 }

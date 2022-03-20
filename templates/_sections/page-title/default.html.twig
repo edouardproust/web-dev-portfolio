@@ -11,19 +11,22 @@
                 { ... },
                 { label: 'Portfolio', active: true},
             ] %} 
+        - shapeDivider = <string> eg. 'slant' Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html
+        - shapeDividerReverse: <bool>
+        - h2LineHeight: <string> eg. '3.2rem'
+        - animationDuration = <string> eg. '600ms'
 #}
 
-{% set animation = 'fadeInUp' %}
-{% set shapeDivider = 'slant' %} {# Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html #}
+{% set shapeDivider = 'slant' %}
 {% set shapeDividerReverse = true %}
 {% set h2LineHeight = '3.2rem' %}
+{% set animationDuration = '600ms' %}
 
 
 {# Prepare #}
 
     {# design #}
-    {% set animationClass = animation is defined ? ' ' ~ animation ~ ' animated' : '' %}
-    {% set animationAttr = animation is defined ? ' data-animate="' ~ animation ~ '"' : '' %}
+    {% set animationDurationAttr = animationDuration is defined ? ' style="animation-duration: ' ~ animationDuration ~ '"' : '' %}
     {% set shapeDividerExtraClass = shapeDividerReverse is defined and shapeDividerReverse is same as(true) ? ' reverse' : '' %}
 
 {# Title Page section (Default) ======================================================== #} 
@@ -32,24 +35,26 @@
 
     <div class="container clearfix">
 
-        <div class="small {{ animationClass }}"{{ animationAttr }}{# data-delay="200" #}{# style="animation-duration: 600ms" #}>
-            
-            {% if breadcrumb is defined %}
+        {% if breadcrumb is defined %}
+            <div class="small fadeInDown animated" data-animate="fadeInDown"{{ animationDurationAttr }}>
                 {% include "_elements/breadcrumb.html.twig" with {
                     links: breadcrumb
                 } %}
+            </div>
+        {% endif %}
+        
+
+        <div class="fadeInUp animated" data-animate="fadeInUp"{# data-delay="200" #}{{ animationDurationAttr }}>
+            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ title }}</h2>
+
+            {% if subtitle is defined and subtitle is not null %}
+                    <div class="page-description" style="opacity: .7">
+                        {{ subtitle }}
+                    </div>
+                
             {% endif %}
 
-            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ title }}</h2>
-            
-            {% if subtitle is defined and subtitle is not null %}
-                <div class="page-description" style="opacity: .7">
-                    {{ subtitle }}
-                </div>
-            {% endif %}
-            
         </div>
-        
     </div>
 
     {% if shapeDivider is defined %}

@@ -1,40 +1,119 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Contact
+{# Config
+
+	Ref: 
+		- https://themes.semicolonweb.com/html/canvas/contact-2.html
+		- https://themes.semicolonweb.com/html/canvas/featured-boxes.html 
+
+#}
+
+{% block title %}Contact{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
 {% endblock %}
 
-{% block body %}
+{% set breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'Contact', active: true}
+] %}
 
-	<h1>Contact</h1>
 
-	<div class="section container">
-		<h2>Send me an email</h2>
+{# Contact page =============================================================== #}
+		
+{% block hero %}
 
-		{{ form_start(contactForm) }}
-		{{ form_widget(contactForm) }}
-		<button type="submit" class="primary">Send</button>
-		{{ form_end(contactForm) }}
-	</div>
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Contact',
+        subtitle: null
+    } %}
+    
+{% endblock %}
 
-	<div class="section container">
-		<h2>Other ways to contact me</h2>
-		<ul class="unstyled">
-			<li>Phone:
-				{{ config('CONTACT_PHONE') }}
-			</li>
-			<li>Email:
-				<a href="{{ 'mailto:' ~ config('CONTACT_EMAIL') }}">
-					{{ config('CONTACT_EMAIL')|safeEmail(false) }}
-				</a>
-			</li>
-			<li>
-				<a href="{{ config('SOCIAL_LINKEDIN') }}">LinkedIn</a>
-			</li>
-			<li>Address:
-				{{ config('CONTACT_ADDRESS') }}
-			</li>
-		</ul>
-	</div>
+{% block main %}
+
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+
+                {% include "_sections/feature-boxes.html.twig" with { boxes: [
+                    {
+                        icon: 'icon-line-phone',
+                        title: 'Email',
+                        content: config('CONTACT_EMAIL')|safeEmail(false),
+                        link: 'mailto:' ~ config('CONTACT_EMAIL')
+                    },{
+                        icon: 'icon-line-mail',
+                        title: 'Phone',
+                        content: config('CONTACT_PHONE')
+                    },{
+                        icon: 'icon-linkedin-in',
+                        title: 'LinkedIn',
+                        content: 'Click to write me on LinkedIn',
+                        link: config('SOCIAL_LINKEDIN'),
+                        targetBlank: true
+                    },{
+                        icon: 'icon-line-home',
+                        title: 'Address',
+                        content: config('CONTACT_ADDRESS')
+                    }
+                ]} %}
+
+                {# contact form + google map #}
+                <div class="row align-items-stretch col-mb-50 mb-0">
+
+                    {# Contact Form #}
+                    <div class="col-lg-6">
+
+                        <div class="fancy-title title-border">
+                            <h3>Send me an Email</h3>
+                        </div>
+
+                        <div class="form-widget">
+
+							{{ form_start(contactForm) }}
+							{{ form_widget(contactForm) }}
+							<button type="submit" class="primary">Send</button>
+							{{ form_end(contactForm) }}
+ 
+                            {#<div class="form-result"></div>
+
+                            <form class="mb-0" id="template-contactform" name="template-contactform" action="include/form.php" method="post">
+
+                                <div class="form-process">
+                                    <div class="css3-spinner">
+                                        <div class="css3-spinner-scaler"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label for="template-contactform-name">Name <small>*</small></label>
+                                        <input type="text" id="template-contactform-name" name="template-contactform-name" value="" class="sm-form-control required" />
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0">Send</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="prefix" value="template-contactform-">
+
+                            </form> #}
+
+                        </div>
+
+                    </div>
+
+                    {# Google Map #}
+                    <div class="col-lg-6 min-vh-50">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d163975.34506402636!2d19.864790694540723!3d50.04668135328545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471644c0354e18d1%3A0xb46bb6b576478abf!2zS3Jha8OzdywgUG9sYW5k!5e0!3m2!1sen!2suk!4v1646823396559!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

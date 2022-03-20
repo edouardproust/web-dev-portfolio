@@ -21,7 +21,6 @@
 {% set showDate = true %}
 
 {# Set #}
-
 {#% set link = path('blog_show', {id: post.id}) %#}
 {% set categoriesClasses %}{% for category in post.categories %}{{ ' ' ~ category.2 }}{% endfor %}{% endset %}
 {% set hasCategories = post.categories is defined and post.categories|length > 0 ? true : false %}

@@ -1,21 +1,39 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/page.html.twig' %}
 
 {% block title %}My account{% endblock %}
 
-{% block body %}
+{% set page_title = "My account" %}
 
-    <h1>My account</h1>
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
+{% endblock %}
 
-    <p>Authors can publish blog posts and lessons on this website.</p>
-    <a href="{{ path('author_register') }}">
-        <button type="submit" class="primary">Become an author</button>
-    </a>
+{% block content %}
 
-    <h2>My informations</h2>
-    <p>Registered on {{ app.user.createdAt|date('F j, Y') }}</p>
-    {{ form_start(userForm) }}
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <div>Registered on {{ app.user.createdAt|date('F j, Y') }}</div>
+        <a href="{{ path('app_logout') }}">
+            <button type="button" class="btn btn-outline-danger">Logout</button>
+        </a>
+    </div>
+
+    <div class="alert alert-primary">
+        {% if app.user.isAuthor is same as(null) %}
+            <span>Authors can publish blog posts and lessons on this website. </span>
+            <a href="{{ path('author_register') }}">
+                <button type="submit" class="btn btn-sm btn-primary">Become an author</button>
+            </a>
+        {% else %}
+            Your request to become an author is pending. Please wait while the admin is verifying your appliance.
+        {% endif %}
+    </div>
+
+    <h3 class="mt-5 mb-4">Edit my informations</h3>
+
+    {{ form_start(userForm, {attr: {novalidate: ''}}) }}
     {{ form_widget(userForm) }}
-    <button type="submit" class="primary">Update my account</button>
+    <button type="submit" class="btn btn-primary">Edit</button>
     {{ form_end(userForm) }}
 
 {% endblock %}

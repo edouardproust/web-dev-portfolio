@@ -15,7 +15,7 @@
 #}
 
 {% set dateFormated = post.createdAt|date('M j, Y') %}
-{% set animation = 'fadeInUp' %}
+{% set animationDuration = '600ms' %}
 {% set shapeDivider = 'slant' %} {# Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html #}
 {% set shapeDividerReverse = true %}
 {% set h2LineHeight = '3.2rem' %}
@@ -30,8 +30,7 @@
     {% set authorCollectionUrl = hasAuthorLink ? path(author_routeName, {id: post.author.id}) %}
 
     {# design #}
-    {% set animationClass = animation is defined ? ' ' ~ animation ~ ' animated' : '' %}
-    {% set animationAttr = animation is defined ? ' data-animate="' ~ animation ~ '"' : '' %}
+    {% set animationDurationAttr = animationDuration is defined ? ' style="animation-duration: ' ~ animationDuration ~ '"' : '' %}
     {% set shapeDividerExtraClass = shapeDividerReverse is defined and shapeDividerReverse is same as(true) ? ' reverse' : '' %}
     {% set mainImageUrl = post.mainImage is defined and post.mainImage is not null 
         ? uploadUrl('UPLOADS_POSTS', post.mainImage) 
@@ -46,17 +45,18 @@
     <div class="bg-overlay-bg" style="background: radial-gradient({{ overlayColor }}, {{ overlayColor }}), url({{ mainImageUrl }}) center center / cover no-repeat fixed"></div>
 
     <div class="container clearfix text-light">
-
-        <div class="small {{ animationClass }}"{{ animationAttr }}{# data-delay="200" #}{# style="animation-duration: 600ms" #}>
-            
-            {% if breadcrumb is defined %}
+ 
+        {% if breadcrumb is defined %}
+            <div class="small fadeInDown animated" data-animate="fadeInDown"{{ animationDurationAttr }}>
                 {% include "_elements/breadcrumb.html.twig" with {
                     links: breadcrumb
                 } %}
-            {% endif %}
+            </div>
+        {% endif %}
 
+        <div class="fadeInUp animated" data-animate="fadeInUp"{{ animationDurationAttr }}>
             <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ post.title }}</h2>
-                
+            
             <ol class="page-description">
 
                 {% if post.categories|length > 0 %}
@@ -80,9 +80,8 @@
                 {% endif %}
 
             </ol>
-
         </div>
-        
+    
     </div>
 
     {% if shapeDivider is defined %}

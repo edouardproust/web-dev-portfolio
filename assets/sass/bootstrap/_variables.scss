@@ -12,6 +12,7 @@ $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default;
+$gray-550: #8d9299 !default;
 $gray-600: #6c757d !default;
 $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
@@ -645,11 +646,11 @@ $display-line-height: $headings-line-height !default;
 $lead-font-size:              $font-size-base * 1.25 !default;
 $lead-font-weight:            300 !default;
 
-$small-font-size:             .875em !default;
+$small-font-size:             .85em !default;
 
-$sub-sup-font-size:           .75em !default;
+$sub-sup-font-size:           .725em !default;
 
-$text-muted:                  $gray-600 !default;
+$text-muted:                  $gray-550 !default;
 
 $initialism-font-size:        $small-font-size !default;
 

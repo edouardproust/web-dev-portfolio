@@ -10,6 +10,7 @@ use Twig\TwigFunction;
 use App\Helper\StringHelper;
 use App\Repository\PostRepository;
 use App\Service\AdminOptionService;
+use App\Service\EasyAdminService;
 use App\Service\PostTypeService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,17 +18,14 @@ use Symfony\Component\HttpFoundation\Request;
 class AppExtension extends AbstractExtension
 {
     private $adminOptionService;
-    private $postRepository;
-    private $postTypeService;
+    private $easyAdminService;
 
     public function __construct(
         AdminOptionService $adminOptionService,
-        PostRepository $postRepository,
-        PostTypeService $postTypeService
+        EasyAdminService $easyAdminService
     ) {
         $this->adminOptionService = $adminOptionService;
-        $this->postRepository = $postRepository;
-        $this->postTypeService = $postTypeService;
+        $this->easyAdminService = $easyAdminService;
     }
 
     public function getFunctions()
@@ -36,7 +34,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('config', [$this, 'getAdminOptionValue']),
             new TwigFunction('uploadUrl', [$this, 'getUploadUrlFromPublicDir']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
-            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
+            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
+            new TwigFunction('isAdminAccessGranted', [$this, 'isAdminPanelAccessGranted'])
         ];
     }
 
@@ -127,6 +126,11 @@ class AppExtension extends AbstractExtension
         } else {
             return $defaultName;
         }
+    }
+
+    public function isAdminPanelAccessGranted(): bool
+    {
+        return $this->easyAdminService->isAdminPanelAccessGranted();
     }
 
     public function hasVisibleComments(object $postType)

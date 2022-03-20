@@ -2,15 +2,8 @@
 
 {# Config #}
 
-{% block javascripts %}
-    {{ parent() }}
-	{# {{ encore_entry_script_tags('gallery') }} #}
-{% endblock %}
-
 {% block title %}Blog{% endblock %}
 
-{% set page_title = 'Blog' %}
-{% set page_desc = 'The lastest news from the world currated by experts.' %}
 {% set breadcrumb = [
     {label: 'Home', url: path('home')},
     {label: 'Blog', active: true}
@@ -33,7 +26,7 @@
 
 <div id="collection" class="row grid-container block-gallery-9">
     {% for post in posts %}
-        {% include "_elements/blog-collection-item-2.html.twig" with { post: post} %}
+        {% include "_elements/blog-collection-item-2.html.twig" with { post: post } %}
     {% endfor %}
 </div>
 

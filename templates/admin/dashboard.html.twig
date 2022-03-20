@@ -15,7 +15,7 @@
         This is your {{ user|higherRole }} dashboard.
 
         <div class="row mt-4">
-            {% if cardApproveAuthors.authors|length > 0 %}
+            {% if cardApproveAuthors.authors|length > 0 and user|higherRole is same as('admin') %}
                 {% include "admin/_parts/card/authors_waiting_list.html.twig" with {
                     data: cardApproveAuthors
                 } %}

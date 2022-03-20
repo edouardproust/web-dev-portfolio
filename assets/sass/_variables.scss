@@ -386,6 +386,10 @@ $button-transition-speed: 0.2s ease-in-out;
 $button-reveal-transition-speed: 0.3s ease;
 $button-fill-transition-speed: 0.4s ease;
 
+// Animations
+
+$animationOpacity: 0;
+
 // Button Desc in Device-sm
 
 $buttons-color: true; // colors are inside of $button_colors . eg: button-red;
@@ -875,8 +879,9 @@ $grid_filter-styles-rdius: 22px;
 $grid-shuffle-size: 42px;
 
 // Portfolio: 	;
+$portfolio-item-min-height: 300px;
 $Portfolio_desc-padding: 20px 5px;
-$Portfolio_desc-title-size: 1.25rem;
+$Portfolio_desc-title-size: 1.1rem;
 
 // Masonry Thumbs: 	;
 $masonry_thumbs-gutter: 1px;

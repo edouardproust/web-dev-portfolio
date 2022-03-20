@@ -30,10 +30,10 @@ class PostController extends AbstractController
      */
     public function index(): Response
     {
-        $posts = $this->postRepository->findAll();
+        $posts = $this->postRepository->findBy([], ['createdAt' => 'DESC']);
         return $this->render('post/index.html.twig', [
             'posts' => $posts,
-            'categories' => $this->postCategoryRepository->findNotEmpty(),
+            'categories' => $this->postCategoryRepository->findNotEmpty($posts),
         ]);
     }
 

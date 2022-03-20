@@ -193,13 +193,21 @@ class EasyAdminService
         return HiddenField::new('id')->onlyOnDetail();
     }
 
-    public function isAdminPanelAccessGranted()
+    public function isAdminPanelAccessGranted(): bool
     {
         $isGranted = false;
         $user = $this->security->getUser();
         foreach ($user->getRoles() as $role) {
+            // check if is admin or author
             if (in_array($role, Config::EASY_ADMIN_ROLES)) {
                 $isGranted = true;
+                // if is author: check if is approved
+                if (!in_array(Config::ROLE_ADMIN, $user->getRoles())) { // if is not admin (= if is an author)
+                    $author = $this->authorRepository->findOneByUser($user);
+                    if (!$author->getIsApproved()) {
+                        $isGranted = false;
+                    }
+                }
             }
         }
         return $isGranted;

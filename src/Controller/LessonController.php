@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CodingLanguageRepository;
 use App\Repository\LessonCategoryRepository;
 use App\Repository\LessonRepository;
 use App\Service\PostTypeService;
@@ -13,15 +14,18 @@ class LessonController extends AbstractController
 {
     private $lessonRepository;
     private $lessonCategoryRepository;
+    private $codingLanguageRepository;
     private $postTypeService;
 
     public function __construct(
         LessonRepository $lessonRepository,
         LessonCategoryRepository $lessonCategoryRepository,
+        CodingLanguageRepository $codingLanguageRepository,
         PostTypeService $postTypeService
     ) {
         $this->lessonRepository = $lessonRepository;
         $this->lessonCategoryRepository = $lessonCategoryRepository;
+        $this->codingLanguageRepository = $codingLanguageRepository;
         $this->postTypeService = $postTypeService;
     }
 
@@ -30,11 +34,12 @@ class LessonController extends AbstractController
      */
     public function index(): Response
     {
-        $lessons = $this->lessonRepository->findAll();
+        $lessons = $this->lessonRepository->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('lesson/index.html.twig', [
             'lessons' => $lessons,
-            'categories' => $this->lessonCategoryRepository->findNotEmpty()
+            'codingLanguagesFilter' => $this->codingLanguageRepository->findNotEmpty($lessons),
+            'categoriesFilter' => $this->lessonCategoryRepository->findNotEmpty($lessons)
         ]);
     }
     /**
