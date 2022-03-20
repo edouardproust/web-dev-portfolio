@@ -1,12 +1,146 @@
-{% include "_parts/header.html.twig" %}
+{# Config #}
 
-{% for type, messages in app.flashes %}
-	{% for message in messages %}
-		<div class="alert alert-{{ type }}">{{ message|raw }}</div>
-	{% endfor %}
-{% endfor %}
+    {% set isHeaderSticky = false %}
+    {% set headerAnimation = null %} {# eg. 'fadeInDown' or null to desactivate. Animations list: https://themes.semicolonweb.com/html/canvas/animations.html #}
+    {% set headerLogoHeight = 100 %}
+    {% set logoAsText = "{edouard<b>proust</b>}" %} {# To replace logo by simple text. null to use logo instead. Html allowed #}
+
+    {% set headerMenu = [
+        {label: 'Home', url: path('home')},
+        {label: 'Portfolio', url: path('projects')},
+        {label: 'Lessons', url: path('lessons')},
+        {label: 'Blog', url: path('posts')},
+        {label: 'About', url: path('about')},
+        {label: 'Contact', url: path('contact')}
+    ] %}
+    {% set footerMenu = [
+        {label: app.user|higherRole(true) ~ ' dashboard', url: path('admin'), isVisible: isAdminAccessGranted() ? true : false},
+        {label: 'Login', url: path('app_login'), isVisible: app.user is null ? true : false},
+        {label: 'Logout', url: path('app_logout'), isVisible: app.user is null ? false : true},
+        {label: 'Become an author', url: path('author_register'), isVisible: app.user is null or (adminVisible is defined and adminVisible is same as(false)) ? true : false}
+    ] %}  
+    {% set footerSocials = [
+        { link: '#', icon: 'icon-linkedin', color: null},
+        { link: '#', icon: 'icon-github', color: null},
+        { link: '#', icon: 'icon-stackoverflow', color: null}
+] %}
+
+{# Prepare (Don't modify!) #}
+
+    {% set logoAsTextStyle = '' %}
+    {% set logo = asset('build/images/logo@2x.png') %}
+    {% if whiteLogo is defined %} {# whiteLogo can be defined on each layout (or static pages) #}
+        {% set logo = asset('build/images/logo-dark@2x.png') %}
+        {% set logoAsTextStyle = ' style=color:white' %}
+    {% endif %}
+
+    {% set stickyClass = isHeaderSticky ? ' sticky' : ' no-sticky' %}
+    {% set isHeaderAnimated = headerAnimation is defined and headerAnimation is not null ? true : false %}
+    {% set animationClass = isHeaderAnimated ? ' ' + headerAnimation + ' animated' : '' %}
+    {% set animationAttr = isHeaderAnimated ? ' data-animate="fadeInDown"' : '' %}
+    {% set isTextLogo = logoAsText is defined and logoAsText is not null ? true : false %}
 
 
-{% block body %}{% endblock %}
 
-{% include "_parts/footer.html.twig" %}
+
+{# Header ===================================================== #}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="author" content="SemiColonWeb" />
+
+        <title>{% block title %}{% endblock %}</title>
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+    </head>
+
+    <body class="stretched"{#
+        For page transitions, uncomment this: 
+        // data-loader-html="<div><img src='{{ asset('build/images/theme/loader.svg') }}' alt='Loader'></div>" 
+    #}>
+
+        <div id="wrapper" class="clearfix">{# <-- Don't remove wrapper #}
+
+{# Navigation ===================================================== #}
+
+            <header id="header" class="transparent-header{{ stickyClass }}{{ animationClass }}"{{ animationAttr }}>
+                <div id="header-wrap">
+                    <div class="container">
+                        <div class="header-row">
+                            <a href="{{ path('home') }}">
+                                {% if isTextLogo %}
+                                    <h3 id="header-logo" class="py-3 my-3"{{ logoAsTextStyle|raw }}>{{ logoAsText|raw }}</h3>
+                                {% else %}
+                                    <img id="header-logo" src="{{ logo }}" alt="{{ config('SITE_NAME') }}" height="{{ headerLogoHeight }}">
+                                {% endif %}
+                            </a>
+                            {% include "_menus/head_main.html.twig" with { menu: headerMenu } %}
+                        </div>
+                    </div>
+                </div>
+                <div class="header-wrap-clone"></div>
+            </header>
+
+{# View ===================================================== #}
+
+			{% block hero %}{% endblock %}
+
+			{% block main %}{% endblock %}
+            
+{# Footer ===================================================== #}
+
+            <footer id="footer" class="dark border-0 clearfix">
+                
+                <div id="copyrights">
+                    <div class="container clearfix">
+
+                        <div class="w-100 text-center topmargin-sm">
+
+                            <div class="row justify-content-between">
+                                <div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
+                                    {% if isTextLogo %}
+                                        <h4 class="footer-logo-text">{{ logoAsText|raw }}</h4>
+                                    {% else %}
+                                        <img src="{{ asset('build/images/footer-logo.png') }}" alt="Image" class="mb-4"><br>
+                                    {% endif %}
+                                    &copy; {{ config('SITE_NAME') }} {{ date()|date('Y') }}. All Rights Reserved.
+                                </div>
+
+                                <div class="col-12 col-lg-auto text-center text-lg-end">
+
+                                    {% include "_elements/footer-menu.html.twig" with { menu: headerMenu } %}
+                                    {% include "_elements/footer-menu.html.twig" with { menu: footerMenu } %}
+
+                                    {% include "_elements/social-icons.html.twig" with { 
+                                        type: 'footer',
+                                        socials: footerSocials
+                                    } %}
+                                    
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                    </div>
+                </div>
+
+            </footer>
+
+        </div>{# <-- End of wrapper #}
+
+        <div id="gotoTop" class="icon-angle-up bg-color"></div>
+
+    </body>
+
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+	{% endblock %}
+
+</html>

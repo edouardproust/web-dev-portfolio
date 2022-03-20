@@ -23,7 +23,7 @@ class CodingLanguageCrudController extends AbstractCategoryCrudController
             ->setEntityLabelInPlural('Coding Languages')
             ->setEntityLabelInSingular('Language')
             ->setDefaultSort(['label' => 'ASC'])
-            ->setEntityPermission('ROLE_ADMIN');
+            ->setEntityPermission(Config::ROLE_ADMIN);
     }
 
     public function setFields(): iterable

@@ -1,23 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	Lessons
+{# Config #}
+
+{% block title %}Lessons{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Lessons', active: true}
+] %}
+{% set collection_filters = {double: [codingLanguagesFilter, categoriesFilter]} %}
+
+{# Collection of Posts =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Lessons',
+        subtitle: 'Learn coding or improve your skills.'
+    } %}
+    
 {% endblock %}
 
-{% block body %}
-
-	<h1>Lessons</h1>
-
-	<div class="collection">
-
-		{% for lesson in lessons %}
-			{% include "_parts/card/lesson.html.twig" %}
-		{% endfor %}
-
-		<div class="pagination">
-			{{ knp_pagination_render(lessons) }}
-		</div>
-
-	</div>
+{% block content %}
+    
+    <div id="collection" class="row grid-container">
+        {% for lesson in lessons %}
+            {% include "_elements/lesson-collection-item.html.twig" %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

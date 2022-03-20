@@ -17,10 +17,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class EasyAdminService
@@ -193,5 +191,25 @@ class EasyAdminService
                 ->setSortable(false);
         }
         return HiddenField::new('id')->onlyOnDetail();
+    }
+
+    public function isAdminPanelAccessGranted(): bool
+    {
+        $isGranted = false;
+        $user = $this->security->getUser();
+        foreach ($user->getRoles() as $role) {
+            // check if is admin or author
+            if (in_array($role, Config::EASY_ADMIN_ROLES)) {
+                $isGranted = true;
+                // if is author: check if is approved
+                if (!in_array(Config::ROLE_ADMIN, $user->getRoles())) { // if is not admin (= if is an author)
+                    $author = $this->authorRepository->findOneByUser($user);
+                    if (!$author->getIsApproved()) {
+                        $isGranted = false;
+                    }
+                }
+            }
+        }
+        return $isGranted;
     }
 }

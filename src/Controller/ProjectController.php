@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Config;
 use App\Repository\ProjectRepository;
-use App\Service\AdminOptionService;
-use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\ProjectCategoryRepository;
+use App\Service\PostTypeService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,33 +12,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProjectController extends AbstractController
 {
     private $projectRepository;
-    private $paginator;
-    private $adminOptionService;
+    private $projectCategoryRepository;
+    private $postTypeService;
 
     public function __construct(
         ProjectRepository $projectRepository,
-        PaginatorInterface $paginator,
-        AdminOptionService $adminOptionService
+        ProjectCategoryRepository $projectCategoryRepository,
+        PostTypeService $postTypeService
     ) {
         $this->projectRepository = $projectRepository;
-        $this->paginator = $paginator;
-        $this->adminOptionService = $adminOptionService;
+        $this->projectCategoryRepository = $projectCategoryRepository;
+        $this->postTypeService = $postTypeService;
     }
 
     /**
      * @Route("/portfolio", name="projects")
-     * @see https://github.com/KnpLabs/KnpPaginatorBundle
      */
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        $projects = $this->paginator->paginate(
-            $this->projectRepository->findAll(),
-            $request->query->getInt('page', 1),
-            $this->adminOptionService->get('PROJECTS_PER_PAGE')
-        );
+        $projects = $this->projectRepository->findBy([], ['createdAt' => 'DESC']);
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
+            'categories' => $this->projectCategoryRepository->findNotEmpty($projects),
+            'featuredProjects' => $this->projectRepository->findBy(
+                ['featured' => true],
+                ['createdAt' => 'DESC']
+            )
         ]);
     }
 
@@ -49,8 +47,13 @@ class ProjectController extends AbstractController
      */
     public function show(int $id): Response
     {
+        $project = $this->projectRepository->find($id);
+        $prevNextLinks = $this->postTypeService
+            ->getPrevNextLinks($project, $this->projectRepository, 'project_show');
         return $this->render('project/show.html.twig', [
-            'project' => $this->projectRepository->find($id),
+            'project' => $project,
+            'relatedProjects' => $this->projectRepository->findRelated($project),
+            'prevNextLinks' => $prevNextLinks
         ]);
     }
 }

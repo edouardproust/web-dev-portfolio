@@ -1,60 +1,66 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/post.html.twig' %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('content') }}
+{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
+{% endblock %}
 
-	{% if post.mainImage is not null %}
-		<div class="show_img">
-			<img src="{{ vich_uploader_asset(post, 'mainImageFile') | imagine_filter('large') }}" alt="Image for post: {{ post.title }}">
-		</div>
-	{% endif %}
 
-	<h1>{{ post.title }}</h1>
+{# Config 
 
-	<div class="show_data">
-		<span>{{ post.createdAt|date('m/d/Y') }}</span>
-		{% if post|hasApprovedAuthor %}
-			<span> | By </span>
-			<a href="{{ path('author_posts', {'id': post.author.id}) }}">{{ post.author.fullName }}</a>
-		{% endif %}
-	</div>
+    Mandatory variables:
+        - block 'title': displayed on browser tab
+        - page_title: <string> Used in 'title-page.html.twig' section
+        - post: <Post> The blog post object (set in controller)
 
-	{% if post.categories|length > 0 %}
-		<div class="show_pills">
-			<div class="pills-list">
-				<span>In: </span>
-				{% for category in post.categories %}
-				<a class="pill" href="{{ path('post_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
-				{% endfor %}
-			</div>
-		</div>
-	{% endif %}
+    Optionnal variables 
+        - whiteLogo: <bool>
+        - breadcrumb: <object[]> Used in 'title-page.html.twig' section
+            Array of objects: [{ label: <string>, url: <string> }, ... ]
+        - showAuthor: <bool>
+        - showComments: <bool>
+        - showPostNavigation: <bool> If set on true, youn must also set (mandatory):
+            - prevNextLinks: <array[]> Array containing data for each link (previous and next):
+                [ 'prev' => ['url' => string, 'title' => string], 'next' => ['url' => string, 'title' => string] ]
+#}
+
+{% block title %}Blog | {{ post.title|extract(30) }}{% endblock %}
+
+{% set whiteLogo = true %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Blog', url: path('posts')},
+    {label: post.title, active: true}
+] %}
+{% set showPostNavigation = true %}
+{% set showAuthor = true %}
+{% set showComments = true %}
+{% set prevNextLinks = prevNextLinks %}
+{% set author_routeName = 'author_posts' %}
+
+{# Show one Post ================================================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/post-show.html.twig" with { 
+        post: post
+    } %}
+
+{% endblock %}
+
+{% block content %}
 
 	{% if post.headline is not null %}
-		<div class="show_headline">
+		<div class="page_headline">
 			{{ post.headline }}
 		</div>
 	{% endif %}
 
-	<hr>
-
-	<div class="show_content">
-		{{ post.content|raw }}
-	</div>
-
-	{% if  post|hasApprovedAuthor %}
-		<div class="show_author">
-			{% include "_parts/card/author.html.twig" with {
-			'author': post.author
-			} %}
-		</div>
-	{% endif %}
-
-	{% if config('SHOW_COMMENTS_ON_POST') %}
-		{% include "_parts/comments_section.html.twig" with {postType: post} %}
-	{% endif %}
+    {{ post.content|raw }}
 
 {% endblock %}

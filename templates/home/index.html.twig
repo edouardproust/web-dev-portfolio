@@ -1,72 +1,150 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	Home
+{% block title %}Home{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('gallery') }}
+	{{ encore_entry_script_tags('slider') }}
+	{{ encore_entry_script_tags('animation') }}
+	{{ encore_entry_script_tags('content') }}
 {% endblock %}
 
-{% block body %}
+{% block hero %}
 
-	<div class="section hero xl">
-		<h1>Web Developer</h1>
-		<div class="subtitle">PHP. Symfony. Javascript.</div>
-		<div class="bg-img"></div>
-		<button class="primary">Visit Portfolio</button>
-	</div>
+    <section id="slider"
+        class="slider-element min-vh-60 min-vh-md-100 include-header" 
+        style="background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto"
+    >
+        {% include "_sections/home/hero-slider.html.twig" %}
+    </section>
 
-	<div class="section container">
-		<h2>Featured Projects</h2>
-		<div class="collection">
-			{% for project in featuredProjects %}
-				{% include "_parts/card/project.html.twig" %}
-			{% endfor %}
-		</div>
-		<div class="see_more">
-			<a href="{{ path('projects') }}">
-				<button class="primary">Browse all projects</button>
-			</a>
-		</div>
-	</div>
+{% endblock %}
+		
+{% block main %}
 
+	<section id="content">
+		<div class="content-wrap">
 
-	<div class="section container">
-		<h2>Last Projects</h2>
-		<div class="collection">
-			{% for project in projects %}
-				{% include "_parts/card/project.html.twig" %}
-			{% endfor %}
-		</div>
-		<div class="see_more">
-			<a href="{{ path('projects') }}">
-				<button class="primary">Browse all projects</button>
-			</a>
-		</div>
-	</div>
+			{# flip cards #}
+			{% include "_sections/home/flip-cards.html.twig" with {
+				section: 'Experience',
+				title: 'I have been taking photographs for the last 7 years.',
+				columns: 4,
+				parallax: { top: '-100px', bottom: '100px' },
+				removeVerticalMargins: true,
+				titleSize: '36px'
+			} %}
 
-	<div class="section container">
-		<div class="collection">
-			<h2>Last Lessons</h2>
-			{% for lesson in lessons %}
-				{% include "_parts/card/lesson.html.twig" %}
-			{% endfor %}
-		</div>
-		<div class="see_more">
-			<a href="{{ path('lessons') }}">
-				<button class="primary">Browse all lessons</button>
-			</a>
-		</div>
-	</div>
+			{# wrap cards #}
+			<div class="section bg-transparent">
+				<div class="container">
+					{% include "_elements/section-title.html.twig" with {
+						section: 'Some of Featured Pictures',
+						title: 'See what I Did.',
+						offsetLeft: true,
+						content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?'
+					} %}
 
-	<div class="section container">
-		<div class="collection">
-			<h2>Last Blog Posts</h2>
-			{% for post in posts %}
-				{% include "_parts/card/post.html.twig" %}
-			{% endfor %}
+					{% include "_elements/gallery-masonry-3d.html.twig" with { cards : [
+						{
+							img: asset('build/images/album/1.jpg'),
+							category: 'Travel',
+							title: 'Railway Station'
+						},{
+							img: asset('build/images/album/2.jpg'),
+							category: 'Travel',
+							title: 'Mt. Batur'
+						},{
+							img: asset('build/images/album/3.jpg'),
+							category: 'Travel',
+							title: 'Bali, Indonesia'
+						},{
+							img: asset('build/images/album/4.jpg'),
+							category: 'Wedding',
+							title: "Ms. Charle's Wedding"
+						},{
+							img: asset('build/images/album/5.jpg'),
+							category: 'Wedding',
+							title: 'Romantic Moments'
+						},{
+							img: asset('build/images/album/6.jpg'),
+							category: 'Travel',
+							title: 'Surfing on Sunset'
+						},{
+							img: asset('build/images/album/7.jpg'),
+							category: 'Candid',
+							title: 'Black & White'
+						},{
+							img: asset('build/images/album/8.jpg'),
+							category: 'Travel',
+							title: 'Reading Book'
+						},{
+							img: asset('build/images/album/9.jpg'),
+							category: 'Travel',
+							title: 'Little Flubby'
+						},{
+							img: asset('build/images/album/10.jpg'),
+							category: 'Portrait',
+							title: 'Model Shoot'
+						},{
+							img: asset('build/images/album/11.jpg'),
+							category: 'Fashion',
+							title: 'Beach Shoot'
+						},{
+							img: asset('build/images/album/12.jpg'),
+							category: 'Model',
+							title: 'Modelling Pics'
+						},{
+							img: asset('build/images/album/13.jpg'),
+							category: 'Travel',
+							title: 'Street Picture'
+						},{
+							img: asset('build/images/album/14.jpg'),
+							category: 'Street',
+							title: 'Budapest, Hungry'
+						},{
+							img: asset('build/images/album/15.jpg'),
+							category: 'Candid',
+							title: 'Street Picture'
+						}
+
+					] } %}
+
+					{% include "_elements/section-paragraph-left.html.twig" with {
+						title: 'See what I Did.',
+						content: [
+							'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?',
+							'Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda voluptatum, perspiciatis quae dolorum exercitationem quos ullam, doloribus voluptates nulla reprehenderit maxime sunt ducimus eligendi ratione quaerat vero ex voluptatem earum.'
+						] 
+					} %}
+
+				</div>
+			</div>
+
+			{# counters #}
+			{% include "_sections/home/counters.html.twig" %}
+			
+			{# clients #}
+			{% include "_sections/home/clients.html.twig" with {
+				section: 'Trusted Partners',
+				title: 'Happy Clients',
+				columns: 12
+			} %}
+
+			{# services cards #}
+			{% include "_sections/home/services.html.twig" with {
+				section: 'Steps of Works',
+				title: 'See How I Do.',
+			} %}
+			
+			{# contact & testimonials #}
+			{% include "_sections/home/footer-contact.html.twig"  with {
+				section: "Let's Say Hi!",
+				title: "Contact Me Here."
+			} %}
+
 		</div>
-		<div class="see_more">
-			<a href="{{ path('posts') }}">
-				<button class="primary">Browse all posts</button>
-			</a>
-		</div>
-	</div>
+	</section>
+
 {% endblock %}

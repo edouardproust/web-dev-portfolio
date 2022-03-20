@@ -20,10 +20,10 @@ class AppFixtures extends AbstractFixtures
 {
     const AUTHORS_NB = 2;
     const AUTHOR_DEFAUT = [
-        'github' => 'www.github.com',
-        'linkedin' => 'www.linkedin.com',
-        'stackoverflow' => 'www.stackoverflow.com',
-        'website' => 'www.edouardproust.dev'
+        'github' => 'https://www.github.com',
+        'linkedin' => 'https://www.linkedin.com',
+        'stackoverflow' => 'https://www.stackoverflow.com',
+        'website' => 'https://www.edouardproust.dev'
     ];
     const CONDING_LANGUAGES = [
         'php' => 'PHP',
@@ -34,8 +34,8 @@ class AppFixtures extends AbstractFixtures
     const LESSONS_NB = 20;
     const LESSON_DEFAULT = [
         'url' => 'lesson_url',
-        'videoUrl' => 'www.youtube.com',
-        'repository' => 'www.github.com'
+        'videoUrl' => 'https://www.youtube.com',
+        'repository' => 'https://www.github.com'
     ];
     const LESSON_CATEGORIES = [
         'course' => 'Course',
@@ -46,8 +46,8 @@ class AppFixtures extends AbstractFixtures
     const POST_CATEGORIES_NB = 5;
     const PROJECTS_NB =  20;
     const PROJECT_DEFAULT = [
-        'url' => 'project_url',
-        'repository' => 'www.github.com'
+        'url' => 'https://www.edouardproust.dev',
+        'repository' => 'https://www.github.com'
     ];
     const PROJECT_CATEGORIES_NB = 5;
     const USERS_NB = 3;
@@ -241,6 +241,7 @@ class AppFixtures extends AbstractFixtures
             $project = (new Project)
                 ->setAuthor($this->faker->randomElement($this->authors))
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
+                ->setCompletedOn($this->faker->dateTimeBetween('-2 years', 'yesterday'))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
                 ->setMainImage(Path::PROJECT_DEFAULT_IMG)
                 ->setRepository(self::PROJECT_DEFAULT['repository'])

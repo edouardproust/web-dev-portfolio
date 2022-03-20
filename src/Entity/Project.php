@@ -100,6 +100,16 @@ class Project
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $completedOn;
+
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $gallery = [];
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -350,5 +360,29 @@ class Project
             $this->getTitle(),
             Config::ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH
         );
+    }
+
+    public function getCompletedOn(): ?\DateTimeInterface
+    {
+        return $this->completedOn;
+    }
+
+    public function setCompletedOn(\DateTimeInterface $completedOn): self
+    {
+        $this->completedOn = $completedOn;
+
+        return $this;
+    }
+
+    public function getGallery(): ?array
+    {
+        return $this->gallery;
+    }
+
+    public function setGallery(?array $gallery): self
+    {
+        $this->gallery = $gallery;
+
+        return $this;
     }
 }

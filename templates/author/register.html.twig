@@ -1,23 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/bg-video.html.twig' %}
 
-{% block title %}Become an author{% endblock %}
+{% block title %}Login{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
+{% endblock %}
 
-    <h1>Become an author</h1>
+{% block content %}
 
-    <div class="page_headline">
-        <span>Complete this form to submit you request to become an author on this website. </span>
-        <span>Authors can write blog posts and lessons.</span>
+<div class="tabs mx-auto clearfix" id="tab-login-register" style="max-width: 500px;">
+
+    <ul class="tab-nav tab-nav2 center clearfix">
+        <li class="inline-block"><a href="{{ path('app_login') }}">Login</a></li>
+        <li class="inline-block ui-state-active"><a href="#tab-register">Register</a></li>
+    </ul>
+
+    <div class="tab-container">
+
+        <div class="tab-content" id="tab-register">
+            <div class="card mb-0">
+                <div class="card-body" style="padding: 40px;">
+
+                    {% include "security/_register-form.html.twig" %}
+                        
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div>After submitted, your request will be reviewed by the administrator.</div>
-    <div>Mandatory fields are mrked with a *.</div>
-
-	{{ form_start(registerForm) }}
-    {{ form_widget(registerForm) }}
-    <button type="submit" class="primary">Submit registration</button>
-    {{ form_end(registerForm) }}
-
+</div>
 
 {% endblock %}
+

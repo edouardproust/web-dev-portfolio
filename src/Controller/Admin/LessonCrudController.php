@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Config;
 use App\Entity\Lesson;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -22,6 +23,14 @@ class LessonCrudController extends AbstractPosttypeCrudController
     public static function getEntityFqcn(): string
     {
         return Lesson::class;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular(ucfirst($this->route))
+            ->setEntityLabelInPlural(ucfirst($this->route) . 's')
+            ->setDefaultSort(['createdAt' => 'DESC']);
     }
 
     public function setFields(): iterable
@@ -43,9 +52,15 @@ class LessonCrudController extends AbstractPosttypeCrudController
         yield UrlField::new('repository')->hideOnIndex();
         yield AssociationField::new('codingLanguage')->hideOnIndex();
         yield AssociationField::new('categories')->hideOnIndex();
-        yield $this->associationFieldAuthor();
-        yield DateTimeField::new('createdAt', 'Creation date')
-            ->hideWhenCreating()
+        yield $this->associationFieldAuthor()->onlyOnIndex(); // all: show on index
+        yield $this->associationFieldAuthor()->setPermission('ROLE_ADMIN'); // authors: hide field on edit
+        yield DateTimeField::new('createdAt', 'Creation date') // all: show on index
+            ->onlyOnIndex()
             ->setFormat('medium');
+        yield DateTimeField::new('createdAt', 'Creation date') // auhtors: hide field on edit
+            ->hideWhenCreating()
+            ->hideOnIndex()
+            ->setFormat('medium')
+            ->setPermission('ROLE_ADMIN');
     }
 }

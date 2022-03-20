@@ -1,0 +1,42 @@
+{# Prepare #}
+
+{% set hasSeveralImages = image is defined and image is iterable ? true : false %}
+{% if hasSeveralImages %}
+    {% set numberOfColumns = 12 / image|length %}
+    {% set bootstrapColClass = 'col-sm-' ~ numberOfColumns %}
+{% endif %}
+
+
+{# Post-type: Large Row Image(s) =============================================== #}
+
+<div class="row align-wide-xl mb-4 text-center">
+
+    {% if hasSeveralImages %}
+
+        {% for img in image %}
+            {% set hasCaption = img.caption is defined and not null ? true : false %}
+            {% set alt = hasCaption ? img.caption : 'Image' %}
+
+            <div class="{{ bootstrapColClass }}">
+                <img src="{{ img.src }}" alt="{{ alt }}">
+                {% set hasCaption = img.caption is defined and not null ? true : false %}
+                {% if hasCaption %}
+                    <figcaption class="text-center mt-2 text-muted text-smaller">{{ img.caption }}</figcaption>
+                {% endif %}
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+        
+        {% set hasCaption = caption is defined and not null ? true : false %}
+        {% set alt = hasCaption ? caption : 'Image' %}
+
+        <img src="{{ src }}" alt="{{ alt }}">
+        {% if hasCaption %}
+            <figcaption class="text-center mt-2 text-muted text-smaller">{{ caption }}</figcaption>
+        {% endif %}
+
+    {% endif %}
+ 
+</div>

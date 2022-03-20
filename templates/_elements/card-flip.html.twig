@@ -1,0 +1,46 @@
+{# 
+    variables:
+    - icon: optionnal
+    - title
+    - contentFront
+    - contentBack
+    - imgBack: Background-image on the card back
+    - btnLabel: If not defined,the button will be hidden
+    - btnLink: If not defined,the button will be hidden
+#}
+
+{% set imgBack %}
+    {% if imgBack is defined %}
+        style="background-image: url('{{ imgBack }}')"
+    {% endif %}
+{% endset %}
+
+<div class="col-sm-6 mb-5">
+    <div class="flip-card">
+        <div class="flip-card-front no-after" style="background-color: #F9F9F9">
+            <div class="flip-card-inner">
+                <div class="feature-box media-box fbox-sm">
+                    {% if icon is defined %}
+                        <div class="fbox-icon position-relative mb-4">
+                            <img src="{{ icon }}" class="rounded-0 bg-transparent text-start" alt="Icon for: {{ title }}">
+                        </div>
+                    {% endif %}
+                    <div class="fbox-content">
+                        <h3 class="fw-normal nott">{{ title }}</h3>
+                        <p class="text-muted fw-medium">{{ contentFront }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flip-card-back dark"{{ imgBack }}>
+            <div class="flip-card-inner mt-3">
+                <h4 class="mb-4">{{ contentBack }}</h4>
+                {% if btnLabel is defined and btnLink is defined %}
+                    <a href="{{ btnLink }}" class="button button-change overflow-hidden rounded nott fw-light m-0">
+                        <span>{{ btnLabel }}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

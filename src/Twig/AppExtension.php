@@ -2,30 +2,40 @@
 
 namespace App\Twig;
 
+use App\Entity\Post;
 use App\Entity\User;
 use Twig\TwigFilter;
 use App\Entity\Author;
 use Twig\TwigFunction;
 use App\Helper\StringHelper;
+use App\Repository\PostRepository;
 use App\Service\AdminOptionService;
+use App\Service\EasyAdminService;
+use App\Service\PostTypeService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
 class AppExtension extends AbstractExtension
 {
     private $adminOptionService;
+    private $easyAdminService;
 
-    public function __construct(AdminOptionService $adminOptionService)
-    {
+    public function __construct(
+        AdminOptionService $adminOptionService,
+        EasyAdminService $easyAdminService
+    ) {
         $this->adminOptionService = $adminOptionService;
+        $this->easyAdminService = $easyAdminService;
     }
 
     public function getFunctions()
     {
         return [
             new TwigFunction('config', [$this, 'getAdminOptionValue']),
+            new TwigFunction('uploadUrl', [$this, 'getUploadUrlFromPublicDir']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
-            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname'])
+            new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
+            new TwigFunction('isAdminAccessGranted', [$this, 'isAdminPanelAccessGranted'])
         ];
     }
 
@@ -44,6 +54,14 @@ class AppExtension extends AbstractExtension
     public function getAdminOptionValue(string $constant)
     {
         return $this->adminOptionService->get($constant);
+    }
+
+    public function getUploadUrlFromPublicDir(?string $constant, ?string $fileName): ?string
+    {
+        if (!$constant || !$fileName) {
+            return null;
+        }
+        return constant('\App\Path' . '::' . $constant) . '/' . $fileName;
     }
 
     /**
@@ -110,6 +128,11 @@ class AppExtension extends AbstractExtension
         } else {
             return $defaultName;
         }
+    }
+
+    public function isAdminPanelAccessGranted(): bool
+    {
+        return $this->easyAdminService->isAdminPanelAccessGranted();
     }
 
     public function hasVisibleComments(object $postType)

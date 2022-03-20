@@ -37,7 +37,7 @@ class CommentCrudController extends AbstractEntityCrudController
             ->setEntityLabelInPlural('Comments')
             ->setEntityLabelInSingular('Comment')
             ->setDefaultSort(['createdAt' => 'DESC'])
-            ->setEntityPermission('ROLE_ADMIN');
+            ->setEntityPermission(Config::ROLE_ADMIN);
     }
 
     public function setFields(): iterable

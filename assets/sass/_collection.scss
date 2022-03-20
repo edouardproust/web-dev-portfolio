@@ -1,0 +1,45 @@
+h3 a:hover {
+    color: inherit !important;
+}
+
+.block-gallery-9 .entry-title h3 {
+    text-transform: none;
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+.block-gallery-9 .entry-title:hover h3 a {
+    color: #DDD
+}
+
+.block-gallery-9 .btn-more {
+    opacity: 0;
+    font-size: 1.5rem;
+    color: #FFF;
+    margin-top: 15px;
+    transition: opacity .3s ease;
+}
+
+.block-gallery-9 .grid-item .bg-overlay-content {
+    top: auto;
+    bottom: -40px;
+    transition: bottom .3s ease;
+}
+
+.block-gallery-9 .grid-item:hover .bg-overlay-content {
+    bottom: 0;
+}
+
+.block-gallery-9 .grid-item:hover .btn-more {
+    opacity: 1;
+}
+
+.block-gallery-9 .entry-meta li {
+    font-style: italic;
+    font-size: 90%;
+}
+
+.block-gallery-9 .dark .entry-meta li,
+.block-gallery-9 .dark .entry-meta li a {
+    color: rgba(255,255,255,0.8);
+}

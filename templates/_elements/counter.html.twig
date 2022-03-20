@@ -1,0 +1,14 @@
+<div class="col-lg-3 col-md-6 mt-4">
+    <div class="counter counter-large fw-light">
+        {{ before is defined ? before }}
+        <span 
+            data-from="{{ from is defined ? from : 1 }}"
+            data-to="{{ to is defined ? to : 100 }}"
+            data-refresh-interval="{{ interval is defined ? interval : 50 }}"
+            data-speed="{{ speed is defined ? speed : 2000 }}">
+        </span>
+        {{ after is defined ? after }}
+    </div>
+    <h5>{{ title}}</h5>
+    <p class="text-muted mb-0 pb-5 border-bottom">{{ content }}</p>
+</div>

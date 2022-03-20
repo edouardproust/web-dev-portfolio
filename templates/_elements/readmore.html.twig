@@ -1,0 +1,44 @@
+{# Examples: https://themes.semicolonweb.com/html/canvas/read-more.html #}
+
+{#
+Mandatory variables:
+    - content: <string> html is allowed
+Optionnal variables:
+    - style: <int> Allowed values: 1 or 2. Default: 1
+    Only for style 2.:
+        - btnLabelOpen: <string> Label of the button. Default: "Read more  <i class='icon-angle-down'></i>"
+        - btnLabelClose: <string> Label of th button (html is allowed). Default: "Read less <i class='icon-angle-up'></i>"
+        - btnClass: <string> Additional classes for the btn (html is allowed). Default: 'btn-link text-primary'
+#}
+
+{# set #}
+
+{% set style = style is defined and not null ? style : 1 %}
+
+{% if style == 1 %}
+    {% set btnLabelOpen = "<i class='icon-angle-down i-plain i-large m-0 float-none'></i>"  %}
+    {% set btnLabelClose = "<i class='icon-angle-up i-plain i-large m-0 float-none'></i>"  %}
+{% elseif style == 2 %}
+    {% set btnLabelOpen = style.btnLabelOpen is defined and not null ? btnLabelOpen : "Read more  <i class='icon-angle-down'></i>"  %}
+    {% set btnLabelClose = btnLabelClose is defined and not null ? btnLabelClose : "Read less  <i class='icon-angle-up'></i>"  %}
+    {% set btnClass = btnClass is defined and not null ? btnClass : 'btn-link text-primary' %}
+{% endif %}
+
+{# Render #}
+
+<div 
+    data-readmore 
+    data-readmore-trigger-open="{{ btnLabelOpen }}" 
+    data-readmore-trigger-close="{{ btnLabelClose }}"
+    class="read-more-wrap"
+>
+    <div class="mb-2">
+        {{ content|raw }}
+    </div>
+    {% if style == 1 %}
+        <a href="#" class="read-more-trigger read-more-trigger-center"></a>
+    {% elseif style == 2 %}
+        <a href="#" class="btn {{ btnClass }} read-more-trigger read-more-trigger-center"></a>
+        <div class="read-more-mask"></div>
+    {% endif %}
+</div>

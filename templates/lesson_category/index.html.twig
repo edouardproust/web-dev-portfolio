@@ -1,29 +1,35 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	"{{ category.label }}" Lessons
+{# Config #}
+
+{% block title %}Lessons: {{ category.label }}{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Lessons', url: path('lessons')},
+	{label: category.label, active: true}
+] %}
+{% set collection_filters = codingLanguages %}
+{% set collection_items = lessons %}
+
+
+{# Collection of Posts =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Lessons: ' ~ category.label,
+        subtitle: category.description
+    } %}
+    
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
-	<h1>"{{ category.label }}" Lessons</h1>
-
-	{% if category.description is not null %}
-		<div class="page_headline">
-			{{ category.description }}
-		</div>
-	{% endif %}
-
-	<div class="collection">
-
-		{% for lesson in lessons %}
-			{% include "_parts/card/lesson.html.twig" %}
-		{% endfor %}
-
-		<div class="pagination">
-			{{ knp_pagination_render(lessons) }}
-		</div>
-
-	</div>
+    <div id="collection" class="row grid-container">
+        {% for lesson in lessons %}
+            {% include "_elements/lesson-collection-item.html.twig" %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

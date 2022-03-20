@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\ProjectCategory;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method ProjectCategory|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +15,27 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProjectCategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $projectRepository;
+
+    public function __construct(ManagerRegistry $registry, ProjectRepository $projectRepository)
     {
         parent::__construct($registry, ProjectCategory::class);
+        $this->projectRepository = $projectRepository;
     }
 
-    // /**
-    //  * @return ProjectCategory[] Returns an array of ProjectCategory objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Get list of all categories of a group of projects
+     * @var Collection|Project[] Projects in collection
+     * @return ProjectCategory[] Returns an array of ProjectCategory objects
+     */
+    public function findNotEmpty($projects): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $projectsCategories = [];
+        foreach ($projects as $project) {
+            foreach ($project->getCategories() as $category) {
+                $projectsCategories[$category->getSlug()] = $category;
+            }
+        }
+        return $projectsCategories;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ProjectCategory
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

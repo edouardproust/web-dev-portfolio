@@ -1,66 +1,67 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/lesson.html.twig' %}
+{% set post = lesson %}{# <-- Make template compatible with lessons #}
 
-{% block title %}{{ lesson.title }}{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('content') }}
+{% endblock %}
 
-{% block body %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
+{% endblock %}
 
-	<h1>{{ lesson.title }}</h1>
 
-	<div class="show_data">
-		<span>{{ lesson.createdAt|date('m/d/Y') }}</span>
-		{% if lesson|hasApprovedAuthor %}
-			<span> | By </span>
-			<a href="{{ path('author_lessons', {'id': lesson.author.id}) | imagine_filter('large') }}">{{ lesson.author.fullName }}</a>
-		{% endif %}
-	</div>
+{# Config 
 
-	{% if lesson.categories|length > 0 %}
-		<div class="show_pills">
-			<div class="pills-list">
-				<span>In:
-					</span>
-				{% for category in lesson.categories %}
-				<a class="pill" href="{{ path('lesson_category', {slug:category.slug}) }}">
-					{{ category.label }}
-				</a>
-				{% endfor %}
-			</div>
-		</div>
-	{% endif %}
+    Mandatory variables:
+        - block 'title': displayed on browser tab
+        - page_title: <string> Used in 'title-page.html.twig' section
+        - post: <Post> The blog post object (set in controller)
 
-	{% if lesson.codingLanguage is not null %}
-		<div class="card_pills">
-			<div class="pills-list">
-				Language:
-				<a class="pill" href="{{ path('coding_language_lessons', {'slug': lesson.codingLanguage.slug}) }}">
-					{{ lesson.codingLanguage.label }}
-				</a>
-			</div>
-		</div>
-	{% endif %}
+    Optionnal variables 
+        - whiteLogo: <bool>
+        - breadcrumb: <object[]> Used in 'title-page.html.twig' section
+            Array of objects: [{ label: <string>, url: <string> }, ... ]
+        - showAuthor: <bool>
+        - showComments: <bool>
+        - showPostNavigation: <bool> If set on true, youn must also set (mandatory):
+            - prevNextLinks: <array[]> Array containing data for each link (previous and next):
+                [ 'prev' => ['url' => string, 'title' => string], 'next' => ['url' => string, 'title' => string] ]
+#}
+
+{% block title %}Lesson | {{ lesson.title|extract(30) }}{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Lessons', url: path('lessons')},
+    {label: lesson.title, active: true}
+] %}
+{% set showPostNavigation = true %}
+{% set showAuthor = true %}
+{% set showComments = true %}
+{% set prevNextLinks = prevNextLinks %}
+{% set author_routeName = 'author_lessons' %}
+
+
+{# Show one Lesson ================================================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/lesson-show.html.twig" with { 
+        post: lesson
+	} %}
+
+{% endblock %}
+
+{% block content %}
 
 	{% if lesson.headline is not null %}
-		<div class="show_headline">
+		<div class="page_headline">
 			{{ lesson.headline }}
 		</div>
 	{% endif %}
 
-	<hr>
-
-	<div class="show_content">
-		{{ lesson.content|raw }}
-	</div>
-
-	{% if lesson|hasApprovedAuthor %}
-		<div class="show_author">
-			{% include "_parts/card/author.html.twig" with {
-			'author': lesson.author
-			} %}
-		</div>
-	{% endif %}
-
-	{% if config('SHOW_COMMENTS_ON_LESSON') %}
-		{% include "_parts/comments_section.html.twig" with {postType: lesson} %}
-	{% endif %}
+    {{ lesson.content|raw }}
 
 {% endblock %}

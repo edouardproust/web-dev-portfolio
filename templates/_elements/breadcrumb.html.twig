@@ -1,0 +1,31 @@
+{# You must define a 'breadcrumb' variable in each page template: 
+    {% set breadcrumb = [
+        { label: 'Home', url: '#'},
+        { ... },
+        { label: 'Portfolio', active: true},
+    ] %} 
+#}
+
+{% set linkLabelMaxLength = 25 %}
+                
+<ol class="breadcrumb">
+    {% for link in links %}
+
+        {% set isActive = link.active is defined and link.active is same as(true) ? true : false %}
+        {% set activeClass = '' %}
+        {% set ariaCurrent = '' %}
+        {% if isActive %}
+            {% set activeClass = ' active' %}
+            {% set ariaCurrent =  ' aria-current=page' %}
+        {% endif %}
+        
+        <li class="breadcrumb-item{{ activeClass }} small"{{ ariaCurrent }}>
+            {% if isActive %}
+                {{ link.label|extract(linkLabelMaxLength) }}
+            {% else %}
+                 <a href="{{ link.url }}">{{ link.label|extract(linkLabelMaxLength) }}</a>
+            {% endif %}
+        </li>    
+
+    {% endfor %}
+</ol>

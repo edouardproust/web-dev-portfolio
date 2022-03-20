@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Service\EasyAdminService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,16 +23,17 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     public const LOGIN_ROUTE = 'app_login';
 
     private UrlGeneratorInterface $urlGenerator;
+    private EasyAdminService $easyAdminService;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, EasyAdminService $easyAdminService)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->easyAdminService = $easyAdminService;
     }
 
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');
-
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
         return new Passport(
@@ -48,8 +50,11 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        return new RedirectResponse($this->urlGenerator->generate('admin'));
-        throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
+        if ($this->easyAdminService->isAdminPanelAccessGranted()) {
+            return new RedirectResponse($this->urlGenerator->generate('admin'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('user_show'));
+        }
     }
 
     protected function getLoginUrl(Request $request): string

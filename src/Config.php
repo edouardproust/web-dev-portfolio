@@ -7,11 +7,17 @@ namespace App;
  */
 class Config
 {
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_AUTHOR = 'ROLE_AUTHOR';
+
     const ROLES = [
-        'User' => 'ROLE_USER',
-        'Author' => 'ROLE_AUTHOR',
-        'Admin' => 'ROLE_ADMIN'
+        'User' => self::ROLE_USER,
+        'Author' => self::ROLE_AUTHOR,
+        'Admin' => self::ROLE_ADMIN
     ];
+    // Roles that allow access to EasyAdmin panel
+    const EASY_ADMIN_ROLES = ['ROLE_AUTHOR', 'ROLE_ADMIN'];
 
     const HEADLINE_MAX_LENGTH = 255;
     const ADMIN_FORM_MAIN_CSS_CLASS = 'col-md-8';

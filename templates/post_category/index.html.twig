@@ -1,29 +1,37 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	"{{ category.label }}" Posts
+{# Config #}
+
+{% block title %}Blog: {{ category.label }}{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Blog', url: path('posts')},
+	{label: category.label, active: true}
+] %}
+{% set collection_filters = null %}
+{% set collection_items = posts %}
+
+
+{# Collection of Posts =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Blog: ' ~ category.label,
+        subtitle: category.description
+    } %}
+    
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
-	<h1>"{{ category.label }}" Posts</h1>
-
-	{% if category.description is not null %}
-		<div class="page_headline">
-			{{ category.description }}
-		</div>
-	{% endif %}
-
-	<div class="collection">
-
-		{% for post in posts %}
-			{% include "_parts/card/post.html.twig" %}
-		{% endfor %}
-
-		<div class="pagination">
-			{{ knp_pagination_render(posts) }}
-		</div>
-
-	</div>
+    <div id="collection" class="row grid-container block-gallery-9">
+        {% for post in posts %}
+            {% include "_elements/blog-collection-item-2.html.twig" with { 
+                post: post
+            } %}
+        {% endfor %}
+    </div>
 
 {% endblock %}

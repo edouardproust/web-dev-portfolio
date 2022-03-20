@@ -1,23 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends '_layout/collection.html.twig' %}
 
-{% block title %}
-	Portfolio
+{% block javascripts %}
+    {{ parent() }}
+	{{ encore_entry_script_tags('slider') }}
+	{{ encore_entry_script_tags('gallery') }}
 {% endblock %}
 
-{% block body %}
+{# Config #}
 
-	<h1>Portfolio</h1>
+{% block title %}Portfolio{% endblock %}
 
-	<div class="collection">
+{% set page_title = 'Portfolio' %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Portfolio', active: true}
+] %}
+{% set collection_filters = categories %}
 
-		{% for project in projects %}
-			{% include "_parts/card/project.html.twig" %}
-		{% endfor %}
 
-		<div class="pagination">
-			{{ knp_pagination_render(projects) }}
-		</div>
+{# Collection of Projects =============================================== #}
 
-	</div>
+{% block hero %}
 
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Portfolio',
+        subtitle: 'Showcase of My Awesome Works'
+    } %}
+    
+{% endblock %}
+
+{% block content %}
+
+    <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
+        {% for project in projects %}
+            {% include "_elements/portfolio-collection-item.html.twig" with {
+                project: project,
+                featuredProjects: featuredProjects
+            } %}
+        {% endfor %}
+    </div>
+    
 {% endblock %}

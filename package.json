@@ -17,5 +17,21 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.2",
+        "bootstrap": "^5.1.3",
+        "fitvids": "^2.1.1",
+        "flexslider-conditional-before": "^2.6.4",
+        "intersection-observer": "^0.12.0",
+        "isotope-layout": "^3.0.6",
+        "jquery": "^3.6.0",
+        "jquery-bridget": "^3.0.1",
+        "jquery-countto": "^1.2.0",
+        "jquery.easing": "^1.4.1",
+        "jrespond": "^1.0.0",
+        "magnific-popup": "^1.1.0",
+        "owl.carousel": "^2.3.4",
+        "skrollr": "^0.6.26"
     }
 }

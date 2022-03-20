@@ -27,13 +27,15 @@ class UserService
         $this->flash = $flash;
     }
 
-    public function buildUser(array $data): User
+    public function buildUser($data): User
     {
+        $email = is_array($data) ? $data['email'] : $data->email ?? null;
+        $password = is_array($data) ? $data['password'] : $data->password ?? null;
         $user = new User;
         return $user
-            ->setEmail($data['email'])
+            ->setEmail($email)
             ->setCreatedAt(new \DateTime())
-            ->setPassword($this->hasher->hashPassword($user, $data['password']));
+            ->setPassword($this->hasher->hashPassword($user, $password));
     }
 
     /**

@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Config;
-use App\Service\AdminOptionService;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\CodingLanguageRepository;
 use App\Repository\LessonCategoryRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,36 +11,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class LessonCategoryController extends AbstractController
 {
     private $lessonCategoryRepository;
-    private $paginator;
-    private $adminOptionService;
+    private $codingLanguageRepository;
 
     public function __construct(
         LessonCategoryRepository $lessonCategoryRepository,
-        PaginatorInterface $paginator,
-        AdminOptionService $adminOptionService
+        CodingLanguageRepository $codingLanguageRepository
     ) {
         $this->lessonCategoryRepository = $lessonCategoryRepository;
-        $this->paginator = $paginator;
-        $this->adminOptionService = $adminOptionService;
+        $this->codingLanguageRepository = $codingLanguageRepository;
     }
 
     /**
      * @Route("/lessons/category/{slug}", name="lesson_category")
      */
-    public function index($slug, Request $request): Response
+    public function index($slug): Response
     {
         $category = $this->lessonCategoryRepository->findOneBy([
             'slug' => $slug
         ]);
-        $lessons = $this->paginator->paginate(
-            $category->getLessons(),
-            $request->query->getInt('page', 1),
-            $this->adminOptionService->get('LESSONS_PER_PAGE')
-        );
+        $lessons = $category->getLessons();
 
         return $this->render('lesson_category/index.html.twig', [
             'category' => $category,
-            'lessons' => $lessons
+            'lessons' => $category->getLessons(),
+            'codingLanguages' => $this->codingLanguageRepository->findNotEmpty($lessons)
         ]);
     }
 }

@@ -1,0 +1,39 @@
+<div class="section" style="padding: 140px 0;">
+    <div class="container">
+
+        {% include "_elements/section-title.html.twig" with {
+            section: section,
+            title: title,
+            content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?',
+        } %}
+
+        <div class="row clearfix">
+
+            {% include "_elements/card.html.twig" with {
+                img: asset('build/images/icons/shutter.svg'),
+                title: 'Updated Lenses:',
+                content: [
+                    'Objectively productivate interoperable process improvements after team building testing procedures. Distinctively architect resource-leveling portals.',
+                    'Objectively productivate interoperable process improvements.'
+                ]
+            } %}
+            {% include "_elements/card.html.twig" with {
+                img: asset('build/images/icons/video-camera.svg'),
+                title: 'Most Edited Tools:',
+                content: [
+                    'Objectively productivate interoperable process improvements after team building.',
+                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur dolores sit, corrupti laborum ab.'
+                ]
+            } %}
+            {% include "_elements/card.html.twig" with {
+                img: asset('build/images/icons/lr.svg'),
+                title: 'Film Making:',
+                content: [
+                    'Objectively productivate interoperable process improvements.',
+                    'Team building testing procedures. Distinctively architect resource-leveling portals.'
+                ]
+            } %}
+
+        </div>
+    </div>
+</div>

@@ -7,6 +7,7 @@ use App\Config;
 use App\Entity\Author;
 use App\Service\EasyAdminService;
 use App\Repository\AuthorRepository;
+use Symfony\Component\Security\Core\Security;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -26,12 +27,19 @@ class AuthorCrudController extends AbstractEntityCrudController
     private $authorRepository;
     private $easyAdminService;
 
+    private $entityId;
+    private $currentAuthorId;
+
     public function __construct(
         AuthorRepository $authorRepository,
-        EasyAdminService $easyAdminService
+        EasyAdminService $easyAdminService,
+        Security $security
     ) {
         $this->authorRepository = $authorRepository;
         $this->easyAdminService = $easyAdminService;
+
+        $this->entityId = (int)$_GET['entityId'];
+        $this->currentAuthorId = $authorRepository->findOneByUser($security->getUser())->getId();
     }
 
     public static function getEntityFqcn(): string
@@ -42,13 +50,14 @@ class AuthorCrudController extends AbstractEntityCrudController
     public function configureCrud(Crud $crud): Crud
     {
         $crud
-            ->setEntityPermission('ROLE_ADMIN')
             ->setEntityLabelInPlural('Authors')
             ->setDefaultSort(['fullName' => 'ASC']);
+        // permission
+        if ($this->entityId && $this->entityId !== $this->currentAuthorId) {
+            $crud->setEntityPermission(Config::ROLE_ADMIN);
+        }
         // page title
-        $currentAuthor = $this->authorRepository->findOneByUser($this->getUser());
-        $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
-        if ($currentAuthor->getId() == $entityId) {
+        if ($this->currentAuthorId === $this->entityId) {
             $crud->setPageTitle(Crud::PAGE_EDIT, 'My Author Profile');
         }
         return $crud;
@@ -61,6 +70,13 @@ class AuthorCrudController extends AbstractEntityCrudController
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
             ->add(Crud::PAGE_EDIT, Action::DELETE)
             ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::DELETE]);
+        // On Author panel only, if current Author is editing his own profile
+        if ($this->entityId && $this->entityId === $this->currentAuthorId) {
+            $actions
+                ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)
+                ->add(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
+                ->remove(Crud::PAGE_EDIT, Action::DELETE);
+        }
         return $actions;
     }
 

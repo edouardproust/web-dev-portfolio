@@ -1,0 +1,23 @@
+{# Config
+
+    Mandatory variables:
+        - gallery: <string[]> Array of images names
+
+#}
+
+{# Project Gallery Slider ======================================================== #}
+
+<div class="fslider project-show" data-arrows="true" data-animation="slide">
+    <div class="flexslider">
+        <div class="slider-wrap">
+            {# mainImage slide #}
+            <div class="slide shadow">
+                <img src="{{ uploadUrl('UPLOADS_PROJECTS', project.mainImage) }}" alt="Image of project: {{ project.title }}">
+            </div>
+            {# gallery slides #}
+            {% for i, image in project.gallery %}
+                <div class="slide shadow"><img src="{{ uploadUrl('UPLOADS_PROJECTS', image) }}" alt="Image n.{{ i }} of project: {{ project.title }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

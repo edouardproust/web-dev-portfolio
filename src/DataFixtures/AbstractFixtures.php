@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Config;
+use App\Helper\StringHelper;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -79,7 +80,7 @@ abstract class AbstractFixtures extends Fixture
     protected function setOptional(object $entity, string $fieldName, $value, int $probability = 100)
     {
         $setterFn = 'set' . ucFirst($fieldName);
-        if (random_int(1, 100) < $probability) {
+        if ($this->faker->boolean($probability)) {
             $entity->$setterFn($value);
         }
     }
@@ -99,7 +100,7 @@ abstract class AbstractFixtures extends Fixture
         if (random_int(1, 100) < $probability) {
             $headline = $this->faker->paragraph(5, true);
             if (strlen($headline) > Config::HEADLINE_MAX_LENGTH) { // cut headline if to long
-                $headline = substr($headline, 0, Config::HEADLINE_MAX_LENGTH);
+                $headline = StringHelper::extract($headline, Config::HEADLINE_MAX_LENGTH - 3, '.');
             }
             if (!$setterFn) {
                 $entity->setHeadline($headline);
