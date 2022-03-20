@@ -58,7 +58,9 @@ class AppExtension extends AbstractExtension
 
     public function getUploadUrlFromPublicDir(?string $constant, ?string $fileName): ?string
     {
-        if (!$constant || !$fileName) return null;
+        if (!$constant || !$fileName) {
+            return null;
+        }
         return constant('\App\Path' . '::' . $constant) . '/' . $fileName;
     }
 

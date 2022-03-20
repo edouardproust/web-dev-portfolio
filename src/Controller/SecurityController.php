@@ -12,7 +12,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-
     private $easyAdminService;
 
     public function __construct(

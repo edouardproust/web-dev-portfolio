@@ -47,8 +47,8 @@ class ProjectRepository extends ServiceEntityRepository
 
     /**
      * Get "Related Projects" = projects with at least 1 category in common
-     * @param Project $project 
-     * @return void 
+     * @param Project $project
+     * @return void
      */
     public function findRelated(Project $project)
     {

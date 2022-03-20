@@ -20,11 +20,11 @@ class PostTypeService
 
     /**
      * Get link data (url and title) for the 'navigation' section of a twig template
-     * 
+     *
      * @param Post|Lesson|Project $entity The current entity (must be a post-type)
      * @param ServiceEntityRepository $repository Repository for this entity
      * @param string $routeName Route name for the link to generate. Eg. 'post_show'
-     * @return array Array containing the Link data: 
+     * @return array Array containing the Link data:
      *   [
      *      'prev' => ['url' => string, 'title' => string],
      *      'next' => ['url' => string, 'title' => string]
@@ -76,7 +76,9 @@ class PostTypeService
             return $prevPosts[0] ?? null;
         } elseif ($prevNext === 'next') {
             for ($i = 0; $i < count($allPosts) - 1; $i++) {
-                if ($allPosts[$i]->getId() > $entity->getId()) $nextPosts[] = $allPosts[$i];
+                if ($allPosts[$i]->getId() > $entity->getId()) {
+                    $nextPosts[] = $allPosts[$i];
+                }
             }
             return $nextPosts[0] ?? null;
         }

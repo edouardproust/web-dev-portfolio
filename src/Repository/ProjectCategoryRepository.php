@@ -15,7 +15,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class ProjectCategoryRepository extends ServiceEntityRepository
 {
-
     private $projectRepository;
 
     public function __construct(ManagerRegistry $registry, ProjectRepository $projectRepository)
