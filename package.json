@@ -23,6 +23,7 @@
         "bootstrap": "^5.1.3",
         "fitvids": "^2.1.1",
         "flexslider-conditional-before": "^2.6.4",
+        "highlight.js": "^11.5.0",
         "intersection-observer": "^0.12.0",
         "isotope-layout": "^3.0.6",
         "jquery": "^3.6.0",

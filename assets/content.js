@@ -5,7 +5,9 @@ import counter from "./js/content/counter";
 import readmore from "./js/content/readmore";
 import tabs from "./js/content/tabs";
 import toggle from "./js/content/toggle";
-import progress from "./js/content/progress"
+import progress from "./js/content/progress";
+import "./js/content/highlight";
+
 
 accordions.exec();
 counter.exec();
