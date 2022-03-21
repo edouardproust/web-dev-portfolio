@@ -197,6 +197,9 @@ class EasyAdminService
     {
         $isGranted = false;
         $user = $this->security->getUser();
+        if (!$user) {
+            return false;
+        }
         foreach ($user->getRoles() as $role) {
             // check if is admin or author
             if (in_array($role, Config::EASY_ADMIN_ROLES)) {

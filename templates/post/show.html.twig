@@ -8,6 +8,7 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{{ encore_entry_link_tags('ui') }}
+    {{ encore_entry_link_tags('content') }}
 {% endblock %}
 
 
@@ -54,6 +55,23 @@
 {% endblock %}
 
 {% block content %}
+
+    {% set codeHtml %}<div>
+    <a href="#">
+        Hello world
+    </a>
+    <p>This is a test</p>
+</div>{% endset %}
+
+    {% set codeJs %}const numbers = [4, 9, 16, 25, 29];
+let first = numbers.findIndex(myFunction);
+
+function myFunction(value, index, array) {
+  return value > 18;
+}{% endset %}
+
+    <pre><code class="language-html">{{ codeHtml|escape }}</code></pre>
+    <pre><code class="language-js">{{ codeJs }}</code></pre>
 
 	{% if post.headline is not null %}
 		<div class="page_headline">
