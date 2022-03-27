@@ -2,16 +2,13 @@
 
 namespace App\Twig;
 
-use App\Entity\Post;
 use App\Entity\User;
 use Twig\TwigFilter;
 use App\Entity\Author;
 use Twig\TwigFunction;
 use App\Helper\StringHelper;
-use App\Repository\PostRepository;
 use App\Service\AdminOptionService;
 use App\Service\EasyAdminService;
-use App\Service\PostTypeService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,6 +29,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('config', [$this, 'getAdminOptionValue']),
+            new TwigFunction('appConfig', [$this, 'getAppConfig']),
             new TwigFunction('uploadUrl', [$this, 'getUploadUrlFromPublicDir']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
             new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
@@ -51,9 +49,24 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * Get constant value from AdminOptions
+     * @param string $constant 
+     * @return string 
+     */
     public function getAdminOptionValue(string $constant)
     {
         return $this->adminOptionService->get($constant);
+    }
+
+    /**
+     * Get constant value from src\Config.php
+     * @param string $constant 
+     * @return void 
+     */
+    public function getAppConfig(string $constant)
+    {
+        return constant('App\\Config::' . $constant);
     }
 
     public function getUploadUrlFromPublicDir(?string $constant, ?string $fileName): ?string

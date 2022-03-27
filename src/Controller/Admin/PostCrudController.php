@@ -15,8 +15,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use App\Controller\Admin\AbstractPosttypeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class PostCrudController extends AbstractPosttypeCrudController
 {
@@ -29,6 +29,7 @@ class PostCrudController extends AbstractPosttypeCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         return $crud
             ->setEntityLabelInSingular(ucfirst($this->route))
             ->setEntityLabelInPlural(ucfirst($this->route) . 's')
@@ -43,7 +44,9 @@ class PostCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield TextEditorField::new('content')->hideOnIndex();
+        yield TextField::new('content')
+            ->setFormType(CKEditorType::class)
+            ->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield SlugField::new('slug')

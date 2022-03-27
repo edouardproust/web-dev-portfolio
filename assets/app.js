@@ -31,4 +31,3 @@
     // custom scripts
 
     import './js/snippets';
-
