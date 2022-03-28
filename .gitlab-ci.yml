@@ -11,6 +11,7 @@ stages:
   - SecurityChecker
   - CodingStandards
   - UnitTests
+  - Deploy
 
 security-checker:
   stage: SecurityChecker
@@ -40,5 +41,10 @@ phpunit:
   stage: UnitTests
   script:
     - php bin/phpunit
+  allow_failure: false
+
+deploy:
+  stage: Deploy
+  script:
   allow_failure: false
 
