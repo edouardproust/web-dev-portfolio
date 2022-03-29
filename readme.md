@@ -1,6 +1,7 @@
 # EP Portfolio
 
 Portfolio of Edouard Proust, web developer (PHP , Symfony and Javascript)
+v.1.0: march 2022
 
 ## Technologies & Requirements
 
@@ -10,30 +11,45 @@ Portfolio of Edouard Proust, web developer (PHP , Symfony and Javascript)
 - Composer
 - Docker
 - Docker-compose
-- Nodejs & yarn
+- NodeJS
 
 ```bash
 symfony check:requirements
 ```
 
-## Launch
+## Launch Dev environment
 
 ```bash
 composer install
-yarn install
-yarn dev
+npm install
+npm run dev
 docker compose up -d
 symfony serve -d
-symfony console make:migration
-symfony console doctrine:migrations:migrate
-symfony console doctrine:fixtures:load
+php bin/console make:migration -n
+php bin/console d:m:m -n
+php bin/console d:f:l -n
+```
+
+## Prod (deployment)
+
+1. Update variables in .env.local
+2. Connect to server using SSH and run these commands:
+```bash
+composer install
+npm install
+npm run dev
+docker compose up -d
+symfony serve -d
+php bin/console make:migration -n
+php bin/console d:m:m -n
+php bin/console d:f:l -n
 ```
 
 ## Usefull commands
 
-To build Encore files automatically:
+Build Encore assets on save:
 ```bash
-yarn watch
+npm run watch
 ```
 
 ## Config
