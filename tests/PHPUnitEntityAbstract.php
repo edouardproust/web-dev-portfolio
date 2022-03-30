@@ -26,12 +26,12 @@ abstract class PHPUnitEntityAbstract extends TestCase
         return $this->now;
     }
 
-    protected function processTrueFalseAndEmptyTests(string $entityClass, array $properties)
-    {
-        $this->processIsTrue(new $entityClass, $properties);
-        $this->processIsFalse(new $entityClass, $properties);
-        $this->processIsEmpty(new $entityClass, $properties);
-    }
+    // protected function processTrueFalseAndEmptyTests(string $entityClass, array $properties)
+    // {
+    //     $this->processIsTrue(new $entityClass, $properties);
+    //     $this->processIsFalse(new $entityClass, $properties);
+    //     $this->processIsEmpty(new $entityClass, $properties);
+    // }
 
     protected function processIsTrue(object $entity, array $properties)
     {

@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class PostUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = Post::class;
+    private static $entityClass = Post::class;
 
     public function testBasic(): void
     {
@@ -19,7 +19,9 @@ class PostUnitTest extends PHPUnitEntityAbstract
             'content' => 'This is a post content.',
             'mainImage' => 'img/posts/mypostimg',
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

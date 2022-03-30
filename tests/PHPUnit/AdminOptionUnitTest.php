@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class AdminOptionUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = AdminOption::class;
+    private static $entityClass = AdminOption::class;
 
     public function testBasic(): void
     {
@@ -15,7 +15,9 @@ class AdminOptionUnitTest extends PHPUnitEntityAbstract
             'constant' => 'option',
             'value' => 'Option'
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

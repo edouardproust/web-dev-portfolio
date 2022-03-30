@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class CommentUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = Comment::class;
+    private static $entityClass = Comment::class;
 
     public function testBasic(): void
     {
@@ -15,7 +15,9 @@ class CommentUnitTest extends PHPUnitEntityAbstract
             'createdAt' => $this->getNow(),
             'content' => 'This is my comment',
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

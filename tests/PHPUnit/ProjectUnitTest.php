@@ -7,12 +7,12 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class ProjectUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = Project::class;
+    private static $entityClass = Project::class;
 
     public function testBasic(): void
     {
         $properties = [
-            'createdAt' => $this->getNow(),
+            // 'createdAt' => $this->getNow(),
             'slug' => 'project',
             'title' => 'Project',
             'headline' => 'This a project.',
@@ -21,7 +21,9 @@ class ProjectUnitTest extends PHPUnitEntityAbstract
             'url' => 'projects/project/show',
             'repository' => 'github.com/myrepo',
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

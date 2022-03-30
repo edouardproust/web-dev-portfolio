@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class CodingLanguageUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = CodingLanguage::class;
+    private static $entityClass = CodingLanguage::class;
 
     public function testBasic(): void
     {
@@ -15,7 +15,9 @@ class CodingLanguageUnitTest extends PHPUnitEntityAbstract
             'slug' => 'php',
             'label' => 'PHP',
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

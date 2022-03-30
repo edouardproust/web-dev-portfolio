@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class UserUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = User::class;
+    private static $entityClass = User::class;
 
     public function testBasic(): void
     {
@@ -16,7 +16,9 @@ class UserUnitTest extends PHPUnitEntityAbstract
             'email' => 'test@email.com',
             'password' => '********',
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

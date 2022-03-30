@@ -8,7 +8,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class AuthorUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = Author::class;
+    private static $entityClass = Author::class;
 
     public function testBasic(): void
     {
@@ -21,7 +21,9 @@ class AuthorUnitTest extends PHPUnitEntityAbstract
             'stackoverflow' => 'www.stackoverflow.com/myprofile',
             'website' => 'www.mywebsite.com'
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     public function testRelations(): void
@@ -29,6 +31,8 @@ class AuthorUnitTest extends PHPUnitEntityAbstract
         $properties = [
             'user' => new User,
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 }
