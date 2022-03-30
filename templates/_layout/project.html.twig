@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('content') }}
+	{% if showComments %}
+		{{ encore_entry_link_tags('ui') }}
+	{% endif %}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 	{{ encore_entry_script_tags('content') }}
@@ -27,17 +35,12 @@
 	{% set completedOnFormated = project.completedOn|date('M d, Y') %}
 {% endif %}
 
-{% block stylesheets %}
-	{{ parent() }}
-	{% if showComments %}
-		{{ encore_entry_link_tags('ui') }}
-	{% endif %}
-{% endblock %}
-
 
 {# Project Show layout ====================================================================== #}
 
 {% block main %}
+
+<div class="as-console-wrapper"><div class="as-console"></div></div></body>
 
 	<section id="content" class="project-show">
 		<div class="content-wrap">
@@ -52,6 +55,7 @@
 						<div class="row col-mb-50">
 
 							{# Carousel #}
+	
 							<div class="col-12 portfolio-single-image">
 								{% if project.gallery|length > 0 %}
 									{% include "_elements/project_gallery_slider.html.twig" with { gallery: project.gallery } %}

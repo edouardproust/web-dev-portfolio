@@ -53,7 +53,8 @@ class ProjectController extends AbstractController
         return $this->render('project/show.html.twig', [
             'project' => $project,
             'relatedProjects' => $this->projectRepository->findRelated($project),
-            'prevNextLinks' => $prevNextLinks
+            'prevNextLinks' => $prevNextLinks,
+            'gallery' => $project->getGallery()
         ]);
     }
 }

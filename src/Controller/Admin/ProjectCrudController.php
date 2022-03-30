@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Path;
 use App\Config;
 use App\Entity\Project;
+use App\Form\GalleryItemType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -18,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class ProjectCrudController extends AbstractPosttypeCrudController
 {
@@ -32,6 +34,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
     {
         parent::configureCrud($crud);
         return $crud
+            ->addFormTheme('admin/form.html.twig')
             ->setEntityLabelInSingular(ucfirst($this->route))
             ->setEntityLabelInPlural(ucfirst($this->route) . 's')
             ->setDefaultSort(['createdAt' => 'DESC'])
@@ -58,6 +61,12 @@ class ProjectCrudController extends AbstractPosttypeCrudController
             ->setSortable(false);
         yield TextField::new('mainImageFile')
             ->setFormType(VichImageType::class)
+            ->onlyOnForms();
+        yield CollectionField::new('gallery')
+            ->setEntryType(GalleryItemType::class)
+            ->setFormTypeOptions([
+                'block_name' => 'custom_gallery',
+            ])
             ->onlyOnForms();
         yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();

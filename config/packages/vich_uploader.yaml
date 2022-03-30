@@ -9,8 +9,8 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+            delete_on_update: false
+            delete_on_remove: false
 
         projects:
             uri_prefix: '%uploads_projects_path%'
@@ -18,8 +18,8 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+            delete_on_update: false
+            delete_on_remove: false
 
         posts:
             uri_prefix: '%uploads_posts_path%'
@@ -27,8 +27,8 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+            delete_on_update: false
+            delete_on_remove: false
         
         lessons:
             uri_prefix: '%uploads_lessons_path%'
@@ -36,5 +36,5 @@ vich_uploader:
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false
-            delete_on_update: true
-            delete_on_remove: true
+            delete_on_update: false
+            delete_on_remove: false

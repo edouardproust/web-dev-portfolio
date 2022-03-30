@@ -15,20 +15,11 @@ fos_ck_editor:
                 - "lineutils"
                 - "widgetselection"
                 - "widget"
-                - "simplebox"
             # https://symfony.com/doc/current/FOSCKEditorBundle/usage/toolbar.html#built-in-toolbars
             # toolbar: basic
             # toolbar: [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ] 
-            toolbar: [
-                [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ],
-                [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
-                '/',
-                [ 'Bold', 'Italic' ],
-                '/',
-                [ 'simplebox' ]
-            ]
                         
     plugins:
-        # wordcount:
-        #     path: "/bundles/fosckeditor/plugins/wordcount/"
-        #     filename: "plugin.js"
+        wordcount:
+            path: "/bundles/fosckeditor/plugins/wordcount/"
+            filename: "plugin.js"
