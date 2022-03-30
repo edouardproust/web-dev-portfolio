@@ -46,7 +46,7 @@ function flexSlider() {
 			elUseCSS = true;
 		}
 		if( elReverse == 'true' ) { elReverse = true; } else { elReverse = false; }
-		if( !elSlideshow ) { elSlideshow = true; } else { elSlideshow = false; }
+		if( elSlideshow == 'true' ) { elSlideshow = true; } else { elSlideshow = false; }
 		if( !elVideo ) { elVideo = false; }
 		if( elSheight == 'false' ) { elSheight = false; } else { elSheight = true; }
 		if( elDirection == 'vertical' ) { elSheight = false; }

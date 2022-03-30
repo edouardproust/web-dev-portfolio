@@ -7,7 +7,7 @@ use App\Tests\PHPUnitEntityAbstract;
 
 class LessonUnitTest extends PHPUnitEntityAbstract
 {
-    private $entityClass = Lesson::class;
+    private static $entityClass = Lesson::class;
 
     public function testBasic(): void
     {
@@ -21,7 +21,9 @@ class LessonUnitTest extends PHPUnitEntityAbstract
             'url' => 'lessons/mylesson/result',
             'repository' => 'www.github.com/myrepo',
         ];
-        $this->processTrueFalseAndEmptyTests($this->entityClass, $properties);
+        $this->processIsTrue(new self::$entityClass, $properties);
+        $this->processIsFalse(new self::$entityClass, $properties);
+        $this->processIsEmpty(new self::$entityClass, $properties);
     }
 
     // public function testRelations(): void

@@ -4,19 +4,55 @@
         - gallery: <string[]> Array of images names
 
 #}
+    {% set autoplay = false %}
+    {% set showArrows = true %}
+    {% set showPagination = true %}
+    {% set smoothHeight = false %}
+
+    {% set autoplayDelay = 6000 %}
+    {% set slideSpeed = 500 %}
+
+
+{# Prepare #}
+
+    {% set autoplay = autoplay is defined and autoplay is not same as(false) ? "true" : "false" %}
+    {% set showArrows = showArrows is defined and showArrows is not same as(false) ? "true" : "false" %}
+    {% set showPagination = showPagination is defined and showPagination is not same as(false) ? "true" : "false" %}
+    {% set smoothHeight = smoothHeight is defined and smoothHeight is not same as(false) ? "true" : "false" %}
 
 {# Project Gallery Slider ======================================================== #}
 
-<div class="fslider project-show" data-arrows="true" data-animation="slide">
+<div class="fslider project-show" data-smooth-height={{ smoothHeight }} data-slideshow={{ autoplay }} data-pagi={{ showPagination }} data-arrows={{ showArrows }} data-pause={{ autoplayDelay }} data-speed={{ slideSpeed }}>
     <div class="flexslider">
-        <div class="slider-wrap">
+        <div class="slider-wrap scroll-hover-container">
+
             {# mainImage slide #}
-            <div class="slide shadow">
+            <div class="slide shadow scroll-hover-img">
                 <img src="{{ uploadUrl('UPLOADS_PROJECTS', project.mainImage) }}" alt="Image of project: {{ project.title }}">
             </div>
+
             {# gallery slides #}
-            {% for i, image in project.gallery %}
-                <div class="slide shadow"><img src="{{ uploadUrl('UPLOADS_PROJECTS', image) }}" alt="Image n.{{ i }} of project: {{ project.title }}"></div>
+            {% for i, item in project.gallery %}
+
+                {% set isVideo = file('getMime', item.item) is same as(file('VIDEO_TYPE')) ? true : false %}
+
+                <div class="slide shadow{{ isVideo ? " slider-element" }} scroll-hover-img">
+                        		
+                    {% if isVideo %}
+
+                        <video poster="{{ asset('build/images/videos/deskwork.jpg') }}" preload="auto" loop autoplay muted>
+                            <source src='{{ asset('build/images/videos/deskwork.mp4') }}' type='video/mp4' />
+                            <source src='{{ asset('build/images/videos/deskwork.webm') }}' type='video/webm' />
+                        </video>
+                       
+                    {% else %} 
+
+                        <img src="{{ uploadUrl('UPLOADS_PROJECTS', item.item) }}" alt="Image n.{{ i }} of project: {{ project.title }}">
+                    
+                    {% endif %}
+
+                </div>
+
             {% endfor %}
         </div>
     </div>

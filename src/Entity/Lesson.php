@@ -72,7 +72,7 @@ class Lesson
     private $codingLanguage;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="lesson")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="lesson", cascade={"remove"})
      */
     private $comments;
 

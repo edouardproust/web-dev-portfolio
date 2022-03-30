@@ -85,7 +85,7 @@ class Project
     private $codingLanguages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="project")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="project", cascade={"remove"})
      */
     private $comments;
 
@@ -106,15 +106,16 @@ class Project
     private $completedOn;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\OneToMany(targetEntity=GalleryItem::class, mappedBy="project", cascade={"persist", "remove"})
      */
-    private $gallery = [];
+    private $gallery;
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->codingLanguages = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->gallery = new ArrayCollection();
     }
 
     public function __toString()
@@ -129,13 +130,15 @@ class Project
 
     public function getCreatedAt(): ?\DateTime
     {
+        if (!$this->createdAt) {
+            $this->setCreatedAt(new \DateTime('now'));
+        }
         return $this->createdAt;
     }
 
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
@@ -210,22 +213,20 @@ class Project
         return $this;
     }
 
+    public function getMainImageFile()
+    {
+        return $this->mainImageFile;
+    }
+
     public function setMainImageFile(File $mainImageFile = null)
     {
         $this->mainImageFile = $mainImageFile;
 
-        // VERY IMPORTANT:
         // It is required that at least one field changes if you are using Doctrine,
         // otherwise the event listeners won't be called and the file is lost
         if ($mainImageFile) {
-            // if 'updatedAt' is not defined in your entity, use another property
             $this->updatedAt = new \DateTime('now');
         }
-    }
-
-    public function getMainImageFile()
-    {
-        return $this->mainImageFile;
     }
 
     public function getUrl(): ?string
@@ -374,14 +375,32 @@ class Project
         return $this;
     }
 
-    public function getGallery(): ?array
+    /**
+     * @return Collection<int, GalleryItem>
+     */
+    public function getGallery(): Collection
     {
         return $this->gallery;
     }
 
-    public function setGallery(?array $gallery): self
+    public function addGallery(GalleryItem $gallery): self
     {
-        $this->gallery = $gallery;
+        if (!$this->gallery->contains($gallery)) {
+            $this->gallery[] = $gallery;
+            $gallery->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(GalleryItem $gallery): self
+    {
+        if ($this->gallery->removeElement($gallery)) {
+            // set the owning side to null (unless already changed)
+            if ($gallery->getProject() === $this) {
+                $gallery->setProject(null);
+            }
+        }
 
         return $this;
     }

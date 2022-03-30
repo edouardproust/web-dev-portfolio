@@ -27,7 +27,9 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
+            ->addFormTheme(
+                '@FOSCKEditor/Form/ckeditor_widget.html.twig',
+            );
     }
 
     public function configureActions(Actions $actions): Actions

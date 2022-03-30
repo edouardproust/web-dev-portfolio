@@ -7,8 +7,9 @@ use Twig\TwigFilter;
 use App\Entity\Author;
 use Twig\TwigFunction;
 use App\Helper\StringHelper;
-use App\Service\AdminOptionService;
 use App\Service\EasyAdminService;
+use App\Service\AdminOptionService;
+use App\Helper\FileHelper;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,7 +34,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('uploadUrl', [$this, 'getUploadUrlFromPublicDir']),
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
             new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
-            new TwigFunction('isAdminAccessGranted', [$this, 'isAdminPanelAccessGranted'])
+            new TwigFunction('isAdminAccessGranted', [$this, 'isAdminPanelAccessGranted']),
+            new TwigFunction('file', [$this, 'callFileHelper'])
         ];
     }
 
@@ -166,5 +168,15 @@ class AppExtension extends AbstractExtension
             return true;
         }
         return false;
+    }
+
+    public function callFileHelper(string $fnOrConst, ...$arguments)
+    {
+        // get a constant value 
+        if (in_array($fnOrConst, array_keys(FileHelper::getConstants()))) {
+            return FileHelper::getConstant($fnOrConst);
+        }
+        // run a function
+        return FileHelper::$fnOrConst(...$arguments);
     }
 }
