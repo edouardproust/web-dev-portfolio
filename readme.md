@@ -32,8 +32,18 @@ php bin/console d:f:l -n
 
 ## Prod (deployment)
 
-1. Update variables in .env.local
-2. Connect to server using SSH and run these commands:
+1. Run these commands (connect to ssh and clone directory). 
+```bash
+ssh deploy@<host>
+git clone https://gitlab.com/<directory>
+```
+- Replace <host> by the host IP address (eg. 168.38.144.76)
+- Replace <directory> by the directory slug (eg. /my-folder/my-project)
+- For cloning from gitLab, use these comment: git clone https://gitlab.com/solo-projects3/ep-portfolio.git
+
+2. Update variables in .env.local
+
+3. Connect to server using SSH and run these commands:
 ```bash
 composer install
 npm install
