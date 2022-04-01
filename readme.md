@@ -32,7 +32,7 @@ php bin/console d:f:l -n
 
 ## Prod (deployment)
 
-1. Run these commands (connect to ssh and clone directory). 
+**1. Run these commands (connect to ssh and clone directory).**
 ```bash
 ssh deploy@<host>
 git clone https://gitlab.com/<directory>
@@ -41,7 +41,7 @@ git clone https://gitlab.com/<directory>
 - Replace <directory> by the directory slug (eg. /my-folder/my-project)
 - For cloning from gitLab, use these comment: `git clone https://gitlab.com/solo-projects3/ep-portfolio.git`
 
-2. Create an .env.local and precise these keys:
+**2. Create an .env.local and precise these keys:**
 ```bash
 APP_ENV=prod
 MAILER_DSN=smtp://<dsn_host>
@@ -49,7 +49,7 @@ DATABASE_URL="mysql://<db_user>:<db_password>@<db_host>/<db_name>"
 ```
 (don't precise "serverVersion" attribute in DATABASE_URL or this error may be fired: "The metadata storage is not up to date, please run the sync-metadata-storage command to fix this issue")
 
-3. Connect to server using SSH and run these commands:
+**3. Connect to server using SSH and run these commands:**
 ```bash
 composer install
 npm install
