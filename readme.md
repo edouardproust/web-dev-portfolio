@@ -39,7 +39,7 @@ git clone https://gitlab.com/<directory>
 ```
 - Replace <host> by the host IP address (eg. 168.38.144.76)
 - Replace <directory> by the directory slug (eg. /my-folder/my-project)
-- For cloning from gitLab, use these comment: `git clone https://gitlab.com/solo-projects3/ep-portfolio.git`
+- For cloning from gitLab, use these comment: `git clone https://gitlab.com/<directory>`
 
 **2. Create an .env.local and precise these keys:**
 ```bash
