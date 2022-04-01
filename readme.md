@@ -41,7 +41,10 @@ git clone https://gitlab.com/<directory>
 - Replace <directory> by the directory slug (eg. /my-folder/my-project)
 - For cloning from gitLab, use these comment: git clone https://gitlab.com/solo-projects3/ep-portfolio.git
 
-2. Update variables in .env.local
+2. Create an .env.local and precise these keys:
+** APP_ENV=prod
+** MAILER_DSN=smtp://<dsn_host>
+** DATABASE_URL="mysql://<db_user>:<db_password>@<db_host>/<db_name>?serverVersion=5.7"
 
 3. Connect to server using SSH and run these commands:
 ```bash
