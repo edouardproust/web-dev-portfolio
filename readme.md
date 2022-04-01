@@ -17,7 +17,7 @@ v.1.0: march 2022
 symfony check:requirements
 ```
 
-## Launch Dev environment
+## Dev: generate environment
 
 ```bash
 composer install
@@ -30,7 +30,7 @@ php bin/console d:m:m -n
 php bin/console d:f:l -n
 ```
 
-## Prod (deployment)
+## Prod: deployment
 
 **1. Run these commands (connect to ssh and clone directory).**
 ```bash
