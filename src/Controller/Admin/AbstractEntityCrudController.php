@@ -2,16 +2,23 @@
 
 namespace App\Controller\Admin;
 
-use App\Service\AdminOptionService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 abstract class AbstractEntityCrudController extends AbstractCrudController
 {
+
+    protected $entityId;
+
     abstract public static function getEntityFqcn(): string;
 
     abstract public function setFields(): iterable;
+
+    public function __construct()
+    {
+        $this->entityId = !empty($_GET['entityId']) ? (int)$_GET['entityId'] : null;
+    }
 
     public function configureCrud(Crud $crud): Crud
     {

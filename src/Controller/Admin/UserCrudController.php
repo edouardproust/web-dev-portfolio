@@ -18,8 +18,6 @@ use App\Controller\Admin\AbstractEntityCrudController;
 class UserCrudController extends AbstractEntityCrudController
 {
     private $easyAdminService;
-
-    private $entityId;
     private $currentUserId;
 
     public function __construct(
@@ -27,10 +25,10 @@ class UserCrudController extends AbstractEntityCrudController
         Security $security
     ) {
         $this->easyAdminService = $easyAdminService;
-        $this->entityId = (int)$_GET['entityId'];
         /** @var User $user */
         $user = $security->getUser();
         $this->currentUserId = $user->getId();
+        parent::__construct();
     }
 
     public static function getEntityFqcn(): string
@@ -82,8 +80,10 @@ class UserCrudController extends AbstractEntityCrudController
         if ($this->entityId && $this->entityId === $this->currentUserId) {
             $actions
                 ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_RETURN)
-                ->add(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
-                ->remove(Crud::PAGE_EDIT, Action::DELETE);
+                ->add(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);
+            if (!$isAdmin) {
+                $actions->remove(Crud::PAGE_EDIT, Action::DELETE);
+            }
         }
         return $actions;
     }

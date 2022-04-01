@@ -24,10 +24,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class AuthorCrudController extends AbstractEntityCrudController
 {
-    private $authorRepository;
     private $easyAdminService;
-
-    private $entityId;
     private $currentAuthorId;
 
     public function __construct(
@@ -37,9 +34,8 @@ class AuthorCrudController extends AbstractEntityCrudController
     ) {
         $this->authorRepository = $authorRepository;
         $this->easyAdminService = $easyAdminService;
-
-        $this->entityId = (int)$_GET['entityId'];
         $this->currentAuthorId = $authorRepository->findOneByUser($security->getUser())->getId();
+        parent::__construct();
     }
 
     public static function getEntityFqcn(): string
