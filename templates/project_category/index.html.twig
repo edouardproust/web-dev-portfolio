@@ -28,16 +28,21 @@
 {% endblock %}
 
 {% block content %}
-    
-    <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
-        {% for projects in collection_items %}
-            {% include "_elements/portfolio-collection-item.html.twig" with {
-                project: projects,
-				data: { 
-					categories: false,
-					codingLanguages: true }
-            } %}
-        {% endfor %}
-    </div>
+
+    {% if lessons is defined and lessons|length > 0 %}
+        {{ parent() }}
+        <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
+            {% for projects in collection_items %}
+                {% include "_elements/portfolio-collection-item.html.twig" with {
+                    project: projects,
+                    data: { 
+                        categories: false,
+                        codingLanguages: true }
+                } %}
+            {% endfor %}
+        </div>
+    {% else %}
+        No project in this category.
+    {% endif %}
     
 {% endblock %}

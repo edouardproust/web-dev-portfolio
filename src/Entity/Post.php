@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -36,21 +37,28 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(max=255)
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3, max=255)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min=200)
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $mainImage;
 
@@ -65,12 +73,8 @@ class Post
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post", cascade={"remove"})
-     */
-    private $comments;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=10, max=255)
      */
     private $headline;
 
@@ -79,6 +83,16 @@ class Post
      * @ORM\JoinColumn(name="author", referencedColumnName="id", onDelete="SET NULL")
      */
     private $author;
+
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity=Comment::class, 
+     *     mappedBy="post", 
+     *     orphanRemoval=true,
+     *     cascade={"remove", "persist"}
+     * )
+     */
+    private $comments;
 
     public function __construct()
     {
@@ -210,6 +224,30 @@ class Post
         return $this;
     }
 
+    public function getHeadline(): ?string
+    {
+        return $this->headline;
+    }
+
+    public function setHeadline(?string $headline): self
+    {
+        $this->headline = $headline;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Comment[]
      */
@@ -236,30 +274,6 @@ class Post
                 $comment->setPost(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getHeadline(): ?string
-    {
-        return $this->headline;
-    }
-
-    public function setHeadline(?string $headline): self
-    {
-        $this->headline = $headline;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?Author
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?Author $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }

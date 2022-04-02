@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LessonRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LessonRepository::class)
@@ -33,31 +34,46 @@ class Lesson
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3, max=255)
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3, max=255)
      */
     private $title;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=10, max=255)
+     */
+    private $headline;
+
+    /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min=200)
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, max=255)
      */
     private $videoUrl;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, max=255)
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, max=255)
      */
     private $repository;
 
@@ -72,14 +88,14 @@ class Lesson
     private $codingLanguage;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="lesson", cascade={"remove"})
+     * @ORM\OneToMany(
+     *     targetEntity=Comment::class, 
+     *     mappedBy="lesson",
+     *     orphanRemoval=true,
+     *     cascade={"remove", "persist"}
+     * )
      */
     private $comments;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $headline;
 
     /**
      * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="lessons")
@@ -147,6 +163,18 @@ class Lesson
     public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getHeadline(): ?string
+    {
+        return $this->headline;
+    }
+
+    public function setHeadline(?string $headline): self
+    {
+        $this->headline = $headline;
 
         return $this;
     }
@@ -261,18 +289,6 @@ class Lesson
                 $comment->setLesson(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getHeadline(): ?string
-    {
-        return $this->headline;
-    }
-
-    public function setHeadline(?string $headline): self
-    {
-        $this->headline = $headline;
 
         return $this;
     }

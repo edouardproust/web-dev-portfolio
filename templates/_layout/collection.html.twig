@@ -21,33 +21,37 @@
         <div class="content-wrap">
             <div class="container clearfix">
 
-                {# Featured projects #}
-                {% if hasFeaturedSection %}
-                <div class="section bg-transparent pt-0">
-                    <h2>Featured</h2>
-                    {% include "_elements/projects-carousel.html.twig" with {
-                        projects: featuredProjects,
-                        cols: 3
-                    } %}
-                </div>
-
-                <h2>All projects</h2>
-                {% endif %}
-
-                {% if collection_filters is defined and collection_filters is not null %}
-                    {% if collection_filters.double is defined and collection_filters.double is iterable %}
-                        {% include "_elements/collection-filters-double.html.twig" with {
-                            filters: collection_filters.double
+                {% block content %}
+                
+                    {# Featured projects #}
+                    {% if hasFeaturedSection %}
+                    <div class="section bg-transparent pt-0">
+                        <h2>Featured</h2>
+                        {% include "_elements/projects-carousel.html.twig" with {
+                            projects: featuredProjects,
+                            cols: 3
                         } %}
-                    {% else %}
-                        {% include "_elements/collection-filters.html.twig" with {
-                            filters: collection_filters
-                        } %}
+                    </div>
+
+                    <h2>All projects</h2>
                     {% endif %}
-                {% endif %}
 
-                {# Collection Items #}
-                {% block content %}{% endblock %}
+                    {% if collection_filters is defined and collection_filters is not null %}
+                        {% if collection_filters.double is defined and collection_filters.double is iterable %}
+                            {% include "_elements/collection-filters-double.html.twig" with {
+                                filters: collection_filters.double
+                            } %}
+                        {% else %}
+                            {% include "_elements/collection-filters.html.twig" with {
+                                filters: collection_filters
+                            } %}
+                        {% endif %}
+                    {% endif %}
+
+                    {# Collection Items:
+                    Defined in <posttype>/index.html.twig template #}
+                
+                {% endblock %}
                 
             </div>
         </div>

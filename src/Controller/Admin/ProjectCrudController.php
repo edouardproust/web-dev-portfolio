@@ -35,6 +35,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         parent::configureCrud($crud);
         return $crud
             ->addFormTheme('admin/form.html.twig')
+            //->setFormOptions(['attr' => ['novalidate' => 'novalidate']])
             ->setEntityLabelInSingular(ucfirst($this->route))
             ->setEntityLabelInPlural(ucfirst($this->route) . 's')
             ->setDefaultSort(['createdAt' => 'DESC'])
@@ -61,12 +62,11 @@ class ProjectCrudController extends AbstractPosttypeCrudController
             ->setSortable(false);
         yield TextField::new('mainImageFile')
             ->setFormType(VichImageType::class)
+            ->setFormTypeOption('required', true)
             ->onlyOnForms();
         yield CollectionField::new('gallery')
             ->setEntryType(GalleryItemType::class)
-            ->setFormTypeOptions([
-                'block_name' => 'custom_gallery',
-            ])
+            ->setFormTypeOption('block_name', 'custom_gallery')
             ->onlyOnForms();
         yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();

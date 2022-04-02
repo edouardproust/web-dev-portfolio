@@ -31,11 +31,16 @@
 {% endblock %}
 
 {% block content %}
-    
-    <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
-        {% for project in projects %}
-            {% include "_elements/portfolio-collection-item.html.twig" with {project: project} %}
-        {% endfor %}
-    </div>
+
+    {% if lessons is defined and lessons|length > 0 %}
+        {{ parent() }}
+        <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
+            {% for project in projects %}
+                {% include "_elements/portfolio-collection-item.html.twig" with {project: project} %}
+            {% endfor %}
+        </div>
+    {% else %}
+        This author has not published any project.
+    {% endif %}
     
 {% endblock %}
