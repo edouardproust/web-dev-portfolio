@@ -12,13 +12,12 @@ fos_ck_editor:
             # toolbar: [ ["Source", "-", "Save"], "/", ["Anchor"], "/", ["Maximize"] ]
             # uiColor: "#000000"
             # filebrowserUploadRoute: "my_route"
-            extraPlugins: {
-                "clipboard",
-                "lineutils",
-                "widget",
-                "widgetselection",
-                "wordcount"
-            }
+            extraPlugins: 
+                - clipboard
+                - lineutils
+                - widget
+                - widgetselection
+                - wordcount
             # removePlugins: 'any_plugins'
     plugins:
         clipboard:
