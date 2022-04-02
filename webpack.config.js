@@ -68,9 +68,8 @@ Encore
     })
     .copyFiles({
         from: './assets/ckeditor',
-        to: 'ckeditor/plugins/[path][name].[ext]'
+        to: 'bundles/ckeditor/plugins/[path][name].[ext]'
     })
-
     // enables Sass/SCSS support
     .enableSassLoader()
 
