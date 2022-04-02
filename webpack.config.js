@@ -62,15 +62,14 @@ Encore
         config.corejs = 3;
     })
 
-    .copyFiles(
-        {
-            from: './assets/images',
-            to: 'images/[path][name].[hash:8].[ext]',
-        },{
-            from: './assets/bundles/ckeditor',
-            to: 'bundles/ckeditor/plugins/[path][name].[ext]'
-        }
-    )
+    .copyFiles({
+        from: './assets/images',
+        to: 'images/[path][name].[hash:8].[ext]',
+    })
+    .copyFiles({
+        from: './assets/ckeditor',
+        to: 'ckeditor/plugins/[path][name].[ext]'
+    })
 
     // enables Sass/SCSS support
     .enableSassLoader()
