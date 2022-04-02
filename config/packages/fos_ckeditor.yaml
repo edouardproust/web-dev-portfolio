@@ -3,23 +3,3 @@
 twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
-
-fos_ck_editor:
-    input_sync: true
-    default_config: default
-    configs:
-        default:
-            extraPlugins: 
-                - "wordcount"
-                - "clipboard"
-                - "lineutils"
-                - "widgetselection"
-                - "widget"
-            # https://symfony.com/doc/current/FOSCKEditorBundle/usage/toolbar.html#built-in-toolbars
-            # toolbar: basic
-            # toolbar: [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ] 
-                        
-    plugins:
-        wordcount:
-            path: "/bundles/fosckeditor/plugins/wordcount/"
-            filename: "plugin.js"

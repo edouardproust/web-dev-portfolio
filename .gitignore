@@ -44,15 +44,5 @@ public/uploads/authors/*
 
 ###> fosckeditor/plugins ###
 public/bundles/*
-!public/bundles/fosckeditor/
-
-public/bundles/fosckeditor/*
-!public/bundles/fosckeditor/plugins/
-
-public/bundles/fosckeditor/plugins/*
-!public/bundles/fosckeditor/plugins/clipboard/
-!public/bundles/fosckeditor/plugins/lineutils/
-!public/bundles/fosckeditor/plugins/widget/
-!public/bundles/fosckeditor/plugins/widgetselection/
-!public/bundles/fosckeditor/plugins/wordcount/
+!public/bundles/fosckeditor_plugins/
 ###< fosckeditor/plugins ###

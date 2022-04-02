@@ -28,6 +28,7 @@ symfony serve -d
 php bin/console make:migration -n
 php bin/console d:m:m -n
 php bin/console d:f:l -n
+php bin/console ckeditor:install public/bundles/fosckeditor
 ```
 
 ## Prod: deployment
@@ -35,7 +36,7 @@ php bin/console d:f:l -n
 **1. Run these commands (connect to ssh and clone directory).**
 ```bash
 ssh deploy@<host>
-git clone https://gitlab.com/<directory>
+git clone https://gitlab.com/<directory> .
 ```
 - Replace <host> by the host IP address (eg. 168.38.144.76)
 - Replace <directory> by the directory slug (eg. /my-folder/my-project)
@@ -55,10 +56,12 @@ composer install
 npm install
 npm run dev
 docker compose up -d
-php bin/console make:migration -n
-php bin/console d:m:m -n
-php bin/console app:create:options
+    php bin/console make:migration -n
+    php bin/console d:m:m -n
+    php bin/console app:create:options
 ```
+_/!\ Indented lignes are to use ONLY on first deployment (database not set up yet)._
+
 **4. Create your admin account:**
 ```bash
 php bin/console app:create:admin <username> <password>

@@ -21,7 +21,7 @@ class FileHelper
         ],
         self::IMAGE_TYPE => [
             'label' => 'Image',
-            'ext' => ['jpg', 'jpeg', 'png', 'bmp', 'eps', 'tif', 'tiff', 'raw', 'cr2', 'nef', 'orf', 'sr2'],
+            'ext' => ['jpg', 'jpeg', 'png', 'webp', 'bmp', 'eps', 'tif', 'tiff', 'raw', 'cr2', 'nef', 'orf', 'sr2'],
             'mime' => 'image',
         ],
         self::GIF_TYPE => [
