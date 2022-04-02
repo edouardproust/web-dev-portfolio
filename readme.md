@@ -23,7 +23,7 @@ symfony check:requirements
 composer install
 npm install
 npm run dev
-docker compose up -d
+docker-compose up -d
 symfony serve -d
 php bin/console make:migration -n
 php bin/console d:m:m -n
@@ -55,7 +55,6 @@ Don't precise "serverVersion" attribute in DATABASE_URL or this error may be fir
 composer install
 npm install
 npm run dev
-docker compose up -d
     php bin/console make:migration -n
     php bin/console d:m:m -n
     php bin/console app:create:options

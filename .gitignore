@@ -8,6 +8,10 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> vscode ###
+/.vscode/
+###< vscode ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml

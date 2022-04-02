@@ -3,3 +3,36 @@
 twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
+# Config and add plugins: https://symfony.com/bundles/FOSCKEditorBundle/current/usage/plugin.html
+
+fos_ck_editor:
+    configs:
+        my_config:
+            # toolbar: [ ["Source", "-", "Save"], "/", ["Anchor"], "/", ["Maximize"] ]
+            # uiColor: "#000000"
+            # filebrowserUploadRoute: "my_route"
+            extraPlugins: {
+                "clipboard",
+                "lineutils",
+                "widget",
+                "widgetselection"
+                "wordcount"
+            }
+            # removePlugins: 'any_plugins'
+    plugins:
+        clipboard:
+            path: "/build/bundles/ckeditor/plugins/clipboard/"
+            filename: "plugin.js"
+        lineutils:
+            path: "/build/bundles/ckeditor/plugins/lineutils/"
+            filename: "plugin.js"
+        widget:
+            path: "/build/bundles/ckeditor/plugins/widget/"
+            filename: "plugin.js"
+        widgetselection:
+            path: "/build/bundles/ckeditor/plugins/widgetselection/"
+            filename: "plugin.js"
+        wordcount:
+            path: "/build/bundles/ckeditor/plugins/wordcount/"
+            filename: "plugin.js"
