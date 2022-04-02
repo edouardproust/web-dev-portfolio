@@ -16,7 +16,7 @@ fos_ck_editor:
                 "clipboard",
                 "lineutils",
                 "widget",
-                "widgetselection"
+                "widgetselection",
                 "wordcount"
             }
             # removePlugins: 'any_plugins'
