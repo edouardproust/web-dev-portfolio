@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProjectRepository::class)
@@ -36,41 +37,61 @@ class Project
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(max=255)
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3, max=255)
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=10, max=255)
      */
     private $headline;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
+     * @Assert\Length(min=200)
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
+     * @Assert\Length(max=255)
      */
     private $mainImage;
 
     /**
      * @Vich\UploadableField(mapping="projects", fileNameProperty="mainImage")
+     * @var File
+     * @Assert\NotBlank
      */
     private $mainImageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3, max=255)
      */
     private $url;
 
     /**
+     * @ORM\OneToMany(targetEntity=GalleryItem::class, mappedBy="project", cascade={"persist", "remove"})
+     */
+    private $gallery;
+
+    /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=3, max=255)
      */
     private $repository;
 
@@ -85,7 +106,12 @@ class Project
     private $codingLanguages;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="project", cascade={"remove"})
+     * @ORM\OneToMany(
+     *     targetEntity=Comment::class, 
+     *     mappedBy="project", 
+     *     orphanRemoval=true,
+     *     cascade={"remove", "persist"}
+     * )
      */
     private $comments;
 
@@ -105,10 +131,6 @@ class Project
      */
     private $completedOn;
 
-    /**
-     * @ORM\OneToMany(targetEntity=GalleryItem::class, mappedBy="project", cascade={"persist", "remove"})
-     */
-    private $gallery;
 
     public function __construct()
     {
@@ -170,7 +192,7 @@ class Project
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -194,7 +216,7 @@ class Project
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
@@ -206,7 +228,7 @@ class Project
         return $this->mainImage;
     }
 
-    public function setMainImage(string $mainImage): self
+    public function setMainImage(?string $mainImage): self
     {
         $this->mainImage = $mainImage;
 
@@ -218,7 +240,7 @@ class Project
         return $this->mainImageFile;
     }
 
-    public function setMainImageFile(File $mainImageFile = null)
+    public function setMainImageFile(?File $mainImageFile = null)
     {
         $this->mainImageFile = $mainImageFile;
 
@@ -229,12 +251,42 @@ class Project
         }
     }
 
+    /**
+     * @return Collection<int, GalleryItem>
+     */
+    public function getGallery(): Collection
+    {
+        return $this->gallery;
+    }
+
+    public function addGallery(GalleryItem $gallery): self
+    {
+        if (!$this->gallery->contains($gallery)) {
+            $this->gallery[] = $gallery;
+            $gallery->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(GalleryItem $gallery): self
+    {
+        if ($this->gallery->removeElement($gallery)) {
+            // set the owning side to null (unless already changed)
+            if ($gallery->getProject() === $this) {
+                $gallery->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl(?string $url): self
     {
         $this->url = $url;
 
@@ -246,7 +298,7 @@ class Project
         return $this->repository;
     }
 
-    public function setRepository(string $repository): self
+    public function setRepository(?string $repository): self
     {
         $this->repository = $repository;
 
@@ -371,36 +423,6 @@ class Project
     public function setCompletedOn(\DateTimeInterface $completedOn): self
     {
         $this->completedOn = $completedOn;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, GalleryItem>
-     */
-    public function getGallery(): Collection
-    {
-        return $this->gallery;
-    }
-
-    public function addGallery(GalleryItem $gallery): self
-    {
-        if (!$this->gallery->contains($gallery)) {
-            $this->gallery[] = $gallery;
-            $gallery->setProject($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGallery(GalleryItem $gallery): self
-    {
-        if ($this->gallery->removeElement($gallery)) {
-            // set the owning side to null (unless already changed)
-            if ($gallery->getProject() === $this) {
-                $gallery->setProject(null);
-            }
-        }
 
         return $this;
     }

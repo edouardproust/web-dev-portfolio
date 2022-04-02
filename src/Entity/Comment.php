@@ -34,17 +34,20 @@ class Comment
     private $fullName;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="comments")     
+     * @ORM\JoinColumn(name="project", referencedColumnName="id", onDelete="CASCADE")
      */
     private $project;
 
     /**
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="comments")
+     * @ORM\JoinColumn(name="post", referencedColumnName="id", onDelete="CASCADE")
      */
     private $post;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lesson::class, inversedBy="comments")
+     * @ORM\JoinColumn(name="lesson", referencedColumnName="id", onDelete="CASCADE")
      */
     private $lesson;
 

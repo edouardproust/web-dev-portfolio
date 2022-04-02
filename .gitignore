@@ -4,7 +4,6 @@
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -42,3 +41,18 @@ public/uploads/authors/*
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+
+###> fosckeditor/plugins ###
+public/bundles/*
+!public/bundles/fosckeditor/
+
+public/bundles/fosckeditor/*
+!public/bundles/fosckeditor/plugins/
+
+public/bundles/fosckeditor/plugins/*
+!public/bundles/fosckeditor/plugins/clipboard/
+!public/bundles/fosckeditor/plugins/lineutils/
+!public/bundles/fosckeditor/plugins/widget/
+!public/bundles/fosckeditor/plugins/widgetselection/
+!public/bundles/fosckeditor/plugins/wordcount/
+###< fosckeditor/plugins ###

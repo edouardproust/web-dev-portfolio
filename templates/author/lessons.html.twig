@@ -26,10 +26,16 @@
 
 {% block content %}
     
-    <div id="collection" class="row grid-container">
-        {% for lesson in lessons %}
-            {% include "_elements/lesson-collection-item.html.twig" %}
-        {% endfor %}
-    </div>
+    {% if lessons is defined and lessons|length > 0 %}
+        {{ parent() }}
+    
+        <div id="collection" class="row grid-container">
+            {% for lesson in lessons %}
+                {% include "_elements/lesson-collection-item.html.twig" %}
+            {% endfor %}
+        </div>
+    {% else %}
+        This author has not published any lesson.
+    {% endif %}
     
 {% endblock %}

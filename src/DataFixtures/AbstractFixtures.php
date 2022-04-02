@@ -15,21 +15,21 @@ abstract class AbstractFixtures extends Fixture
 {
     private $uniqueElements = [];
 
+    protected $entityManager;
     protected $hasher;
     protected $slugger;
-    protected $faker;
-    protected $entityManager;
     protected $urlGenerator;
+    protected $faker;
 
     public function __construct(
+        EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $hasher,
         SluggerInterface $slugger,
-        EntityManagerInterface $entityManager,
         UrlGeneratorInterface $urlGenerator
     ) {
+        $this->entityManager = $entityManager;
         $this->hasher = $hasher;
         $this->slugger = $slugger;
-        $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
 
         $this->faker = \Faker\Factory::create();
@@ -38,6 +38,24 @@ abstract class AbstractFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // set in App\DataFixtures\AppFixtures
+    }
+
+    /**
+     * Run a given function and persist the generated entities
+     * - Before running this function you must set a property (array type)
+     * to store the generated entities
+     * @param string $method The method name. Must start by 'create' (eg. 'createUsers', 'createPosts')
+     * @param array $properties Properties for the given method, if it accepts some.
+     * @return void
+     */
+    public function runAndPersist(string $method, array $properties = []): void
+    {
+        $entities = lcfirst(str_replace('create', '', $method));
+        if ($entities === 'admin') $entities = 'users';
+        $this->$method(...$properties);
+        foreach ($this->$entities as $entity) {
+            $this->entityManager->persist($entity);
+        }
     }
 
     /**
@@ -50,22 +68,6 @@ abstract class AbstractFixtures extends Fixture
     {
         foreach ($methods as $method) {
             $this->runAndPersist($method);
-        }
-    }
-
-    /**
-     * Run a given function and persist the generated entities
-     * - Before running this function you must set a property (array type)
-     * to store the generated entities
-     * @param string $method The method name. Must start by 'create' (eg. 'createUsers', 'createPosts')
-     * @return void
-     */
-    protected function runAndPersist(string $method): void
-    {
-        $entities = lcfirst(str_replace('create', '', $method));
-        $this->$method();
-        foreach ($this->$entities as $entity) {
-            $this->entityManager->persist($entity);
         }
     }
 

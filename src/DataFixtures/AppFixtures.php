@@ -18,6 +18,10 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends AbstractFixtures
 {
+
+    const ADMIN_EMAIL = 'contact@edouardproust.dev';
+    const ADMIN_PASSWORD = 'admin';
+
     const AUTHORS_NB = 2;
     const AUTHOR_DEFAUT = [
         'github' => 'https://www.github.com',
@@ -67,6 +71,7 @@ class AppFixtures extends AbstractFixtures
     {
         $this->runAndPersistAll([
             'createAdminOptions',
+            'createAdmin',
             'createUsers',
             'createAuthors',
             'createCodingLanguages',
@@ -94,25 +99,67 @@ class AppFixtures extends AbstractFixtures
         }
     }
 
-    protected function createAuthors()
+    protected function createAdmin(?string $email = null, ?string $plainPassword = null)
     {
+        if (!$email) $email = self::ADMIN_EMAIL;
+        if (!$plainPassword) $plainPassword = self::ADMIN_PASSWORD;
+
+        $admin = (new User)
+            ->setCreatedAt(new \Datetime('now'))
+            ->setEmail($email)
+            ->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword($this->hasher->hashPassword($admin, $plainPassword));
+        $this->users[] = $admin;
+    }
+
+    protected function createUsers()
+    {
+        for ($u = 0; $u < self::USERS_NB; $u++) {
+            $firstname = $this->faker->firstName();
+            $user = (new User)
+                ->setEmail(
+                    strtolower(
+                        $firstname . '.' . $this->faker->lastName()
+                    ) . '@' . $this->faker->freeEmailDomain()
+                )
+                ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
+            $user->setPassword($this->hasher->hashPassword($user, strtolower($firstname)));
+            $this->users[] = $user;
+        }
+    }
+
+    protected function createAuthors(
+        ?int $authorsNb = null,
+        bool $onlyMandatoryProps = false,
+        ?string $fullname = null
+    ) {
+        if ($authorsNb === null) $authorsNb = self::AUTHORS_NB;
+
         // admin
         $admin = $this->users[0];
         $author = (new Author)
             ->setUser($admin)
             ->setAvatar(Path::AUTHOR_DEFAULT_IMG)
-            ->setBio($this->faker->paragraph(5, true))
-            ->setFullName(AdminOptions::get('CONTACT_NAME', 'value'))
-            ->setIsApproved(true)
-            ->setGithub(AdminOptions::get('SOCIAL_GITHUB', 'value'))
-            ->setLinkedin(AdminOptions::get('SOCIAL_LINKEDIN', 'value'))
-            ->setStackoverflow(AdminOptions::get('SOCIAL_STACKOVERFLOW', 'value'))
-            ->setWebsite($this->urlGenerator->generate('home'));
+            ->setFullName($fullname ?? AdminOptions::get('CONTACT_NAME', 'value') ?? 'Anonymous')
+            ->setBio("Author since " . $admin->getCreatedAt()->format('F d, Y'))
+            ->setIsApproved(true);
+        $author->setBio(
+            $author->getFullName() . " is author on \"" . AdminOptions::get('SITE_NAME', 'value') .
+                "\" since " . $admin->getCreatedAt()->format('F d, Y') . "."
+        );
+        if (!$onlyMandatoryProps) {
+            $author
+                ->setBio($this->faker->paragraph(5, true))
+                ->setGithub(AdminOptions::get('SOCIAL_GITHUB', 'value'))
+                ->setLinkedin(AdminOptions::get('SOCIAL_LINKEDIN', 'value'))
+                ->setStackoverflow(AdminOptions::get('SOCIAL_STACKOVERFLOW', 'value'))
+                ->setWebsite($this->urlGenerator->generate('home'));
+        }
         $admin->setIsAuthor(true);
         $this->authors[] = $author;
 
-        // others
-        for ($a = 0; $a < self::AUTHORS_NB - 1; $a++) {
+        // other users
+        for ($a = 0; $a < $authorsNb - 1; $a++) {
             $firstname = $this->faker->firstName();
             $author = (new Author)
                 ->setAvatar(Path::AUTHOR_DEFAULT_IMG)
@@ -273,31 +320,6 @@ class AppFixtures extends AbstractFixtures
             $this->setDescription($projectCategory); // description
 
             $this->projectCategories[] = $projectCategory;
-        }
-    }
-
-    protected function createUsers()
-    {
-        // admin
-        $admin = (new User)
-            ->setCreatedAt(new \Datetime('-1 year'))
-            ->setEmail('contact@edouardproust.dev')
-            ->setRoles(['ROLE_ADMIN']);
-        $admin->setPassword($this->hasher->hashPassword($admin, 'admin'));
-        $this->users[] = $admin;
-
-        // users
-        for ($u = 0; $u < self::USERS_NB; $u++) {
-            $firstname = $this->faker->firstName();
-            $user = (new User)
-                ->setEmail(
-                    strtolower(
-                        $firstname . '.' . $this->faker->lastName()
-                    ) . '@' . $this->faker->freeEmailDomain()
-                )
-                ->setCreatedAt($this->faker->dateTimeBetween('-6 months', 'yesterday'));
-            $user->setPassword($this->hasher->hashPassword($user, strtolower($firstname)));
-            $this->users[] = $user;
         }
     }
 
