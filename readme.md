@@ -50,22 +50,28 @@ DATABASE_URL="mysql://<db_user>:<db_password>@<db_host>/<db_name>"
 ```
 Don't precise "serverVersion" attribute in DATABASE_URL or this error may be fired: "The metadata storage is not up to date, please run the sync-metadata-storage command to fix this issue".
 
-**3. Connect to server using SSH and run these command:**
+**3. Connect to server using SSH and run these commands:**
 ```bash
 composer install
+npm install
+npm run dev
+    php bin/console make:migration -n
+    php bin/console d:m:m -n
+    php bin/console app:create:options
 ```
+_/!\ Indented lignes are to use ONLY on first deployment (database not set up yet)._
 
-**4. [security] Update your admin credentials:** Connect to admin panel (username: "admin", password: "admin") -> click on top-right photo -> My profile
-
-**5. (optionnal) Run fixtures:
+**4. Create your admin account:**
 ```bash
-php bin/console d:f:l -n
+php bin/console app:create:admin <username> <password>
 ```
 
 ## Usefull commands
 
-- Add an admin account: `php bin/console app:create:admin <username> <password>`
-- Build Encore assets on save: `npm run watch`
+Build Encore assets on save:
+```bash
+npm run watch
+```
 
 ## Config
 
