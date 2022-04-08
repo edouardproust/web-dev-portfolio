@@ -9,7 +9,7 @@
 ###< symfony/framework-bundle ###
 
 ###> vscode ###
-/.vscode/
+.vscode/
 ###< vscode ###
 
 ###> symfony/phpunit-bridge ###
