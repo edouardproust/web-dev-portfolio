@@ -57,6 +57,11 @@ composer install
 
 **4. [security] Update your admin credentials:** Connect to admin panel (username: "admin", password: "admin") -> click on top-right photo -> My profile
 
+**5. (optionnal) Run fixtures:
+```bash
+php bin/console d:f:l -n
+```
+
 ## Usefull commands
 
 - Add an admin account: `php bin/console app:create:admin <username> <password>`
