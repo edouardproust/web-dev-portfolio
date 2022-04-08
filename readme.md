@@ -3,6 +3,8 @@
 Portfolio of Edouard Proust, web developer (PHP , Symfony and Javascript)
 v.1.0: march 2022
 
+This project is developped on GitLab: https://gitlab.com/solo-projects3/ep-portfolio.git
+
 ## Technologies & Requirements
 
 - PHP 7.4
@@ -39,7 +41,7 @@ ssh deploy@<host>
 git clone https://gitlab.com/<directory> .
 ```
 - Replace <host> by the host IP address (eg. 168.38.144.76)
-- Replace <directory> by the directory slug (eg. /my-folder/my-project)
+- Replace <directory> by the direMy portfolio featuring my projects as a web developer.ctory slug (eg. /my-folder/my-project)
 - For cloning from gitLab, use this command: `git clone https://gitlab.com/<directory>`
 
 **2. Create an .env.local containing these keys:**
