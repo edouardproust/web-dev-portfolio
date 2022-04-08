@@ -55,7 +55,7 @@ Don't precise "serverVersion" attribute in DATABASE_URL or this error may be fir
 composer install
 ```
 
-**4. [security] Update your admin credentials: connect to admin panel (username: "admin", password: "admin") -> click on top-right photo -> My profile
+**4. [security] Update your admin credentials:** Connect to admin panel (username: "admin", password: "admin") -> click on top-right photo -> My profile
 
 ## Usefull commands
 
