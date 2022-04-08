@@ -94,8 +94,19 @@
             "ckeditor:install --clear=drop": "symfony-cmd",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
         },
+        "webpack-setup": [
+            "npm install",
+            "npm run dev"
+        ],
+        "database-setup": [
+            "php bin/console doctrine:migrations:migrate --no-interaction",
+            "php bin/console doctrine:fixtures:load --no-interaction",
+            "php bin/console app:create:options",
+            "php bin/console app:create:admin admin admin"
+        ],
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@database-setup"
         ],
         "post-update-cmd": [
             "@auto-scripts"
