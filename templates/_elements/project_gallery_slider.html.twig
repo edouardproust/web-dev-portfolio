@@ -9,8 +9,12 @@
     {% set showPagination = true %}
     {% set smoothHeight = false %}
 
+    {% set sliderShowMainImage = false %}
     {% set autoplayDelay = 6000 %}
     {% set slideSpeed = 500 %}
+    {% set sliderHeight = '70vh' %}
+    {% set sliderMaxHeight = '600px' %}
+
 
 
 {# Prepare #}
@@ -24,12 +28,14 @@
 
 <div class="fslider project-show" data-smooth-height={{ smoothHeight }} data-slideshow={{ autoplay }} data-pagi={{ showPagination }} data-arrows={{ showArrows }} data-pause={{ autoplayDelay }} data-speed={{ slideSpeed }}>
     <div class="flexslider">
-        <div class="slider-wrap scroll-hover-container">
+        <div class="slider-wrap scroll-hover-container" style="height:1000px">
 
             {# mainImage slide #}
-            <div class="slide shadow scroll-hover-img">
-                <img src="{{ uploadUrl('UPLOADS_PROJECTS', project.mainImage) }}" alt="Image of project: {{ project.title }}">
-            </div>
+            {% if sliderShowMainImage %}
+                <div class="slide shadow scroll-hover-img">
+                    <img src="{{ uploadUrl('UPLOADS_PROJECTS', project.mainImage) }}" alt="Image of project: {{ project.title }}">
+                </div>
+            {% endif %}
 
             {# gallery slides #}
             {% for i, item in project.gallery %}
@@ -40,9 +46,8 @@
                         		
                     {% if isVideo %}
 
-                        <video poster="{{ asset('build/images/videos/deskwork.jpg') }}" preload="auto" loop autoplay muted>
-                            <source src='{{ asset('build/images/videos/deskwork.mp4') }}' type='video/mp4' />
-                            <source src='{{ asset('build/images/videos/deskwork.webm') }}' type='video/webm' />
+                        <video poster="{{ uploadUrl('UPLOADS_PROJECTS', project.mainImage) }}" preload="auto" loop autoplay muted>
+                            <source src='{{ uploadUrl('UPLOADS_PROJECTS', item.item) }}' type='video/mp4' />
                         </video>
                        
                     {% else %} 
