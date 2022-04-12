@@ -28,7 +28,7 @@ class GalleryItem
     private $item;
 
     /**
-     * @Vich\UploadableField(mapping="projects", fileNameProperty="item")
+     * @Vich\UploadableField(mapping="projects_lib", fileNameProperty="item")
      */
     private $itemFile;
 

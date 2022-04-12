@@ -1,10 +1,15 @@
 import $ from 'jquery';
 
+
 const SELECTOR_CONTAINER = '.scroll-hover-container';
 const SELECTOR_IMG = '.scroll-hover-img';
-const CONTAINER_HEIGHT = '50vh';
-const CONTAINER_MAX_HEIGHT = '600px';
+const IMAGE_HEIGHT_BREAKPOINT = '90vh';
 const SCROLL_SPEED_BASE_MS = 5; // in ms
+
+// if is 
+    // a video 
+    // OR an image with a height > IMAGE_HEIGHT_BREAKPOINT
+// Then apply the hover script
 
 function exec(){
 	imageScrollHover(); console.log('imageScrollHover executed');
@@ -12,15 +17,12 @@ function exec(){
 export default { exec };
 
 function imageScrollHover() {
-    // $(SELECTOR_IMG).css(
-    //     "transition", "transform " + (SCROLL_SPEED_BASE_MS * $(SELECTOR_IMG).height()) + "ms ease"
-    // );
 
     const sliders = document.querySelectorAll(SELECTOR_CONTAINER);
 
     let sliderStyleOnLoad = function(slider) {
-        slider.style.height = CONTAINER_HEIGHT;
-        slider.style.maxHeight = CONTAINER_MAX_HEIGHT;
+        slider.style.maxHeight = IMAGE_HEIGHT_BREAKPOINT;
+        slider.parentNode.style.maxHeight = IMAGE_HEIGHT_BREAKPOINT;
     };
 
     let imageStyleOnMouseEnter = function(image) {

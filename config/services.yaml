@@ -5,7 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     uploads_authors_path: !php/const App\Path::UPLOADS_AUTHORS
-    uploads_projects_path: !php/const App\Path::UPLOADS_PROJECTS
+    uploads_projects_lib_path: !php/const App\Path::UPLOADS_PROJECTS_LIB
+    uploads_projects_thumb_path: !php/const App\Path::UPLOADS_PROJECTS_THUMB
     uploads_posts_path: !php/const App\Path::UPLOADS_POSTS
     uploads_lessons_path: !php/const App\Path::UPLOADS_LESSONS
     
