@@ -1,4 +1,5 @@
 vich_uploader:
-    projects:
-        delete_on_update: true
-        delete_on_remove: true
+    mappings:
+        projects:
+            delete_on_update: true
+            delete_on_remove: true
