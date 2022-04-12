@@ -56,13 +56,13 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
-        yield ImageField::new('mainImage', 'Featured image')
-            ->setBasePath(Path::UPLOADS_PROJECTS)
+        yield ImageField::new('thumbnail')
+            ->setBasePath(Path::UPLOADS_PROJECTS_THUMB)
             ->onlyOnIndex()
             ->setSortable(false);
-        yield TextField::new('mainImageFile')
+        yield TextField::new('thumbnailFile', 'Thumbnail')
             ->setFormType(VichImageType::class)
-            ->setFormTypeOption('required', true)
+            // ->setFormTypeOption('required', true)
             ->onlyOnForms();
         yield CollectionField::new('gallery')
             ->setEntryType(GalleryItemType::class)

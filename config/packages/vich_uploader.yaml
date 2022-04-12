@@ -12,9 +12,18 @@ vich_uploader:
             delete_on_update: false
             delete_on_remove: false
 
-        projects:
-            uri_prefix: '%uploads_projects_path%'
-            upload_destination: '%kernel.project_dir%/public%uploads_projects_path%'
+        projects_thumb:
+            uri_prefix: '%uploads_projects_thumb_path%'
+            upload_destination: '%kernel.project_dir%/public%uploads_projects_thumb_path%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+            inject_on_load: false
+            delete_on_update: false
+            delete_on_remove: false
+
+        projects_lib:
+            uri_prefix: '%uploads_projects_lib_path%'
+            upload_destination: '%kernel.project_dir%/public%uploads_projects_lib_path%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false
