@@ -1,5 +1,0 @@
-vich_uploader:
-  projects:
-      mappings:
-        delete_on_update: false
-        delete_on_remove: false

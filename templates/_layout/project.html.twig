@@ -60,7 +60,7 @@
 								{% if project.gallery|length > 0 %}
 									{% include "_elements/project_gallery_slider.html.twig" with { gallery: project.gallery } %}
 								{% else %}
-									<img src="{{ uploadUrl('UPLOADS_PROJECTS', project.mainImage) }}" alt="Image of project: {{ project.title }}">
+									<img src="{{ uploadUrl('UPLOADS_PROJECTS_THUMB', project.thumbnail) }}" alt="Image of project: {{ project.title }}">
 								{% endif %}
 							</div>
 

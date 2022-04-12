@@ -67,14 +67,13 @@ class Project
      * @var string
      * @Assert\Length(max=255)
      */
-    private $mainImage;
+    private $thumbnail;
 
     /**
-     * @Vich\UploadableField(mapping="projects", fileNameProperty="mainImage")
+     * @Vich\UploadableField(mapping="projects_thumb", fileNameProperty="thumbnail")
      * @var File
-     * @Assert\NotBlank
      */
-    private $mainImageFile;
+    private $thumbnailFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -223,30 +222,30 @@ class Project
         return $this;
     }
 
-    public function getMainImage(): ?string
+    public function getThumbnail(): ?string
     {
-        return $this->mainImage;
+        return $this->thumbnail;
     }
 
-    public function setMainImage(?string $mainImage): self
+    public function setThumbnail(?string $thumbnail): self
     {
-        $this->mainImage = $mainImage;
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
 
-    public function getMainImageFile()
+    public function getThumbnailFile()
     {
-        return $this->mainImageFile;
+        return $this->thumbnailFile;
     }
 
-    public function setMainImageFile(?File $mainImageFile = null)
+    public function setThumbnailFile(?File $thumbnailFile = null)
     {
-        $this->mainImageFile = $mainImageFile;
+        $this->thumbnailFile = $thumbnailFile;
 
         // It is required that at least one field changes if you are using Doctrine,
         // otherwise the event listeners won't be called and the file is lost
-        if ($mainImageFile) {
+        if ($thumbnailFile) {
             $this->updatedAt = new \DateTime('now');
         }
     }

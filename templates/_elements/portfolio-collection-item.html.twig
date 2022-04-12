@@ -31,8 +31,8 @@
 
 {# Prepare #}
 
-    {% set mainImage = project.mainImage %}
-    {% set mainImage = uploadUrl('UPLOADS_PROJECTS', mainImage) %}
+    {% set thumbnail = project.thumbnail %}
+    {% set thumbnail = uploadUrl('UPLOADS_PROJECTS_THUMB', thumbnail) %}
     {% set projectUrl = path('project_show', {id: project.id, slug: project.slug}) %}
 
     {% set data = data ?? null %}
@@ -50,14 +50,14 @@
         {% set zoomIcon = 'play' %}
         {% set dataLightbox = 'iframe' %}
         {% set zoomTitle = 'Show video' %}
-    {% elseif mainImage is iterable %}
+    {% elseif thumbnail is iterable %}
         {% if project.zoom is iterable %}
             {% set isGallery = true %}
             {% set zoomIcon = 'stack-2' %}
             {% set dataLightbox = 'gallery-item' %}
             {% set zoomTitle = 'View diaporama' %}
         {% else %}
-            {% set mainImage = mainImage.0 %}
+            {% set thumbnail = thumbnail.0 %}
         {% endif %}
     {% endif %}
 
@@ -90,14 +90,14 @@
             {% else %}
 
                 <a href="{{ projectUrl }}">
-                    <img src="{{ mainImage }}" alt="{{ project.title }}">
+                    <img src="{{ thumbnail }}" alt="{{ project.title }}">
                 </a>
 
             {% endif %}
 
             <div class="bg-overlay"{{ isGallery ? '  data-lightbox="gallery"' : '' }}>
                 <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
-                    <a href="{{ mainImage }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="{{ dataLightbox }}">
+                    <a href="{{ thumbnail }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="{{ dataLightbox }}">
                         <i class="{{ zoomIcon }}"></i>
                     </a>
                     
