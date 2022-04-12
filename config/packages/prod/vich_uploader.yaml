@@ -1,3 +1,4 @@
-projects:
-    delete_on_update: true
-    delete_on_remove: true
+vich_uploader:
+    projects:
+        delete_on_update: true
+        delete_on_remove: true
