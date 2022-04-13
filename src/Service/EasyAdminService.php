@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Path;
 use App\Config;
 use App\Entity\User;
 use Doctrine\ORM\QueryBuilder;
@@ -9,10 +10,12 @@ use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
 use App\Repository\AdminOptionRepository;
 use Symfony\Component\Security\Core\Security;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -189,6 +192,17 @@ class EasyAdminService
                 ->setSortable(false);
         }
         return HiddenField::new('id')->onlyOnDetail();
+    }
+
+    public function thumbnailFileField()
+    {
+        $thumbnailField = TextField::new('thumbnailFile', 'Thumbnail')
+            ->setFormType(VichImageType::class)
+            ->onlyOnForms();
+        if ($_GET['crudAction'] === Action::NEW) {
+            $thumbnailField->setFormTypeOption('required', true);
+        }
+        return $thumbnailField;
     }
 
     public function isAdminPanelAccessGranted(): bool

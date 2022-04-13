@@ -8,7 +8,6 @@ use App\Entity\Project;
 use App\Form\GalleryItemType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -60,10 +59,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
             ->setBasePath(Path::UPLOADS_PROJECTS_THUMB)
             ->onlyOnIndex()
             ->setSortable(false);
-        yield TextField::new('thumbnailFile', 'Thumbnail')
-            ->setFormType(VichImageType::class)
-            // ->setFormTypeOption('required', true)
-            ->onlyOnForms();
+        yield $this->easyAdminService->thumbnailFileField();
         yield CollectionField::new('gallery')
             ->setEntryType(GalleryItemType::class)
             ->setFormTypeOption('block_name', 'custom_gallery')

@@ -42,6 +42,11 @@
             <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >
                 {{ post.title }}
             </h2>
+            {% if post.headline is defined and post.headline is not null %}
+                <div class="page-description" style="opacity: .7">
+                    {{ post.headline }}
+                </div>
+            {% endif %}
         </div>
         
     </div>
