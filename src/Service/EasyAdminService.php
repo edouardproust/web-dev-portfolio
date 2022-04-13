@@ -145,7 +145,7 @@ class EasyAdminService
             ->onlyOnForms();
 
         if ($_GET['crudAction'] === Action::EDIT) {
-            $textField->setFormTypeOption('required', false);
+            $textField->setRequired(false);
         }
         return $textField;
     }
@@ -200,7 +200,10 @@ class EasyAdminService
             ->setFormType(VichImageType::class)
             ->onlyOnForms();
         if ($_GET['crudAction'] === Action::NEW) {
-            $thumbnailField->setFormTypeOption('required', true);
+            $thumbnailField->setRequired(true);
+        }
+        if ($_GET['crudAction'] === Action::EDIT) {
+            $thumbnailField->setFormTypeOption('row_attr', ['class' => 'vich-no-delete']);
         }
         return $thumbnailField;
     }
