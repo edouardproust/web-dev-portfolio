@@ -8,7 +8,15 @@
     {label: 'Home', url: path('home')},
     {label: 'Lessons', active: true}
 ] %}
-{% set collection_filters = {double: [codingLanguagesFilter, categoriesFilter]} %}
+{% set collection_filters = [
+    {
+        collection: codingLanguagesFilter,
+        showAllLabel: 'All languages'
+    }, {
+        collection: categoriesFilter,
+        showAllLabel: 'All categories'
+    }
+] %}
 
 {# Collection of Posts =============================================== #}
 

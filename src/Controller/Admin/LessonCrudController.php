@@ -48,11 +48,12 @@ class LessonCrudController extends AbstractPosttypeCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('title')
             ->hideOnIndex();
+        yield AssociationField::new('codingLanguage', "Language")
+            ->setFormTypeOption('required', true);
+        yield AssociationField::new('categories')->hideOnIndex();
         yield UrlField::new('videoUrl')->hideOnIndex();
         yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();
-        yield AssociationField::new('codingLanguage')->hideOnIndex();
-        yield AssociationField::new('categories')->hideOnIndex();
         yield $this->associationFieldAuthor()->onlyOnIndex(); // all: show on index
         yield $this->associationFieldAuthor()->setPermission('ROLE_ADMIN'); // authors: hide field on edit
         yield DateTimeField::new('createdAt', 'Creation date') // all: show on index
