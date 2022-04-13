@@ -49,7 +49,7 @@ class LessonCrudController extends AbstractPosttypeCrudController
             ->setTargetFieldName('title')
             ->hideOnIndex();
         yield AssociationField::new('codingLanguage', "Language")
-            ->setFormTypeOption('required', true);
+            ->setRequired(true);
         yield AssociationField::new('categories')->hideOnIndex();
         yield UrlField::new('videoUrl')->hideOnIndex();
         yield UrlField::new('url', 'Project link')->hideOnIndex();
