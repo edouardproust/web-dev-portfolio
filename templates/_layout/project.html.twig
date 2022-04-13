@@ -91,6 +91,17 @@
 													{{ language.label }}
 												{% endfor %}
 												</li>
+											{% endif %}											
+											
+											{% if project.technologies|length > 0 %}
+												<li><span><i class="icon-line-tool"></i>Technolog{% if project.technologies|length > 1 %}ies{% else %}y{% endif %}:</span>
+												{% for technology in project.technologies %}
+													{% if technology is not same as(project.technologies|first) %} / {% endif %}
+													<a href="{{ technology.url }}" target="_blank">
+														{{ technology.label }}
+													</a>
+												{% endfor %}
+												</li>
 											{% endif %}
 
 											{% if project.categories|length > 0 %}
