@@ -37,13 +37,13 @@
                     {% endif %}
 
                     {% if collection_filters is defined and collection_filters is not null %}
-                        {% if collection_filters.double is defined and collection_filters.double is iterable %}
+                        {% if collection_filters|length > 1 and collection_filters.0 is defined %}
                             {% include "_elements/collection-filters-double.html.twig" with {
-                                filters: collection_filters.double
+                                filters: collection_filters
                             } %}
                         {% else %}
                             {% include "_elements/collection-filters.html.twig" with {
-                                filters: collection_filters
+                                filters: collection_filters,
                             } %}
                         {% endif %}
                     {% endif %}

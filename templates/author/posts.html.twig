@@ -10,7 +10,10 @@
     {label: 'Blog', url: path('projects')},
     {label: author.fullname, active: true}
 ] %}
-{% set collection_filters = categories %}
+{% set collection_filters = {
+    collection: categories,
+    showAllLabel: 'All Categories'
+}%}
 
 
 {# Collection of Projects =============================================== #}
@@ -26,7 +29,7 @@
 
 {% block content %}
 
-    {% if lessons is defined and lessons|length > 0 %}
+    {% if posts is defined and posts|length > 0 %}
         {{ parent() }}
         <div id="collection" class="row grid-container block-gallery-9">
             {% for post in posts %}

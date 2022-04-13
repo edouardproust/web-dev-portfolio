@@ -16,7 +16,10 @@
     {label: 'Portfolio', url: path('projects')},
     {label: author.fullname, active: true}
 ] %}
-{% set collection_filters = categories %}
+{% set collection_filters = {
+    collection: categories,
+    showAllLabel: 'All categories'
+} %}
 
 
 {# Collection of Projects =============================================== #}
@@ -32,7 +35,7 @@
 
 {% block content %}
 
-    {% if lessons is defined and lessons|length > 0 %}
+    {% if projects is defined and projects|length > 0 %}
         {{ parent() }}
         <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
             {% for project in projects %}

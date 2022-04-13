@@ -19,16 +19,16 @@
 
         <div class="col-md-6 d-flex justify-content-start">
             <ul class="grid-filter style-4" data-container="#collection">
-                <li class="activeFilter"><a href="#" data-filter="*">All languages</a></li>
-                {% for filter in filters.0 %}
+                <li class="activeFilter"><a href="#" data-filter="*">{{ filters.0.showAllLabel }}</a></li>
+                {% for filter in filters.0.collection %}
                     <li><a href="#" data-filter=".{{ filter.slug }}">{{ filter.label }}</a></li>
                 {% endfor %}
             </ul>
         </div>
         <div class="col-md-6 d-flex justify-content-end">
             <ul class="grid-filter style-4" data-container="#collection">
-                <li class="activeFilter"><a href="#" data-filter="*">All types</a></li>
-                {% for filter in filters.1 %}
+                <li class="activeFilter"><a href="#" data-filter="*">{{ filters.1.showAllLabel }}</a></li>
+                {% for filter in filters.1.collection %}
                     <li><a href="#" data-filter=".{{ filter.slug }}">{{ filter.label }}</a></li>
                 {% endfor %}
             </ul>
