@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Author;
+use App\Service\EasyAdminService;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -14,14 +15,16 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     const MANDATORY_PROPERTIES_IN_CHILD = ['route'];
 
     protected $route;
+    protected $easyAdminService;
 
     abstract public static function getEntityFqcn(): string;
 
     abstract public function setFields(): iterable;
 
-    public function __construct()
+    public function __construct(EasyAdminService $easyAdminService)
     {
         $this->checkProperties();
+        $this->easyAdminService = $easyAdminService;
     }
 
     public function configureCrud(Crud $crud): Crud
