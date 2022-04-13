@@ -137,14 +137,12 @@ class EasyAdminService
     {
         $entityId = !empty($_GET['entityId']) ? $_GET['entityId'] : null;
 
-        $textField = TextField::new('password')
+        $textField = TextField::new('password', "New password")
             ->setFormType(PasswordType::class)
-            ->onlyOnDetail();
+            ->onlyOnForms();
 
-        /** @var User $currentUser */
-        $currentUser = $this->security->getUser();
-        if ($entityId == $currentUser->getId()) {
-            return $textField->onlyWhenUpdating();
+        if ($_GET['crudAction'] === Action::EDIT) {
+            $textField->setFormTypeOption('required', false);
         }
         return $textField;
     }

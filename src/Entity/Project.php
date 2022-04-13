@@ -130,6 +130,11 @@ class Project
      */
     private $completedOn;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Technology::class, inversedBy="projects")
+     */
+    private $technologies;
+
 
     public function __construct()
     {
@@ -137,6 +142,7 @@ class Project
         $this->codingLanguages = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->gallery = new ArrayCollection();
+        $this->technologies = new ArrayCollection();
     }
 
     public function __toString()
@@ -422,6 +428,30 @@ class Project
     public function setCompletedOn(\DateTimeInterface $completedOn): self
     {
         $this->completedOn = $completedOn;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Technology>
+     */
+    public function getTechnologies(): Collection
+    {
+        return $this->technologies;
+    }
+
+    public function addTechnology(Technology $technology): self
+    {
+        if (!$this->technologies->contains($technology)) {
+            $this->technologies[] = $technology;
+        }
+
+        return $this;
+    }
+
+    public function removeTechnology(Technology $technology): self
+    {
+        $this->technologies->removeElement($technology);
 
         return $this;
     }

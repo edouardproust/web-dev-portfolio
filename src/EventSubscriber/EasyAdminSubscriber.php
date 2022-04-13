@@ -67,6 +67,11 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             // save data for later (onBeforeEntityUpdated)
             $this->dataContainer['isApproved'] = $entity->getInstance()->getIsApproved();
         }
+        // User entity and is defined (has an id)
+        if ($entity->getFqcn() === User::class && $entity->getInstance()) {
+            // save data for later (onBeforeEntityUpdated)
+            $this->dataContainer['currentUserPassword'] = $entity->getInstance()->getPassword();
+        }
     }
 
     /**
@@ -91,7 +96,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         }
 
         // Author entity
-        if ($author instanceof Author) {
+        if ($entity instanceof Author) {
             // user
             $user = $this->userRepository->find($author->getUser());
             $user->addRole('ROLE_AUTHOR');
@@ -141,9 +146,13 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         // User entity
         if ($entity instanceof User) {
-            $entity->setPassword(
-                $this->hasher->hashPassword($entity, $entity->getPassword())
-            );
+            if (!$entity->getPassword()) {
+                $user = $this->userRepository->find($entity->getId());
+                $hashedPassword = $this->dataContainer['currentUserPassword'];
+            } else {
+                $hashedPassword = $this->hasher->hashPassword($entity, $entity->getPassword());
+            }
+            $entity->setPassword($hashedPassword);
         }
 
         // flash

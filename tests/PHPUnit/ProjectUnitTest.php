@@ -17,7 +17,7 @@ class ProjectUnitTest extends PHPUnitEntityAbstract
             'title' => 'Project',
             'headline' => 'This a project.',
             'content' => 'This project is awesome!',
-            'mainImage' => 'img/posts/mypostimg',
+            'thumbnail' => 'img/posts/mypostimg',
             'url' => 'projects/project/show',
             'repository' => 'github.com/myrepo',
         ];
