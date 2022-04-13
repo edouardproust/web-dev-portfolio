@@ -8,7 +8,10 @@
     {label: 'Home', url: path('home')},
     {label: 'Blog', active: true}
 ] %}
-{% set collection_filters = categories %}
+{% set collection_filters = {
+    collection: categories,
+    showAllLabel: 'All Categories'
+} %}
 
 
 {# Collection of Posts =============================================== #}

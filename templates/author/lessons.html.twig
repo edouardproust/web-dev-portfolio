@@ -10,7 +10,15 @@
     {label: 'Lessons', url: path('lessons')},
     {label: author.fullname, active: true}
 ] %}
-{% set collection_filters = {double: [codingLanguages, categories]} %}
+{% set collection_filters = [
+    {
+        collection: codingLanguages, 
+        showAllLabel: 'All languages'
+    }, {
+        collection: categories,
+        showAllLabel: 'All categories'
+    }
+] %}
 
 
 {# Collection of Projects =============================================== #}
