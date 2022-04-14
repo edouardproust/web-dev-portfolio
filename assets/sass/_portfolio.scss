@@ -204,7 +204,8 @@ $masonry-prefix: masonry;
 		.#{$portfolio-prefix}-image img {
 			display: block;
 			width: 100%;
-			height: auto;
+			height: $portfolio-carousel-height;
+			object-fit: cover;
 		}
 		&:not(.no-min-height) {
 			min-height: $portfolio-item-min-height;
