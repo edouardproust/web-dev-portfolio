@@ -204,8 +204,7 @@ $masonry-prefix: masonry;
 		.#{$portfolio-prefix}-image img {
 			display: block;
 			width: 100%;
-			height: $portfolio-carousel-height;
-			object-fit: cover;
+			height: auto;
 		}
 		&:not(.no-min-height) {
 			min-height: $portfolio-item-min-height;
@@ -224,6 +223,14 @@ $masonry-prefix: masonry;
 		-webkit-transition: height .4s linear;
 		-o-transition: height .4s linear;
 		transition: height .4s linear;
+	}
+}
+.portfolio-carousel-item {
+	.#{$portfolio-prefix}-image,
+	.#{$portfolio-prefix}-image > a,
+	.#{$portfolio-prefix}-image img {
+		height: $portfolio-carousel-height;
+		object-fit: cover;
 	}
 }
 
