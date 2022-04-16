@@ -3,11 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Post;
+use App\Entity\Tool;
 use App\Entity\User;
 use App\Entity\Author;
 use App\Entity\Lesson;
 use App\Entity\Comment;
 use App\Entity\Project;
+use App\Entity\Technology;
 use App\Entity\AdminOption;
 use App\Entity\PostCategory;
 use App\Entity\CodingLanguage;
@@ -16,7 +18,6 @@ use App\Entity\ProjectCategory;
 use App\Service\AdminOptionService;
 use App\Repository\AuthorRepository;
 use App\Controller\Admin\AuthorCrudController;
-use App\Entity\Technology;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -100,6 +101,7 @@ class DashboardController extends AbstractDashboardController
         ])->setPermission('ROLE_ADMIN');
         yield MenuItem::subMenu('Lessons', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('List', 'fas fa-list', Lesson::class),
+
             MenuItem::linkToCrud('New', 'fas fa-plus', Lesson::class)
                 ->setAction(Action::NEW),
             MenuItem::linkToCrud('Categories', 'fas fa-tags', LessonCategory::class)
@@ -121,7 +123,8 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
             yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
             yield MenuItem::linkToCrud('Coding languages', 'fas fa-code', CodingLanguage::class);
-            yield MenuItem::linkToCrud('Technologies', 'fas fa-wrench', Technology::class);
+            yield MenuItem::linkToCrud('Technologies', 'fas fa-cubes', Technology::class);
+            yield MenuItem::linkToCrud('Tools', 'fas fa-wrench', Tool::class);
         }
     }
 

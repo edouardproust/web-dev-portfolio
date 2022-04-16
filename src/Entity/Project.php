@@ -76,20 +76,18 @@ class Project
     private $thumbnailFile;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\Length(min=3, max=255)
-     */
-    private $url;
-
-    /**
      * @ORM\OneToMany(targetEntity=GalleryItem::class, mappedBy="project", cascade={"persist", "remove"})
      */
     private $gallery;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, max=255)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min=3, max=255)
      */
     private $repository;
@@ -135,6 +133,11 @@ class Project
      */
     private $technologies;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Tool::class, inversedBy="projects")
+     */
+    private $tools;
+
 
     public function __construct()
     {
@@ -143,6 +146,7 @@ class Project
         $this->comments = new ArrayCollection();
         $this->gallery = new ArrayCollection();
         $this->technologies = new ArrayCollection();
+        $this->tools = new ArrayCollection();
     }
 
     public function __toString()
@@ -452,6 +456,30 @@ class Project
     public function removeTechnology(Technology $technology): self
     {
         $this->technologies->removeElement($technology);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tool>
+     */
+    public function getTools(): Collection
+    {
+        return $this->tools;
+    }
+
+    public function addTool(Tool $tool): self
+    {
+        if (!$this->tools->contains($tool)) {
+            $this->tools[] = $tool;
+        }
+
+        return $this;
+    }
+
+    public function removeTool(Tool $tool): self
+    {
+        $this->tools->removeElement($tool);
 
         return $this;
     }

@@ -70,6 +70,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield AssociationField::new('categories')->hideOnIndex();
         yield AssociationField::new('codingLanguages', 'Languages')->hideOnIndex();
         yield AssociationField::new('technologies')->hideOnIndex();
+        yield AssociationField::new('tools')->hideOnIndex();
         yield $this->associationFieldAuthor();
         yield DateTimeField::new('createdAt', 'Creation date')
             ->hideWhenCreating()

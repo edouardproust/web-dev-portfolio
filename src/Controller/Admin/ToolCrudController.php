@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Config;
-use App\Entity\Technology;
+use App\Entity\Tool;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
@@ -12,18 +12,18 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractCategoryCrudController;
 
-class TechnologyCrudController extends AbstractCategoryCrudController
+class ToolCrudController extends AbstractCategoryCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Technology::class;
+        return Tool::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInPlural('Technologies')
-            ->setEntityLabelInSingular('Technology')
+            ->setEntityLabelInPlural('Tools')
+            ->setEntityLabelInSingular('Tool')
             ->setDefaultSort(['label' => 'ASC'])
             ->setEntityPermission(Config::ROLE_ADMIN);
     }
