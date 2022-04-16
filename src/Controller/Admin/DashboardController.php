@@ -116,15 +116,17 @@ class DashboardController extends AbstractDashboardController
         ]);
         yield MenuItem::linkToCrud('Comments', 'fas fa-comment', Comment::class)
             ->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
 
         if ($this->isGranted('ROLE_ADMIN')) {
-            yield MenuItem::section('Settings');
-            yield MenuItem::linkToCrud('Options', 'fas fa-cog', AdminOption::class);
-            yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
-            yield MenuItem::linkToCrud('Authors', 'fas fa-feather', Author::class);
+            yield MenuItem::section('Meta data');
             yield MenuItem::linkToCrud('Coding languages', 'fas fa-code', CodingLanguage::class);
             yield MenuItem::linkToCrud('Technologies', 'fas fa-cubes', Technology::class);
             yield MenuItem::linkToCrud('Tools', 'fas fa-wrench', Tool::class);
+
+            yield MenuItem::section('Settings');
+            yield MenuItem::linkToCrud('Options', 'fas fa-cog', AdminOption::class);
+            yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
         }
     }
 
