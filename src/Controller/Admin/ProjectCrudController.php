@@ -62,7 +62,10 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield $this->easyAdminService->thumbnailFileField();
         yield CollectionField::new('gallery')
             ->setEntryType(GalleryItemType::class)
-            ->setFormTypeOption('block_name', 'custom_gallery')
+            ->setFormTypeOptions([
+                'block_name' => 'custom_gallery',
+                'row_attr' => ['class' => 'vich-no-delete field-collection form-group']
+            ])
             ->onlyOnForms();
         yield UrlField::new('url', 'Project link')->hideOnIndex();
         yield UrlField::new('repository')->hideOnIndex();

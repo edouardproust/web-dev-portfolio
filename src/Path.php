@@ -7,8 +7,10 @@ namespace App;
  */
 class Path
 {
+    const PUBLIC = '/public';
+
     const UPLOADS_AUTHORS = '/uploads/authors';
-    const UPLOADS_PROJECTS_LIB = '/uploads/projects/library';
+    const UPLOADS_PROJECTS_GALLERY = '/uploads/projects/library';
     const UPLOADS_PROJECTS_THUMB = '/uploads/projects/thumbnail';
     const UPLOADS_POSTS = '/uploads/posts';
     const UPLOADS_LESSONS = '/uploads/lessons';

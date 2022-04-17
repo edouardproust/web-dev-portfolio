@@ -6,10 +6,10 @@ use App\Entity\User;
 use Twig\TwigFilter;
 use App\Entity\Author;
 use Twig\TwigFunction;
+use App\Helper\FileHelper;
 use App\Helper\StringHelper;
 use App\Service\EasyAdminService;
 use App\Service\AdminOptionService;
-use App\Helper\FileHelper;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,7 +35,9 @@ class AppExtension extends AbstractExtension
             new TwigFunction('eaConst', [$this, 'getEasyAdminConstant']),
             new TwigFunction('eaAuthorName', [$this, 'getEasyAdminAuthorFullname']),
             new TwigFunction('isAdminAccessGranted', [$this, 'isAdminPanelAccessGranted']),
-            new TwigFunction('file', [$this, 'callFileHelper'])
+            new TwigFunction('file', [$this, 'callFileHelper']),
+            new TwigFunction('slideType', [$this, 'getSlideType']),
+            new TwigFunction('fileContent', [$this, 'fileGetContents'])
         ];
     }
 
@@ -71,12 +73,12 @@ class AppExtension extends AbstractExtension
         return constant('App\\Config::' . $constant);
     }
 
-    public function getUploadUrlFromPublicDir(?string $constant, ?string $fileName): ?string
+    public function getUploadUrlFromPublicDir(?string $pathConstant, ?string $fileName): ?string
     {
-        if (!$constant || !$fileName) {
+        if (!$pathConstant || !$fileName) {
             return null;
         }
-        return constant('\App\Path' . '::' . $constant) . '/' . $fileName;
+        return constant('\App\Path' . '::' . $pathConstant) . '/' . $fileName;
     }
 
     /**
@@ -178,5 +180,19 @@ class AppExtension extends AbstractExtension
         }
         // run a function
         return FileHelper::$fnOrConst(...$arguments);
+    }
+
+    public function getSlideType(string $file): ?string
+    {
+        foreach (FileHelper::getUplodadTypes() as $type) {
+            if (FileHelper::getMime($file) === $type) {
+                return $type;
+            }
+        }
+    }
+
+    public function fileGetContents($pathConstant, $fileName)
+    {
+        return file_get_contents(FileHelper::getAbsPath($pathConstant, $fileName));
     }
 }
