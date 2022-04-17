@@ -65,7 +65,10 @@ class ProjectRepository extends ServiceEntityRepository
             $categories = $p->getCategories();
             foreach ($categories as $c) {
                 if (in_array($c, $projectCategories)) {
-                    $relatedProjects[] = $p;
+                    // exclude current project and prevent doublons
+                    if ($p !== $project && !in_array($p, $relatedProjects)) {
+                        $relatedProjects[] = $p;
+                    }
                 }
             }
         }
