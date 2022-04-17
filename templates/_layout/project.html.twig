@@ -70,10 +70,14 @@
 									<div class="card-body">
 										<ul class="portfolio-meta mb-0">
 											
-											<li><span><i class="icon-line-external-link"></i><a href="{{ project.url }}" target="_blank">Visit project</a></span></li>
-											
-											<li><span><i class="icon-line-github"></i><a href="{{ project.repository }}" target="_blank">Github repository</a></span></li>
-											
+											{% if project.url is not null %}
+												<li><span><i class="icon-line-external-link"></i><a href="{{ project.url }}" target="_blank">Visit project</a></span></li>
+											{% endif %}
+
+											{% if project.repository is not null %}
+												<li><span><i class="icon-line-github"></i><a href="{{ project.repository }}" target="_blank">Github repository</a></span></li>
+											{% endif %}
+
 											{% if project|hasApprovedAuthor %}
 												<li><span><i class="icon-user1"></i>Created by:</span>
 													<a href="{{ path('author_projects', {id: project.author.id}) }}">{{ project.author.fullname }}</a>

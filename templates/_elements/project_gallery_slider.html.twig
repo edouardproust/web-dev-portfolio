@@ -13,6 +13,8 @@
     {% set autoplayDelay = 6000 %}
     {% set slideSpeed = 500 %}
 
+    {% set videoWidth = 'auto' %}
+    {% set videoHeight = '500' %}
 
 
 {# Prepare #}
@@ -38,19 +40,43 @@
             {# gallery slides #}
             {% for i, item in project.gallery %}
 
-                {% set isVideo = file('getMime', item.item) is same as(file('VIDEO_TYPE')) ? true : false %}
-
-                <div class="slide{{ isVideo ? " slider-element" }} scroll-hover-img">
+                {% set isVideo = slideType(item.item) is same as(file('VIDEO_TYPE')) ? true : false %}
+                {% set isEmbed = slideType(item.item) is same as(file('EMBED_TYPE')) ? true : false %}
+                {% set slideVideoClass = isVideo or isEmbed ? ' slide-video' : '' %}
+                
+                <div class="slide{{ slideVideoClass }}{{ isVideo ? " slider-element" }} scroll-hover-img">
                         		
                     {% if isVideo %}
 
                         <video preload="auto" loop autoplay muted>
-                            <source src='{{ uploadUrl('UPLOADS_PROJECTS_LIB', item.item) }}' type='video/mp4' />
+                            <source src='{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}' type='video/mp4' />
                         </video>
-                       
+
+                    {% elseif isEmbed %}
+                    
+                        {# VIEMO: the file must contain the video Id #}
+                        {% if file('getExtension', item.item) is same as(file('EMBED_TYPE_VIMEO')) %}
+                            {% set videoId = fileContent('UPLOADS_PROJECTS_GALLERY', item.item) %}
+                            <iframe 
+                                src="https://player.vimeo.com/video/{{ videoId }}" width="{{ videoWidth }}" height="{{ videoHeight }}" 
+                                frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                            ></iframe>
+                        {# YOUTUBE: the file must contain the video Id #}
+                        {% elseif file('getExtension', item.item) is same as(file('EMBED_TYPE_YOUTUBE'))%}
+                            {% set videoId = fileContent('UPLOADS_PROJECTS_GALLERY', item.item) %}
+                            <iframe 
+                                width="{{ videoWidth }}" height="{{ videoHeight }}" src="https://www.youtube-nocookie.com/embed/{{ videoId }}" 
+                                title="YouTube video player" frameborder="0" 
+                                allowfullscreen
+                            ></iframe>
+                        {# OTHER: the file must contain full iframe html code #}
+                        {% else %}
+                            {{ fileContent('UPLOADS_PROJECTS_GALLERY', item.item)|raw }}
+                        {% endif %}
+
                     {% else %} 
 
-                        <img src="{{ uploadUrl('UPLOADS_PROJECTS_LIB', item.item) }}" alt="Image n.{{ i }} of project: {{ project.title }}">
+                        <img src="{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}" alt="Image n.{{ i }} of project: {{ project.title }}">
                     
                     {% endif %}
 

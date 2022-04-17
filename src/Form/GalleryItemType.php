@@ -23,7 +23,7 @@ class GalleryItemType extends AbstractType
                     'constraints' => [
                         new File([
                             'maxSize' => FileHelper::getMaxSize('IMAGE_TYPE'),
-                            'mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE', 'VIDEO_TYPE'),
+                            'mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE', 'VIDEO_TYPE', 'EMBED_TYPE'),
                             'mimeTypesMessage' => FileHelper::getMimeTypesMessage('FILE_TYPE')
                         ])
                     ]

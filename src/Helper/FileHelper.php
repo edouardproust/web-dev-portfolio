@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Path;
 use ReflectionClass;
 
 class FileHelper
@@ -12,6 +13,10 @@ class FileHelper
     const GIF_TYPE = 'gif';
     const ICON_TYPE = 'icon';
     const VIDEO_TYPE = 'video';
+    const EMBED_TYPE = 'text';
+
+    const EMBED_TYPE_VIMEO = 'vimeo';
+    const EMBED_TYPE_YOUTUBE = 'youtube';
 
     const UPLOAD_TYPES = [
         self::FILE_TYPE => [ // default
@@ -39,12 +44,41 @@ class FileHelper
             'ext' => ['mp4', 'mov', 'avi', 'flv', 'mkv', 'wmv', 'webm', 'avchd', 'h264', 'mpeg4'],
             'maxSize' => '5m',
             'mime' => 'video'
-        ]
+        ],
+        self::EMBED_TYPE => [
+            // Upload a text file containing the embed code inside 
+            // (use one of the recongnized extensions below or add your own ones)
+            'label' => 'Embed',
+            'ext' => ['embed', 'txt', 'html', 'htm', 'vimeo', 'youtube', 'plain'],
+            'maxSize' => '1k',
+            'mime' => 'text'
+        ],
     ];
+
+    public static function getAbsPath(?string $constPath = null, ?string $fileName = null)
+    {
+        $append = '';
+        if ($fileName) {
+            $append = '/' . $fileName;
+        }
+        if (!$constPath || empty($constPath)) {
+            $constPath = '';
+        } else {
+            $constPath = constant('\App\Path' . '::' . $constPath);
+        }
+        $path = dirname(__DIR__, 2) . Path::PUBLIC . $constPath . $append;
+
+        return $path;
+    }
 
     public static function getConstant(string $fileType)
     {
         return constant('self::' . $fileType);
+    }
+
+    public static function getUplodadTypes()
+    {
+        return array_keys(self::UPLOAD_TYPES);
     }
 
     public static function getConstants()
@@ -59,13 +93,25 @@ class FileHelper
         return end($parts);
     }
 
+    public static function getExtensions(string ...$fileType): array
+    {
+        $extensions = [];
+        foreach ($fileType as $const) {
+            $type = self::UPLOAD_TYPES[$const];
+            foreach ($type['ext'] as $extension) {
+                $extensions[] = $extension;
+            }
+        }
+        return $extensions;
+    }
+
     public static function getLabel(?string $fileName = null): string
     {
         if ($fileName) {
             foreach (self::UPLOAD_TYPES as $type) {
                 $extension = self::getExtension($fileName);
                 if (in_array($extension, $type['ext'] ?? [])) {
-                    return $type['label'] . ' (' . $extension . ')';
+                    return $type['label'] . ' (' . ucFirst($extension) . ')';
                 }
             }
         }
@@ -79,7 +125,7 @@ class FileHelper
             ?? self::getDefault('maxSize');
     }
 
-    public function getMime(?string $fileName): ?string
+    public static function getMime(?string $fileName): ?string
     {
         $fileExtension = self::getExtension($fileName);
         foreach (self::UPLOAD_TYPES as $type) {

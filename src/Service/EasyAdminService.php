@@ -5,12 +5,14 @@ namespace App\Service;
 use App\Path;
 use App\Config;
 use App\Entity\User;
+use App\Helper\FileHelper;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
 use App\Repository\AdminOptionRepository;
 use Symfony\Component\Security\Core\Security;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Validator\Constraints\File;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -198,6 +200,12 @@ class EasyAdminService
     {
         $thumbnailField = TextField::new('thumbnailFile', 'Thumbnail')
             ->setFormType(VichImageType::class)
+            ->setFormTypeOption(
+                'constraints',
+                [new File([
+                    'mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE')
+                ])]
+            )
             ->onlyOnForms();
         if ($_GET['crudAction'] === Action::NEW) {
             $thumbnailField->setRequired(true);
