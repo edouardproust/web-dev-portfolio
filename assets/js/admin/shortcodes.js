@@ -16,7 +16,7 @@ function vichUploaderHideDeleteLink() {
 	
 	elements.forEach((element) => {
         let actionsContainer = element.querySelector('.ea-vich-image-actions');
-        let deleteLink = actionsContainer.querySelector('div[class=""]');
-		deleteLink.innerHTML = '';
+        let deleteLink = actionsContainer.querySelector('div.form-check');
+		deleteLink.parentNode.parentNode.parentNode.outerHTML = '';
     });
 }
