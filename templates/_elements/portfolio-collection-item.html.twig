@@ -22,6 +22,7 @@
             }
 #}
     {% set zoomIcon = 'icon-line-zoom-in' %}
+    {% set showZoomIcon = true %}
     {% set viewProjectIcon = 'icon-line-eye' %}
     {% set overlayAnimation = 'fadeIn' %}
     {% set iconAnimationIn = 'fadeInDownSmall' %}
@@ -97,9 +98,16 @@
 
             <div class="bg-overlay"{{ isGallery ? '  data-lightbox="gallery"' : '' }}>
                 <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
-                    <a href="{{ thumbnail }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="{{ dataLightbox }}">
-                        <i class="{{ zoomIcon }}"></i>
+
+                    <a href="{{ projectUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item">
+                        <i class="{{ viewProjectIcon }}"></i>
                     </a>
+
+                    {% if showZoomIcon %}
+                        <a href="{{ thumbnail }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="{{ dataLightbox }}">
+                            <i class="{{ zoomIcon }}"></i>
+                        </a>
+                    {% endif %}
                     
                     {% if isGallery %}
                         {% for image in project.gallery %}
@@ -110,9 +118,6 @@
 
                     {% endif %}
 
-                    <a href="{{ projectUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="{{ iconAnimationIn }}" data-hover-animate-out="{{ iconAnimationOut }}" data-hover-speed="350" data-hover-parent=".portfolio-item">
-                        <i class="{{ viewProjectIcon }}"></i>
-                    </a>
                 </div>
                 <div class="bg-overlay-bg dark" data-hover-animate="{{ overlayAnimation }}" data-hover-parent=".portfolio-item"></div>
             </div>
