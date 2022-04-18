@@ -20,6 +20,10 @@
     Go to this template to get the variables list 
 #}
 
+{# Options #}
+
+{% set showAuthorMetaLink = false %}
+
 {# Prepare #}
 
 {% set projectUrl = path('project_show', {id: project.id, slug: project.slug}) %}
@@ -78,8 +82,8 @@
 												<li><span><i class="icon-line-github"></i><a href="{{ project.repository }}" target="_blank">Github repository</a></span></li>
 											{% endif %}
 
-											{% if project|hasApprovedAuthor %}
-												<li><span><i class="icon-user1"></i>Created by:</span>
+											{% if project|hasApprovedAuthor and showAuthorMetaLink %}
+												<li><span><i class="icon-user1"></i>Author:</span>
 													<a href="{{ path('author_projects', {id: project.author.id}) }}">{{ project.author.fullname }}</a>
 												</li>
 											{% endif %}

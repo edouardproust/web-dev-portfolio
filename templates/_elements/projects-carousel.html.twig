@@ -16,6 +16,7 @@
 
     {% set showCategories = false %}
     {% set zoomIcon = 'icon-line-zoom-in' %}
+    {% set showZoomIcon = true %}
     {% set viewProjectIcon = 'icon-line-eye' %}
     {% set defaultThumbnail = 'placeholder.png' %}
 
@@ -44,12 +45,17 @@
                     </a>
                     <div class="bg-overlay">
                         <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-speed="350">
-                            <a href="{{ thumbnailUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image">
-                                <i class="{{ zoomIcon }}"></i>
-                            </a>
+
                             <a href="{{ projectUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350">
                                 <i class="{{ viewProjectIcon }}"></i>
                             </a>
+
+                            {% if showZoomIcon %}
+                                <a href="{{ thumbnailUrl }}" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeInUpSmall" data-hover-speed="350" data-lightbox="image">
+                                    <i class="{{ zoomIcon }}"></i>
+                                </a>
+                            {% endif %}
+
                         </div>
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-speed="350"></div>
                     </div>
