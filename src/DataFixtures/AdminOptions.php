@@ -125,7 +125,7 @@ class AdminOptions
         'How many projects do you want to display in the "Last projects" section on homepage?'
     ];
     const HOME_FEATURED_PROJECTS = [
-        'number', 3, null,
+        'number', 9, null,
         'Homepage: Featured projects to show',
         'How many projects do you want to display in the "Featured projects" section on homepage?'
     ];

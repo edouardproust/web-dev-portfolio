@@ -71,7 +71,7 @@ body.dark,
 	.dark #header.transparent-header .primary-menu ul:last-child { border-left: 1px solid rgba(255, 255, 255, .15); }
 
 	.slider-element h2 {
-		font-size: 4.8rem;
+		font-size: $home-slider-title-font-size;
 		line-height: 1.2;
 		letter-spacing: -4px;
 	}

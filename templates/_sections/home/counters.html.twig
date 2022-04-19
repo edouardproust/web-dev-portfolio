@@ -2,23 +2,17 @@
 
     <div class="container">
         <div class="row justify-content-between">
-            {% include "_elements/counter.html.twig" with {
-                from: 1, to: 7, interval: 90,
-                title: "Years of Experience",
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora.",
-            } %}
-            {% include "_elements/counter.html.twig" with {
-                from: 10, to: 114,
-                title: "Posted Travel Blogs",
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora.",
-                after: '+'
-            } %}
-            {% include "_elements/counter.html.twig" with {
-                from: 100, to: 1034,
-                title: "Photos Published",
-                content: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora.",
-                after: '+'
-            } %}
+            {% for counter in counters %}
+                {% include "_elements/counter.html.twig" with {
+                    from: counter.from ?? null, 
+                    to: counter.to, 
+                    title: counter.title,
+                    interval: counter.interval ?? null,
+                    content: counter.content ?? null,
+                    after: counter.after ?? null,
+                    speed: counter.speed ?? null
+                } %}
+            {% endfor %}
         </div>
     </div>
     
