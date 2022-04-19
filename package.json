@@ -33,6 +33,7 @@
         "jrespond": "^1.0.0",
         "magnific-popup": "^1.1.0",
         "owl.carousel": "^2.3.4",
-        "skrollr": "^0.6.26"
+        "skrollr": "^0.6.26",
+        "typed.js": "^2.0.12"
     }
 }

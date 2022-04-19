@@ -2,6 +2,8 @@
 
 namespace App\Helper;
 
+use Doctrine\Common\Collections\Collection;
+
 class StringHelper
 {
     public static function extract(
@@ -39,5 +41,39 @@ class StringHelper
             }
             return '0';
         }
+    }
+
+    /**
+     * Transform an array into a string like "I have a dog, a cat and 3 goldfishes in my garden." array.
+     * @param array|Collection $array Array of strings, int,... or Collection of objects
+     * @param null|string $property If $array is an array of objects, precise the property to get.
+     * (null if not an array of objects)
+     * @param null|int $limit Max number of items listed. if this number is reached, the list will be trimmed by a '...'
+     * @param string $before 
+     * @param string $after 
+     * @return string 
+     */
+    public static function arrayToSentence($array, ?string $property = null, ?int $limit = null, string $before = '', string $after = ''): string
+    {
+        $list = '';
+
+        $items = count($array);
+        for ($i = 0; $i <= $limit; $i++) {
+            $item = $array[$i];
+            if ($property !== null) {
+                $getterFn = 'get' . ucfirst($property);
+                $item = $item->$getterFn();
+            }
+            if ($i < $items - 2) {
+                $list .= $item . ', ';
+            } elseif ($i < $items - 1) {
+                $list .= $item . ' and ';
+            } else {
+                $list .= $item;
+            }
+        }
+
+
+        return $before . $list . $after;
     }
 }

@@ -137,10 +137,11 @@ blockquote {
 
 .typed-cursor {
 	font-weight: 400;
+	color: black !important;
 }
 
-.text-rotater > .t-rotate > .animated {
-	display: inline-block;
+.text-rotater > .t-rotate {
+	display: inline-block !important;
 }
 
 
