@@ -290,7 +290,7 @@ class AppFixtures extends AbstractFixtures
                 ->setContent($this->faker->paragraphs($this->faker->numberBetween(5, 10), true))
                 ->setCompletedOn($this->faker->dateTimeBetween('-2 years', 'yesterday'))
                 ->setCreatedAt($this->faker->dateTimeBetween('-1 year', '-1 hour'))
-                ->setMainImage(Path::PROJECT_DEFAULT_IMG)
+                ->setThumbnail(Path::PROJECT_DEFAULT_IMG)
                 ->setRepository(self::PROJECT_DEFAULT['repository'])
                 ->setSlug(strtolower($this->slugger->slug($title)))
                 ->setTitle($title)
