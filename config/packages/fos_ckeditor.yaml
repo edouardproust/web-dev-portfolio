@@ -8,17 +8,54 @@ twig:
 
 fos_ck_editor:
     configs:
-        my_config:
-            # toolbar: [ ["Source", "-", "Save"], "/", ["Anchor"], "/", ["Maximize"] ]
+        config_full:
+            toolbar: config_standard # "config_name" or: "full", "standard", "basic"
             # uiColor: "#000000"
             # filebrowserUploadRoute: "my_route"
+            # removePlugins: 'any_plugins'
             extraPlugins: 
                 - clipboard
                 - lineutils
                 - widget
                 - widgetselection
                 - wordcount
-            # removePlugins: 'any_plugins'
+
+    toolbars:
+        # Full list of built-in items: check the `FOS\CKEditorBundle\Config\CKEditorConfiguration` class.
+        configs:
+            config_basic:
+                - [] # basic.about: ['About']
+                - ['Bold', 'Italic'] # basic.basic_styles: ['Bold', 'Italic']
+                - ['Link', 'Unlink'] # basic.links: ['Link', 'Unlink']
+                - ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'] # basic.paragraph: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']
+            config_standard:
+                - ['Styles', 'Format'] # standard.about: ['Styles', 'Format', 'About']
+                - ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] # standard.basic_styles: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat']
+                - ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] # standard.clipboard: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                - ['Source'] # standard.document: ['Source']
+                - '/'
+                - ['codeBlock']
+                - '/'
+                - ['Scayt'] # standard.editing: ['Scayt']
+                - ['Link', 'Unlink', 'Anchor'] # standard.links: ['Link', 'Unlink', 'Anchor']
+                - ['Image', 'Table', 'HorizontalRule', 'SpecialChar'] # standard.insert: ['Image', 'Table', 'HorizontalRule', 'SpecialChar']
+                - ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] # standard.paragraph: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']
+                - ['Maximize'] # standard.tools: ['Maximize']
+            config_full:
+                # full.about: ['About']
+                - ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] # full.basic_styles: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
+                - ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'] # full.clipboard: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']
+                - ['TextColor', 'BGColor'] # full.colors: ['TextColor', 'BGColor']
+                - ['Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates'] # full.document: ['Source', '-', 'NewPage', 'Preview', 'Print', '-', 'Templates']
+                - '/'
+                - ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt'] # full.editing: ['Find', 'Replace', '-', 'SelectAll', '-', 'Scayt']
+                - ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField'] # full.forms: ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'SelectField', 'Button', 'ImageButton', 'HiddenField']
+                - ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe'] # full.insert: ['Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar', 'Smiley', 'PageBreak', 'Iframe']
+                - ['Link', 'Unlink', 'Anchor'] # full.links: ['Link', 'Unlink', 'Anchor']
+                - ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl'] # full.paragraph: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
+                - ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor'] # full.styles: ['Styles', 'Format', 'Font', 'FontSize', 'TextColor', 'BGColor']
+                - ['Maximize', 'ShowBlocks'] # full.tools: ['Maximize', 'ShowBlocks']
+
     plugins:
         clipboard:
             path: "/build/bundles/ckeditor/plugins/clipboard/"
