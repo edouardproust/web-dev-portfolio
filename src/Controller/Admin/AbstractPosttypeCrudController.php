@@ -27,14 +27,6 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
         $this->easyAdminService = $easyAdminService;
     }
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->addFormTheme(
-                '@FOSCKEditor/Form/ckeditor_widget.html.twig',
-            );
-    }
-
     public function configureActions(Actions $actions): Actions
     {
         $view = Action::new('VIEW', false, 'fa fa-eye')

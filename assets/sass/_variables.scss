@@ -286,6 +286,7 @@ $page-title-border: 1px solid darken($page-title-bg, 2.75%);
 $page-title-center-mx-width: 700px;
 
 //-------------------- Sliders --------------------//
+
 // Flex Slider
 $fslider-dots-position-top: 14px;
 $fslider-dots-position-right: 10px;
@@ -859,6 +860,11 @@ $gotoTop-border-radius: 2px;
 $gotoTop-hover-color: $theme-color;
 
 $gotoTop-hidden-sm: true;
+
+
+//-------------------- Homepage ---------------------//@at-root
+
+$home-slider-title-font-size: 4.2rem;
 
 //-------------------- Portfolio --------------------//
 

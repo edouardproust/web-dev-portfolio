@@ -30,7 +30,6 @@ symfony serve -d
 php bin/console make:migration -n
 php bin/console d:m:m -n
 php bin/console d:f:l -n
-php bin/console ckeditor:install public/bundles/fosckeditor
 ```
 
 ## Prod: deployment

@@ -1,51 +1,88 @@
+{# Options #}
+
+	{% set section = section %}
+	{# iitle rotation: 
+		{before: <string>, rotate: <string>, 'after: <string>} 
+		Separate 'words' with a "|". Eg: "These|words|will|rotate" 
+	#}
+	{% set title = title %}
+	{% set headline = headline %}
+	{% set slides = slides %}
+
+	{% set slideDefaultHeight = "400px" %}
+	{% set sliderAutoplay = "true" %}
+	{% set sliderTouch = "true" %}
+	{% set sliderSmoothHeight = "false" %}
+	{% set sliderAnimation = "fade" %}
+	{% set sliderArrows = "false" %}
+	{% set sliderPagination = "true" %}
+
+	{% set titleCursor = "false" %}
+
+{# Render #}
+
 <div class="slider-inner">
 
 	<div class="vertical-middle">
 		<div class="container parallax py-5" data-0="opacity: 1; overflow: visible; margin-top:0px" data-top-bottom="opacity: 0; overflow: visible; margin-top:100px">
 
 			<div class="row align-items-center col-mb-50">
-				<div class="col-md-6">
+					<div class="col-md-6">
 					<div class="py-5 py-md-0">
-						<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">Photographer</small>
-						<h2 class="text-dark">Shooting Your Memory.</h2>
-						<h5 class="fw-light ls1" style="opacity: .7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi quo ea magnam dignissimos quis obcaecati aut in.</h5>
+						<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">{{ section }}</small>
+						<h2 class="text-rotater" data-cursor={{ titleCursor }}>
+							{% if title.words is not defined %}
+								{{ title }}
+							{% else %}
+								<span class="t-rotate-texts d-none">{{ title.words }}</span>
+								{{ title.before is defined ? (' ' ~ title.before)|raw : '' }} <span class="t-rotate nocolor"></span>{{ title.after is defined ? (' ' ~ title.after)|raw : '' }}
+							{% endif %}
+						</h2>
+
+						<h5 class="fw-light ls1" style="opacity: .7">{{ headline }}</h5>
 						
 						{% include "_elements/contact-button.html.twig" with {
-							contactLabel: 'Contact Me!',
-							contactLink: '#',
+							contactLabel: 'View my works',
+							contactLink: path('projects'),
+							btnIcon: null,
 							socials: [ 
-								{ slug: 'facebook', link: 'https://facebook.com' },
-								{ slug: 'twitter', link: 'https://twitter.com' },
-								{ slug: 'instagram', link: 'https://instagram.com' }
+								{ slug: 'email3', link: 'mailto:' ~ config('CONTACT_EMAIl') },
+								{ slug: 'github', link: config('SOCIAL_GITHUB') },
+								{ slug: 'linkedin', link: config('SOCIAL_LINKEDIN') }
 							]
 						} %}
 						
 					</div>
 				</div>
 
-				<div class="col-md-6 ps-md-5 ps-lg-0">
-					<div class="row align-items-stretch">
-						<div class="col-lg-6 col-md-12 rounded col-6 d-none d-sm-flex" style="background: url('{{ asset('build/images/1.jpg') }}') center center no-repeat; background-size: cover;">
-						</div>
-						<div class="col-6 d-none d-lg-flex"></div>
-						<div class="col-6 d-none d-lg-flex"></div>
-						<div class="col-lg-6 col-md-12 gradient-border shadow-sm col-sm-6 col-12 max-height" style="background-color: #FFF;">
-							<div class="feature-box flex-column px-3 py-4 fbox-sm">
-								<div class="fbox-media">
-									<img src="{{ asset('build/images/icons/instagram.svg') }}" class="rounded-0 bg-transparent text-start" alt="Image" style="height: 48px;">
-								</div>
-								<div class="fbox-content">
-									<div class="d-block" style="margin: 90px auto"></div>
-									<p class="mb-0 fw-normal">View My Stories</p>
-									<h3 class="fw-medium mt-1 mb-0 d-flex align-self-end"><a href="https://instagram.com/semicolonweb" target="_blank" class="text-dark">Instagram <i class="icon-line-arrow-right fw-semibold position-relative" style="top: 2px"></i></a></h3>
+				<div class="col d-flex">
+					<div class="col"></div>
+					<div class="col-lg-6 col-sm-12 ps-md-5 ps-lg-0">
+						<div class="fslider" data-slideshow={{ sliderAutoplay }} data-smooth-height={{ sliderSmoothHeight }} data-animation={{ sliderAnimation }} data-arrows={{ sliderArrows }} data-pagi={{ sliderPagination }}>
+							<div class="flexslider">
+								<div class="slider-wrap">
+
+									{% for slide in slides %}
+
+										{% set img = slide.img %}
+										{% set height = slide.height ?? slideDefaultHeight %}
+
+										<div class="slide rounded">
+											<div 
+												style="height:{{ height }}; background: url('{{ asset(img) }}') center center no-repeat; background-size: cover;"
+											></div>
+										</div>
+									{% endfor %}
+
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
-
+				
 		</div>
-	</div>
 
+	</div>
 </div>

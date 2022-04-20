@@ -20,13 +20,6 @@ abstract class AbstractEntityCrudController extends AbstractCrudController
         $this->entityId = !empty($_GET['entityId']) ? (int)$_GET['entityId'] : null;
     }
 
-    public function configureCrud(Crud $crud): Crud
-    {
-        parent::configureCrud($crud);
-        return $crud
-            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
-    }
-
     public function configureFields(string $pageName): iterable
     {
         foreach ($this->setFields() as $field) {
