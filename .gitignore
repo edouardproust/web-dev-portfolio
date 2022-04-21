@@ -32,7 +32,7 @@ yarn-error.log
 
 ###> uploads ###
 public/uploads/projects/*
-!public/uploads/projects/placeholder.png
+!public/uploads/projects/thumbnail/placeholder.png
 
 public/uploads/posts/*
 !public/uploads/posts/placeholder.png
