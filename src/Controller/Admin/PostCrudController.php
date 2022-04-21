@@ -44,7 +44,12 @@ class PostCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield TextEditorField::new('content')->hideOnIndex();
+        yield TextField::new('content')
+            ->setFormTypeOption('attr', [
+                'class' => 'ckeditorField adminCrud',
+                'cols' => 20
+            ])
+            ->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield SlugField::new('slug')

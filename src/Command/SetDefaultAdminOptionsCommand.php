@@ -11,6 +11,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * - Command: `php bin/console app:create:options`
+ * - Alias: `php bin/console a:c:o`
+ * - Equivalent of `php bin/console doctrine:fixtures:load --group=prod -n` (alias: `php bin/console d:f:l --groupe=options -n`)
+ * @package App\Command
+ */
 class SetDefaultAdminOptionsCommand extends Command
 {
     private $entityManager;
@@ -41,7 +47,7 @@ class SetDefaultAdminOptionsCommand extends Command
         $this
             ->setName('app:create:options')
             ->setAliases([
-                'app:c:o'
+                'a:c:o'
             ])
             ->setDescription('Generate Default Admin Options.')
             ->setHelp(

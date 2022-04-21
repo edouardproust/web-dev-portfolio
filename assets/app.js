@@ -4,6 +4,7 @@
 
 // style
     import './app.scss';
+    
 // scripts
 
     import menueasing from './js/app/menueasing';
@@ -16,9 +17,6 @@
     // responsive
     import isMobile from './js/app/responsive/isMobile';
     import jrespond from './js/app/responsive/jrespond';
-
-    // load libraries
-    import 'bootstrap';
 
     // exec
 

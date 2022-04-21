@@ -1,0 +1,27 @@
+// ck-word-count plugin
+
+.ck-word-count {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #8d8d8d;
+}
+
+.ck-toolbar,
+.ck-editor__editable {
+    border-color: #ced8e3 !important;
+}
+
+.ck-toolbar {
+    border-radius: 4px 4px 0 0 !important;
+}
+
+.ck-editor__editable {
+    border-radius: 0 !important;
+    min-height: 200px;
+}
+
+.ck-word-count {
+    border-top: 0 !important;
+    border-radius: 0 0 4px 4px !important;
+}

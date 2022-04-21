@@ -18,7 +18,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
 class ProjectCrudController extends AbstractPosttypeCrudController
 {
@@ -49,7 +48,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield TextEditorField::new('content')->hideOnIndex();
+        yield TextField::new('content')->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield SlugField::new('slug')

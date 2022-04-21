@@ -4,9 +4,13 @@ namespace App\DataFixtures;
 
 use App\Config;
 use ReflectionClass;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
+use App\DataFixtures\AbstractFixtures;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
 /**
+ * Fixtures group: 'prod'
+ * 
  * Define website options (AdminOption) to be saved in database
  * - Constant are saved in the order you listed them in the class (from top to bottom)
  * - You must set them using this pattern:
@@ -21,7 +25,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncode;
  * 'label' = Custom label on top of the field (if null, it will)
  * 'help' = Help message below the field
  */
-class AdminOptions
+class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
 {
     const SITE_NAME =  [
         Config::FIELD_TEXT, 'Edouard Proust Portfolio', null,
@@ -68,7 +72,7 @@ class AdminOptions
         'Link to you LinkedIn profile (eg. https://github.com/myname)'
     ];
     const SOCIAL_STACKOVERFLOW = [
-        Config::FIELD_URL, 'https://stackoverflow.com/users/13865643/edouard', null,
+        Config::FIELD_URL, 'https://stackoverflow.com/users/13865643/edouard?tab=profile', null,
         'Social: StackOverflow profile',
         'Link to you LinkedIn profile (eg. https://stackoverflow.com/users/12345678/myname)'
     ];
@@ -139,6 +143,19 @@ class AdminOptions
         'Homepage: Posts to show',
         'How many posts do you want to display in the "Last posts" section on homepage?'
     ];
+
+    public static function getGroups(): array
+    {
+        return ['options'];
+    }
+
+    public function load(ObjectManager $manager): void
+    {
+        $this->runAndPersistAll([
+            'createAdminOptions'
+        ]);
+        $manager->flush();
+    }
 
     /**
      * Get the index's value of a given option. The input can be either an array or an index.
