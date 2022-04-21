@@ -44,6 +44,7 @@ abstract class AbstractFixtures extends Fixture
 
     protected function createAdminOptions()
     {
+        dd(AdminOptions::getConstants());
         foreach (AdminOptions::getConstants() as $name => $array) {
             $option = (new AdminOption)
                 ->setConstant($name)
