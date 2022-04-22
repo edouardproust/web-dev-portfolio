@@ -98,11 +98,28 @@ Add or Edit a const in _Config.php_ and then call it where you need: `Config::MY
 Add a new const in _src/DataFixtures/AdminOptions.php_
 - **Change fixtures default values:** 
 Edit const in _src/DataFixtures/AppFixtures.php_
-- **Create a new CKEditor build**: 
-    - Create a new build using the [online builder](https://ckeditor.com/ckeditor-5/online-builder/)
-    - Download the archive, unzip it in `assets/ckeditor/builds/<new-build-name>`
-    - Run command: `npm run watch`
-    - In `assets/js/admin/ckeditor.js`, update `import` statement:
-        ```bash
-        import ClassicEditor from '../../../public/build/ckeditor/builds/<new-build-name>/src/ckeditor';
-        ```
+
+----------
+
+## CKEditor
+
+- **Reorder toolbar:** update `Editor.defaultConfig()` function in _assets/ckeditor/builds/**{build_name}**/src/ckeditor.js_
+
+- **Add plugins and features:** 
+    - [Download package on NPM](https://www.npmjs.com/search?q=%40ckeditor-5%2Fckeditor5-)
+    - Run this command: `npm i @ckeditor5/ckeditor5-<plugin_name>`
+    - Add this line after other **import** statements on the top of _assets/ckeditor/builds/**{build-name}**/src/ckeditor.js_ : `import <PluginName> from '@ckeditor/ckeditor5-<plugin-name>/src/<file-name>.js';
+
+- **Add a build:**
+    - [Configure and download package here](https://ckeditor.com/ckeditor-5/online-builder/)
+    - Unzip it in _assets/ckeditor/builds/**{build-name}**_
+    - In _assets/js/admin/ckeditor.js_, update the first line: `import ClassicEditor from '../../../public/build/ckeditor/builds/<build-name>/src/ckeditor';`
+
+
+**/!\ After any of the above actions:**
+1. update `Editor.defaultConfig()` function in _assets/ckeditor/builds/**{build-name}**/src/ckeditor.js_
+2. Run these commands:
+```bash 
+npm run build
+npm run dev
+```
