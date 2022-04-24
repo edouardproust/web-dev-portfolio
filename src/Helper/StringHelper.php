@@ -49,15 +49,18 @@ class StringHelper
      * @param null|string $property If $array is an array of objects, precise the property to get.
      * (null if not an array of objects)
      * @param null|int $limit Max number of items listed. if this number is reached, the list will be trimmed by a '...'
-     * @param string $before 
-     * @param string $after 
-     * @return string 
+     * @param string $before
+     * @param string $after
+     * @return string
      */
     public static function arrayToSentence($array, ?string $property = null, ?int $limit = null, string $before = '', string $after = ''): string
     {
         $list = '';
 
         $items = count($array);
+        if ($items < 1) {
+            return '';
+        }
         for ($i = 0; $i <= $limit; $i++) {
             $item = $array[$i];
             if ($property !== null) {
