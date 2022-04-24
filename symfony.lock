@@ -127,6 +127,18 @@
     "http-interop/http-factory-guzzle": {
         "version": "1.2.0"
     },
+    "guzzlehttp/guzzle": {
+        "version": "7.4.2"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.5.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "2.2.1"
+    },
+    "http-interop/http-factory-guzzle": {
+        "version": "1.2.0"
+    },
     "imagine/imagine": {
         "version": "1.2.4"
     },

@@ -58,7 +58,6 @@ class StringHelper
         $list = '';
 
         $items = count($array);
-        if ($items <= 0) return '';
         for ($i = 0; $i <= $limit; $i++) {
             $item = $array[$i];
             if ($property !== null) {
