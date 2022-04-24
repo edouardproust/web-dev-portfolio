@@ -1,5 +1,4 @@
-import ClassicEditor from '../../../public/build/ckeditor/builds/full/src/ckeditor';
-import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
+import ClassicEditor from '../../../public/build/ckeditor/builds/full/src/ckeditor.js';
 
 const SELECTOR = '.ckeditorField';
 const ALERT_SELECTOR = '.invalid-feedback';

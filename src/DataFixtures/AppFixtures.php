@@ -19,12 +19,11 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
 /**
  * Fixtures group: 'dev'
- * 
+ *
  * @package App\DataFixtures
  */
 class AppFixtures extends AbstractFixtures implements FixtureGroupInterface
 {
-
     const ADMIN_EMAIL = 'contact@edouardproust.dev';
     const ADMIN_PASSWORD = 'admin';
 
@@ -81,7 +80,7 @@ class AppFixtures extends AbstractFixtures implements FixtureGroupInterface
     public function load(ObjectManager $manager): void
     {
         $this->runAndPersistAll([
-            'createAdminOptions',
+            // 'createAdminOptions',
             'createAdmin',
             'createUsers',
             'createAuthors',
@@ -98,8 +97,12 @@ class AppFixtures extends AbstractFixtures implements FixtureGroupInterface
 
     protected function createAdmin(?string $email = null, ?string $plainPassword = null)
     {
-        if (!$email) $email = self::ADMIN_EMAIL;
-        if (!$plainPassword) $plainPassword = self::ADMIN_PASSWORD;
+        if (!$email) {
+            $email = self::ADMIN_EMAIL;
+        }
+        if (!$plainPassword) {
+            $plainPassword = self::ADMIN_PASSWORD;
+        }
 
         $admin = (new User)
             ->setCreatedAt(new \Datetime('now'))
@@ -130,7 +133,9 @@ class AppFixtures extends AbstractFixtures implements FixtureGroupInterface
         bool $onlyMandatoryProps = false,
         ?string $fullname = null
     ) {
-        if ($authorsNb === null) $authorsNb = self::AUTHORS_NB;
+        if ($authorsNb === null) {
+            $authorsNb = self::AUTHORS_NB;
+        }
 
         // admin
         $admin = $this->users[0];
