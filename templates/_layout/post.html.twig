@@ -1,5 +1,16 @@
 {% extends "base.html.twig" %}
 
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('content') }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('ui') }}
+    {{ encore_entry_link_tags('content') }}
+{% endblock %}
+
 {# /!\ 
     All variables are defined inside the page template: '<posttype>/show.html.twig'
     Go to this template to get the variables list 

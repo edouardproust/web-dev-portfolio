@@ -1,17 +1,6 @@
 {% extends '_layout/lesson.html.twig' %}
 {% set post = lesson %}{# <-- Make template compatible with lessons #}
 
-{% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('content') }}
-{% endblock %}
-
-{% block stylesheets %}
-	{{ parent() }}
-	{{ encore_entry_link_tags('ui') }}
-{% endblock %}
-
-
 {# Config 
 
     Mandatory variables:
@@ -61,7 +50,6 @@
 			{{ lesson.headline }}
 		</div>
 	{% endif %}
-
-    {{ lesson.content|raw }}
+    {{ content|raw }}
 
 {% endblock %}

@@ -1,8 +1,8 @@
 /**
- * @license Copyright (c) 2014-2022, CKSource Holding sp. z o.o. All rights reserved.
- * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
- */
+ * @info Build config options: https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editorconfig-EditorConfig.html
+*/
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor.js';
+
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment.js';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
 import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage.js';
@@ -24,7 +24,9 @@ import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize.js';
 import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle.js';
 import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar.js';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload.js';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
+import ImageResizeEditing from '@ckeditor/ckeditor5-image/src/imageresize/imageresizeediting.js';
+import ImageResizeHandles from '@ckeditor/ckeditor5-image/src/imageresize/imageresizehandles.js';
+// import Indent from '@ckeditor/ckeditor5-indent/src/indent.js';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic.js';
 import Link from '@ckeditor/ckeditor5-link/src/link.js';
 import LinkImage from '@ckeditor/ckeditor5-link/src/linkimage.js';
@@ -69,14 +71,16 @@ Editor.builtinPlugins = [
 	ImageStyle,
 	ImageToolbar,
 	ImageUpload,
-	Indent,
+	ImageResizeEditing,
+	ImageResizeHandles,
+	// Indent,
 	Italic,
 	Link,
 	LinkImage,
 	List,
 	ListProperties,
 	MediaEmbed,
-	MediaEmbedToolbar,
+	// MediaEmbedToolbar,
 	Paragraph,
 	RemoveFormat,
 	SourceEditing,
@@ -92,7 +96,9 @@ Editor.builtinPlugins = [
 
 // Editor configuration.
 Editor.defaultConfig = {
+	// toolbar - https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html
 	toolbar: {
+		shouldNotGroupWhenFull: true,
 		items: [
 			'sourceEditing',
 			'undo',
@@ -104,9 +110,9 @@ Editor.defaultConfig = {
 			'bold',
 			'italic',
 			// 'removeFormat',
-			'|',
-			'outdent',
-			'indent',
+			// '|',
+			// 'outdent',
+			// 'indent',
 			'|',
 			'imageInsert',
 			// 'imageUpload',
@@ -131,14 +137,53 @@ Editor.defaultConfig = {
 	},
 	language: 'en',
 	image: {
+		resizeUnit: "%",
+		resizeOptions: [ {
+			name: 'resizeImage:original',
+			value: null
+		},{
+			name: 'resizeImage:100',
+			value: '100'
+		},{
+			name: 'resizeImage:75',
+			value: '75'
+		},{
+			name: 'resizeImage:50',
+			value: '50'
+		},{
+			name: 'resizeImage:25',
+			value: '25'
+		} ],
 		toolbar: [
-			'imageTextAlternative',
-			'imageStyle:inline',
-			'imageStyle:block',
-			'imageStyle:side',
-			'linkImage'
-		]
+			'linkImage',
+            'toggleImageCaption',
+            'imageTextAlternative',
+			// 'imageStyle:inline',
+			{
+                name: 'imageStyle:alignBlockDropdown',
+				title: 'Align images as a block',
+                items: [ 'imageStyle:alignBlockLeft', 'imageStyle:alignBlockRight' ],
+                defaultItem: 'imageStyle:alignBlockLeft'
+            },{
+                name: 'imageStyle:alignDropdown',
+				title: 'Align image surrounded by text',
+                items: [ 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight' ],
+                defaultItem: 'imageStyle:alignCenter'
+            },
+			'ResizeImage'
+		],
 	},
+	codeBlock: {
+        languages: [
+            { language: 'html', label: 'HTML' },
+            { language: 'css', label: 'CSS' },
+            { language: 'php', label: 'PHP' },
+            { language: 'javascript', label: 'JavaScript' },
+        ]
+    },
+    wordCount: {
+        displayWords: false
+    },
 	table: {
 		contentToolbar: [
 			'tableColumn',

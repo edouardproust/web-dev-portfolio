@@ -13,9 +13,7 @@ function lightbox() {
 	let elements = $(SELECTOR)
 	elements = elements.filter(':not(.customjs)');
 
-	if( elements.length < 1 ){
-		return;
-	}
+	if( elements.length < 1 ) return;
 	console.log('lightbox executed');
 
 	elements.each( function(){

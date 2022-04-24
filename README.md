@@ -79,16 +79,7 @@ php bin/console app:create:admin <username> <password>
 
 ----------
 
-## Usefull commands
-
-Build Encore assets on save:
-```bash
-npm run watch
-```
-
-----------
-
-## Config
+## Config: misc.
 
 - **Add or Edit a global dir or file path to be used anywhere in the project:** 
 Add or Edit a const in _Path.php_ and then call it where you need: `Path::MY_PATH`
@@ -101,7 +92,7 @@ Edit const in _src/DataFixtures/AppFixtures.php_
 
 ----------
 
-## CKEditor
+## Config: CKEditor
 
 - **Reorder toolbar:** update `Editor.defaultConfig()` function in _assets/ckeditor/builds/**{build_name}**/src/ckeditor.js_
 
@@ -122,4 +113,13 @@ Edit const in _src/DataFixtures/AppFixtures.php_
 ```bash 
 npm run build
 npm run dev
+```
+
+----------
+
+## Usefull commands
+
+Build Encore assets on save:
+```bash
+npm run watch
 ```

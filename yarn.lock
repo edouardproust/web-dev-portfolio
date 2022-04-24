@@ -1115,6 +1115,11 @@
   dependencies:
     "ckeditor5" "^34.0.0"
 
+"@ckeditor/ckeditor5-inspector@^4.0.0":
+  "integrity" "sha512-ygIb0fFOH0zuGrZZbhVqnhYruzaK0+/H0c3ZuNFT5csnd0Vt4bSFJyjKoIp49wAhAlY5EWF8sMdc/fgwjCawUA=="
+  "resolved" "https://registry.npmjs.org/@ckeditor/ckeditor5-inspector/-/ckeditor5-inspector-4.0.0.tgz"
+  "version" "4.0.0"
+
 "@ckeditor/ckeditor5-link@^34.0.0":
   "integrity" "sha512-xtAHw7uF9J0yqbcYViNS5jV4fws3V5x8I/U8m8BtnBqmRVG+pXfN/Zpw9+LhsMWnKa5BX9/B105VoHcn/Sz84Q=="
   "resolved" "https://registry.npmjs.org/@ckeditor/ckeditor5-link/-/ckeditor5-link-34.0.0.tgz"

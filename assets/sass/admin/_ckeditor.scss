@@ -16,7 +16,8 @@
     border-radius: 4px 4px 0 0 !important;
 }
 
-.ck-editor__editable {
+[data-editable-el = true],
+[role="textbox"] {
     border-radius: 0 !important;
     min-height: 200px;
 }

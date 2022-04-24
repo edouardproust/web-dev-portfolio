@@ -1,14 +1,13 @@
-/**
- * Doc:
- * - Config Toolbar: https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html
- */
-
 import ClassicEditor from '../../../public/build/ckeditor/builds/full/src/ckeditor';
+import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
 
 const SELECTOR = '.ckeditorField';
+const ALERT_SELECTOR = '.invalid-feedback';
+const CK_EDITABLE_SELECTOR = '[role="textbox"]';
+const FORBIDDEN_CLASSES = [ ALERT_SELECTOR ]; // The editor won't be build if the div also contains one of these classes
 const DEBUG = false;
 
-async function exec() 
+function exec() 
 {
     let elements = document.querySelectorAll(SELECTOR);
     let elementsNb = elements.length;
@@ -16,102 +15,106 @@ async function exec()
         return; 
     }
     elements.forEach((element) => {
-        buildEditor(element);
-        customStyle(element);
-        if(DEBUG) buildSuccessLog(elementsNb);
-        setFieldData(element);
-        prepareFormSumbit(element);
+        if(!isForbidden(element)) {
+            buildEditor(element);
+        }
     });
+    if(DEBUG) buildSuccessLog(elementsNb);
 }
 export default { exec };
+
+/**
+ * Check if the the current div target contains one of the FORBIDDEN_CLASSES
+ * @returns 'true' if the div contains one of the FORBIDDEN_CLASSES, 'false' otherwise
+ */
+function isForbidden(element) {
+    let forbidden = false;
+    FORBIDDEN_CLASSES.forEach((item) => {
+        // substring is used to remove the first char ('.' for a class or '#' for an id)
+        if(element.classList.contains(item.substring(1))) { 
+            forbidden = true;
+        }
+    });
+    return forbidden;
+}
 
 function buildEditor(element) 
 {
     ClassicEditor
-        // Note that you do not have to specify the plugin and toolbar configuration — using defaults from the build.
-        .create( element )
-        .then( editor => {
-            if(DEBUG) console.log( 'Editor was initialized', editor );
-            wordCount(editor, element);
-        } )
+        // Build config: https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editorconfig-EditorConfig.html
+        .create(element)
+        .then(editor => {
+            CKEditorInspector.attach( editor );
+            // selectors
+            let editableEl = element.parentNode.querySelector(CK_EDITABLE_SELECTOR);
+            let alertEl = element.parentNode.querySelector(ALERT_SELECTOR);
+            // functions
+            setFieldData(element, editableEl);
+            prepareFormSumbit(editor, element);
+            wordCount(editor, element, alertEl);
+            customStyle(element, editableEl); // must be at last position
+        })
         .catch( error => {
             if(DEBUG) console.error( error.stack );
-        } );
+        });
 }
 
-function customStyle(element)
+function customStyle(element, editableEl)
 {
-    setTimeout(() => {
-        let ckedirorField = element.parentNode.querySelector('.ck-editor');
-        ckedirorField.setAttribute('rows', 40);
-    }, 1);
-    setTimeout(() => {
-        let wordCount = element.parentNode.querySelector('.word-count')
-        console.log(element.parentNode.querySelector('.word-count'))
-        wordCount.childNodes[0].classList.add('ck-toolbar');
-    }, 1000);
+    // editable field: height & corners
+    editableEl.setAttribute('data-editable-el', true);
+    // words count
+    let wordCountEl = element.parentNode.querySelector('.word-count')
+    wordCountEl.childNodes[0].classList.add('ck-toolbar');
+}
+
+/**
+ * On form load: the editable element (CKEditor) from database (data of the original EasyAdmin field)
+ * @link https://ckeditor.com/docs/ckeditor5/latest/support/faq.html#how-to-get-the-editor-instance-object-from-the-dom-element
+*/
+function setFieldData(element, editableEl) 
+{
+    const instance = editableEl.ckeditorInstance;
+    instance.setData(element.value);
+}
+
+/**
+ * On editabelEl change: edit element (easyAdmin field) with the content of the editableEl content (CKEditor)
+*/
+function prepareFormSumbit(editor, element)
+{    // Debug: show hidden field
+    if(DEBUG) element.style.display = "block";
+    // Inject clean code into the native hidden field (attached to easyAdmin)
+    document.querySelector('.content-body > form')
+        .addEventListener('submit', (e) => {
+            element.value = editor.getData();
+        });
+}
+
+function wordCount(editor, element, alertEl)
+{
+    // create a wrapper
+    let divsWrapper = document.createElement('div');
+    element.parentNode.appendChild(divsWrapper);
+    // create a word-cound div
+    const wordCountWrapper = document.createElement('div');
+    wordCountWrapper.classList.add('word-count');
+    // append divs to wrapper
+    divsWrapper.appendChild(wordCountWrapper);
+    if(alertEl !== null) {
+        divsWrapper.appendChild(alertEl)
+    }
+    // fill word-cound div with data
+    const wordCountPlugin = editor.plugins.get( 'WordCount' );
+    wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
 }
 
 /**
  * Display a confirmation log when script has been successfully loaded
- * @param {int} elementsNb 
+ * @param {Number} elementsNb 
  */
 function buildSuccessLog(elementsNb) 
 {
     console.log('CKEditor: ' + elementsNb + ' editor' + (elementsNb > 1 ? 's' : '') + ' built!');
 }
 
-/**
- * Fill the original field (EasyAdmin) with content typed by the user in the CKEditor field.
- * @param {object} element 
- */
-function prepareFormSumbit(element)
-{
-    setTimeout(() => {
-        let editableEl = element.parentNode.querySelector('.ck-editor__editable ');
-    
-        if(DEBUG) {
-            element.style.display = 'block';
-            console.log(element);
-        }
-
-        // look for updates in createdField
-        let editableElBefore = editableEl.innerHTML;
-        setInterval(() => {
-            if(editableElBefore !== editableEl.innerHTML) {
-                element.value = editableEl.innerHTML;
-                editableElBefore = editableEl.innerHTML;
-            }
-        }, 1);
-
-    }, 1);
-}
-
-/**
- * On form load: the editable element (CKEditor) from database (data of the original EasyAdmin field)
- * @link https://ckeditor.com/docs/ckeditor5/latest/support/faq.html#how-to-get-the-editor-instance-object-from-the-dom-element
- * @param {object|null} element If set on null and tseveral instances exist, the first one will be returned. Default: null 
-*/
-async function setFieldData(element) 
-{
-    setTimeout(() => {
-        let editableEl = element.parentNode.querySelector('.ck-editor__editable ');
-        const instance = editableEl.ckeditorInstance;
-        instance.setData(element.value);
-    }, 1);
-}
-
-function wordCount(editor, element)
-{
-    setTimeout(() => {
-        console.log(element.parentNode)
-        const wordCountWrapper = document.createElement('div');
-        wordCountWrapper.classList.add('word-count');
-        element.parentNode.appendChild(wordCountWrapper);
-        console.log(element.parentNode);
-
-        const wordCountPlugin = editor.plugins.get( 'WordCount' );
-
-        wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-    }, 1);
-}
