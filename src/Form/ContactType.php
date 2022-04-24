@@ -22,7 +22,15 @@ class ContactType extends AbstractType
             ->add('subject', TextType::class)
             ->add('content', TextareaType::class, [
                 'label' => 'Your message'
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Send'
             ]);
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return '';
     }
 
     public function configureOptions(OptionsResolver $resolver): void

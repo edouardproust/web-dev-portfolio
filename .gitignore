@@ -32,7 +32,9 @@ yarn-error.log
 
 ###> uploads ###
 public/uploads/projects/*
-!public/uploads/projects/placeholder.png
+!public/uploads/projects/thumbnail
+public/uploads/projects/thumbnail/*
+!public/uploads/projects/thumbnail/placeholder.png
 
 public/uploads/posts/*
 !public/uploads/posts/placeholder.png
@@ -46,8 +48,3 @@ public/uploads/authors/*
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
-
-###> fosckeditor/plugins ###
-public/bundles/*
-!public/bundles/fosckeditor_plugins/
-###< fosckeditor/plugins ###

@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Config;
 use App\Entity\Lesson;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
@@ -15,6 +14,7 @@ use App\Controller\Admin\AbstractPosttypeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 
 class LessonCrudController extends AbstractPosttypeCrudController
 {
@@ -42,8 +42,9 @@ class LessonCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield TextField::new('content')->setFormType(CKEditorType::class)->hideOnIndex();
-
+        yield TextareaField::new('content')
+            ->setFormTypeOption('attr', ['class' => 'ckeditorField adminCrud'])
+            ->hideOnIndex();
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield SlugField::new('slug')
             ->setTargetFieldName('title')

@@ -1,17 +1,5 @@
 {% extends '_layout/post.html.twig' %}
 
-{% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('content') }}
-{% endblock %}
-
-{% block stylesheets %}
-	{{ parent() }}
-	{{ encore_entry_link_tags('ui') }}
-    {{ encore_entry_link_tags('content') }}
-{% endblock %}
-
-
 {# Config 
 
     Mandatory variables:
@@ -79,6 +67,6 @@ function myFunction(value, index, array) {
 		</div>
 	{% endif %}
 
-    {{ post.content|raw }}
+    {{ post.content }}
 
 {% endblock %}
