@@ -1,119 +1,53 @@
-import ClassicEditor from '../../../public/build/ckeditor/builds/full/src/ckeditor.js';
+/**
+ * Documentation:
+ * - Editor config: https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editorconfig-EditorConfig.html
+*/
 
-const SELECTOR = '.ckeditorField';
-const ALERT_SELECTOR = '.invalid-feedback';
-const CK_EDITABLE_SELECTOR = '[role="textbox"]';
-const FORBIDDEN_CLASSES = [ ALERT_SELECTOR ]; // The editor won't be build if the div also contains one of these classes
-const DEBUG = false;
-
-function exec() 
-{
-    let elements = document.querySelectorAll(SELECTOR);
-    let elementsNb = elements.length;
-    if(elementsNb < 1) {
-        return; 
-    }
-    elements.forEach((element) => {
-        if(!isForbidden(element)) {
-            buildEditor(element);
-        }
-    });
-    if(DEBUG) buildSuccessLog(elementsNb);
-}
 export default { exec };
 
-/**
- * Check if the the current div target contains one of the FORBIDDEN_CLASSES
- * @returns 'true' if the div contains one of the FORBIDDEN_CLASSES, 'false' otherwise
- */
-function isForbidden(element) {
-    let forbidden = false;
-    FORBIDDEN_CLASSES.forEach((item) => {
-        // substring is used to remove the first char ('.' for a class or '#' for an id)
-        if(element.classList.contains(item.substring(1))) { 
-            forbidden = true;
-        }
-    });
-    return forbidden;
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+// Built-in plugins
+import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
+import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink.js';
+import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import Code from '@ckeditor/ckeditor5-basic-styles/src/code.js';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+// Extra plugins (not on build / added by me with `npm run install`)
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock.js';
+import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
+// Build editors
+import buildEditors from './ckeditor_build';
+
+ClassicEditor.builtinPlugins = [ 
+    // toolbar buttons
+    Alignment,
+    BlockQuote,
+    Bold, 
+    Code,
+    CodeBlock,
+    Italic,
+    // no toolbar btn   
+    Autoformat,
+    AutoImage,
+    AutoLink,
+    Essentials,
+    Paragraph,     
+    // extras plugins w/ no toolbar btn
+    WordCount,
+];
+
+const EDITOR_CONFIG = {
+    toolbar: [ 'bold', 'italic', 'alignment', 'blockQuote', 'code', 'codeBlock' ],
+    wordCount: {
+        displayWords: false
+    },
 }
 
-function buildEditor(element) 
-{
-    ClassicEditor
-        // Build config: https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editorconfig-EditorConfig.html
-        .create(element)
-        .then(editor => {
-            CKEditorInspector.attach( editor );
-            // selectors
-            let editableEl = element.parentNode.querySelector(CK_EDITABLE_SELECTOR);
-            let alertEl = element.parentNode.querySelector(ALERT_SELECTOR);
-            // functions
-            setFieldData(element, editableEl);
-            prepareFormSumbit(editor, element);
-            wordCount(editor, element, alertEl);
-            customStyle(element, editableEl); // must be at last position
-        })
-        .catch( error => {
-            if(DEBUG) console.error( error.stack );
-        });
+function exec() {
+    buildEditors(ClassicEditor, EDITOR_CONFIG);
 }
-
-function customStyle(element, editableEl)
-{
-    // editable field: height & corners
-    editableEl.setAttribute('data-editable-el', true);
-    // words count
-    let wordCountEl = element.parentNode.querySelector('.word-count')
-    wordCountEl.childNodes[0].classList.add('ck-toolbar');
-}
-
-/**
- * On form load: the editable element (CKEditor) from database (data of the original EasyAdmin field)
- * @link https://ckeditor.com/docs/ckeditor5/latest/support/faq.html#how-to-get-the-editor-instance-object-from-the-dom-element
-*/
-function setFieldData(element, editableEl) 
-{
-    const instance = editableEl.ckeditorInstance;
-    instance.setData(element.value);
-}
-
-/**
- * On editabelEl change: edit element (easyAdmin field) with the content of the editableEl content (CKEditor)
-*/
-function prepareFormSumbit(editor, element)
-{    // Debug: show hidden field
-    if(DEBUG) element.style.display = "block";
-    // Inject clean code into the native hidden field (attached to easyAdmin)
-    document.querySelector('.content-body > form')
-        .addEventListener('submit', (e) => {
-            element.value = editor.getData();
-        });
-}
-
-function wordCount(editor, element, alertEl)
-{
-    // create a wrapper
-    let divsWrapper = document.createElement('div');
-    element.parentNode.appendChild(divsWrapper);
-    // create a word-cound div
-    const wordCountWrapper = document.createElement('div');
-    wordCountWrapper.classList.add('word-count');
-    // append divs to wrapper
-    divsWrapper.appendChild(wordCountWrapper);
-    if(alertEl !== null) {
-        divsWrapper.appendChild(alertEl)
-    }
-    // fill word-cound div with data
-    const wordCountPlugin = editor.plugins.get( 'WordCount' );
-    wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-}
-
-/**
- * Display a confirmation log when script has been successfully loaded
- * @param {Number} elementsNb 
- */
-function buildSuccessLog(elementsNb) 
-{
-    console.log('CKEditor: ' + elementsNb + ' editor' + (elementsNb > 1 ? 's' : '') + ' built!');
-}
-
