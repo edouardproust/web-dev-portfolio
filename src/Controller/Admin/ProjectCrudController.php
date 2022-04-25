@@ -6,7 +6,6 @@ use App\Path;
 use App\Config;
 use App\Entity\Project;
 use App\Form\GalleryItemType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
@@ -49,7 +48,9 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield TextField::new('content')->setFormType(CKEditorType::class)->hideOnIndex();
+        yield TextareaField::new('content')
+            ->setFormTypeOption('attr', ['class' => 'ckeditorField adminCrud'])
+            ->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield SlugField::new('slug')

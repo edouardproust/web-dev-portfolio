@@ -12,6 +12,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * - Command: `php bin/console app:create:admin <username> <password> <?fullname>`
+ * - Alias: `php bin/console a:c:a <username> <password> <?fullname>`
+ * @package App\Command
+ */
 class CreateAdminCommand extends Command
 {
 
@@ -46,7 +51,7 @@ class CreateAdminCommand extends Command
         $this
             ->setName('app:create:admin')
             ->setAliases([
-                'app:c:a'
+                'a:c:a'
             ])
             ->setDescription('Creates a new admin.')
             ->setHelp(
@@ -65,7 +70,7 @@ class CreateAdminCommand extends Command
             ->addArgument(
                 'fullname',
                 InputArgument::OPTIONAL,
-                'GIve this admin a fullname (firstname + lastname). This field is optional.'
+                'Give this admin a fullname (firstname + lastname). This field is optional.'
             )
             ->setHidden(false);
     }

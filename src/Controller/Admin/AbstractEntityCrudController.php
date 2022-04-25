@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 abstract class AbstractEntityCrudController extends AbstractCrudController
 {
-
     protected $entityId;
 
     abstract public static function getEntityFqcn(): string;
@@ -22,9 +21,16 @@ abstract class AbstractEntityCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        parent::configureCrud($crud);
         return $crud
-            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig');
+            // Change page title options for every CRUDs here
+            // Title options: https://symfony.com/bundles/EasyAdminBundle/current/crud.html#title-and-help-options
+            // it can include these placeholders:
+            //   %entity_name%, %entity_as_string%, %entity_id%, %entity_short_id%
+            //   %entity_label_singular%, %entity_label_plural%
+            ->setPageTitle(Crud::PAGE_INDEX, 'All %entity_label_plural%')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Edit %entity_label_singular% "<b>%entity_as_string%</b>"')
+            ->setPageTitle(Crud::PAGE_NEW, 'Create a new %entity_label_singular%')
+        ;
     }
 
     public function configureFields(string $pageName): iterable

@@ -9,16 +9,21 @@ use App\Entity\Author;
 use App\Entity\Lesson;
 use App\Entity\Comment;
 use App\Entity\Project;
-use App\Entity\AdminOption;
 use App\Entity\PostCategory;
 use App\Entity\CodingLanguage;
 use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
+use App\DataFixtures\AdminOptions;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
-class AppFixtures extends AbstractFixtures
+/**
+ * Fixtures group: 'dev'
+ *
+ * @package App\DataFixtures
+ */
+class AppFixtures extends AbstractFixtures implements FixtureGroupInterface
 {
-
     const ADMIN_EMAIL = 'contact@edouardproust.dev';
     const ADMIN_PASSWORD = 'admin';
 
@@ -67,10 +72,15 @@ class AppFixtures extends AbstractFixtures
     protected $projectCategories = [];
     protected $users = [];
 
+    public static function getGroups(): array
+    {
+        return ['dev'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $this->runAndPersistAll([
-            'createAdminOptions',
+            // 'createAdminOptions',
             'createAdmin',
             'createUsers',
             'createAuthors',
@@ -85,24 +95,14 @@ class AppFixtures extends AbstractFixtures
         $manager->flush();
     }
 
-    protected function createAdminOptions()
-    {
-        foreach (AdminOptions::getConstants() as $name => $array) {
-            $option = (new AdminOption)
-                ->setConstant($name)
-                ->setType(AdminOptions::get($array, 'type'))
-                ->setLabel(AdminOptions::get($array, 'label'))
-                ->setHelp(AdminOptions::get($array, 'help'))
-                ->setValue(AdminOptions::get($array, 'value'))
-                ->setIsActive(AdminOptions::get($array, 'isActive'));
-            $this->adminOptions[] = $option;
-        }
-    }
-
     protected function createAdmin(?string $email = null, ?string $plainPassword = null)
     {
-        if (!$email) $email = self::ADMIN_EMAIL;
-        if (!$plainPassword) $plainPassword = self::ADMIN_PASSWORD;
+        if (!$email) {
+            $email = self::ADMIN_EMAIL;
+        }
+        if (!$plainPassword) {
+            $plainPassword = self::ADMIN_PASSWORD;
+        }
 
         $admin = (new User)
             ->setCreatedAt(new \Datetime('now'))
@@ -133,7 +133,9 @@ class AppFixtures extends AbstractFixtures
         bool $onlyMandatoryProps = false,
         ?string $fullname = null
     ) {
-        if ($authorsNb === null) $authorsNb = self::AUTHORS_NB;
+        if ($authorsNb === null) {
+            $authorsNb = self::AUTHORS_NB;
+        }
 
         // admin
         $admin = $this->users[0];

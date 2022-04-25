@@ -55,7 +55,7 @@ class Lesson
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank
-     * @Assert\Length(min=200)
+     * @Assert\Length(min=20)
      */
     private $content;
 
@@ -89,7 +89,7 @@ class Lesson
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity=Comment::class, 
+     *     targetEntity=Comment::class,
      *     mappedBy="lesson",
      *     orphanRemoval=true,
      *     cascade={"remove", "persist"}

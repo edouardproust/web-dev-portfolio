@@ -3,13 +3,15 @@
 namespace App\DataFixtures;
 
 use App\Config;
+use App\Entity\AdminOption;
 use App\Helper\StringHelper;
+use App\DataFixtures\AdminOptions;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 abstract class AbstractFixtures extends Fixture
 {
@@ -40,6 +42,20 @@ abstract class AbstractFixtures extends Fixture
         // set in App\DataFixtures\AppFixtures
     }
 
+    protected function createAdminOptions()
+    {
+        foreach (AdminOptions::getConstants() as $name => $array) {
+            $option = (new AdminOption)
+                ->setConstant($name)
+                ->setType(AdminOptions::get($array, 'type'))
+                ->setLabel(AdminOptions::get($array, 'label'))
+                ->setHelp(AdminOptions::get($array, 'help'))
+                ->setValue(AdminOptions::get($array, 'value'))
+                ->setIsActive(AdminOptions::get($array, 'isActive'));
+            $this->adminOptions[] = $option;
+        }
+    }
+
     /**
      * Run a given function and persist the generated entities
      * - Before running this function you must set a property (array type)
@@ -51,7 +67,9 @@ abstract class AbstractFixtures extends Fixture
     public function runAndPersist(string $method, array $properties = []): void
     {
         $entities = lcfirst(str_replace('create', '', $method));
-        if ($entities === 'admin') $entities = 'users';
+        if ($entities === 'admin') {
+            $entities = 'users';
+        }
         $this->$method(...$properties);
         foreach ($this->$entities as $entity) {
             $this->entityManager->persist($entity);

@@ -34,8 +34,10 @@ class AdminOptionCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         return $crud
             ->setEntityLabelInPlural('Options')
+            ->setDefaultSort(['id' => 'ASC'])
             ->setEntityLabelInSingular(
                 $this->easyAdminService->getEntityLabelSingular(false, 'Option')
             )->setEntityPermission(Config::ROLE_ADMIN);

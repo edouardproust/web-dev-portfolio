@@ -82,7 +82,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle($this->adminOptionService->get('SITE_NAME'));
+            ->setTitle($this->adminOptionService->get('SITE_NAME'))
+            ->setFaviconPath($this->adminOptionService->get('SITE_FAVICON'));
     }
 
     public function configureMenuItems(): iterable

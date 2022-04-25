@@ -3,5 +3,78 @@
 @import './sass/counter-skills';
 @import './sass/shortcodes/image_scroll_hover';
 
-// code highlight
-@import 'highlight.js/scss/atom-one-dark.scss';
+// editor & code highlight
+@import 'highlight.js/scss/agate.scss';
+
+
+/**
+ * Image
+ */
+
+figure.image {
+    @include border-radius($card-inner-border-radius);
+    overflow: hidden;
+    transition: opacity 0.5s;
+    /* center images */
+    text-align: center !important;
+    margin: 20px auto !important; 
+    * img {
+        width: 100%;
+    }
+}
+figure.image:hover {
+    opacity: 0.8;
+}
+
+/**
+ * Code
+ */
+
+code.hljs {
+    scroll-behavior: auto;
+    max-height: 400px;
+    tab-size: 34px;
+    @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
+}
+
+/**
+ * Captions (Image + Code)
+ */
+
+figcaption,
+.code-header {
+    text-align: center;
+    font-size: $form-text-font-size;
+    padding: $card-cap-padding-y $card-cap-padding-x;
+    color: $gray-550;
+    background-color: $card-cap-bg;
+}
+figcaption {
+    border: $card-border-width solid $card-border-color;
+    border-top: none;
+}
+.code-header {
+    font-size: $form-text-font-size * 0.9;
+    border: $card-border-width solid $card-border-color;
+    border-bottom: none;
+    @include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
+}
+// lightbox captions (image)
+.lightbox-caption {
+    line-height: $form-text-font-size * 1.6;
+    padding: 20px 15px;
+    margin-bottom: -35px;
+    background-color: transparent;
+    border-width: 0px;
+    color: #e2e2e2;
+}
+.lightbox-figure::after {
+    height: 100% !important;
+    background-color: #2d2d2d;
+    border-radius: $card-inner-border-radius;
+}
+.lightbox-img {
+    padding: 0 !important;
+    border-top-left-radius: $card-inner-border-radius;
+    border-top-right-radius: $card-inner-border-radius;
+}

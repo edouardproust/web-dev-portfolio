@@ -1,17 +1,6 @@
 {% extends '_layout/lesson.html.twig' %}
 {% set post = lesson %}{# <-- Make template compatible with lessons #}
 
-{% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('content') }}
-{% endblock %}
-
-{% block stylesheets %}
-	{{ parent() }}
-	{{ encore_entry_link_tags('ui') }}
-{% endblock %}
-
-
 {# Config 
 
     Mandatory variables:
@@ -56,12 +45,12 @@
 
 {% block content %}
 
+<iframe src="https://vimeo.com/694134896" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
 	{% if lesson.headline is not null %}
 		<div class="page_headline">
 			{{ lesson.headline }}
 		</div>
 	{% endif %}
-
-    {{ lesson.content|raw }}
+    {{ content|raw }}
 
 {% endblock %}

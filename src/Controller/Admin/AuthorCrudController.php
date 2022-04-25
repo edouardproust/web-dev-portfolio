@@ -45,6 +45,7 @@ class AuthorCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         $crud
             ->setEntityLabelInPlural('Authors')
             ->setDefaultSort(['fullName' => 'ASC']);
