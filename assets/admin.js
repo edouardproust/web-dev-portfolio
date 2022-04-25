@@ -3,10 +3,8 @@
  */
 
 import './admin.scss';
+import ckeditorBuild from './js/admin/ckeditor_config';
+import uiHacks from './js/admin/ui_hacks';
 
-import shortcodes from './js/admin/shortcodes';
-import ckeditor from './js/admin/ckeditor';
-import './js/admin/ckeditor_fix';
-
-shortcodes.exec();
-ckeditor.exec();
+ckeditorBuild.exec();
+uiHacks.exec();

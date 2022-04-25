@@ -16,3 +16,4 @@ tabs.exec();
 toggle.exec();
 progress.exec();
 image_scroll_hover.exec();
+blocks.exec();

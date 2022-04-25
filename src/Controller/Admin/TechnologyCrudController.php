@@ -21,6 +21,7 @@ class TechnologyCrudController extends AbstractCategoryCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         return $crud
             ->setEntityLabelInPlural('Technologies')
             ->setEntityLabelInSingular('Technology')

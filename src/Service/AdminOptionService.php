@@ -20,8 +20,10 @@ class AdminOptionService
      */
     public function get(string $constant)
     {
-        return $this->adminOptionRepository
-            ->findOneByConstant($constant)
-            ->getValue();
+        $property = $this->adminOptionRepository->findOneByConstant($constant);
+        if ($property) {
+            return $property->getValue();
+        }
+        return '';
     }
 }

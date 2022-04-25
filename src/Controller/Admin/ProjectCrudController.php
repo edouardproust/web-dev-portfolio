@@ -48,7 +48,9 @@ class ProjectCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield TextField::new('content')->hideOnIndex();
+        yield TextareaField::new('content')
+            ->setFormTypeOption('attr', ['class' => 'ckeditorField adminCrud'])
+            ->hideOnIndex();
 
         yield FormField::addPanel()->setCssClass(Config::ADMIN_FORM_SIDE_CSS_CLASS);
         yield SlugField::new('slug')
