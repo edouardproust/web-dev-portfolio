@@ -19,11 +19,13 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         return $crud
             ->setEntityLabelInPlural('Categories')
             ->setEntityLabelInSingular('Category')
             ->setDefaultSort(['label' => 'ASC'])
             ->setEntityPermission(Config::ROLE_ADMIN);
+        ;
     }
 
     public function configureActions(Actions $actions): Actions

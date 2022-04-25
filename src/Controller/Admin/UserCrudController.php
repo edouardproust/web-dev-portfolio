@@ -38,6 +38,7 @@ class UserCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         $crud
             ->setEntityLabelInPlural('Users')
             ->setDefaultSort(['createdAt' => 'ASC']);

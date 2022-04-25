@@ -44,7 +44,6 @@ abstract class AbstractFixtures extends Fixture
 
     protected function createAdminOptions()
     {
-        dd(AdminOptions::getConstants());
         foreach (AdminOptions::getConstants() as $name => $array) {
             $option = (new AdminOption)
                 ->setConstant($name)
@@ -68,7 +67,9 @@ abstract class AbstractFixtures extends Fixture
     public function runAndPersist(string $method, array $properties = []): void
     {
         $entities = lcfirst(str_replace('create', '', $method));
-        if ($entities === 'admin') $entities = 'users';
+        if ($entities === 'admin') {
+            $entities = 'users';
+        }
         $this->$method(...$properties);
         foreach ($this->$entities as $entity) {
             $this->entityManager->persist($entity);
