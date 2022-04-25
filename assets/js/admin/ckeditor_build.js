@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 const SELECTOR = '.ckeditorField';
 const ALERT_SELECTOR = '.invalid-feedback';
 const CK_EDITABLE_SELECTOR = '[role="textbox"]';
@@ -7,23 +7,23 @@ const FORBIDDEN_CLASSES = [
     ALERT_SELECTOR 
 ]; 
 
-export default function buildEditors(ClassicEditor, editorConfig) 
+export default function buildEditors(ClassicEditor, toolsConfig) 
 {
     let elements = document.querySelectorAll(SELECTOR);
     if(elements.length < 1) return; 
 
     elements.forEach((element) => {
         if(!isForbidden(element)) {
-            buildOneEditor(ClassicEditor, editorConfig, element);
+            buildOneEditor(ClassicEditor, toolsConfig, element);
         }
     });
     buildSuccessLog(elements.length);
 }
 
-function buildOneEditor(ClassicEditor, editorConfig, element) 
+function buildOneEditor(ClassicEditor, toolsConfig, element) 
 {
     ClassicEditor
-        .create(element, editorConfig)
+        .create(element, toolsConfig)
         .then(editor => {
             let editableEl = element.parentNode.querySelector(CK_EDITABLE_SELECTOR);
             let alertEl = element.parentNode.querySelector(ALERT_SELECTOR);

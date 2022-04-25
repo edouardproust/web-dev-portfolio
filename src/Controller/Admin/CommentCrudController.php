@@ -33,6 +33,7 @@ class CommentCrudController extends AbstractEntityCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
+        parent::configureCrud($crud);
         return $crud
             ->setEntityLabelInPlural('Comments')
             ->setEntityLabelInSingular('Comment')
