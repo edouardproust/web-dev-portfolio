@@ -15,9 +15,9 @@ use App\Entity\PostCategory;
 use App\Entity\CodingLanguage;
 use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
-use App\Service\AdminOptionService;
 use App\Repository\AuthorRepository;
 use App\Controller\Admin\AuthorCrudController;
+use App\Repository\AdminOptionRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -34,16 +34,16 @@ class DashboardController extends AbstractDashboardController
 {
     private $authorRepository;
     private $adminUrlGenerator;
-    private $adminOptionService;
+    private $adminOptionRepository;
 
     public function __construct(
         AuthorRepository $authorRepository,
         AdminUrlGenerator $adminUrlGenerator,
-        AdminOptionService $adminOptionService
+        AdminOptionRepository $adminOptionRepository
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
-        $this->adminOptionService = $adminOptionService;
+        $this->adminOptionRepository = $adminOptionRepository;
     }
 
     /**
@@ -81,9 +81,10 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()
-            ->setTitle($this->adminOptionService->get('SITE_NAME'))
-            ->setFaviconPath($this->adminOptionService->get('SITE_FAVICON'));
+        $dashboard = Dashboard::new()
+            ->setTitle($this->adminOptionRepository->get('SITE_NAME')->getValue());
+
+        return $dashboard;
     }
 
     public function configureMenuItems(): iterable

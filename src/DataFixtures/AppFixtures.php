@@ -80,7 +80,6 @@ class AppFixtures extends AbstractFixtures implements FixtureGroupInterface
     public function load(ObjectManager $manager): void
     {
         $this->runAndPersistAll([
-            // 'createAdminOptions',
             'createAdmin',
             'createUsers',
             'createAuthors',

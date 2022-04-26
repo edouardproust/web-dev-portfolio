@@ -30,16 +30,26 @@ abstract class AbstractCategoryCrudController extends AbstractEntityCrudControll
 
     public function configureActions(Actions $actions): Actions
     {
+        parent::configureActions($actions);
         return $actions
             ->update(
                 Crud::PAGE_INDEX,
                 Action::EDIT,
-                fn (Action $action) => $action->setIcon('fa fa-edit')->setLabel(false)
+                function (Action $action) {
+                    return $action
+                    ->setIcon('fa fa-edit')
+                    ->setLabel(false)
+                    ->setCssClass('btn btn-primary admin-crud-row-btn');
+                }
             )
             ->update(
                 Crud::PAGE_INDEX,
                 Action::DELETE,
-                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
+                function (Action $action) {
+                    return $action
+                    ->setIcon('fa fa-trash')->setLabel(false)
+                    ->setCssClass('btn btn-light admin-crud-row-btn');
+                }
             )
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);
     }

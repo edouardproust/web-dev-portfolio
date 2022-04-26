@@ -44,14 +44,17 @@ abstract class AbstractFixtures extends Fixture
 
     protected function createAdminOptions()
     {
-        foreach (AdminOptions::getConstants() as $name => $array) {
+        foreach (AdminOptions::getConstants() as $optionName => $optionData) {
             $option = (new AdminOption)
-                ->setConstant($name)
-                ->setType(AdminOptions::get($array, 'type'))
-                ->setLabel(AdminOptions::get($array, 'label'))
-                ->setHelp(AdminOptions::get($array, 'help'))
-                ->setValue(AdminOptions::get($array, 'value'))
-                ->setIsActive(AdminOptions::get($array, 'isActive'));
+                ->setConstant($optionName)
+                ->setType(AdminOptions::get($optionName, 'type'))
+                ->setLabel(AdminOptions::get($optionName, 'label'))
+                ->setHelp(AdminOptions::get($optionName, 'help'))
+                ->setValue(AdminOptions::get($optionName, 'value'))
+                ->setIsActive(AdminOptions::get($optionName, 'isActive'))
+                ->setFile(AdminOptions::get($optionName, 'file'))
+                ->setIsUploadable(AdminOptions::get($optionName, 'isUploadable'))
+                ->setIsRequired(AdminOptions::get($optionName, 'isRequired'));
             $this->adminOptions[] = $option;
         }
     }

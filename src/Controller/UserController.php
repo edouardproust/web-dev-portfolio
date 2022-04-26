@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Config;
 use App\Form\UserEditType;
 use App\Service\EasyAdminService;
 use Doctrine\ORM\EntityManagerInterface;

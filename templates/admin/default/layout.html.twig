@@ -1,6 +1,6 @@
 {% extends '@EasyAdmin/layout.html.twig' %}
 
-{% block page_title %}{{ block('content_title') }} - {{ config('SITE_NAME') }}{% endblock %}
+{% block page_title %}{{ block('content_title') }} - {{ config('SITE_NAME')|striptags }}{% endblock %}
 
 {% block content_header %}
     {% include "admin/_parts/breadcrumbs.html.twig" %}

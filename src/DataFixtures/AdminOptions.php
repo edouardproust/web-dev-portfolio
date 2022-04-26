@@ -10,143 +10,213 @@ use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 
 /**
  * Fixtures group: 'prod'
- * 
+ *
  * Define website options (AdminOption) to be saved in database
+ *
  * - Constant are saved in the order you listed them in the class (from top to bottom)
+ *
  * - You must set them using this pattern:
- * >const MY_CONSTANT = [type, value, isActive, label, help]
+ *       >**`const MY_CONSTANT = [type, value, isActive, label, help]`**
+ *
  * - The type is mandatory. Other options are optionnal:
- * >const MY_CONSTANT = [type] will work / const MY_CONSTANT = [] won't work
- * - Index of the array:
- * >'type' = The type of the field
- * (eg. Config::FIELD_TEXT, Config::FIELD_BOOL, Config::FIELD_URL,
- * Config::FIELD_EMAIL or Config::FIELD_NUMBER)
- * 'value' = The default value of thie option
- * 'label' = Custom label on top of the field (if null, it will)
- * 'help' = Help message below the field
+ *       >**`const MY_CONSTANT = [type]`** will work, but `const MY_CONSTANT = []` won't.
+ *
+ * - Array index:
+ *       >- **0 => type** | The type of the field
+ *          (eg. `Config::FIELD_TEXT`, `Config::FIELD_BOOL`, `Config::FIELD_URL`,
+ *          `Config::FIELD_EMAIL` or `Config::FIELD_NUMBER`)
+ *       >- **1 => value** | The default value of the option (for all type of fields except 'boolean').
+ *          For 'boolean' fields: always set this to null
+ *       >- **2 => isActive** | The default value of the option (for 'boolean' field type only).
+ *          Accepted values: null, true or false. Set always to null for non-boolean fields types.
+ *       >- **3 => label** | Custom label on top of the field (if null, it will)
+ *       >- **4 => help** | Help message below the field
  */
 class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
 {
+
+    // Template:
+    //
+    // const SITE_NAME =  [
+    //     'type' => Config::FIELD_TEXT,
+    //     'value' => null,
+    //     'isActive' => null,
+    //     'label' => '',
+    //     'help' => ''
+    // ];
+
     const SITE_NAME =  [
-        Config::FIELD_TEXT, 'Edouard Proust Portfolio', null,
-        'Site: Title',
-        'The site\'s name, displayed on top, and on several locations of the website and in emails.'
+        'type' => Config::FIELD_TEXT,
+        'value' => '{edouard<b>proust</b>}',
+        'isRequired' => true,
+        'label' => 'Site: Title',
+        'help' => 'The site\'s name, displayed on top, and on several locations of the website and in emails.' .
+            ' This text will replace the logo if none has been defined.'
     ];
     const SITE_DOMAIN = [
-        Config::FIELD_TEXT, 'edouardproust.dev', null,
-        'Site: Domaine name',
-        'The website domaine name (without "https://www"). Eg. "mysite.com"'
+        'type' => Config::FIELD_TEXT,
+        'value' => 'edouardproust.dev',
+        'isRequired' => true,
+        'label' => 'Site: Domaine name',
+        'help' => 'The website domaine name (without "https://www"). Eg. "mysite.com"'
+    ];
+    const SITE_LOGO = [
+        'type' => Config::FIELD_TEXT,
+        'isUploadable' => true,
+        'label' => 'Site: Logo',
+        'help' => 'An image that reflects you website concept. It is displayed on several locations of the wesite.'
+    ];
+    const SITE_LOGO_HEIGHT = [
+        'type' => Config::FIELD_NUM,
+        'value' => 40,
+        'isRequired' => true,
+        'label' => 'Site: Logo height',
+        'help' => 'Defines the height of the header logo in pixels (max. 65px: all values bigger will apply 65px height).'
+    ];
+    const SITE_FAVICON = [
+        'type' => Config::FIELD_TEXT,
+        'file' => 'favicon.ico',
+        'isUploadable' => true,
+        'label' => 'Site: Favicon',
+        'help' => 'The icon displayed in the browser tab. Recommended size: 16x16. Allowed extensions: .png, .jpg, .ico'
     ];
 
     const CONTACT_NAME = [
-        Config::FIELD_TEXT, 'Edouard Proust', null,
-        'Contact: Website owner\'s name',
-        'The name displayed in the "from" field in the emails you send.'
+        'type' => Config::FIELD_TEXT,
+        'value' => 'Edouard Proust',
+        'isRequired' => true,
+        'label' => 'Contact: Website owner\'s name',
+        'help' => 'The name displayed in the "from" field in the emails you send.'
     ];
     const CONTACT_EMAIL = [
-        Config::FIELD_EMAIL, 'contact@edouardproust.dev', null,
-        'Contact: Email',
-        'The email the visitors will use to send you emails. 
-        It is displayed on Contact page and in the "from" field of the email you send.'
+        'type' => Config::FIELD_EMAIL,
+        'value' => 'contact@edouardproust.dev',
+        'label' => 'Contact: Email',
+        'isRequired' => true,
+        'help' => 'The email the visitors will use to send you emails. ' .
+            'It is displayed on Contact page and in the "from" field of the email you send.'
     ];
     const CONTACT_PHONE = [
-        Config::FIELD_TEXT, '(+48) 727 775 824', null,
-        'Contact: Phone',
-        'The phone number the visitors can use to call you or your company. 
-        It is displayed on Contact page.'
+        'type' => Config::FIELD_TEXT,
+        'value' => '(+48) 727 775 824',
+        'label' => 'Contact: Phone',
+        'help' => 'The phone number the visitors can use to call you or your company. ' .
+            'It is displayed on Contact page.'
     ];
     const CONTACT_ADDRESS = [
-        Config::FIELD_TEXT, 'Helclów 9/5A, 31-148 Kraków (Polska)', null,
-        'Contact: Address',
-        'The address of your company / where you live. It is displayed on Contact page.'
+        'type' => Config::FIELD_TEXT,
+        'value' => 'Helclów 9/5A, 31-148 Kraków (Polska)',
+        'label' => 'Contact: Address',
+        'help' => 'The address of your company / where you live. It is displayed on Contact page.'
     ];
 
     const SOCIAL_LINKEDIN = [
-        Config::FIELD_URL, 'https://fr.linkedin.com/in/edouardproust', null,
-        'Social: LinkedIn profile',
-        'Link to you LinkedIn profile (eg. https://www.linkedin.com/pub/dir/myname)'
+        'type' => Config::FIELD_URL,
+        'value' => 'https://fr.linkedin.com/in/edouardproust',
+        'label' => 'Social: LinkedIn profile',
+        'help' => 'Link to you LinkedIn profile (eg. https://www.linkedin.com/pub/dir/myname)'
     ];
     const SOCIAL_GITHUB = [
-        Config::FIELD_URL, 'https://github.com/edouardproust', null,
-        'Social: GitHub profile',
-        'Link to you LinkedIn profile (eg. https://github.com/myname)'
+        'type' => Config::FIELD_URL,
+        'value' => 'https://github.com/edouardproust',
+        'label' => 'Social: GitHub profile',
+        'help' => 'Link to you LinkedIn profile (eg. https://github.com/myname)'
     ];
     const SOCIAL_STACKOVERFLOW = [
-        Config::FIELD_URL, 'https://stackoverflow.com/users/13865643/edouard?tab=profile', null,
-        'Social: StackOverflow profile',
-        'Link to you LinkedIn profile (eg. https://stackoverflow.com/users/12345678/myname)'
+        'type' => Config::FIELD_URL,
+        'value' => 'https://stackoverflow.com/users/13865643/edouard?tab=profile',
+        'label' => 'Social: StackOverflow profile',
+        'help' => 'Link to you LinkedIn profile (eg. https://stackoverflow.com/users/12345678/myname)'
     ];
 
     const NOTIFICATION_NEW_COMMENT = [
-        Config::FIELD_BOOL, null, true,
-        'Notification: New comment published',
-        'Do you want to receive an email each time a comment is published 
-        by a visitor on a project, post or lesson? 
-        (You need to validate comments before them to be published on the website.'
+        'type' => Config::FIELD_BOOL,
+        'label' => 'Notification: New comment published',
+        'help' => 'Do you want to receive an email each time a comment is published ' .
+            'by a visitor on a project, post or lesson? ' .
+            '(You need to validate comments before them to be published on the website.'
     ];
     const NOTIFICATION_NEW_AUTHOR = [
-        Config::FIELD_BOOL, null, true,
-        'Notification: New author registration',
-        'Do you want to receive an email each time a visitor submit a registration to become an author? 
-        (You need to validate them before they can write lessons or posts.)'
+        'type' => Config::FIELD_BOOL,
+        'isActive' => true,
+        'label' => 'Notification: New author registration',
+        'help' => 'Do you want to receive an email each time a visitor submit a registration to become an author? ' .
+            '(You need to validate them before they can write lessons or posts.)'
     ];
 
     const SHOW_COMMENTS_ON_PROJECT = [
-        Config::FIELD_BOOL, null, true,
-        'Comments: Show on Projects',
-        'Do you want to show comments at the bottom on a project page, and allow visitors to write one?'
+        'type' => Config::FIELD_BOOL,
+        'isActive' => true,
+        'label' => 'Comments: Show on Projects',
+        'help' => 'Do you want to show comments at the bottom on a project page, and allow visitors to write one?'
     ];
     const SHOW_COMMENTS_ON_LESSON = [
-        Config::FIELD_BOOL, null, true,
-        'Comments: Show on Pessons',
-        'Do you want to show comments at the bottom on a lesson page, and allow visitors to write one?'
+        'type' => Config::FIELD_BOOL,
+        'isActive' => true,
+        'label' => 'Comments: Show on Lessons',
+        'help' => 'Do you want to show comments at the bottom on a lesson page, and allow visitors to write one?'
     ];
     const SHOW_COMMENTS_ON_POST = [
-        Config::FIELD_BOOL, null, true,
-        'Comments: Show on Posts',
-        'Do you want to show comments at the bottom on a post page, and allow visitors to write one?'
+        'type' => Config::FIELD_BOOL,
+        'isActive' => true,
+        'label' => 'Comments: Show on Posts',
+        'help' => 'Do you want to show comments at the bottom on a post page, and allow visitors to write one?'
     ];
 
     const PROJECTS_PER_PAGE = [
-        Config::FIELD_NUM, 6, null,
-        'Collection: Projects per page',
-        'How many projects do you want to display per collection page?'
+        'type' => Config::FIELD_NUM,
+        'value' => 6,
+        'isRequired' => true,
+        'label' => 'Collection: Projects per page',
+        'help' => 'How many projects do you want to display per collection page?'
     ];
     const LESSONS_PER_PAGE = [
-        'number', 6, null,
-        'Collection: Lessons per page',
-        'How many lessons do you want to display per collection page?'
+        'type' => Config::FIELD_NUM,
+        'value' => 6,
+        'isRequired' => true,
+        'label' => 'Collection: Lessons per page',
+        'help' => 'How many lessons do you want to display per collection page?'
     ];
     const POSTS_PER_PAGE = [
-        Config::FIELD_NUM, 6, null,
-        'Collection: posts per page',
-        'How many posts do you want to display per collection page?'
+        'type' => Config::FIELD_NUM,
+        'value' => 6,
+        'isRequired' => true,
+        'label' => 'Collection: posts per page',
+        'help' => 'How many posts do you want to display per collection page?'
     ];
 
     const HOME_PROJECTS = [
-        Config::FIELD_NUM, 3, null,
-        'Homepage: Projects to show',
-        'How many projects do you want to display in the "Last projects" section on homepage?'
+        'type' => Config::FIELD_NUM,
+        'value' => 3,
+        'isRequired' => true,
+        'label' => 'Homepage: Projects to show',
+        'help' => 'How many projects do you want to display in the "Last projects" section on homepage?'
     ];
     const HOME_FEATURED_PROJECTS = [
-        'number', 9, null,
-        'Homepage: Featured projects to show',
-        'How many projects do you want to display in the "Featured projects" section on homepage?'
+        'type' => Config::FIELD_NUM,
+        'value' => 9,
+        'isRequired' => true,
+        'label' => 'Homepage: Featured projects to show',
+        'help' => 'How many projects do you want to display in the "Featured projects" section on homepage?'
     ];
     const HOME_LESSONS = [
-        Config::FIELD_NUM, 3, null,
-        'Homepage: lessons to show',
-        'How many lessons do you want to display in the "Last lessons" section on homepage?'
+        'type' => Config::FIELD_NUM,
+        'value' => 3,
+        'isRequired' => true,
+        'label' => 'Homepage: lessons to show',
+        'help' => 'How many lessons do you want to display in the "Last lessons" section on homepage?'
     ];
     const HOME_POSTS = [
-        Config::FIELD_NUM, 3, null,
-        'Homepage: Posts to show',
-        'How many posts do you want to display in the "Last posts" section on homepage?'
+        'type' => Config::FIELD_NUM,
+        'value' => 3,
+        'isRequired' => true,
+        'label' => 'Homepage: Posts to show',
+        'help' => 'How many posts do you want to display in the "Last posts" section on homepage?'
     ];
 
     public static function getGroups(): array
     {
-        return ['options'];
+        return ['prod', 'dev'];
     }
 
     public function load(ObjectManager $manager): void
@@ -158,23 +228,15 @@ class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
     }
 
     /**
-     * Get the index's value of a given option. The input can be either an array or an index.
-     * @param array|string $constant The constant
-     * @param string $index The index in the array ('type', 'value', 'label' or 'help')
-     * @return null|string|int The index's value
+     * Retrieve a specific value of an option.
+     * @param array|string $constant The option's name (like 'SITE_NAME', 'SITE_LOGO', 'CONTACT_PHONE', etc.)
+     * @param string $index The index in the array (like 'type', 'value', 'label', 'help', etc.)
+     * @return null|string|int The index's value. Or null if the index doesn't exist for this option
      */
-    public static function get($constant, string $index)
+    public static function get($optionName, string $index)
     {
-        if (is_array($constant)) {
-            return self::getIndexValue($constant, $index);
-        } else {
-            foreach (self::getConstants() as $key => $array) {
-                if ($key === $constant) {
-                    return self::getIndexValue($array, $index);
-                }
-            }
-        }
-        return null;
+        $optionData = constant('self::' . $optionName);
+        return $optionData[$index] ?? null;
     }
 
     /**
@@ -185,22 +247,5 @@ class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
     {
         $class = new ReflectionClass(__CLASS__);
         return $class->getConstants();
-    }
-
-    /**
-     * Get the index's value of a given option. The input must be an array.
-     * @param array $constant The constant
-     * @param string $index The index in the array ('type', 'value', 'label' or 'help')
-     * @return null|string|int The index's value
-     */
-    private static function getIndexValue(array $constant, string $index): ?string
-    {
-        $relations = ['type' => 0, 'value' => 1, 'isActive' => 2, 'label' => 3, 'help' => 4];
-        foreach ($relations as $name => $int) {
-            if ($name === $index) {
-                return $constant[$int] ?? null;
-            }
-        }
-        return null;
     }
 }

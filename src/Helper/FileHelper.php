@@ -7,7 +7,6 @@ use ReflectionClass;
 
 class FileHelper
 {
-
     const FILE_TYPE = 'file';
     const IMAGE_TYPE = 'image';
     const GIF_TYPE = 'gif';
@@ -46,7 +45,7 @@ class FileHelper
             'mime' => 'video'
         ],
         self::EMBED_TYPE => [
-            // Upload a text file containing the embed code inside 
+            // Upload a text file containing the embed code inside
             // (use one of the recongnized extensions below or add your own ones)
             'label' => 'Embed',
             'ext' => ['embed', 'txt', 'html', 'htm', 'vimeo', 'youtube', 'plain'],
@@ -54,6 +53,34 @@ class FileHelper
             'mime' => 'text'
         ],
     ];
+
+    /**
+     * Get the file type based on it's name or url.
+     * @param null|string $fileName The file name or url (must contain the file extension: .jpg, .mp4,...)
+     * @return null|string The file type or null if the extension is not met in the UPLOAD_TYPES table
+     * In cas of success, the string returned is sameas one of the consts:
+     * FILE_TYPE, IMAGE_TYPE, GIF_TYPE, ICON_TYPE, VIDEO_TYPE, EMBED_TYPE,...
+     */
+    public static function getTypeFromExtension(?string $fileName): ?string
+    {
+        if ($fileName) {
+            $extension = self::getExtension($fileName);
+            $extensionsByType = [];
+            foreach (self::UPLOAD_TYPES as $type => $data) {
+                if ($type !== self::FILE_TYPE) {
+                    $extensionsByType[$type] = $data['ext'];
+                }
+            }
+            foreach ($extensionsByType as $type => $extensions) {
+                foreach ($extensions as $ext) {
+                    if ($extension === $ext) {
+                        return $type;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     public static function getAbsPath(?string $constPath = null, ?string $fileName = null)
     {

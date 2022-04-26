@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220420185920 extends AbstractMigration
+final class Version20220426080528 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,12 @@ final class Version20220420185920 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE lesson CHANGE content content LONGTEXT NOT NULL');
+        $this->addSql('ALTER TABLE admin_option ADD is_uploadable TINYINT(1) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE lesson CHANGE content content JSON NOT NULL');
+        $this->addSql('ALTER TABLE admin_option DROP is_uploadable');
     }
 }
