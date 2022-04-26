@@ -86,8 +86,8 @@ class Post
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity=Comment::class, 
-     *     mappedBy="post", 
+     *     targetEntity=Comment::class,
+     *     mappedBy="post",
      *     orphanRemoval=true,
      *     cascade={"remove", "persist"}
      * )

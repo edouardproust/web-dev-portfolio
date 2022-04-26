@@ -16,7 +16,6 @@ use App\Controller\Admin\AbstractPosttypeCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 
 class PostCrudController extends AbstractPosttypeCrudController
 {
@@ -44,7 +43,7 @@ class PostCrudController extends AbstractPosttypeCrudController
         yield TextField::new('titleExtract', 'Title')->onlyOnIndex();
         yield TextField::new('title')->onlyOnForms();
         yield TextareaField::new('headline')->hideOnIndex();
-        yield HiddenField::new('content')
+        yield TextareaField::new('content')
             ->setFormTypeOption('attr', ['class' => 'ckeditorField adminCrud'])
             ->hideOnIndex();
 

@@ -3,6 +3,15 @@ vich_uploader:
 
     mappings:
 
+        adminoptions:
+            uri_prefix: '%uploads_adminoptions_path%'
+            upload_destination: '%kernel.project_dir%/public%uploads_adminoptions_path%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+            inject_on_load: false
+            delete_on_update: false
+            delete_on_remove: false
+
         authors:
             uri_prefix: '%uploads_authors_path%'
             upload_destination: '%kernel.project_dir%/public%uploads_authors_path%'
@@ -22,8 +31,8 @@ vich_uploader:
             delete_on_remove: false
 
         projects_lib:
-            uri_prefix: '%UPLOADS_PROJECTS_GALLERY_path%'
-            upload_destination: '%kernel.project_dir%/public%UPLOADS_PROJECTS_GALLERY_path%'
+            uri_prefix: '%uploads_projects_gallery_path%'
+            upload_destination: '%kernel.project_dir%/public%uploads_projects_gallery_path%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
             inject_on_load: false

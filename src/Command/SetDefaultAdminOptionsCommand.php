@@ -14,7 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 /**
  * - Command: `php bin/console app:create:options`
  * - Alias: `php bin/console a:c:o`
- * - Equivalent of `php bin/console doctrine:fixtures:load --group=prod -n` (alias: `php bin/console d:f:l --groupe=options -n`)
+ * - Equivalent of `php bin/console doctrine:fixtures:load --group=prod -n` (alias: `php bin/console d:f:l --groupe=prod -n`)
  * @package App\Command
  */
 class SetDefaultAdminOptionsCommand extends Command

@@ -1,5 +1,7 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
 
+{% block page_title %}Welcome {{ eaAuthorName(author) }} - {{ config('SITE_NAME')|striptags }}{% endblock %}
+
 {% block content %}
 
 <article class="content">

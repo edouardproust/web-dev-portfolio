@@ -23,7 +23,7 @@ class AdminOptionRepository extends ServiceEntityRepository
      * @param string $constant 'constant' field of the admin_option table in database'
      * @return AdminOption Returns an array of AdminOption objects
      */
-    public function findOneByConstant(string $constant): ?AdminOption
+    public function get(string $constant): ?AdminOption
     {
         return $this->createQueryBuilder('ao')
             ->andWhere('ao.constant = :val')

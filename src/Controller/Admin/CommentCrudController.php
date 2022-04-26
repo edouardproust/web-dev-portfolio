@@ -62,6 +62,7 @@ class CommentCrudController extends AbstractEntityCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        parent::configureActions($actions);
         return $actions
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
             ->add(Crud::PAGE_EDIT, Action::DELETE)

@@ -59,15 +59,24 @@ function singleImage()
                     let lightboxContent = document.querySelector('.mfp-content')
                     let lightboxFigure = lightboxContent.querySelector('.mfp-figure');
                     let img = lightboxContent.querySelector('.mfp-img');
-                    let caption = lightboxContent.querySelector('figcaption');
-                    caption.parentNode.removeChild(caption);
+                    let caption = element.querySelector('figcaption');
+                    let lightCaption = lightboxContent.querySelector('figcaption');
+                    if(caption) { // rearange caption layout
+                        lightCaption.parentNode.removeChild(lightCaption);
+                        lightCaption.classList.add('lightbox-caption');
+                        lightCaption.innerHTML = caption.innerText; 
+                        lightCaption.style.maxWidth = img.offsetWidth + 'px';
+                        let captionSave = lightCaption;
+                        lightboxContent.appendChild(captionSave);
+                    } else { // remove caption structure
+                        let div = document.createElement('div');
+                        div.innerHTML = lightboxFigure.querySelector('figure').innerHTML;
+                        lightboxFigure.replaceWith(div);
+                        div.removeChild(div.querySelector('figcaption'))
+                    }
+                    console.log('nope')
                     lightboxFigure.classList.add('lightbox-figure');
                     img.classList.add('lightbox-img');
-                    caption.classList.add('lightbox-caption');
-                    caption.innerHTML = element.querySelector('figcaption').innerText; 
-                    caption.style.maxWidth = img.offsetWidth + 'px';
-                    let captionSave = caption;
-                    lightboxContent.appendChild(captionSave);
                 });
             }
         }

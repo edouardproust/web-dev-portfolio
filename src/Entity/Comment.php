@@ -34,7 +34,7 @@ class Comment
     private $fullName;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="comments")     
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="comments")
      * @ORM\JoinColumn(name="project", referencedColumnName="id", onDelete="CASCADE")
      */
     private $project;
@@ -147,6 +147,6 @@ class Comment
 
     public function getExtract(): string
     {
-        return StringHelper::extract($this->getContent());
+        return StringHelper::extract($this->getContent(), 70);
     }
 }

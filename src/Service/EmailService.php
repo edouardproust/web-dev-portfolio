@@ -2,8 +2,8 @@
 
 namespace App\Service;
 
-use App\Config;
 use App\Entity\Author;
+use App\Repository\AdminOptionRepository;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -13,16 +13,20 @@ class EmailService
 {
     private $mailer;
     private $flash;
-    private $adminOptionService;
+    private $aor;
+    private $siteEmail;
+    private $siteName;
 
     public function __construct(
         MailerInterface $mailer,
         FlashBagInterface $flash,
-        AdminOptionService $adminOptionService
+        AdminOptionRepository $adminOptionRepository
     ) {
         $this->mailer = $mailer;
         $this->flash = $flash;
-        $this->adminOptionService = $adminOptionService;
+        $this->aor = $adminOptionRepository;
+        $this->siteEmail = $adminOptionRepository->get('CONTACT_EMAIL')->getValue();
+        $this->siteName = $adminOptionRepository->get('CONTACT_NAME')->getValue();
     }
 
     /**
@@ -32,12 +36,11 @@ class EmailService
      */
     public function sendEmailOnAuthorRegistration(Author $authorRequest)
     {
-        $ao = $this->adminOptionService;
-        if ($this->adminOptionService->get('NOTIFICATION_NEW_AUTHOR')) {
+        if ($this->aor->get('NOTIFICATION_NEW_AUTHOR')->getValue()) {
             $email = (new TemplatedEmail)
-                ->to(new Address($ao->get('CONTACT_EMAIL'), $ao->get('CONTACT_NAME')))
-                ->from(new Address($ao->get('CONTACT_EMAIL'), $ao->get('CONTACT_NAME')))
-                ->subject('New Author registration on ' . $ao->get('SITE_NAME'))
+                ->to(new Address($this->siteEmail, $this->siteName))
+                ->from(new Address($this->siteEmail, $this->siteName))
+                ->subject('New Author registration on ' . $this->siteName)
                 ->htmlTemplate('email/author_registration.html.twig')
                 ->context([
                     'authorRequest' => $authorRequest
@@ -53,12 +56,11 @@ class EmailService
      */
     public function sendEmailOnContactSubmit(array $data)
     {
-        $ao = $this->adminOptionService;
         try {
             $email = (new TemplatedEmail)
-                ->to(new Address($ao->get('CONTACT_EMAIL'), $ao->get('CONTACT_NAME')))
+                ->to(new Address($this->siteEmail, $this->siteName))
                 ->from(new Address($data['email'], $data['fullName']))
-                ->subject('New contact message from ' . $ao->get('SITE_NAME'))
+                ->subject('New contact message from ' . $this->siteName)
                 ->htmlTemplate('email/contact.html.twig')
                 ->context([
                     'contactMessage' => $data
@@ -72,11 +74,13 @@ class EmailService
 
     public function sendNotifOnAuthorApproval(Author $author)
     {
-        $ao = $this->adminOptionService;
         try {
             $email = (new TemplatedEmail)
                 ->to(new Address($author->getUser()->getEmail(), $author->getFullName()))
-                ->from(new Address($ao->get('CONTACT_EMAIL'), $ao->get('SITE_NAME')))
+                ->from(new Address(
+                    $this->siteEmail,
+                    $this->siteName
+                ))
                 ->subject('Author registration accepted')
                 ->htmlTemplate('email/author_approval.html.twig')
                 ->context([

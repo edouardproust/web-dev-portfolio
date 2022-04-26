@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\AdminOptionRepository;
 use App\Service\HomeService;
 use App\Repository\PostRepository;
-use App\Service\AdminOptionService;
 use App\Repository\LessonRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,19 +16,19 @@ class HomeController extends AbstractController
     private $projectRepository;
     private $lessonRepository;
     private $postRepository;
-    private $adminOptionService;
+    private $adminOptionRepository;
 
     public function __construct(
         ProjectRepository $projectRepository,
         LessonRepository $lessonRepository,
         PostRepository $postRepository,
-        AdminOptionService $adminOptionService,
+        AdminOptionRepository $adminOptionRepository,
         HomeService $homeservice
     ) {
         $this->projectRepository = $projectRepository;
         $this->lessonRepository = $lessonRepository;
         $this->postRepository = $postRepository;
-        $this->adminOptionService = $adminOptionService;
+        $this->adminOptionRepository = $adminOptionRepository;
         $this->homeService = $homeservice;
     }
 
@@ -37,14 +37,16 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        $ao = $this->adminOptionService;
-        $featuredProjects = $this->projectRepository->findFeatured($ao->get('HOME_FEATURED_PROJECTS'));
+        $aor = $this->adminOptionRepository;
+        $featuredProjects = $this->projectRepository->findFeatured(
+            $aor->get('HOME_FEATURED_PROJECTS')->getValue()
+        );
 
         return $this->render('home/index.html.twig', [
-            'projects' => $this->projectRepository->findLast($ao->get('HOME_PROJECTS')),
+            'projects' => $this->projectRepository->findLast($aor->get('HOME_PROJECTS')->getValue()),
             'featuredProjects' => $this->homeService->prepareFeaturedProjects($featuredProjects),
-            'lessons' => $this->lessonRepository->findLast($ao->get('HOME_LESSONS')),
-            'posts' => $this->postRepository->findLast($ao->get('HOME_PROJECTS')),
+            'lessons' => $this->lessonRepository->findLast($aor->get('HOME_LESSONS')->getValue()),
+            'posts' => $this->postRepository->findLast($aor->get('HOME_PROJECTS')->getValue()),
             'stats' => $this->homeService->getStatistics()
         ]);
     }

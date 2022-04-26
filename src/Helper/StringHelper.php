@@ -76,7 +76,6 @@ class StringHelper
             }
         }
 
-
         return $before . $list . $after;
     }
 }

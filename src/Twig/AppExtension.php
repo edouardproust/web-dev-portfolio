@@ -8,21 +8,21 @@ use App\Entity\Author;
 use Twig\TwigFunction;
 use App\Helper\FileHelper;
 use App\Helper\StringHelper;
+use App\Repository\AdminOptionRepository;
 use App\Service\EasyAdminService;
-use App\Service\AdminOptionService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
 class AppExtension extends AbstractExtension
 {
-    private $adminOptionService;
+    private $adminOptionRepository;
     private $easyAdminService;
 
     public function __construct(
-        AdminOptionService $adminOptionService,
+        AdminOptionRepository $adminOptionRepository,
         EasyAdminService $easyAdminService
     ) {
-        $this->adminOptionService = $adminOptionService;
+        $this->adminOptionRepository = $adminOptionRepository;
         $this->easyAdminService = $easyAdminService;
     }
 
@@ -55,18 +55,24 @@ class AppExtension extends AbstractExtension
 
     /**
      * Get constant value from AdminOptions
-     * @param string $constant 
-     * @return string 
+     * @param string $optionName The name of the Option, like 'SITE_NAME', 'SITE_LOGO', 'CONTACT_EMAIL', etc.
+     * The full list of optionNames is in App\DataFixtures\Adminoptions
+     * @return string
      */
-    public function getAdminOptionValue(string $constant)
+    public function getAdminOptionValue(string $optionName, bool $returnOptionEntity = false)
     {
-        return $this->adminOptionService->get($constant);
+        $optionEntity = $this->adminOptionRepository->get($optionName);
+        if (!$returnOptionEntity) {
+            // $adminOption->getValue() must be checked last (as it is the default value)
+            return $optionEntity->getFile() ?: $optionEntity->getIsActive() ?: $optionEntity->getValue();
+        }
+        return $optionEntity;
     }
 
     /**
      * Get constant value from src\Config.php
-     * @param string $constant 
-     * @return void 
+     * @param string $constant
+     * @return void
      */
     public function getAppConfig(string $constant)
     {
@@ -174,7 +180,7 @@ class AppExtension extends AbstractExtension
 
     public function callFileHelper(string $fnOrConst, ...$arguments)
     {
-        // get a constant value 
+        // get a constant value
         if (in_array($fnOrConst, array_keys(FileHelper::getConstants()))) {
             return FileHelper::getConstant($fnOrConst);
         }

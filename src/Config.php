@@ -27,9 +27,14 @@ class Config
 
     const ADMIN_CRUD_ENTITY_TITLE_MAX_LENGTH = 40;
 
+    // EasyAdmin Field types
+    // (For file types consts: refer to `App\Helper\FileHelper`)
     const FIELD_BOOL = 'boolean';
     const FIELD_NUM = 'number';
     const FIELD_TEXT = 'text';
     const FIELD_EMAIL = 'email';
     const FIELD_URL = 'url';
+    
+    // other
+    const TYPE_NULL = 'null';
 }

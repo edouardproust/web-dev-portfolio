@@ -31,11 +31,6 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###> uploads ###
-public/uploads/projects/*
-!public/uploads/projects/thumbnail
-public/uploads/projects/thumbnail/*
-!public/uploads/projects/thumbnail/placeholder.png
-
 public/uploads/posts/*
 !public/uploads/posts/placeholder.png
 
@@ -43,6 +38,17 @@ public/uploads/lessons/*
 
 public/uploads/authors/*
 !public/uploads/authors/placeholder.png
+
+public/uploads/projects/*
+!public/uploads/projects/thumbnail
+public/uploads/projects/thumbnail/*
+!public/uploads/projects/thumbnail/placeholder.png
+
+public/uploads/admin/*
+public/uploads/admin/options
+public/uploads/admin/options/*
+public/uploads/admin/options/logo.png
+public/uploads/admin/options/favicon.ico
 ###< uploads ###
 
 ###> liip/imagine-bundle ###
