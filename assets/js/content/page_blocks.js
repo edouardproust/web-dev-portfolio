@@ -86,10 +86,34 @@ function singleImage()
 
 function mediaEmbed() 
 {
-    const NEEDLE = '{{ mediaUrl }}';
+    const YOUTUBE = 'youtube';
+    const VIMEO = 'vimeo';
+
+    const EMBED_NEEDLE = '{{ embedNeedle }}';
+    
     const CONVERTERS = {
-        youtube: '<iframe width="560" height="315" src="{{ mediaUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-        vimeo: '<iframe src="{{ mediaUrl }}" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>'
+        youtube: {
+            urlCorrectBase: 'https://www.youtube.com/embed/', // Wrong one: https://www.youtube.com/watch?v=OzIpdEYUtn8
+            embedCode: // Config tool: https://www.classynemesis.com/projects/ytembed/
+                '<iframe ' +
+                    'width="560" ' +
+                    'height="315" ' +
+                    'src="{{ embedNeedle }}?autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&color=white"' + 
+                    'frameborder="0" ' +
+                '></iframe>'
+        },
+        vimeo: {
+            urlCorrectBase: 'https://player.vimeo.com/video/', // Wrong one: 'https://vimeo.com/696472656',
+            embedCode: 
+                '<iframe ' +
+                    'src="{{ embedNeedle }}" ' +
+                    'width="640"' +
+                    'height="360"' +
+                    'frameborder="0"' +
+                    'allow="autoplay; fullscreen"' +
+                    'allowfullscreen' +
+                '></iframe>'
+        }
     }
 
     const containers = document.querySelectorAll('figure.media');
@@ -99,21 +123,46 @@ function mediaEmbed()
 
         const mediaUrl = container.querySelector('oembed[url]').getAttribute('url');
         const embedCode = getEmbedCode(mediaUrl);
-        if(embedCode !== null) {
-            console.log('================== EMBED CODE ====================', embedCode);
-            container.innerText = embedCode;
-        }
-        
-        function getEmbedCode(mediaUrl) {
-            let match = false;
-            Object.keys(CONVERTERS).forEach((plateformName) => {
-                if(mediaUrl.includes(plateformName)) match = plateformName;
-            });
-            if(match !== false) {
-                return CONVERTERS[match].replace(NEEDLE, mediaUrl);
+        container.innerHTML = embedCode;
+    
+        function getEmbedCode(url) {
+            const plateform = getPlateform(url);
+            if(plateform) {
+                const correctUrl = getCorrectUrl(url, plateform)
+                return CONVERTERS[plateform].embedCode.replace(EMBED_NEEDLE, correctUrl);
             } else {
-                console.log('Error (Media embed converter system): The media url provided is related to a plateform that is not in our converters library yet.  You must create a new converter in order to process this media.');
+                console.log('Error (Media embed converter system): The media url provided is related ' + 
+                    'to a plateform that is not in our converters library yet.  You must create a new ' +
+                    'converter in order to process this media.');
                 return null;
+            }
+            
+            // Return the plateform id (on success) or false (failure)
+            function getPlateform(url) {
+                let plateform = false;
+                Object.keys(CONVERTERS).forEach((plateformId) => {
+                    if(url.includes(plateformId)) {
+                        plateform = plateformId
+                    };
+                });
+                return plateform;
+            }
+
+            // Convert the browser url ("wrong" one) into the embed url ("good" one)
+            function getCorrectUrl(url, plateform) {
+                if(plateform === YOUTUBE) { // Goal: https://www.youtube.com/watch?v=OzIpdEYUtn8 => 'https://www.youtube.com/embed/OzIpdEYUtn8'
+                    let urlBase = url.replace( url.split("v=")[1], '' ); // check if the baseUrl is alreadycorrect
+                    if(urlBase !== CONVERTERS[plateform].urlCorrectBase) { // if not...
+                        url = url.replace('watch?v=', 'embed/'); // ...filter url to make it match the correct one
+                    }
+                }
+                else if(plateform === VIMEO) { // Goal: https://vimeo.com/696472656' => 'https://player.vimeo.com/video/696472656'
+                    let urlBase = url.replace( url.split(".com/")[1], '' ); 
+                    if(urlBase !== CONVERTERS[plateform].urlCorrectBase) {
+                        url = url.replace('vimeo.com', 'player.vimeo.com/video');
+                    }
+                }
+                return url;
             }
         }
 
