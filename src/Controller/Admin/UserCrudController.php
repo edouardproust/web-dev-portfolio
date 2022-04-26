@@ -68,6 +68,7 @@ class UserCrudController extends AbstractEntityCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        parent::configureActions($actions);
         $isAdmin = $this->easyAdminService->isAdmin();
         $actions
             ->remove(Crud::PAGE_INDEX, Action::DELETE)

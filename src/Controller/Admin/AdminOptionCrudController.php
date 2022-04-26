@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Config;
 use App\Entity\AdminOption;
-use App\Repository\AdminOptionRepository;
+use App\Service\EasyAdminService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -12,18 +12,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractEntityCrudController;
-use App\Service\EasyAdminService;
 
 class AdminOptionCrudController extends AbstractEntityCrudController
 {
-    private $adminOptionRepository;
     private $easyAdminService;
 
     public function __construct(
-        AdminOptionRepository $adminOptionRepository,
         EasyAdminService $easyAdminService
     ) {
-        $this->adminOptionRepository = $adminOptionRepository;
         $this->easyAdminService = $easyAdminService;
     }
 
@@ -40,7 +36,10 @@ class AdminOptionCrudController extends AbstractEntityCrudController
             ->setDefaultSort(['id' => 'ASC'])
             ->setEntityLabelInSingular(
                 $this->easyAdminService->getEntityLabelSingular(false, 'Option')
-            )->setEntityPermission(Config::ROLE_ADMIN);
+            )
+            ->setEntityPermission(Config::ROLE_ADMIN)
+            ->setPaginatorPageSize(100)
+            ->setPageTitle(Crud::PAGE_EDIT, fn ($entity) => 'Edit ' . $entity->getLabel());
     }
 
     public function setFields(): iterable
@@ -60,8 +59,10 @@ class AdminOptionCrudController extends AbstractEntityCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        parent::configureActions($actions);
         return $actions
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
-            ->remove(Crud::PAGE_INDEX, Action::NEW);
+            ->remove(Crud::PAGE_INDEX, Action::NEW)
+            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);
     }
 }

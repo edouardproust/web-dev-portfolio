@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Path;
 use App\Config;
 use App\Entity\User;
 use App\Helper\FileHelper;
@@ -17,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -172,7 +170,8 @@ class EasyAdminService
         if (!empty($_GET['entityId'])) {
             $adminOption = $this->adminOptionRepository->find($_GET['entityId']);
             $type = $adminOption->getType();
-            $label = $adminOption->getLabel();
+            // Label is hidden beacause it the same as page title (see AdminOptionCrudController::configureCrud)
+            $label = $adminOption->getHelp();
             $allowedTypes = [
                 Config::FIELD_TEXT => TextField::class,
                 Config::FIELD_EMAIL => EmailField::class,
@@ -182,15 +181,24 @@ class EasyAdminService
             ];
             foreach ($allowedTypes as $fieldType => $fieldClass) {
                 if ($type === $fieldType) {
-                    $valueField = $fieldClass::new('value', $label);
                     if ($type === Config::FIELD_BOOL) {
                         $valueField = $fieldClass::new('isActive', $label);
+                    } elseif ($adminOption->getIsUploadable()) {
+                        $valueField = TextField::new('fileFile', $label)
+                            ->setFormType(VichImageType::class)
+                            ->setFormTypeOption('constraints', [
+                                    new File(['mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE')])
+                            ]);
+                    } else {
+                        $valueField = $fieldClass::new('value', $label);
                     }
                 }
             }
+            if ($adminOption->getIsRequired()) {
+                $valueField->setRequired(true);
+            }
             return $valueField
                 ->onlyOnForms()
-                ->setHelp($adminOption->getHelp())
                 ->setSortable(false);
         }
         return HiddenField::new('id')->onlyOnDetail();
@@ -200,12 +208,9 @@ class EasyAdminService
     {
         $thumbnailField = TextField::new('thumbnailFile', 'Thumbnail')
             ->setFormType(VichImageType::class)
-            ->setFormTypeOption(
-                'constraints',
-                [new File([
-                    'mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE')
-                ])]
-            )
+            ->setFormTypeOption('constraints', [
+                new File(['mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE')])
+            ])
             ->onlyOnForms();
         if ($_GET['crudAction'] === Action::NEW) {
             $thumbnailField->setRequired(true);

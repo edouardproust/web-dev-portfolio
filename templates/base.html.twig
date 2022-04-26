@@ -2,8 +2,10 @@
 
     {% set isHeaderSticky = false %}
     {% set headerAnimation = null %} {# eg. 'fadeInDown' or null to desactivate. Animations list: https://themes.semicolonweb.com/html/canvas/animations.html #}
-    {% set headerLogoHeight = 100 %}
-    {% set logoAsText = "{edouard<b>proust</b>}" %} {# To replace logo by simple text. null to use logo instead. Html allowed #}
+    {% set siteName = config('SITE_NAME') %}
+    {% set logo = config('SITE_LOGO') %}
+    {% set headerLogoHeight = config('SITE_LOGO_HEIGHT') %}
+    {% set favicon = config('SITE_FAVICON') %}
 
     {% set headerMenu = [
         {label: 'Home', url: path('home')},
@@ -25,23 +27,20 @@
         { link: '#', icon: 'icon-stackoverflow', color: null}
 ] %}
 
-{# Prepare (Don't modify!) #}
+{# Prepare #}
 
-    {% set logoAsTextStyle = '' %}
-    {% set logo = asset('build/images/logo@2x.png') %}
+    {% set logoUrl = vich_uploader_asset(config('SITE_LOGO', true), 'fileFile') %}
+    {% set logoFooterClass = 'logo-color-invert' %}
+    {% set logoClass = null %}
     {% if whiteLogo is defined %} {# whiteLogo can be defined on each layout (or static pages) #}
-        {% set logo = asset('build/images/logo-dark@2x.png') %}
-        {% set logoAsTextStyle = ' style=color:white' %}
+        {% set logoClass = 'logo-color-invert' %}
     {% endif %}
 
+    {% set isTextLogo = logo is null ? true : false %}
     {% set stickyClass = isHeaderSticky ? ' sticky' : ' no-sticky' %}
     {% set isHeaderAnimated = headerAnimation is defined and headerAnimation is not null ? true : false %}
     {% set animationClass = isHeaderAnimated ? ' ' + headerAnimation + ' animated' : '' %}
     {% set animationAttr = isHeaderAnimated ? ' data-animate="fadeInDown"' : '' %}
-    {% set isTextLogo = logoAsText is defined and logoAsText is not null ? true : false %}
-
-
-
 
 {# Header ===================================================== #}
 
@@ -54,7 +53,8 @@
         <meta name="author" content="SemiColonWeb" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{% block title %}{% endblock %}</title>
+        <title>{% block title %}{% endblock %} - {{ config('SITE_NAME')|striptags }}</title>
+        <link rel="shortcut icon" href="{{ favicon }}" />
 
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
@@ -77,9 +77,9 @@
                         <div class="header-row">
                             <a href="{{ path('home') }}">
                                 {% if isTextLogo %}
-                                    <h3 id="header-logo" class="py-3 my-3"{{ logoAsTextStyle|raw }}>{{ logoAsText|raw }}</h3>
+                                    <h3 id="header-logo" class="py-3 my-3 {{ logoClass }}">{{ siteName|raw }}</h3>
                                 {% else %}
-                                    <img id="header-logo" src="{{ logo }}" alt="{{ config('SITE_NAME') }}" height="{{ headerLogoHeight }}">
+                                    <img id="header-logo" src="{{ logoUrl }}" class="logo-header {{ logoClass }}" alt="{{ config('SITE_NAME') }}" style="height:{{ headerLogoHeight }}px">
                                 {% endif %}
                             </a>
                             {% include "_menus/head_main.html.twig" with { menu: headerMenu } %}
@@ -107,9 +107,9 @@
                             <div class="row justify-content-between">
                                 <div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
                                     {% if isTextLogo %}
-                                        <h4 class="footer-logo-text">{{ logoAsText|raw }}</h4>
+                                        <h4 class="footer-logo-text">{{ siteName|raw }}</h4>
                                     {% else %}
-                                        <img src="{{ asset('build/images/footer-logo.png') }}" alt="Image" class="mb-4"><br>
+                                        <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="Image" class="mb-4"><br>
                                     {% endif %}
                                     &copy; {{ config('SITE_NAME') }} {{ date()|date('Y') }}. All Rights Reserved.
                                 </div>

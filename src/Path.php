@@ -9,6 +9,7 @@ class Path
 {
     const PUBLIC = '/public';
 
+    const UPLOADS_ADMIN_OPTIONS = '/uploads/admin/options';
     const UPLOADS_AUTHORS = '/uploads/authors';
     const UPLOADS_PROJECTS_GALLERY = '/uploads/projects/library';
     const UPLOADS_PROJECTS_THUMB = '/uploads/projects/thumbnail';

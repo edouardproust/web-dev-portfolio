@@ -342,6 +342,21 @@ body.dark,
 	}
 }
 
+// Logo
+
+.logo-header,
+.logo-footer {
+	max-width: 300px;
+	height: auto;
+	margin: 20px 0;
+}
+.logo-footer {
+	margin: 10px 0 20px 0;
+}
+.logo-color-invert {
+	filter: brightness(200) grayscale(100%);
+}
+
 .page-description {
 	display: flex;
 	list-style: none;

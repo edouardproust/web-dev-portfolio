@@ -29,14 +29,21 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
 
     public function configureActions(Actions $actions): Actions
     {
+        parent::configureActions($actions);
         $view = Action::new('VIEW', false, 'fa fa-eye')
             ->linkToRoute($this->route . '_show', function (object $entity) {
                 return ['id' => $entity->getId(), 'slug' => $entity->getSlug()];
             })
-            ->setHtmlAttributes(['target' => '_blank']);
-        $actions
-            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER);
-        return $this->setActionsOnIndex($actions, $view);
+            ->setHtmlAttributes(['target' => '_blank'])
+            ->setCssClass('btn btn-light admin-crud-row-btn');
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $view)
+            ->add(Crud::PAGE_EDIT, $view)
+            ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER)
+            ->reorder(Crud::PAGE_INDEX, [Action::EDIT, 'VIEW', Action::DELETE])
+            ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::SAVE_AND_CONTINUE, 'VIEW'])
+        ;
     }
 
     protected function associationFieldAuthor(): AssociationField
@@ -52,34 +59,11 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
             });
     }
 
-    private function setActionsOnIndex(Actions $actions, Action ...$newActions): Actions
-    {
-        $reorder = [Action::EDIT, Action::DELETE];
-        foreach ($newActions as $action) {
-            $actions->add(Crud::PAGE_INDEX, $action);
-            $reorder[] = $action->__toString();
-        }
-        $actions
-            ->update(
-                Crud::PAGE_INDEX,
-                Action::EDIT,
-                fn (Action $action) => $action->setIcon('fa fa-edit')->setLabel(false)
-            )
-            ->update(
-                Crud::PAGE_INDEX,
-                Action::DELETE,
-                fn (Action $action) => $action->setIcon('fa fa-trash')->setLabel(false)
-            )
-            ->reorder(Crud::PAGE_INDEX, $reorder);
-        return $actions;
-    }
-
-
     private function checkProperties()
     {
         foreach (self::MANDATORY_PROPERTIES_IN_CHILD as $property) {
             if (!isset($this->$property)) {
-                throw new  \Exception(
+                throw new \Exception(
                     'Protected property $' . $property . ' must be declared in class ' . get_called_class()
                 );
             }

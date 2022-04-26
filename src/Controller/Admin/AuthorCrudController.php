@@ -62,6 +62,7 @@ class AuthorCrudController extends AbstractEntityCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        parent::configureActions($actions);
         $actions
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
