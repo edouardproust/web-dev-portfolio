@@ -47,7 +47,7 @@ Encore
         to: 'images/[path][name].[hash:8].[ext]',
     })
     .copyFiles({
-        from: './assets/ckeditor',
+        from: './assets/ckfinder',
         to: 'ckeditor/[path][name].[ext]',
     })
     

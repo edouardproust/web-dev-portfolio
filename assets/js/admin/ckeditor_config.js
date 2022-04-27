@@ -42,6 +42,8 @@ export default { exec };
 
     import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
     import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
+    import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
+    import CKFinderUploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter';
     import FindAndReplace from '@ckeditor/ckeditor5-find-and-replace/src/findandreplace';
     import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
     import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
@@ -83,6 +85,7 @@ export default { exec };
         // Extra plugins (added to package.json)
         Alignment,
         CodeBlock,
+        CKFinder, CKFinderUploadAdapter,
         FindAndReplace,
         FontColor,
         FontSize,
@@ -100,11 +103,15 @@ export default { exec };
                 'undo', 'redo', 
                 '|', 'heading', 'alignment',  'fontSize', 'fontColor',
                 '|', 'bold', 'italic', 'code', 'underline', 'strikethrough',
-                '|', 'link', 'codeBlock', 'imageInsert', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable',
+                '|', 'link', 'codeBlock', 'uploadImage', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', // 'imageInsert',
                 '|', 'bulletedList', 'numberedList',
                 '|', 'findAndReplace', 'sourceEditing'
             ],
             shouldNotGroupWhenFull: true,
+        },
+        ckfinder: {
+            // Upload the images to the server using the CKFinder QuickUpload command.
+            uploadUrl: '/build/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
         },
         // Features config
         wordCount: {
