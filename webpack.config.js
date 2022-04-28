@@ -48,7 +48,7 @@ Encore
     })
     .copyFiles({
         from: './assets/ckfinder',
-        to: 'ckeditor/[path][name].[ext]',
+        to: 'ckfinder/[path][name].[ext]',
     })
     
     .enableSassLoader()
