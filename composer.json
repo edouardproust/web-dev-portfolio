@@ -13,7 +13,6 @@
         "doctrine/orm": "^2.11",
         "easycorp/easyadmin-bundle": "^3.5",
         "fakerphp/faker": "^1.19",
-        "friendsofsymfony/ckeditor-bundle": "^2.4",
         "guzzlehttp/guzzle": "^7.0.1",
         "http-interop/http-factory-guzzle": "^1.0",
         "knplabs/github-api": "^3.0",

@@ -16,8 +16,9 @@ use App\Entity\CodingLanguage;
 use App\Entity\LessonCategory;
 use App\Entity\ProjectCategory;
 use App\Repository\AuthorRepository;
-use App\Controller\Admin\AuthorCrudController;
+use App\Helper\CKFinderAuthenticator;
 use App\Repository\AdminOptionRepository;
+use App\Controller\Admin\AuthorCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -39,7 +40,7 @@ class DashboardController extends AbstractDashboardController
     public function __construct(
         AuthorRepository $authorRepository,
         AdminUrlGenerator $adminUrlGenerator,
-        AdminOptionRepository $adminOptionRepository
+        AdminOptionRepository $adminOptionRepository,
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
@@ -67,6 +68,13 @@ class DashboardController extends AbstractDashboardController
      */
     public function configureCrud(): Crud
     {
+        // Prepare CKFinder
+        CKFinderAuthenticator::setData(
+            ['roles' => $this->getUser()->getRoles()],
+            ['entity' => $_GET['entityId'] ?? null],
+        );
+        CKFinderAuthenticator::isGranted();
+
         $crud = Crud::new();
         return $crud
             ->showEntityActionsInlined()

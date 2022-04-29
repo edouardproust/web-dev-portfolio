@@ -19,27 +19,26 @@ export default { exec };
     import Heading from '@ckeditor/ckeditor5-heading/src/heading';
     import Image from '@ckeditor/ckeditor5-image/src/image';
     import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
-    import ImageTextAlternative from '@ckeditor/ckeditor5-image/src/imagetextalternative'
-    import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize.js';
-    import ImageInsert from '@ckeditor/ckeditor5-image/src/imageinsert';
+    import ImageTextAlternative from '@ckeditor/ckeditor5-image/src/imagetextalternative';
+    import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
+    import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
     import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
     import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-    import Link from '@ckeditor/ckeditor5-link/src/link.js';
-    import LinkImage from '@ckeditor/ckeditor5-link/src/linkimage.js';
-    import List from '@ckeditor/ckeditor5-list/src/list.js';
-    import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties.js';
-    import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed.js';
+    import Link from '@ckeditor/ckeditor5-link/src/link';
+    import LinkImage from '@ckeditor/ckeditor5-link/src/linkimage';
+    import List from '@ckeditor/ckeditor5-list/src/list';
+    import ListProperties from '@ckeditor/ckeditor5-list/src/listproperties';
+    import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
     import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-    import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
-    import Table from '@ckeditor/ckeditor5-table/src/table.js';
+    import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
+    import Table from '@ckeditor/ckeditor5-table/src/table';
     import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
     import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
-    import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
-    import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
-    import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
+    import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+    import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
+    import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 
     // Extra plugins (not on build / added by me with `npm run install`)
-
     import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
     import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
     import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
@@ -48,7 +47,7 @@ export default { exec };
     import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
     import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
     import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
-    import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting.js';
+    import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
     import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 
 /** Load features */
@@ -63,11 +62,11 @@ export default { exec };
         Essentials,
         Italic,
         Heading,
-        ImageInsert, // insert image from upload or url
         Link,
         Image, // show images inside textarea
         ImageCaption,// inline toolbar btn
         ImageResize, // Inline tooblar dropdown
+        ImageStyle,
         ImageToolbar, // inline toolbar (container)
         ImageTextAlternative, // inline toolbar btn
         LinkImage, // inline toolbar btn
@@ -103,15 +102,11 @@ export default { exec };
                 'undo', 'redo', 
                 '|', 'heading', 'alignment',  'fontSize', 'fontColor',
                 '|', 'bold', 'italic', 'code', 'underline', 'strikethrough',
-                '|', 'link', 'codeBlock', 'uploadImage', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', // 'imageInsert',
+                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable',
                 '|', 'bulletedList', 'numberedList',
                 '|', 'findAndReplace', 'sourceEditing'
             ],
             shouldNotGroupWhenFull: true,
-        },
-        ckfinder: {
-            // Upload the images to the server using the CKFinder QuickUpload command.
-            uploadUrl: '/build/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
         },
         // Features config
         wordCount: {
@@ -141,6 +136,11 @@ export default { exec };
                 'tableProperties'
             ]
         },
+        ckfinder: {
+            // Configuration: https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/ckfinder.html#configuration
+            uploadUrl: '/build/ckfinder/core/connector/php/connector.php?command=QuickUpload&responseType=json',
+            openerMethod: 'modal'
+        },
         image: {
             resizeUnit: "%",
             resizeOptions: [ 
@@ -153,8 +153,19 @@ export default { exec };
             toolbar: [
                 'linkImage',
                 'toggleImageCaption',
-                'imageTextAlternative',
-                'ResizeImage'
+                {
+                    name: 'imageStyle:alignBlockDropdown',
+                    title: 'Align images as a block',
+                    items: [ 'imageStyle:alignBlockLeft', 'imageStyle:alignCenter', 'imageStyle:alignBlockRight' ],
+                    defaultItem: 'imageStyle:alignCenter'
+                },{
+                    name: 'imageStyle:alignDropdown',
+                    title: 'Align image surrounded by text',
+                    items: [ 'imageStyle:alignLeft', 'imageStyle:alignRight' ],
+                    defaultItem: 'imageStyle:alignLeft'
+                },
+                'ResizeImage',
+                'imageTextAlternative'
             ],
         },
         // Headings : https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#heading-levels

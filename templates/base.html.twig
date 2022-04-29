@@ -54,7 +54,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}{% endblock %} - {{ config('SITE_NAME')|striptags }}</title>
-        <link rel="shortcut icon" href="{{ favicon }}" />
+        <link rel="shortcut icon" href="/{{ favicon }}" />
 
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
@@ -79,7 +79,7 @@
                                 {% if isTextLogo %}
                                     <h3 id="header-logo" class="py-3 my-3 {{ logoClass }}">{{ siteName|raw }}</h3>
                                 {% else %}
-                                    <img id="header-logo" src="{{ logoUrl }}" class="logo-header {{ logoClass }}" alt="{{ config('SITE_NAME') }}" style="height:{{ headerLogoHeight }}px">
+                                    <img id="header-logo" src="{{ logoUrl }}" class="logo-header {{ logoClass }}" alt="{{ config('SITE_NAME') }} logo" style="height:{{ headerLogoHeight }}px">
                                 {% endif %}
                             </a>
                             {% include "_menus/head_main.html.twig" with { menu: headerMenu } %}
@@ -109,7 +109,7 @@
                                     {% if isTextLogo %}
                                         <h4 class="footer-logo-text">{{ siteName|raw }}</h4>
                                     {% else %}
-                                        <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="Image" class="mb-4"><br>
+                                        <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME') }} logo" class="mb-4"  style="height:{{ headerLogoHeight / 1.5 }}px"><br>
                                     {% endif %}
                                     &copy; {{ config('SITE_NAME') }} {{ date()|date('Y') }}. All Rights Reserved.
                                 </div>

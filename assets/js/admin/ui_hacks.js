@@ -1,35 +1,29 @@
 import lightbox from "../gallery/lightbox";
 
-const SELECTOR = '#ea-index-AdminOption';
+const SELECTOR_INDEX = '.ea-index';
+const SELECTOR_EDIT = '.ea-edit-form';
+const SELECTOR_NEW = '.ea-new-form';
 
 function exec(){
-	// Only apply on easyAdmin panel
-	const eaBody = document.querySelector(SELECTOR);
-	if(eaBody) {
-		vichUploaderHideDeleteLink(); console.log('vichUploaderHideDeleteLink executed');
-		adminOptionPlaceholdersTransform(eaBody); console.log('adminOptionPlaceholdersTransform executed');
-	}
+
+	// Crud Actions
+	const eaIndexBody = document.querySelector(SELECTOR_INDEX);
+	const eaEditForm = document.querySelector(SELECTOR_EDIT);
+	const eaForm = document.querySelector(SELECTOR_EDIT) ?? document.querySelector(SELECTOR_NEW);
+
+		if(eaIndexBody) { // only on index
+			adminOptionPlaceholdersTransform(eaIndexBody); console.log('adminOptionPlaceholdersTransform executed');
+		}		
+		if(eaForm) { // only on forms
+			// ...
+		}
+		if(eaEditForm) { // only on edit
+			// ...
+		}	
 }
 export default { exec };
 
-function vichUploaderHideDeleteLink() 
-{
-    const SELECTOR = '.vich-no-delete';
-
-	let elements = document.querySelectorAll(SELECTOR);
-
-	if( elements.length < 1 ){
-		return;
-	}
-	
-	elements.forEach((element) => {
-        let actionsContainer = element.querySelector('.ea-vich-image-actions');
-        let deleteLink = actionsContainer.querySelector('div.form-check');
-		deleteLink.parentNode.parentNode.parentNode.outerHTML = '';
-    });
-}
-
-function adminOptionPlaceholdersTransform(eaBody) 
+function adminOptionPlaceholdersTransform(body) 
 {
 	const placeholderBoundaryLeft = '{%~';
 	const placeholderBoundaryRight = '~%}';
@@ -50,7 +44,7 @@ function adminOptionPlaceholdersTransform(eaBody)
 	}
 			
 	// restrict to page with tables
-	let indexTable = eaBody.querySelector('.table.datagrid ');
+	let indexTable = body.querySelector('.table.datagrid ');
 	indexTable.setAttribute('data-lightbox', true)
 	let adminOptionCells = indexTable.querySelectorAll('td[data-label="Value"]');
 	if(adminOptionCells) {

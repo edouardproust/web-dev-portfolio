@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Config;
 use App\Entity\User;
 use App\Helper\FileHelper;
+use App\Path;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
@@ -23,6 +24,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use stdClass;
 
 class EasyAdminService
 {

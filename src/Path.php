@@ -19,4 +19,9 @@ class Path
     const PROJECT_DEFAULT_IMG = 'placeholder.png';
     const POST_DEFAULT_IMG = 'placeholder.png';
     const AUTHOR_DEFAULT_IMG = 'placeholder.png';
+
+    public static function APP_DIR()
+    {
+        return dirname(__DIR__);
+    }
 }

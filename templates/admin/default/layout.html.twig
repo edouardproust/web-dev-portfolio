@@ -5,4 +5,15 @@
 {% block content_header %}
     {% include "admin/_parts/breadcrumbs.html.twig" %}
     {{ parent() }}
+    {% endblock %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('admin') }}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('admin') }}
+    <script src="/build/ckfinder/ckfinder.js"></script>
 {% endblock %}

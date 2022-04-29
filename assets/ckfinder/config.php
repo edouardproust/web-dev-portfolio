@@ -10,6 +10,7 @@
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/debugging.html
 
 // Production
+
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
 ini_set('display_errors', 0);
 
@@ -26,7 +27,8 @@ $config = array();
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_authentication
 
 $config['authentication'] = function () {
-    return true;
+    require(dirname(__DIR__, 3) . '/src/Helper/CKFinderAuthenticator.php');
+    return App\Helper\CKFinderAuthenticator::isGranted();
 };
 
 /*============================ License Key ============================================*/
@@ -66,7 +68,7 @@ $config['images'] = array(
 $config['backends'][] = array(
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => '/ckfinder/userfiles/',
+    'baseUrl'      => '/uploads/ckfinder',
 //  'root'         => '', // Can be used to explicitly set the CKFinder user files directory.
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,
@@ -76,23 +78,51 @@ $config['backends'][] = array(
 /*================================ Resource Types =====================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_resourceTypes
 
-$config['defaultResourceTypes'] = '';
-
-$config['resourceTypes'][] = array(
-    'name'              => 'Files', // Single quotes not allowed.
-    'directory'         => 'files',
-    'maxSize'           => 0,
-    'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,zip',
-    'deniedExtensions'  => '',
-    'backend'           => 'default'
-);
+$config['defaultResourceTypes'] = 'Images, Scripts, Documents, Videos, Audio clips';
 
 $config['resourceTypes'][] = array(
     'name'              => 'Images',
     'directory'         => 'images',
-    'maxSize'           => 0,
-    'allowedExtensions' => 'bmp,gif,jpeg,jpg,png',
-    'deniedExtensions'  => '',
+    'maxSize'           => '800K',
+    'allowedExtensions' => 'ico,webp,bmp,gif,jpeg,jpg,png,svg,tif,tiff',
+    'backend'           => 'default'
+);
+$config['resourceTypes'][] = array(
+    'name'              => 'Scripts',
+    'directory'         => 'scripts',
+    'maxSize'           => '10M',
+    'allowedExtensions' => 'htm,html,css,js,php,sql,txt',
+    'backend'           => 'default'
+);
+
+// More extensions (activate them with the 'defaultResourceTypes' option above)
+
+$config['resourceTypes'][] = array(
+    'name'              => 'Documents', // Single quotes not allowed.
+    'directory'         => 'documents',
+    'maxSize'           => '800K',
+    'allowedExtensions' => 'csv,doc,docx,odt,ods,pdf,xls,xlsx',
+    'backend'           => 'default'
+);
+$config['resourceTypes'][] = array(
+    'name'              => 'Videos',
+    'directory'         => 'videos',
+    'maxSize'           => '4M',
+    'allowedExtensions' => 'mp4,webm',
+    'backend'           => 'default'
+);
+$config['resourceTypes'][] = array(
+    'name'              => 'Audio clips',
+    'directory'         => 'audio-clips',
+    'maxSize'           => '2M',
+    'allowedExtensions' => 'mid,mp3,wav',
+    'backend'           => 'default'
+);
+$config['resourceTypes'][] = array(
+    'name'              => 'Archives',
+    'directory'         => 'archives',
+    'maxSize'           => '4M',
+    'allowedExtensions' => 'rar,zip,7z,gz,gzip,rar,tar,tgz',
     'backend'           => 'default'
 );
 
@@ -137,7 +167,7 @@ $config['forceAscii'] = false;
 $config['xSendfile'] = false;
 
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_debug
-$config['debug'] = false;
+$config['debug'] = true;
 
 /*==================================== Plugins ========================================*/
 // https://ckeditor.com/docs/ckfinder/ckfinder3-php/configuration.html#configuration_options_plugins

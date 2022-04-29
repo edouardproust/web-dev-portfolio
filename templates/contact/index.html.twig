@@ -79,30 +79,11 @@
 
                         <div class="form-widget">
 
-							{{ form(contactForm) }}
- 
-                            {#<div class="form-result"></div>
-
-                            <form class="mb-0" id="template-contactform" name="template-contactform" action="include/form.php" method="post">
-
-                                <div class="form-process">
-                                    <div class="css3-spinner">
-                                        <div class="css3-spinner-scaler"></div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-4 form-group">
-                                        <label for="template-contactform-name">Name <small>*</small></label>
-                                        <input type="text" id="template-contactform-name" name="template-contactform-name" value="" class="sm-form-control required" />
-                                    </div>
-                                    <div class="col-12 form-group">
-                                        <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0">Send</button>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="prefix" value="template-contactform-">
-
-                            </form> #}
+							{{ form_start(contactForm) }}
+                            {{ form_errors(contactForm) }}
+                            {{ form_widget(contactForm) }}
+                            <button type="submit" class="button button-3d m-0">Send</button>
+                            {{ form_end(contactForm) }}
 
                         </div>
 
