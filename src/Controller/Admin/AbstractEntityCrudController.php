@@ -73,7 +73,7 @@ abstract class AbstractEntityCrudController extends AbstractCrudController
                     return $action
                         ->setIcon('fa fa-trash')
                         ->setLabel(false)
-                        ->setCssClass('btn btn-light admin-crud-row-btn');
+                        ->setCssClass('action-delete btn btn-light admin-crud-row-btn');
                 }
             );
     }
