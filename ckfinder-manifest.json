@@ -1,0 +1,42 @@
+{
+    "App\\Entity\\Lesson": {
+        "386": {},
+        "385": {
+            "0": "\/uploads\/ckfinder\/audio-clips\/sample1.mp3",
+            "1": "\/uploads\/ckfinder\/videos\/sample_640x360.mp4"
+        },
+        "370": {
+            "0": "\/uploads\/ckfinder\/scripts\/test.css",
+            "1": "\/uploads\/ckfinder\/scripts\/test.txt",
+            "2": "\/uploads\/ckfinder\/images\/sample_640%C3%97426.jpg",
+            "3": "\/uploads\/ckfinder\/images\/sample_640%C3%97426.gif"
+        }
+    },
+    "App\\Entity\\Project": {
+        "381": {
+            "0": "\/uploads\/ckfinder\/documents\/Curve-finance-interet-cumul%C3%A9s.ods",
+            "2": "\/uploads\/ckfinder\/scripts\/test.htm",
+            "3": "\/uploads\/ckfinder\/scripts\/test.php",
+            "4": "\/uploads\/ckfinder\/scripts\/test.js",
+            "5": "\/uploads\/ckfinder\/scripts\/test.txt",
+            "6": "\/uploads\/ckfinder\/documents\/test.odt",
+            "7": "\/uploads\/ckfinder\/documents\/test.ods",
+            "8": "\/uploads\/ckfinder\/documents\/test.txt",
+            "9": "\/uploads\/ckfinder\/videos\/sample_640x360.mp4",
+            "10": "\/uploads\/ckfinder\/videos\/sample_640x360.webm",
+            "11": "\/uploads\/ckfinder\/audio-clips\/sample1.mp3",
+            "12": "\/uploads\/ckfinder\/audio-clips\/sample1.mp3",
+            "1": "\/uploads\/ckfinder\/scripts\/test.txt"
+        }
+    },
+    "App\\Entity\\Post": {
+        "377": {
+            "0": "\/uploads\/ckfinder\/documents\/test.ods",
+            "1": "\/uploads\/ckfinder\/documents\/test.odt"
+        },
+        "378": {
+            "0": "\/uploads\/ckfinder\/videos\/sample_640x360.webm",
+            "1": "\/uploads\/ckfinder\/images\/sample1.webp"
+        }
+    }
+}

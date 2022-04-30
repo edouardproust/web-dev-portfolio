@@ -1,0 +1,10 @@
+.shadow {
+  box-shadow: 0px 5px 5px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 5px 5px rgba(0,0,0,0.4);
+  -webkit-box-shadow: 0px 5px 5px rgba(0,0,0,0.4);
+}
+.text-with-shadow { text-shadow: 4px 4px 8px #000; }
+.gradient { background: -webkit-gradient(linear, left top, left bottom, from(#000000), to(#ffffff)); background: -moz-linear-gradient(top, #000000, #ffffff); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#ffffff'); }
+
+/* You have 3 options for the type of border (repeat / round / stretch) */
+bordered-image { border-width: 20px; -moz-border-image: url(border.png) 30 30 stretch ; -webkit-border-image: url(border.png) 30 30 stretch; }

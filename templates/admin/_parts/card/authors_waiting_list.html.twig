@@ -1,8 +1,9 @@
 {% extends "admin/_parts/card.html.twig" %}
 
-{% block card_title %}Author Registrations waiting for approval{% endblock %}
+{% block card_title %}Approve authors{% endblock %}
 
 {% block card_text %}
+    <div class="mb-2">Some newly registered autors are waiting for being approved:</div>
     {% for author in data.authors %}
         <div>
             {{ author.fullName }}
@@ -14,4 +15,8 @@
 
 {% block card_btn %}
     <a href="{{ data.link }}" class="btn btn-primary">Manage authors</a>
+{% endblock %}
+
+{% block card_help %}
+    Only approved authors can write posts and lessons. Only admins like you have the priviledge to approve them.
 {% endblock %}

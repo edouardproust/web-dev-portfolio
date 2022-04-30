@@ -32,7 +32,7 @@ class ProjectCrudController extends AbstractPosttypeCrudController
     {
         parent::configureCrud($crud);
         return $crud
-            ->addFormTheme('admin/form.html.twig')
+            ->addFormTheme('admin/default/form_theme.html.twig')
             //->setFormOptions(['attr' => ['novalidate' => 'novalidate']])
             ->setEntityLabelInSingular(ucfirst($this->route))
             ->setEntityLabelInPlural(ucfirst($this->route) . 's')

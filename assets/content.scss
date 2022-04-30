@@ -15,8 +15,9 @@ figure.image {
     @include border-radius($card-inner-border-radius);
     overflow: hidden;
     transition: opacity 0.5s;
+    display:flex;
+    justify-content: center;
     /* center images */
-    text-align: center !important;
     margin: 20px auto !important; 
     * img {
         width: 100%;
@@ -77,4 +78,13 @@ figcaption {
     padding: 0 !important;
     border-top-left-radius: $card-inner-border-radius;
     border-top-right-radius: $card-inner-border-radius;
+}
+
+// audio
+.content-audio-container,
+.content-audio-container audio {
+    width: 100%;
+}
+.content-video-container video {
+    width: 100%;
 }

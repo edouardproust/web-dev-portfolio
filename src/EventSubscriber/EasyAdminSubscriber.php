@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Author;
 use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
+use App\Service\CKFinderService;
 use App\Service\EmailService;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -25,6 +26,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
     private $hasher;
     private $emailService;
     private $flash;
+    private $cKFinderService;
 
     private $dataContainer = [];
 
@@ -34,7 +36,8 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         UserRepository $userRepository,
         UserPasswordHasherInterface $hasher,
         EmailService $emailService,
-        FlashBagInterface $flash
+        FlashBagInterface $flash,
+        CKFinderService $cKFinderService
     ) {
         $this->security = $security;
         $this->authorRepository = $authorRepository;
@@ -42,6 +45,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $this->hasher = $hasher;
         $this->emailService = $emailService;
         $this->flash = $flash;
+        $this->cKFinderService = $cKFinderService;
     }
 
     public static function getSubscribedEvents()
@@ -93,16 +97,19 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $user = $this->security->getUser();
             $author = $this->authorRepository->findOneByUser($user);
             $entity->setAuthor($author);
+
+            // Update files manifest
+            $this->cKFinderService->updateManifestOnEntitySave($entity);
         }
 
         // Author entity
         if ($entity instanceof Author) {
             // user
-            $user = $this->userRepository->find($author->getUser());
+            $user = $this->userRepository->find($entity->getUser());
             $user->addRole('ROLE_AUTHOR');
             $user->setIsAuthor(true);
             // approve
-            $author->setIsApproved(true);
+            $entity->setIsApproved(true);
         }
 
         // Comment entity (has 'isVisible' property)
@@ -125,6 +132,12 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         // All entities with 'updatedAt' property
         if (property_exists($entity, 'updatedAt')) {
             $entity->setUpdatedAt(new DateTime());
+        }
+
+        // Project, Lesson or Post entities (have 'author' property)
+        // Update files manifest
+        if (property_exists($entity, 'author')) {
+            $this->cKFinderService->updateManifestOnEntitySave($entity);
         }
 
         // Author entity
@@ -165,11 +178,17 @@ class EasyAdminSubscriber implements EventSubscriberInterface
      */
     public function onBeforeEntityDeleted(BeforeEntityDeletedEvent $event)
     {
-        $author = $event->getEntityInstance();
-        if ($author instanceof Author) {
-            $user = $this->userRepository->find($author->getUser());
+        // Author entity
+        $entity = $event->getEntityInstance();
+        if ($entity instanceof Author) {
+            $user = $this->userRepository->find($entity->getUser());
             $user->removeRole('ROLE_AUTHOR');
             $user->setIsAuthor(null);
+        }
+
+        // Project, Lesson or Post entities (have 'author' property)
+        if (property_exists($entity, 'author')) {
+            $this->cKFinderService->UpdateManifestOnEntityDelete($entity);
         }
 
         // flash

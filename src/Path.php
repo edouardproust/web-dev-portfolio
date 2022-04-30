@@ -9,6 +9,7 @@ class Path
 {
     const PUBLIC = '/public';
 
+    const UPLOADS_CKFINDER = '/uploads/ckfinder';
     const UPLOADS_ADMIN_OPTIONS = '/uploads/admin/options';
     const UPLOADS_AUTHORS = '/uploads/authors';
     const UPLOADS_PROJECTS_GALLERY = '/uploads/projects/library';
@@ -19,4 +20,9 @@ class Path
     const PROJECT_DEFAULT_IMG = 'placeholder.png';
     const POST_DEFAULT_IMG = 'placeholder.png';
     const AUTHOR_DEFAULT_IMG = 'placeholder.png';
+
+    public static function APP_DIR()
+    {
+        return dirname(__DIR__);
+    }
 }

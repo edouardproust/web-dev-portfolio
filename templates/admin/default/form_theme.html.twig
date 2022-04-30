@@ -1,0 +1,112 @@
+{% extends "@EasyAdmin/crud/form_theme.html.twig" %}
+
+{% block vich_image_widget %}
+
+    {# Config =============================================== #}
+
+    {% set showDelete = false %}
+
+    {# Added part =============================================== #}
+
+    {% for type in ['VIDEO_TYPE', 'EMBED_TYPE'] %}
+        {% if file('getMime', image_uri) is same as(file(type)) %}
+
+            {% set image_uri_save = image_uri %}
+            {% set image_uri = null %}
+
+            {% if file('getExtension', image_uri_save) is same as(file('EMBED_TYPE_VIMEO')) %}
+
+                {% set videoId = fileContent('', image_uri_save) %}
+
+                <div class="mb-3">
+                    <a href="https://player.vimeo.com/video/{{ videoId }}" target="_blank">
+                        <i class="icon-play-sign pe-1"></i>Play video
+                    </a>
+                </div>
+                
+            {% elseif file('getExtension', image_uri_save) is same as(file('EMBED_TYPE_YOUTUBE'))%}
+
+                {% set videoId = fileContent('', image_uri_save) %}
+
+                <div class="mb-3">
+                    <a href="https://www.youtube-nocookie.com/embed/{{ videoId }}" target="_blank">
+                        <i class="icon-play-sign pe-1"></i>Play video
+                    </a>
+                </div>
+
+            {% else %}
+                
+                <div class="mb-3">
+                    <a href="{{ image_uri_save }}" target="_blank">
+                        <i class="icon-play-sign pe-1"></i>Play video
+                    </a>
+                </div>
+
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {# Copied part =============================================== #}
+
+    {% set formTypeOptions = ea_crud_form.ea_field.formTypeOptions|default('') %}
+    <div class="ea-vich-image">
+        {% if image_uri|default('') is not empty %}
+            {% if download_uri|default('') is empty %}
+                <div class="ea-lightbox-thumbnail">
+                    {% if formTypeOptions.imagine_pattern is defined and formTypeOptions.imagine_pattern is not empty %}
+                        <img style="cursor: initial" src="{{ (asset_helper is same as(true) ? asset(image_uri) : image_uri)|ea_apply_filter_if_exists('imagine_filter', formTypeOptions.imagine_pattern) }}">
+                    {% else %}
+                        <img style="cursor: initial" src="{{ asset_helper is same as(true) ? asset(image_uri) : image_uri }}">
+                    {% endif %}
+                </div>
+            {% else %}
+                {% set _lightbox_id = 'ea-lightbox-' ~ id %}
+
+                <a href="#" class="ea-lightbox-thumbnail" data-ea-lightbox-content-selector="#{{ _lightbox_id }}">
+                    {% if formTypeOptions.imagine_pattern is defined and formTypeOptions.imagine_pattern is not empty %}
+                        <img src="{{ (asset_helper is same as(true) ? asset(download_uri) : download_uri)|ea_apply_filter_if_exists('imagine_filter', formTypeOptions.imagine_pattern) }}">
+                    {% else %}
+                        <img src="{{ asset_helper is same as(true) ? asset(download_uri) : download_uri }}">
+                    {% endif %}
+                </a>
+
+                <div id="{{ _lightbox_id }}" class="ea-lightbox">
+                    {% if formTypeOptions.imagine_pattern is defined and formTypeOptions.imagine_pattern is not empty %}
+                        <img src="{{ (asset_helper is same as(true) ? asset(download_uri) : download_uri)|ea_apply_filter_if_exists('imagine_filter', formTypeOptions.imagine_pattern) }}">
+                    {% else %}
+                        <img src="{{ asset_helper is same as(true) ? asset(download_uri) : download_uri }}">
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {% set file_upload_js %}
+            var newFile = document.getElementById('{{ form.file.vars.id }}').files[0];
+            var fileSizeInMegabytes = newFile.size > 1024 * 1024;
+            var fileSize = fileSizeInMegabytes ? newFile.size / (1024 * 1024) : newFile.size / 1024;
+            document.getElementById('{{ form.file.vars.id }}_new_file_name').innerText = newFile.name + ' (' + fileSize.toFixed(2) + ' ' + (fileSizeInMegabytes ? 'MB' : 'KB') + ')';
+        {% endset %}
+
+        {# Custom part =============================================== #}
+        
+            <div class="ea-vich-image-actions">
+                {# the container element is needed to allow customizing the <input type="file" /> #}
+                <div class="btn btn-secondary input-file-container">
+                    <i class="fa fa-fw fa-upload"></i> {{ 'action.choose_file'|trans({}, 'EasyAdminBundle') }}
+                    {{ form_widget(form.file, { 'attr': { 'onchange': file_upload_js }, vich: true}) }}
+                </div>
+
+                {% if showDelete %}
+
+                    {% if form.delete is defined %}
+                        {{ form_row(form.delete, { label: 'vich_uploader.form_label.delete_confirm'|trans({}, 'VichUploaderBundle') }) }}
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+            <div class="small" id="{{ form.file.vars.id }}_new_file_name"></div>
+        
+    </div>
+
+{% endblock %}

@@ -483,7 +483,7 @@ $masonry-prefix: masonry;
 /* Portfolio Single - Content
 -----------------------------------------------------------------*/
 
-.#{$portfolio-prefix}-single-content h2 {
+.#{$portfolio-prefix}-single-content .title-border {
 	margin: 0 0 20px;
 	padding: 0;
 	font-size: $Portfolio_desc-title-size;
