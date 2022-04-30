@@ -47,7 +47,7 @@ class DashboardController extends AbstractDashboardController
         AdminUrlGenerator $adminUrlGenerator,
         AdminOptionRepository $adminOptionRepository,
         AdminContextProvider $adminContext,
-        UserService $userService,
+        UserService $userService
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
