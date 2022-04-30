@@ -10,6 +10,7 @@ use App\Helper\FileHelper;
 use App\Helper\StringHelper;
 use App\Repository\AdminOptionRepository;
 use App\Service\EasyAdminService;
+use App\Service\UserService;
 use Twig\Extension\AbstractExtension;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,13 +18,16 @@ class AppExtension extends AbstractExtension
 {
     private $adminOptionRepository;
     private $easyAdminService;
+    private $userService;
 
     public function __construct(
         AdminOptionRepository $adminOptionRepository,
-        EasyAdminService $easyAdminService
+        EasyAdminService $easyAdminService,
+        UserService $userService
     ) {
         $this->adminOptionRepository = $adminOptionRepository;
         $this->easyAdminService = $easyAdminService;
+        $this->userService = $userService;
     }
 
     public function getFunctions()
@@ -47,7 +51,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('extract', [$this, 'getExtract']),
             new TwigFilter('safeEmail', [$this, 'getAntiScrappingEmailString']),
             new TwigFilter('int', [$this, 'convertToInteger']),
-            new TwigFilter('higherRole', [$this, 'getHigherRoleOfUser']),
+            new TwigFilter('highestRole', [$this, 'getUserHighestRole']),
             new TwigFilter('hasVisibleComments', [$this, 'hasVisibleComments']),
             new TwigFilter('hasApprovedAuthor', [$this, 'hasApprovedAuthor'])
         ];
@@ -126,22 +130,9 @@ class AppExtension extends AbstractExtension
         return (int)$str;
     }
 
-    public function getHigherRoleOfUser(?User $user, bool $capitalizeOutput = false): ?string
+    public function getUserHighestRole(?User $user, bool $humanVersion = false, bool $capitalizeOutput = false): ?string
     {
-        if (!$user) {
-            return null;
-        }
-        $roles = $user->getRoles();
-        $role = null;
-        if (in_array('ROLE_ADMIN', $roles)) {
-            $role = 'admin';
-        } elseif (in_array('ROLE_AUTHOR', $roles)) {
-            $role = 'author';
-        }
-        if ($role && $capitalizeOutput) {
-            $role = ucfirst($role);
-        }
-        return $role;
+        return $this->userService->getHighestRole($user, $humanVersion, $capitalizeOutput);
     }
 
     public function getEasyAdminAuthorFullname(?Author $author, string $defaultName = 'Admin'): string

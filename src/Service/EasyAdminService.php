@@ -24,7 +24,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use stdClass;
 
 class EasyAdminService
 {
@@ -227,6 +226,7 @@ class EasyAdminService
     {
         $isGranted = false;
         $user = $this->security->getUser();
+        
         if (!$user) {
             return false;
         }

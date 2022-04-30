@@ -30,6 +30,7 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     public function configureActions(Actions $actions): Actions
     {
         parent::configureActions($actions);
+        
         $view = Action::new('VIEW', false, 'fa fa-eye')
             ->linkToRoute($this->route . '_show', function (object $entity) {
                 return ['id' => $entity->getId(), 'slug' => $entity->getSlug()];

@@ -12,15 +12,23 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use App\Controller\Admin\AbstractEntityCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class AdminOptionCrudController extends AbstractEntityCrudController
 {
     private $easyAdminService;
+    private $adminUrlGenerator;
+    private $adminContext;
 
     public function __construct(
-        EasyAdminService $easyAdminService
+        EasyAdminService $easyAdminService,
+        AdminUrlGenerator $adminUrlGenerator,
+        AdminContextProvider $adminContext
     ) {
         $this->easyAdminService = $easyAdminService;
+        $this->adminUrlGenerator = $adminUrlGenerator;
+        $this->adminContext = $adminContext;
     }
 
     public static function getEntityFqcn(): string
@@ -60,7 +68,15 @@ class AdminOptionCrudController extends AbstractEntityCrudController
     public function configureActions(Actions $actions): Actions
     {
         parent::configureActions($actions);
+        $this->adminUrlGenerator->includeReferrer();
+        $purgeFiles = Action::new('PURGE', 'Purge files', 'fa fa-broom')
+            ->linkToRoute('admin_files_purge')
+            ->createAsGlobalAction()
+            ->addCssClass('btn')->addCssClass('btn-primary')
+        ;
+
         return $actions
+            ->add(Crud::PAGE_INDEX, $purgeFiles)
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
             ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE);

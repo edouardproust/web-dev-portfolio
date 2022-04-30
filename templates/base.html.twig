@@ -16,7 +16,7 @@
         {label: 'Contact', url: path('contact')}
     ] %}
     {% set footerMenu = [
-        {label: app.user|higherRole(true) ~ ' dashboard', url: path('admin'), isVisible: isAdminAccessGranted() ? true : false},
+        {label: app.user|highestRole(true, true) ~ ' dashboard', url: path('admin'), isVisible: isAdminAccessGranted() ? true : false},
         {label: 'Login', url: path('app_login'), isVisible: app.user is null ? true : false},
         {label: 'Logout', url: path('app_logout'), isVisible: app.user is null ? false : true},
         {label: 'Become an author', url: path('author_register'), isVisible: app.user is null or (adminVisible is defined and adminVisible is same as(false)) ? true : false}

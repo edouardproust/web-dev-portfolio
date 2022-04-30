@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Config;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -60,5 +61,23 @@ class UserService
             $this->flash->add('danger', 'This email is already taken.');
             return false;
         }
+    }
+
+    public function getHighestRole(?User $user, bool $humanVersion = false, bool $capitalizeOutput = false): ?string
+    {
+        if (!$user) {
+            return null;
+        }
+        $roles = $user->getRoles();
+        $role = null;
+        if (in_array(Config::ROLE_ADMIN, $roles)) {
+            $role = $humanVersion ? 'admin' : Config::ROLE_ADMIN;
+        } elseif (in_array(Config::ROLE_AUTHOR, $roles)) {
+            $role = $humanVersion ? 'author' : Config::ROLE_AUTHOR;
+        }
+        if ($role && $capitalizeOutput) {
+            $role = ucfirst($role);
+        }
+        return $role;
     }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\AuthorService;
 use App\Service\EasyAdminService;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,8 +21,9 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        // skip login is already logged
         if ($this->getUser()) {
             if ($this->easyAdminService->isAdminPanelAccessGranted()) {
                 return $this->redirectToRoute('admin');
@@ -32,6 +31,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('user_show');
             }
         }
+        // login form etc.
         if ($error = $authenticationUtils->getLastAuthenticationError()) {
             $this->addFlash('danger', $error->getMessage());
         }

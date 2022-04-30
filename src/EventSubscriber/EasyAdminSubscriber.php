@@ -99,17 +99,17 @@ class EasyAdminSubscriber implements EventSubscriberInterface
             $entity->setAuthor($author);
 
             // Update files manifest
-            $this->cKFinderService->UpdateManifestOnEntitySave($entity);
+            $this->cKFinderService->updateManifestOnEntitySave($entity);
         }
 
         // Author entity
         if ($entity instanceof Author) {
             // user
-            $user = $this->userRepository->find($author->getUser());
+            $user = $this->userRepository->find($entity->getUser());
             $user->addRole('ROLE_AUTHOR');
             $user->setIsAuthor(true);
             // approve
-            $author->setIsApproved(true);
+            $entity->setIsApproved(true);
         }
 
         // Comment entity (has 'isVisible' property)
@@ -137,7 +137,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         // Project, Lesson or Post entities (have 'author' property)
         // Update files manifest
         if (property_exists($entity, 'author')) {
-            $this->cKFinderService->UpdateManifestOnEntitySave($entity);
+            $this->cKFinderService->updateManifestOnEntitySave($entity);
         }
 
         // Author entity
@@ -188,7 +188,7 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
         // Project, Lesson or Post entities (have 'author' property)
         if (property_exists($entity, 'author')) {
-            // $this->cKFinderService->UpdateManifestOnEntityDelete($entity);
+            $this->cKFinderService->UpdateManifestOnEntityDelete($entity);
         }
 
         // flash
