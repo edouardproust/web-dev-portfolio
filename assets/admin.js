@@ -1,5 +1,5 @@
 /*
- * Admin side (made withEasyAdmin Bundle)
+ * Admin side (EasyAdmin Bundle)
  */
 
 import './admin.scss';

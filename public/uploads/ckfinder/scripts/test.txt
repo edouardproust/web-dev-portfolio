@@ -1,0 +1,12 @@
+This is a plain text 
+on several line.
+
+Here is a new paragraphe
+and this is a new line.
+
+Oh! A new paragraph!!
+
+One more...
+with a new line again
+
+Bye bye :)

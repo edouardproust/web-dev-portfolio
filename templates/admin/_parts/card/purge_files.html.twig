@@ -1,0 +1,11 @@
+{% extends "admin/_parts/card.html.twig" %}
+
+{% block card_title %}Purge files{% endblock %}
+
+{% block card_text %}
+    <div>Remove all orphans files clicking simply this button. This action cannot be redo.</div>
+{% endblock %}
+
+{% block card_btn %}
+    <a href="{{ data.link }}" class="btn btn-primary">Purge files</a>
+{% endblock %}

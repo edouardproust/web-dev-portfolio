@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Config;
 use App\Entity\User;
 use App\Helper\FileHelper;
+use App\Path;
 use Doctrine\ORM\QueryBuilder;
 use App\Repository\UserRepository;
 use App\Repository\AuthorRepository;
@@ -225,6 +226,7 @@ class EasyAdminService
     {
         $isGranted = false;
         $user = $this->security->getUser();
+        
         if (!$user) {
             return false;
         }

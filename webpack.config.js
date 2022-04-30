@@ -47,8 +47,8 @@ Encore
         to: 'images/[path][name].[hash:8].[ext]',
     })
     .copyFiles({
-        from: './assets/ckeditor',
-        to: 'ckeditor/[path][name].[ext]',
+        from: './assets/ckfinder',
+        to: 'ckfinder/[path][name].[ext]',
     })
     
     .enableSassLoader()
