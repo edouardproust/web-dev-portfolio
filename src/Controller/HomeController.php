@@ -17,6 +17,7 @@ class HomeController extends AbstractController
     private $lessonRepository;
     private $postRepository;
     private $adminOptionRepository;
+    private $homeService;
 
     public function __construct(
         ProjectRepository $projectRepository,

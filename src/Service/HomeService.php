@@ -2,9 +2,10 @@
 
 namespace App\Service;
 
-use App\Entity\Project;
-use App\Helper\StringHelper;
 use App\Path;
+use App\Entity\Project;
+use Github\Api\AbstractApi;
+use App\Helper\StringHelper;
 use App\Repository\ToolRepository;
 use App\Repository\TechnologyRepository;
 use App\Repository\CodingLanguageRepository;
@@ -37,8 +38,8 @@ class HomeService
     }
 
     /**
-     * @param Project[] $projects 
-     * @return array 
+     * @param Project[] $projects
+     * @return array
      */
     public function prepareFeaturedProjects(array $projects): array
     {
@@ -92,6 +93,11 @@ class HomeService
     private static function getGithubRepositories()
     {
         $client = new \Github\Client();
-        return $client->api('user')->repositories('edouardproust');
+        try {
+            $repositories = $client->api('user')->repositories('edouardproust');
+        } catch (\Exception $e) {
+            trigger_error('Github API: failed to connect.', E_USER_WARNING);
+        }
+        return $repositories ?? 14;
     }
 }
