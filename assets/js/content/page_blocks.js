@@ -8,7 +8,7 @@ import { escape, nl2br } from '../snippets';
  */
 const ALLOWED_FILE_TYPES = {
     images: ['ico','webp','bmp','gif','jpeg','jpg','png','svg','tif','tiff'],
-    scripts: ['htm','html','css','js',/*'php'*/,'sql','txt'],
+    scripts: ['htm',/*'html','css','js',*/'php'/*,'sql','txt'*/],
     documents: ['csv','doc','docx','odt','ods','pdf','xls','xlsx'],
     videos: ['mp4','webm'],
     audio_clips: ['mid','mp3','wav'],
@@ -115,7 +115,7 @@ async function codeBlock()
     elements.forEach((element) => {
         codeBlock__build(element);
     });
-    // hljs.highlightAll(); console.log('highlight.js loaded!');
+    hljs.highlightAll(); console.log('highlight.js loaded!');
 }
 
 function singleImage() 
@@ -264,7 +264,6 @@ function codeBlock__build(element)
 {
     // Create structure
     let preDiv = element.parentNode;
-    let preDivOuterHtml = preDiv.outerHTML;
     let codeContainer = document.createElement('div');
     let codeHeader = document.createElement('div');
     let codeBody = document.createElement('div');
@@ -274,8 +273,14 @@ function codeBlock__build(element)
     codeBody.classList.add('code-body');
     codeContainer.appendChild(codeHeader);
     codeContainer.appendChild(codeBody);
+    // escape code
+    let codeEl = preDiv.querySelector('code');
+    console.log(codeEl.innerHTML);
+    let escapedCode = ep_escape(codeEl.innerHTML.replace('<br>', ''));
     // Fill with content
-    codeBody.innerHTML = preDivOuterHtml;
+    codeEl.innerHTML = escapedCode;
+    codeBody.appendChild(preDiv);
+    // Displey the language name on the header
     let langClass = codeBody.querySelector('code').classList[0];
     codeHeader.innerText = langClass.substring(langClass.indexOf('-') + 1).toUpperCase();
 }
@@ -286,16 +291,21 @@ async function uploadedFile__showScriptsContent() {
     for(let scriptDiv of scriptDivs) {
         let scriptUrl = scriptDiv.getAttribute('data-ckfinder-embed-url');
         let codeElement = scriptDiv.querySelector('code');
-        content = fetch(scriptUrl).then(p => p.text());
-        codeElement.innerText = await content;
+
+        let brrr = await fetch(scriptUrl)
+        .then((result) => { return result.text(); })
+        .then((content) => { 
+            codeElement.innerText = ep_escape(content);
+        });
     }
     return true;
 }
 
-
-
-
-
+function ep_escape(string)
+{
+    let parts = string.split(/<br\s*\/?>/gim);
+    return parts.join('\n');
+}
 
 /**
  * Build the HTML structure inside the `figure.image` element, 

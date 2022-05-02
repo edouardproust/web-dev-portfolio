@@ -56,11 +56,12 @@ class LessonController extends AbstractController
         preg_match_all($filter, $lesson->getContent(), $filteredContent);
         $content = nl2br($lesson->getContent());
         
-        $code = "const SELECTOR = '.hello';
-function test(e) => {
-    e.querySelectorAll(SELECTOR);
-    function(test) => e.preventDefault();
-};";
+        $code =
+"<html>
+    <body>
+        <h1>Hello World!</h1>
+    </body>
+</html>";
 
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,

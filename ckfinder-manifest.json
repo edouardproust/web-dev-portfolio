@@ -1,18 +1,16 @@
 {
     "App\\Entity\\Lesson": {
         "386": {
-            "0": "\/uploads\/ckfinder\/images\/favicon.ico",
-            "1": "\/uploads\/ckfinder\/documents\/test.odt",
-            "2": "\/uploads\/ckfinder\/documents\/test.ods",
-            "3": "\/uploads\/ckfinder\/videos\/sample_640x360.mp4",
-            "4": "\/uploads\/ckfinder\/videos\/sample_640x360.webm",
-            "5": "\/uploads\/ckfinder\/scripts\/test.css",
+            "5": "\/uploads\/ckfinder\/scripts\/test.txt",
             "6": "\/uploads\/ckfinder\/scripts\/test.htm",
             "7": "\/uploads\/ckfinder\/scripts\/test.js",
             "8": "\/uploads\/ckfinder\/scripts\/test.php",
             "9": "\/uploads\/ckfinder\/scripts\/test.txt",
-            "10": "\/uploads\/ckfinder\/audio-clips\/sample1.mp3",
-            "11": "\/uploads\/ckfinder\/images\/sample_640%C3%97426.jpg"
+            "0": "\/uploads\/ckfinder\/scripts\/test.css",
+            "1": "\/uploads\/ckfinder\/scripts\/test.htm",
+            "3": "\/uploads\/ckfinder\/scripts\/test.php",
+            "4": "\/uploads\/ckfinder\/scripts\/test.txt",
+            "2": "\/uploads\/ckfinder\/scripts\/test.js"
         },
         "385": {
             "0": "\/uploads\/ckfinder\/audio-clips\/sample1.mp3",
