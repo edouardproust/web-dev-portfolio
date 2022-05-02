@@ -36,7 +36,7 @@
     <div class="container clearfix">
 
         {% if breadcrumb is defined %}
-            <div class="small fadeInDown animated" data-animate="fadeInDown"{{ animationDurationAttr }}>
+            <div class="small fadeInDown animated" data-animate="fadeInDown"{{ animationDurationAttr|raw }}>
                 {% include "_elements/breadcrumb.html.twig" with {
                     links: breadcrumb
                 } %}
@@ -44,7 +44,7 @@
         {% endif %}
         
 
-        <div class="fadeInUp animated" data-animate="fadeInUp"{# data-delay="200" #}{{ animationDurationAttr }}>
+        <div class="fadeInUp animated" data-animate="fadeInUp"{# data-delay="200" #}{{ animationDurationAttr|raw }}>
             <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ title }}</h2>
 
             {% if subtitle is defined and subtitle is not null %}

@@ -76,7 +76,7 @@
 
 			{% include "_sections/home/counters.html.twig" with { counters: [
 				{
-					to: stats.daysOfCoding * 4,
+					to: stats.daysOfCoding * (5 / 7) * 5, 
 					title: "hours of coding",
 					content: '',
 					after: '+'
