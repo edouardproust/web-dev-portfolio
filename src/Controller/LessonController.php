@@ -51,24 +51,10 @@ class LessonController extends AbstractController
         $prevNextLinks = $this->postTypeService
             ->getprevNextLinks($lesson, $this->lessonRepository, 'lesson_show');
 
-        // Filter content for highlight.js
-        $filter = '/<code class=".*">(.*)<\/code>/s';
-        preg_match_all($filter, $lesson->getContent(), $filteredContent);
-        $content = nl2br($lesson->getContent());
-        
-        $code =
-"<html>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>";
-
         return $this->render('lesson/show.html.twig', [
             'lesson' => $lesson,
-            'filteredContent' => $filteredContent,
             'prevNextLinks' => $prevNextLinks,
-            'content' => $content,
-            'code' => $code
+            'content' => $lesson->getContent()
         ]);
     }
 }

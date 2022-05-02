@@ -1,6 +1,7 @@
+export default { exec };
+
 import hljs from 'highlight.js';
 import lightbox from '../gallery/lightbox';
-import { escape, nl2br } from '../snippets';
 
 /** 
  * CKFinder allowed files
@@ -8,7 +9,7 @@ import { escape, nl2br } from '../snippets';
  */
 const ALLOWED_FILE_TYPES = {
     images: ['ico','webp','bmp','gif','jpeg','jpg','png','svg','tif','tiff'],
-    scripts: ['htm',/*'html','css','js',*/'php'/*,'sql','txt'*/],
+    scripts: ['htm','html','css','js','php','phps','sql','txt'],
     documents: ['csv','doc','docx','odt','ods','pdf','xls','xlsx'],
     videos: ['mp4','webm'],
     audio_clips: ['mid','mp3','wav'],
@@ -88,8 +89,6 @@ function exec() {
     singleImage();
     mediaEmbed();
 }
-export default { exec };
-
 
 function uploadedFile()
 {
@@ -204,7 +203,8 @@ function uploadedFile__applyStyle(embedContainer)
     let extension = embedDiv.getAttribute('data-ckfinder-embed-extension');
     // make some extensions replacement when needed
     let extraClass = null;
-    if(extension === 'htm') extension = 'html'
+    if(extension === 'htm') extension = 'html';
+    if(extension === 'phps') extension = 'php'
     if(extension === 'txt' && type === 'scripts') {
         extraClass = 'no-highlight';
         extension = 'text'
@@ -273,12 +273,9 @@ function codeBlock__build(element)
     codeBody.classList.add('code-body');
     codeContainer.appendChild(codeHeader);
     codeContainer.appendChild(codeBody);
-    // escape code
+    // Fill with the (escaped) content
     let codeEl = preDiv.querySelector('code');
-    console.log(codeEl.innerHTML);
-    let escapedCode = ep_escape(codeEl.innerHTML.replace('<br>', ''));
-    // Fill with content
-    codeEl.innerHTML = escapedCode;
+    codeEl.innerHTML = uploadedFile__escapeContent(codeEl.innerHTML);;
     codeBody.appendChild(preDiv);
     // Displey the language name on the header
     let langClass = codeBody.querySelector('code').classList[0];
@@ -287,21 +284,18 @@ function codeBlock__build(element)
 
 async function uploadedFile__showScriptsContent() {
     let scriptDivs = document.querySelectorAll('div[data-ckfinder-embed-type="scripts"]');
-    let content = null;
     for(let scriptDiv of scriptDivs) {
         let scriptUrl = scriptDiv.getAttribute('data-ckfinder-embed-url');
         let codeElement = scriptDiv.querySelector('code');
-
-        let brrr = await fetch(scriptUrl)
+        await fetch(scriptUrl)
         .then((result) => { return result.text(); })
         .then((content) => { 
-            codeElement.innerText = ep_escape(content);
+            codeElement.innerText = content;
         });
     }
-    return true;
 }
 
-function ep_escape(string)
+function uploadedFile__escapeContent(string)
 {
     let parts = string.split(/<br\s*\/?>/gim);
     return parts.join('\n');

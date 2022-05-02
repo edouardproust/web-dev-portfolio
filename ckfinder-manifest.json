@@ -4,24 +4,18 @@
             "5": "\/uploads\/ckfinder\/scripts\/test.txt",
             "6": "\/uploads\/ckfinder\/scripts\/test.htm",
             "7": "\/uploads\/ckfinder\/scripts\/test.js",
-            "8": "\/uploads\/ckfinder\/scripts\/test.php",
             "9": "\/uploads\/ckfinder\/scripts\/test.txt",
             "0": "\/uploads\/ckfinder\/scripts\/test.css",
             "1": "\/uploads\/ckfinder\/scripts\/test.htm",
-            "3": "\/uploads\/ckfinder\/scripts\/test.php",
             "4": "\/uploads\/ckfinder\/scripts\/test.txt",
-            "2": "\/uploads\/ckfinder\/scripts\/test.js"
+            "2": "\/uploads\/ckfinder\/scripts\/test.js",
+            "3": "\/uploads\/ckfinder\/scripts\/test.phps"
         },
         "385": {
             "0": "\/uploads\/ckfinder\/audio-clips\/sample1.mp3",
             "1": "\/uploads\/ckfinder\/videos\/sample_640x360.mp4"
         },
-        "370": {
-            "0": "\/uploads\/ckfinder\/scripts\/test.css",
-            "1": "\/uploads\/ckfinder\/scripts\/test.txt",
-            "2": "\/uploads\/ckfinder\/images\/sample_640%C3%97426.jpg",
-            "3": "\/uploads\/ckfinder\/images\/sample_640%C3%97426.gif"
-        }
+        "370": {}
     },
     "App\\Entity\\Project": {
         "381": {

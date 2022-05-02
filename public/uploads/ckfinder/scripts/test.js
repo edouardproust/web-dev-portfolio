@@ -1,4 +1,3 @@
-
 fetch('https://example.com/authenticate', {
     method: 'POST',
     headers: {

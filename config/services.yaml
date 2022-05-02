@@ -25,9 +25,3 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-
-    app.listener.compression:
-        class: App\Event\CompressionListener
-        arguments:
-        tags:
-            - { name: kernel.event_subscriber }
