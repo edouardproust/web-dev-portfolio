@@ -78,4 +78,20 @@ class StringHelper
 
         return $before . $list . $after;
     }
+
+    public static function replaceAllBeetweenTags(string $content, string $tag, string $search, string $replace)
+    {
+        //this preg is searching for tags and text inside it
+        //and then change all first words to upper
+        $filteredContent = preg_replace_callback(
+            '#(<'.$tag.'.*?>)(.*?)(</'.$tag.'>)#',
+            function ($matches) use ($search, $replace) {
+                //this preg is searching for last letters in words and changing it to upper
+                $t = str_replace($search, $replace, $matches[2]);
+                return $matches[1] . $t . $matches[3];
+            },
+            $content
+        );
+        return $filteredContent;
+    }
 }

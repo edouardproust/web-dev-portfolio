@@ -3,7 +3,7 @@
 {% block card_title %}Approve authors{% endblock %}
 
 {% block card_text %}
-    <div class="mb-2">Some newly registered autors are waiting for being approved:</div>
+    <div class="mb-2">Some newly registered autors are waiting for your approval:</div>
     {% for author in data.authors %}
         <div>
             {{ author.fullName }}

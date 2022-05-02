@@ -31,14 +31,14 @@
     <div class="container clearfix">
 
         {% if breadcrumb is defined %}
-            <div class="small fadeInDown animated" data-animate="fadeInDown"{{ animationDurationAttr }}>
+            <div class="small fadeInDown animated" data-animate="fadeInDown"{{ animationDurationAttr|raw }}>
                 {% include "_elements/breadcrumb.html.twig" with {
                     links: breadcrumb
                 } %}
             </div>
         {% endif %}
 
-        <div class="fadeInUp animated" data-animate="fadeInUp"{{ animationDurationAttr }}>
+        <div class="fadeInUp animated" data-animate="fadeInUp"{{ animationDurationAttr|raw }}>
             <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >
                 {{ post.title }}
             </h2>
