@@ -2,6 +2,7 @@ export default { exec };
 
 import hljs from 'highlight.js';
 import lightbox from '../gallery/lightbox';
+import accordions from "../../js/content/accordions";
 
 /** 
  * CKFinder allowed files
@@ -88,8 +89,12 @@ function exec() {
     codeBlock();
     singleImage();
     mediaEmbed();
+    accordion(accordions, 'accordion-bg');
 }
 
+/**
+ * Render all uploaded files on the page
+ */
 function uploadedFile()
 {
     document.querySelector('#content')
@@ -105,6 +110,9 @@ function uploadedFile()
         });
 }
 
+/**
+ * Render all code blocks on the page
+ */
 async function codeBlock() 
 {
     let elements = document.querySelectorAll('code');
@@ -117,6 +125,9 @@ async function codeBlock()
     hljs.highlightAll(); console.log('highlight.js loaded!');
 }
 
+/**
+ * Render all single images on the page
+ */
 function singleImage() 
 {
     let elements = document.querySelectorAll('figure.image');
@@ -133,6 +144,9 @@ function singleImage()
     lightbox.exec();
 }
 
+/**
+ * Render all embeded medias on the page
+ */
 function mediaEmbed() 
 {
     const containers = document.querySelectorAll('figure.media');
@@ -152,6 +166,68 @@ function mediaEmbed()
             );
         }
     });
+}
+
+/**
+ * Render all accordions on the page
+ * 
+ * @param {CallableFunction} accordions 
+ * @param {String|null} additionalClass 'accordion-bg', 'accordion-border' or null (default: null)
+ * @returns 
+ */
+function accordion(accordions, additionalClass = null)
+{
+    const SELECTOR_CLASS = 'ck-accordion-item';
+
+    let elements = document.getElementsByClassName(SELECTOR_CLASS);
+    if(elements.length < 1) {
+        return;
+    }
+
+    const parent = elements[0].parentNode;
+    const childs = parent.childNodes;
+
+    // make groups
+    let accordionsEls = [];
+    let groupIndex = 0;
+    accordionsEls[groupIndex] = [];
+    childs.forEach((child, index) => {
+        if(child.classList.contains(SELECTOR_CLASS)) {
+            // si c'est index 0 
+            if(index > 0 && !childs[index - 1].classList.contains(SELECTOR_CLASS)) {
+                if(accordionsEls[groupIndex].length > 0) {
+                    groupIndex += 1;
+                    accordionsEls[groupIndex] = [];
+                }
+            }
+            accordionsEls[groupIndex].push(child);
+        }
+    });
+
+    // Build a container for each group
+    accordionsEls.forEach((group) => {
+        let containerDiv = document.createElement('div');
+        containerDiv.classList.add('accordion');
+        if(additionalClass) containerDiv.classList.add(additionalClass);
+        containerDiv.setAttribute('data-collapsible', true);
+        parent.insertBefore(containerDiv, group[0]);
+        group.forEach((item) => {
+            let titleEl = item.querySelector('div.accordion-title');
+            let contentEl = item.querySelector('div.accordion-content');
+
+            let headerDiv = document.createElement('div');
+            headerDiv.classList.add('accordion-header');
+            headerDiv.innerHTML = 
+                '<div class="accordion-icon">' + 
+                    '<i class="accordion-closed icon-ok-circle"></i>' + 
+                    '<i class="accordion-open icon-remove-circle"></i>' +
+                '</div>';
+            if(titleEl) headerDiv.appendChild(titleEl);
+            containerDiv.appendChild(headerDiv);
+            if(contentEl) containerDiv.appendChild(contentEl);
+        });
+    });
+    accordions.exec();
 }
 
 

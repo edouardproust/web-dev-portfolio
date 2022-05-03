@@ -6,6 +6,7 @@
 /config/secrets/prod/prod.decrypt.private.php
 /var/
 /vendor/
+/ckfinder-manifest.json
 ###< symfony/framework-bundle ###
 
 ###> vscode ###
