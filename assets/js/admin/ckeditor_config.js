@@ -50,6 +50,9 @@ export default { exec };
     import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
     import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 
+    // Custom plugins
+    import Accordion from './ckeditor_plugins/accordion/accordion';
+
 /** Load features */
 
     ClassicEditor.builtinPlugins = [
@@ -90,7 +93,9 @@ export default { exec };
         FontSize,
         HorizontalLine,
         SourceEditing,
-        WordCount
+        WordCount,
+        // Custom plugins
+        Accordion
     ];
 
 /** Config tools & toolbars in the editor */
@@ -102,7 +107,7 @@ export default { exec };
                 'undo', 'redo', 
                 '|', 'heading', 'alignment',  'fontSize', 'fontColor',
                 '|', 'bold', 'italic', 'code', 'underline', 'strikethrough',
-                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable',
+                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', 'accordion',
                 '|', 'bulletedList', 'numberedList',
                 '|', 'findAndReplace', 'sourceEditing'
             ],

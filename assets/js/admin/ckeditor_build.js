@@ -5,28 +5,43 @@ const CK_EDITABLE_SELECTOR = '[role="textbox"]';
 // The editor won't be build if the div contains one of these classes:
 const FORBIDDEN_CLASSES = [ 
     ALERT_SELECTOR 
-]; 
+];
 
+
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+
+/**
+ * Create a CKEditor instance on each div containing the SELECTOR defined above (class or id)
+ * - **Tip:** access the list of all editors with `window.editors`
+ * 
+ * @param {ClassicEditor} ClassicEditor Built in ckeditor_config.js
+ * @param {Constant} toolsConfig Defined in ckeditor_config.js
+ * @returns 
+ */
 export default function buildEditors(ClassicEditor, toolsConfig) 
 {
     let elements = document.querySelectorAll(SELECTOR);
     if(elements.length < 1) return; 
 
-    elements.forEach((element) => {
+    elements.forEach((element, index) => {
         if(!isForbidden(element)) {
-            buildOneEditor(ClassicEditor, toolsConfig, element);
+            buildOneEditor(ClassicEditor, toolsConfig, element, index);
         }
     });
     buildSuccessLog(elements.length);
 }
 
-function buildOneEditor(ClassicEditor, toolsConfig, element) 
+function buildOneEditor(ClassicEditor, toolsConfig, element, index) 
 {
     ClassicEditor
         .create(element, toolsConfig)
         .then(editor => {
             let editableEl = element.parentNode.querySelector(CK_EDITABLE_SELECTOR);
             let alertEl = element.parentNode.querySelector(ALERT_SELECTOR);
+            
+            // make it global (access the list of all editors with `window.editors`)
+            window.editors = [];
+            window.editors[index] = editor; // Make it a glbal variable
 
             prepareFormSumbit(editor, element);
             wordCount(editor, element, alertEl);
