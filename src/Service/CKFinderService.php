@@ -190,6 +190,10 @@ class CKFinderService
 
     private function getManifestContent()
     {
+        // create file if it does not exist
+        if (!file_exists($this->getManifestDir())) {
+            touch($this->getManifestDir());
+        }
         return json_decode(file_get_contents($this->getManifestDir()));
     }
 
