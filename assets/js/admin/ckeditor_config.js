@@ -50,6 +50,12 @@ export default { exec };
     import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
     import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 
+    // Custom plugins
+    import Accordion from './ckeditor_plugins/accordion/accordion';
+
+    // Build
+    import buildEditors from './ckeditor_build';
+
 /** Load features */
 
     ClassicEditor.builtinPlugins = [
@@ -90,7 +96,9 @@ export default { exec };
         FontSize,
         HorizontalLine,
         SourceEditing,
-        WordCount
+        WordCount,
+        // Custom plugins
+        Accordion
     ];
 
 /** Config tools & toolbars in the editor */
@@ -102,7 +110,7 @@ export default { exec };
                 'undo', 'redo', 
                 '|', 'heading', 'alignment',  'fontSize', 'fontColor',
                 '|', 'bold', 'italic', 'code', 'underline', 'strikethrough',
-                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable',
+                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', 'accordionItem',
                 '|', 'bulletedList', 'numberedList',
                 '|', 'findAndReplace', 'sourceEditing'
             ],
@@ -182,8 +190,6 @@ export default { exec };
     }
 
 /** Build all editors */
-
-import buildEditors from './ckeditor_build';
 
 function exec() {
     buildEditors(ClassicEditor, TOOLS_CONFIG);
