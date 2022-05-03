@@ -1,9 +1,9 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import { toWidget, toWidgetEditable } from '@ckeditor/ckeditor5-widget/src/utils';
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
-import InsertAccordionCommand from './accordion_command';  
+import InsertAccordionItemCommand from './accordion_command';  
 
-export default class AccordionEditing extends Plugin {
+export default class AccordionItemEditing extends Plugin {
     static get requires() {
         return [ Widget ];
     }
@@ -11,13 +11,13 @@ export default class AccordionEditing extends Plugin {
     init() {
         this._defineSchema();
         this._defineConverters();
-        this.editor.commands.add( 'insertAccordion', new InsertAccordionCommand( this.editor ) );
+        this.editor.commands.add( 'insertAccordionItem', new InsertAccordionItemCommand( this.editor ) );
     }
 
     _defineSchema() {
         const schema = this.editor.model.schema;
 
-        schema.register( 'accordion', {
+        schema.register( 'accordionItem', {
             // Behaves like a self-contained object (e.g. an image).
             isObject: true,
 
@@ -25,28 +25,28 @@ export default class AccordionEditing extends Plugin {
             allowWhere: '$block'
         } );
 
-        schema.register( 'accordionTitle', {
+        schema.register( 'accordionItemTitle', {
             // Cannot be split or left by the caret.
             isLimit: true,
 
-            allowIn: 'accordion',
+            allowIn: 'accordionItem',
 
             // Allow content which is allowed in blocks (i.e. text with attributes).
             allowContentOf: '$block'
         } );
 
-        schema.register( 'accordionDescription', {
+        schema.register( 'accordionItemContent', {
             // Cannot be split or left by the caret.
             isLimit: true,
 
-            allowIn: 'accordion',
+            allowIn: 'accordionItem',
 
             // Allow content which is allowed in the root (e.g. paragraphs).
             allowContentOf: '$root'
         } );
 
         schema.addChildCheck( ( context, childDefinition ) => {
-            if ( context.endsWith( 'accordionDescription' ) && childDefinition.name == 'accordion' ) {
+            if ( context.endsWith( 'accordionItemContent' ) && childDefinition.name == 'accordionItem' ) {
                 return false;
             }
         } );
@@ -55,74 +55,75 @@ export default class AccordionEditing extends Plugin {
     _defineConverters() {
         const conversion = this.editor.conversion;
 
-        // <accordion> converters
+        // <accordionItem> converters
         conversion.for( 'upcast' ).elementToElement( {
-            model: 'accordion',
-            view: {
-                name: 'section',
-                classes: 'ckeditor-accordion'
-            }
-        } );
-        conversion.for( 'dataDowncast' ).elementToElement( {
-            model: 'accordion',
-            view: {
-                name: 'section',
-                classes: 'ckeditor-accordion'
-            }
-        } );
-        conversion.for( 'editingDowncast' ).elementToElement( {
-            model: 'accordion',
-            view: ( modelElement, { writer: viewWriter } ) => {
-                const section = viewWriter.createContainerElement( 'section', { class: 'ckeditor-accordion' } );
-
-                return toWidget( section, viewWriter, { label: 'accordion widget' } );
-            }
-        } );
-
-        // <accordionTitle> converters
-        conversion.for( 'upcast' ).elementToElement( {
-            model: 'accordionTitle',
-            view: {
-                name: 'h4',
-                classes: 'ckeditor-accordion-title'
-            }
-        } );
-        conversion.for( 'dataDowncast' ).elementToElement( {
-            model: 'accordionTitle',
-            view: {
-                name: 'h4',
-                classes: 'ckeditor-accordion-title'
-            }
-        } );
-        conversion.for( 'editingDowncast' ).elementToElement( {
-            model: 'accordionTitle',
-            view: ( modelElement, { writer: viewWriter } ) => {
-                // Note: You use a more specialized createEditableElement() method here.
-                const h4 = viewWriter.createEditableElement( 'h4', { class: 'ckeditor-accordion-title' } );
-                return toWidgetEditable( h4, viewWriter );
-            }
-        } );
-
-        // <accordionDescription> converters
-        conversion.for( 'upcast' ).elementToElement( {
-            model: 'accordionDescription',
+            model: 'accordionItem',
             view: {
                 name: 'div',
-                classes: 'ckeditor-accordion-description'
+                classes: 'ck-accordion-item'
             }
         } );
         conversion.for( 'dataDowncast' ).elementToElement( {
-            model: 'accordionDescription',
+            model: 'accordionItem',
             view: {
                 name: 'div',
-                classes: 'ckeditor-accordion-description'
+                classes: 'ck-accordion-item'
             }
         } );
         conversion.for( 'editingDowncast' ).elementToElement( {
-            model: 'accordionDescription',
+            model: 'accordionItem',
+            view: ( modelElement, { writer: viewWriter } ) => {
+                const section = viewWriter.createContainerElement( 'div', { class: 'ck-accordion-item' } );
+
+                return toWidget( section, viewWriter, { label: 'accordion item widget' } );
+            }
+        } );
+
+        // <accordionItemTitle> converters
+        conversion.for( 'upcast' ).elementToElement( {
+            model: 'accordionItemTitle',
+            view: {
+                name: 'div',
+                classes: 'accordion-title'
+            }
+        } );
+        conversion.for( 'dataDowncast' ).elementToElement( {
+            model: 'accordionItemTitle',
+            view: {
+                name: 'div',
+                classes: 'accordion-title'
+            }
+        } );
+        conversion.for( 'editingDowncast' ).elementToElement( {
+            model: 'accordionItemTitle',
             view: ( modelElement, { writer: viewWriter } ) => {
                 // Note: You use a more specialized createEditableElement() method here.
-                const div = viewWriter.createEditableElement( 'div', { class: 'ckeditor-accordion-description' } );
+                const h1 = viewWriter.createEditableElement( 'h5', { class: 'accordion-title' } );
+
+                return toWidgetEditable( h1, viewWriter );
+            }
+        } );
+
+        // <accordionItemContent> converters
+        conversion.for( 'upcast' ).elementToElement( {
+            model: 'accordionItemContent',
+            view: {
+                name: 'div',
+                classes: 'accordion-content'
+            }
+        } );
+        conversion.for( 'dataDowncast' ).elementToElement( {
+            model: 'accordionItemContent',
+            view: {
+                name: 'div',
+                classes: 'accordion-content'
+            }
+        } );
+        conversion.for( 'editingDowncast' ).elementToElement( {
+            model: 'accordionItemContent',
+            view: ( modelElement, { writer: viewWriter } ) => {
+                // Note: You use a more specialized createEditableElement() method here.
+                const div = viewWriter.createEditableElement( 'div', { class: 'accordion-content' } );
 
                 return toWidgetEditable( div, viewWriter );
             }

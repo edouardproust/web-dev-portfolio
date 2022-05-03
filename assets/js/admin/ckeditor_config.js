@@ -53,6 +53,9 @@ export default { exec };
     // Custom plugins
     import Accordion from './ckeditor_plugins/accordion/accordion';
 
+    // Build
+    import buildEditors from './ckeditor_build';
+
 /** Load features */
 
     ClassicEditor.builtinPlugins = [
@@ -107,7 +110,7 @@ export default { exec };
                 'undo', 'redo', 
                 '|', 'heading', 'alignment',  'fontSize', 'fontColor',
                 '|', 'bold', 'italic', 'code', 'underline', 'strikethrough',
-                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', 'accordion',
+                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', 'accordionItem',
                 '|', 'bulletedList', 'numberedList',
                 '|', 'findAndReplace', 'sourceEditing'
             ],
@@ -187,8 +190,6 @@ export default { exec };
     }
 
 /** Build all editors */
-
-import buildEditors from './ckeditor_build';
 
 function exec() {
     buildEditors(ClassicEditor, TOOLS_CONFIG);

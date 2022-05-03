@@ -1,9 +1,7 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import { toWidget, viewToModelPositionOutsideModelElement } from '@ckeditor/ckeditor5-widget/src/utils';
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
-import PlaceholderCommand from './placeholder_command'; 
-
-import './placeholder.css';
+import PlaceholderCommand from './placeholder_command';
 
 export default class PlaceholderEditing extends Plugin {
     static get requires() {
@@ -11,38 +9,23 @@ export default class PlaceholderEditing extends Plugin {
     }
 
     init() {
-        console.log( 'PlaceholderEditing#init() got called' );
-
         this._defineSchema();
         this._defineConverters();
-
         this.editor.commands.add( 'placeholder', new PlaceholderCommand( this.editor ) );
-
-        this.editor.editing.mapper.on(
-            'viewToModelPosition',
-            viewToModelPositionOutsideModelElement( this.editor.model, viewElement => viewElement.hasClass( 'placeholder' ) )
-        );
-        this.editor.config.define( 'placeholderConfig', {
-            types: [ 'date', 'first name', 'surname' ]
-        } );
     }
 
     _defineSchema() {
         const schema = this.editor.model.schema;
 
-        schema.register( 'placeholder', {
-            // Allow wherever text is allowed:
-            allowWhere: '$text',
-
-            // The placeholder will act as an inline node:
-            isInline: true,
-
+        schema.register( 'placeholder', {            
             // The inline widget is self-contained so it cannot be split by the caret and it can be selected:
             isObject: true,
-
+            // The placeholder will act as an inline node:
+            isInline: true,
+            // Allow wherever text is allowed:
+            allowWhere: '$text',
             // The inline widget can have the same attributes as text (for example linkHref, bold).
             allowAttributesOf: '$text',
-
             // The placeholder can have many types, like date, name, surname, etc:
             allowAttributes: [ 'name' ]
         } );
@@ -54,7 +37,7 @@ export default class PlaceholderEditing extends Plugin {
         conversion.for( 'upcast' ).elementToElement( {
             view: {
                 name: 'span',
-                classes: [ 'placeholder' ]
+                classes: [ 'cke-placeholder' ]
             },
             model: ( viewElement, { writer: modelWriter } ) => {
                 // Extract the "name" from "{name}".
@@ -84,7 +67,7 @@ export default class PlaceholderEditing extends Plugin {
             const name = modelItem.getAttribute( 'name' );
 
             const placeholderView = viewWriter.createContainerElement( 'span', {
-                class: 'placeholder'
+                class: 'cke-placeholder'
             } );
 
             // Insert the placeholder name (as a text).

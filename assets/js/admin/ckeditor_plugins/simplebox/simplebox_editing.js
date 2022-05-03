@@ -3,7 +3,7 @@ import { toWidget, toWidgetEditable } from '@ckeditor/ckeditor5-widget/src/utils
 import Widget from '@ckeditor/ckeditor5-widget/src/widget';
 import InsertSimpleBoxCommand from './simplebox_command';  
 
-export default class AccordionEditing extends Plugin {
+export default class SimpleBoxEditing extends Plugin {
     static get requires() {
         return [ Widget ];
     }

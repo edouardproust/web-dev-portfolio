@@ -1,9 +1,9 @@
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import AccordionEditing from './accordion_editing';
-import AccordionUI from './accordion_ui';
+import AccordionItemEditing from './accordion_editing';
+import AccordionItemUI from './accordion_ui';
 
-export default class Accordion extends Plugin {
+export default class AccordionItem extends Plugin {
     static get requires() {
-        return [ AccordionEditing, AccordionUI ];
+        return [ AccordionItemEditing, AccordionItemUI ];
     }
 }
