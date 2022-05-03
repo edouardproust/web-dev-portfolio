@@ -20,7 +20,6 @@ use App\Entity\ProjectCategory;
 use App\Repository\AuthorRepository;
 use App\Helper\CKFinderAuthenticator;
 use App\Repository\AdminOptionRepository;
-use Symfony\Component\HttpFoundation\Request;
 use App\Controller\Admin\AuthorCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +30,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\Security\Core\User\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
@@ -39,20 +37,17 @@ class DashboardController extends AbstractDashboardController
     private $authorRepository;
     private $adminUrlGenerator;
     private $adminOptionRepository;
-    private $adminContext;
     private $userService;
 
     public function __construct(
         AuthorRepository $authorRepository,
         AdminUrlGenerator $adminUrlGenerator,
         AdminOptionRepository $adminOptionRepository,
-        AdminContextProvider $adminContext,
         UserService $userService
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->adminOptionRepository = $adminOptionRepository;
-        $this->adminContext = $adminContext;
         $this->userService = $userService;
     }
 
@@ -103,8 +98,8 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         $dashboard = Dashboard::new()
-            ->setTitle($this->adminOptionRepository->get('SITE_NAME')->getValue());
-
+            ->setTitle($this->adminOptionRepository->get('SITE_NAME')->getValue() ?? '')
+            ->setFaviconPath($this->adminOptionRepository->get('SITE_FAVICON')->getValue() ?? '');
         return $dashboard;
     }
 
