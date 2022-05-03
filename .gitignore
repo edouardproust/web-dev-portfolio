@@ -1,5 +1,4 @@
 
-###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
@@ -7,31 +6,21 @@
 /var/
 /vendor/
 /ckfinder-manifest.json
-###< symfony/framework-bundle ###
 
-###> vscode ###
 .vscode/
-###< vscode ###
 
-###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
-###< symfony/phpunit-bridge ###
 
-###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
-###< phpunit/phpunit ###
 
-###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
 npm-debug.log
 yarn-error.log
 /yarn.lock
-###< symfony/webpack-encore-bundle ###
 
-###> uploads ###
 public/uploads/posts/*
 !public/uploads/posts/placeholder.png
 
@@ -50,8 +39,6 @@ public/uploads/admin/options
 public/uploads/admin/options/*
 public/uploads/admin/options/logo.png
 public/uploads/admin/options/favicon.ico
-###< uploads ###
 
-###> liip/imagine-bundle ###
 /public/media/cache/
-###< liip/imagine-bundle ###
+public/uploads/ckfinder/.ckfinder/
