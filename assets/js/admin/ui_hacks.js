@@ -29,7 +29,7 @@ function adminOptionPlaceholdersTransform(body)
 	const placeholderBoundaryRight = '~%}';
 	const _value_ = '{%~value~%}';
 	const blocks = {
-		image: // {"type":"image","value":"\/uploads\/admin\/favicon.ico"}
+		image: //
 			'<a href="' + _value_ + '" data-lightbox="image">' + 
 				'<img src="' + _value_ + '" style="max-width:200px;height:auto" />' +
 			'</a>',

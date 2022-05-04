@@ -6,7 +6,6 @@
     {% set siteName = config('SITE_NAME') %}
     {% set logo = config('SITE_LOGO') %}
     {% set headerLogoHeight = config('SITE_LOGO_HEIGHT') %}
-    {% set favicon = config('SITE_FAVICON') %}
 
     {% set headerMenu = [
         {label: 'Home', url: path('home')},
@@ -31,6 +30,7 @@
 {# Prepare #}
 
     {% set logoUrl = vich_uploader_asset(config('SITE_LOGO', true), 'fileFile') %}
+    {% set faviconUrl = vich_uploader_asset(config('SITE_FAVICON', true), 'fileFile') %}
     {% set logoFooterClass = 'logo-color-invert' %}
     {% set logoClass = null %}
     {% if whiteLogo is defined %} {# whiteLogo can be defined on each layout (or static pages) #}
@@ -55,7 +55,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}{% endblock %} - {{ config('SITE_NAME')|striptags }}</title>
-        <link rel="shortcut icon" href="/{{ favicon }}" />
+        <link rel="shortcut icon" href="{{ faviconUrl }}" />
 
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
