@@ -349,13 +349,24 @@ function codeBlock__build(element)
     codeBody.classList.add('code-body');
     codeContainer.appendChild(codeHeader);
     codeContainer.appendChild(codeBody);
+
     // Fill with the (escaped) content
     let codeEl = preDiv.querySelector('code');
     codeEl.innerHTML = uploadedFile__escapeContent(codeEl.innerHTML);;
     codeBody.appendChild(preDiv);
-    // Displey the language name on the header
-    let langClass = codeBody.querySelector('code').classList[0];
-    codeHeader.innerText = langClass.substring(langClass.indexOf('-') + 1).toUpperCase();
+    
+    // Header content
+    let langClass = codeEl.classList[0];
+    let langName = langClass.substring(langClass.indexOf('-') + 1);
+        // Exception1: 'Plain text' block
+        if(langName === 'plaintext') langName = 'Plain text';
+        // Exception2: 'Result' block
+        if(langName === 'result') {
+            codeContainer.classList.add('code-result');
+            codeEl.classList.replace('language-result', 'language-plaintext');
+        }
+        // Set header text
+        codeHeader.innerText = langName.toUpperCase();
 }
 
 async function uploadedFile__showScriptsContent() {
