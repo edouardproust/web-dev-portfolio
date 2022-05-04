@@ -75,7 +75,7 @@ class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
     ];
     const SITE_FAVICON = [
         'type' => Config::FIELD_TEXT,
-        'file' => 'uploads/admin/options/favicon.ico',
+        'file' => 'favicon.ico',
         'isUploadable' => true,
         'label' => 'Site: Favicon',
         'help' => 'The icon displayed in the browser tab. Recommended size: 16x16. Allowed extensions: .png, .jpg, .ico'

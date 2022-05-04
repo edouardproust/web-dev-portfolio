@@ -21,6 +21,7 @@ use App\Repository\AuthorRepository;
 use App\Helper\CKFinderAuthenticator;
 use App\Repository\AdminOptionRepository;
 use App\Controller\Admin\AuthorCrudController;
+use App\Path;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -97,9 +98,10 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+        $favicon = $this->adminOptionRepository->get('SITE_FAVICON');
         $dashboard = Dashboard::new()
             ->setTitle($this->adminOptionRepository->get('SITE_NAME')->getValue() ?? '')
-            ->setFaviconPath($this->adminOptionRepository->get('SITE_FAVICON')->getValue() ?? '');
+            ->setFaviconPath($favicon ? Path::UPLOADS_ADMIN_OPTIONS . '/' . $favicon->getFile() : '');
         return $dashboard;
     }
 
