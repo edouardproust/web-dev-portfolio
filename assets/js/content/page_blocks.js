@@ -30,7 +30,7 @@ const UPLOADS_STYLES = {
             '<code class="language-{{ extension }} hljs" data-file-url="{{ fileUrl }}"></code>' +
         '</pre>',
     result: 
-        '<div class="content-result" data-file-url="{{ fileUrl }}"></div>',
+        '<iframe class="content-result" src="{{ fileUrl }}" data-file-url="{{ fileUrl }}" title="Result"></iframe>',
     documents: 
         '<div class="content-button-container">' +
             '<a href="{{ fileUrl }}" target="_blank">' + 
@@ -91,11 +91,11 @@ const EXTENSION_REPLACE = {
 
 function exec() {
     uploadedFile();
+    resultBox();
     codeBlock();
     singleImage();
     mediaEmbed();
     accordion(accordions, 'accordion-bg');
-    resultBox();
 }
 
 /**
@@ -212,17 +212,18 @@ async function resultBox()
 
     for(let element of elements) {
         // build structure
-        let contentColl = element.querySelector('.resultbox-content p').children;
-        // build structure
         let headerDiv = document.createElement('div');
         headerDiv.classList.add('resultbox-header');
         headerDiv.innerText = "RESULT";
-        let contentDiv = document.createElement('div');
-        contentDiv.classList.add('resultbox-body');
-        for(let child of contentColl) contentDiv.appendChild(child);
+        let bodyDiv = document.createElement('div');
+        bodyDiv.classList.add('resultbox-body');
+        bodyDiv.innerHTML = element.querySelector('.resultbox-content').innerHTML;
         element.removeChild(element.querySelector('.resultbox-content'));
         element.appendChild(headerDiv);
-        element.appendChild(contentDiv);
+        element.appendChild(bodyDiv);
+        bodyDiv.querySelectorAll('p').forEach((pEl) => {
+            if(pEl.innerHTML.length < 1) bodyDiv.removeChild(pEl);
+        });
         
         // if contains files
         let embedDivs = element.querySelectorAll('.ckfinder-embed')
