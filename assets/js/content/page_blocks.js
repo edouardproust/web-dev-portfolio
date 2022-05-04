@@ -83,7 +83,11 @@ const EMBED_CONVERTERS = {
                 'allowfullscreen' +
             '></iframe>'
     }
-}
+};
+
+const EXTENSION_REPLACE = {
+    phps: 'php',
+};
 
 function exec() {
     uploadedFile();
@@ -104,7 +108,7 @@ function uploadedFile()
         .forEach((aElement) => {
             // verify that the file has been included by CKFinder
             if(aElement.classList.length === 0 && aElement.parentNode.tagName !== 'FIGURE') {
-                let embedDiv = uploadedFile__buildOne(aElement);
+                let embedDiv = uploadedFile__buildOne(aElement, EXTENSION_REPLACE);
                 if(embedDiv) uploadedFile__applyStyle(embedDiv);
             }
         });
@@ -243,7 +247,7 @@ async function resultBox()
  * @param {HTMLElement} aElement The HTMLElement to be analysed and modified byt the method
  * @returns {HTMLElement} The newly created  `div.ckfinder-embed` element
  */
-function uploadedFile__buildOne(aElement)
+function uploadedFile__buildOne(aElement, extensionReplace = [])
 {
     let extension = uploadedFile__isAllowed(aElement.innerText);
     let embedDiv = null;
@@ -253,6 +257,7 @@ function uploadedFile__buildOne(aElement)
         embedDiv.setAttribute('data-ckfinder-embed', true);
         embedDiv.setAttribute('data-ckfinder-embed-url', aElement.innerText);
         embedDiv.setAttribute('data-ckfinder-embed-type', uploadedFile__getType(extension));
+        if(Object.keys(extensionReplace).includes(extension)) extension = extensionReplace[extension];
         embedDiv.setAttribute('data-ckfinder-embed-extension', extension);
         aElement.replaceWith(embedDiv);
     };
