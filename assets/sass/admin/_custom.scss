@@ -39,15 +39,3 @@ section.content-header {
 .action-icon {
     margin-right: 5px;
 }
-
-// ckeditor
-
-.ck-accordion-item {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 2px solid #cfcfcf;
-    border-radius: 4px;
-}
-.accordion-title::before {
-    content: '➡ '
-}
