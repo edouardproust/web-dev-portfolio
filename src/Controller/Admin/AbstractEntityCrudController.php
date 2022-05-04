@@ -49,12 +49,17 @@ abstract class AbstractEntityCrudController extends AbstractCrudController
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_RETURN,
-                fn (Action $action) => $action->setLabel('Save and return')
+                fn (Action $action) => $action->setLabel('Save')->setIcon('fas fa-reply')
             )
             ->update(
                 Crud::PAGE_EDIT,
                 Action::SAVE_AND_CONTINUE,
-                fn (Action $action) => $action->setLabel('Save and continue')
+                fn (Action $action) => $action->setLabel('Save')->setIcon('fas fa-save')
+            )
+            ->update(
+                Crud::PAGE_NEW,
+                Action::SAVE_AND_RETURN,
+                fn (Action $action) => $action->setLabel('Save')->setIcon('fas fa-save')
             )
             ->update(
                 Crud::PAGE_INDEX,
