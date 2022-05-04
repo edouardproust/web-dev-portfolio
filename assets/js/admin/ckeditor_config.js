@@ -52,6 +52,7 @@ export default { exec };
 
     // Custom plugins
     import Accordion from './ckeditor_plugins/accordion/accordion';
+    import Resultbox from './ckeditor_plugins/resultbox/resultbox';
 
     // Build
     import buildEditors from './ckeditor_build';
@@ -98,7 +99,8 @@ export default { exec };
         SourceEditing,
         WordCount,
         // Custom plugins
-        Accordion
+        Accordion,
+        Resultbox
     ];
 
 /** Config tools & toolbars in the editor */
@@ -110,7 +112,7 @@ export default { exec };
                 'undo', 'redo', 
                 '|', 'heading', 'alignment',  'fontSize', 'fontColor',
                 '|', 'bold', 'italic', 'code', 'underline', 'strikethrough',
-                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', 'accordionItem',
+                '|', 'link', 'codeBlock', 'ckfinder', 'mediaEmbed', 'blockQuote', 'horizontalLine', 'insertTable', 'accordionItem', 'resultbox',
                 '|', 'bulletedList', 'numberedList',
                 '|', 'findAndReplace', 'sourceEditing'
             ],
@@ -133,8 +135,7 @@ export default { exec };
                 { language: 'css', label: 'CSS' },
                 { language: 'php', label: 'PHP' },
                 { language: 'javascript', label: 'JavaScript' },
-                { language: 'plaintext', label: 'Plain text' },
-                { language: 'result', label: 'Result' },
+                { language: 'plaintext', label: 'Plain text' }
             ]
         },
         table: {

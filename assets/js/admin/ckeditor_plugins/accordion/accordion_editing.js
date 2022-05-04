@@ -60,20 +60,20 @@ export default class AccordionItemEditing extends Plugin {
             model: 'accordionItem',
             view: {
                 name: 'div',
-                classes: 'ck-accordion-item'
+                classes: 'accordion-container'
             }
         } );
         conversion.for( 'dataDowncast' ).elementToElement( {
             model: 'accordionItem',
             view: {
                 name: 'div',
-                classes: 'ck-accordion-item'
+                classes: 'accordion-container'
             }
         } );
         conversion.for( 'editingDowncast' ).elementToElement( {
             model: 'accordionItem',
             view: ( modelElement, { writer: viewWriter } ) => {
-                const section = viewWriter.createContainerElement( 'div', { class: 'ck-accordion-item' } );
+                const section = viewWriter.createContainerElement( 'div', { class: 'ck-accordion-container' } );
 
                 return toWidget( section, viewWriter, { label: 'accordion item widget' } );
             }
@@ -98,7 +98,7 @@ export default class AccordionItemEditing extends Plugin {
             model: 'accordionItemTitle',
             view: ( modelElement, { writer: viewWriter } ) => {
                 // Note: You use a more specialized createEditableElement() method here.
-                const h1 = viewWriter.createEditableElement( 'h5', { class: 'accordion-title' } );
+                const h1 = viewWriter.createEditableElement( 'h5', { class: 'ck-accordion-title' } );
 
                 return toWidgetEditable( h1, viewWriter );
             }
@@ -123,7 +123,7 @@ export default class AccordionItemEditing extends Plugin {
             model: 'accordionItemContent',
             view: ( modelElement, { writer: viewWriter } ) => {
                 // Note: You use a more specialized createEditableElement() method here.
-                const div = viewWriter.createEditableElement( 'div', { class: 'accordion-content' } );
+                const div = viewWriter.createEditableElement( 'div', { class: 'ck-accordion-content' } );
 
                 return toWidgetEditable( div, viewWriter );
             }
