@@ -125,12 +125,13 @@ async function codeBlock()
     if(elements.length < 1) return;
 
     for(let element of elements) {
-        if(element.getAttribute('data-file-url')) {
-            await uploadedFile__fetchContent(element);
+        if(element.classList.length > 0 && element.classList[0].startsWith('language-')) { // to avoid conflict with the inline `code` markup
+            if(element.getAttribute('data-file-url')) {
+                await uploadedFile__fetchContent(element);
+            }
+            codeBlock__buildOne(element);
         }
-        codeBlock__buildOne(element);
     }
-    
     hljs.highlightAll(); console.log('highlight.js loaded!');
 }
 
@@ -232,6 +233,14 @@ async function resultBox()
                 let type = embedDiv.getAttribute('data-ckfinder-embed-type');
                 if(type === 'result') { // script result
                     uploadedFile__fetchContent(embedDiv.querySelector('.content-result'));
+
+                    var frame = embedDiv.querySelector("iframe.content-result");
+                    frame.style.height = frame.contentWindow.document.body.scrollHeight+"px";
+                    // console.log(frame)
+                    // frame.onload = function() {
+                    //     frame.style.height = frame.contentWindow.document.body.scrollHeight + 'px';
+                    //     // frame.style.width  = frame.contentWindow.document.body.scrollWidth+'px';
+                    // }
                 }
             }
         }
