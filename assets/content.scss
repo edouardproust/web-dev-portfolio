@@ -28,18 +28,7 @@ figure.image:hover {
 }
 
 /**
- * Code
- */
-
-code.hljs {
-    scroll-behavior: auto;
-    max-height: 400px;
-    tab-size: 34px;
-    @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
-}
-
-/**
- * Captions (Image + Code)
+ * Embed headers
  */
 
 figcaption,
@@ -50,15 +39,43 @@ figcaption,
     color: $gray-550;
     background-color: $card-cap-bg;
 }
-figcaption {
-    border: $card-border-width solid $card-border-color;
-    border-top: none;
+
+/**
+ * Code
+ */
+
+code.hljs {
+    scroll-behavior: auto;
+    max-height: 400px;
+    tab-size: 34px;
+    @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
 }
 .code-header {
     font-size: $form-text-font-size * 0.9;
     border: $card-border-width solid $card-border-color;
     border-bottom: none;
     @include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
+}
+.code-result {
+    .code-header {
+        background-color: $blue-100;
+        color: $blue-400;
+        border: $card-border-width solid $blue-200;
+    }
+    *.hljs {
+        color: $body-color;
+        background-color: $body-bg;
+        border: $card-border-width solid $blue-200;
+        border-top: 0px;
+    }
+}
+
+/**
+ * Captions (Image + Code)
+ */
+figcaption {
+    border: $card-border-width solid $card-border-color;
+    border-top: none;
 }
 // lightbox captions (image)
 .lightbox-caption {

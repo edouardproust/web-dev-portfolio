@@ -110,9 +110,9 @@
                                     {% if isTextLogo %}
                                         <h4 class="footer-logo-text">{{ siteName|raw }}</h4>
                                     {% else %}
-                                        <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME') }} logo" class="mb-4"  style="height:{{ headerLogoHeight / 1.5 }}px"><br>
+                                        <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME')|raw }} logo" class="mb-4"  style="height:{{ headerLogoHeight / 1.5 }}px"><br>
                                     {% endif %}
-                                    &copy; {{ config('SITE_NAME') }} {{ date()|date('Y') }}. All Rights Reserved.
+                                    &copy; {{ date()|date('Y') }}. All Rights Reserved.
                                 </div>
 
                                 <div class="col-12 col-lg-auto text-center text-lg-end">
