@@ -1,22 +1,23 @@
 @import './sass/variables';
 @import './sass/mixins';
 
+@import '~bootstrap/scss/bootstrap';
 
-// @import './sass/typography';
-// @import './sass/fonts/fonts';
+@import './sass/typography';
+@import './sass/fonts/fonts';
 // @import './sass/custom-fonts';
 
 // @import './sass/layouts';
-// @import './sass/topbar';
-// @import './sass/header';
-// @import './sass/footer';
+@import './sass/topbar';
+@import './sass/header';
+@import './sass/footer';
 @import './sass/menu';
 
 // @import './sass/pagetitle';
 // @import './sass/portfolio';
 // @import './sass/blog';
 
-// @import '~bootstrap/scss/bootstrap';
+
 // @import './sass/utilities';
 
 
@@ -34,7 +35,7 @@
 
 // @import './sass/dark';
 
-// @import './sass/fonts/font-icons';
+@import './sass/fonts/font-icons';
 
 // @import './sass/custom';
 
