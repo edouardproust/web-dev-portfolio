@@ -15,12 +15,6 @@ Encore
 
     .addEntry('app', './assets/app.js')
     .addEntry('admin', './assets/admin.js')
-    .addEntry('animation', './assets/animation.js')
-    .addEntry('ui', './assets/ui.js')
-    .addEntry('gallery', './assets/gallery.js')
-    .addEntry('slider', './assets/slider.js')
-    .addEntry('content', './assets/content.js')
-    .addEntry('video', './assets/video.js')
 
     .enableStimulusBridge('./assets/controllers.json')
     

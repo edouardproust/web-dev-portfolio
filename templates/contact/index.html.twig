@@ -12,13 +12,10 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('ui') }}
-    {{ encore_entry_link_tags('content') }}
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-    {{ encore_entry_script_tags('content') }}
 {% endblock %}
 
 {% set breadcrumb = [

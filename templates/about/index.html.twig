@@ -11,15 +11,10 @@
 
     {% block javascripts %}
         {{ parent() }}
-        {{ encore_entry_script_tags('content') }}
-        {{ encore_entry_script_tags('slider') }}
-        {# {{ encore_entry_script_tags('animation') }} #}
-        {{ encore_entry_script_tags('gallery') }}
     {% endblock %}
 
     {% block stylesheets %}
         {{ parent() }}
-        {{ encore_entry_link_tags('content') }}
     {% endblock %}
 
     {% set breadcrumb = [

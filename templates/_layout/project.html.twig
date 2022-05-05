@@ -2,17 +2,10 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-    {{ encore_entry_link_tags('content') }}
-	{% if showComments %}
-		{{ encore_entry_link_tags('ui') }}
-	{% endif %}
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	{{ encore_entry_script_tags('content') }}
-	{{ encore_entry_script_tags('slider') }}
-	{{ encore_entry_script_tags('gallery') }}
 {% endblock %}
 
 {# /!\ 
