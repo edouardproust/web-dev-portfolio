@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block javascripts %}
-	{{ parent() }}
-{% endblock %}
-
 {# Prepare #}
     {% set hasFeaturedSection = featuredProjects is defined 
         and featuredProjects is iterable 

@@ -1,7 +1,13 @@
 {% extends '_layout/collection.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('projects') }}
+{% endblock %}
+
 {% block javascripts %}
-    {{ parent() }}
+	{{ parent() }}
+    {{ encore_entry_script_tags('projects') }}
 {% endblock %}
 
 {# Config #}

@@ -2,8 +2,14 @@
 
 {% block title %}{{ codingLanguage.label ~ ' Lessons' }}{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('lessons') }}
+{% endblock %}
+
 {% block javascripts %}
-    {{ parent() }}
+	{{ parent() }}
+    {{ encore_entry_script_tags('lessons') }}
 {% endblock %}
 
 {% set breadcrumb = [

@@ -1,11 +1,19 @@
 {% extends '_layout/page.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('user') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('user') }}
+{% endblock %}
+
 {% block title %}My account{% endblock %}
 
 {% set page_title = "My account" %}
-
-{% block stylesheets %}
-	{{ parent() }}
+    
 {% endblock %}
 
 {% block content %}

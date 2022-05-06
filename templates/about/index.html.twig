@@ -5,17 +5,19 @@
 
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('about') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('about') }}
+{% endblock %}
+
 {% block title %}About{% endblock %}
 
 {# Layout #}
-
-    {% block javascripts %}
-        {{ parent() }}
-    {% endblock %}
-
-    {% block stylesheets %}
-        {{ parent() }}
-    {% endblock %}
 
     {% set breadcrumb = [
         {label: 'Home', url: '/'},

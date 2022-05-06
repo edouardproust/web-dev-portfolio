@@ -13,8 +13,20 @@ Encore
     .setPublicPath('/build')
     //.setManifestKeyPrefix('build/')
 
-    .addEntry('app', './assets/app.js')
-    .addEntry('admin', './assets/admin.js')
+    .addEntry('app', './assets/_app.js')
+    .addEntry('admin', './assets/_admin.js')
+    .addEntry('404', './assets/404.js')
+    .addEntry('about', './assets/about.js')
+    .addEntry('contact', './assets/contact.js')
+    .addEntry('home', './assets/home.js')
+    .addEntry('lesson', './assets/lesson.js')
+    .addEntry('lessons', './assets/lessons.js')
+    .addEntry('login-register', './assets/login-register.js')
+    .addEntry('post', './assets/post.js')
+    .addEntry('posts', './assets/posts.js')
+    .addEntry('project', './assets/project.js')
+    .addEntry('projects', './assets/projects.js')
+    .addEntry('user', './assets/user.js')
 
     .enableStimulusBridge('./assets/controllers.json')
     

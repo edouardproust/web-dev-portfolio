@@ -2,8 +2,14 @@
 
 {% block title %}{{ codingLanguage.label ~ ' Projects' }}{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('projects') }}
+{% endblock %}
+
 {% block javascripts %}
-    {{ parent() }}
+	{{ parent() }}
+    {{ encore_entry_script_tags('projects') }}
 {% endblock %}
 
 {% set breadcrumb = [
