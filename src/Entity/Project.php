@@ -9,6 +9,7 @@ use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -104,8 +105,8 @@ class Project
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity=Comment::class, 
-     *     mappedBy="project", 
+     *     targetEntity=Comment::class,
+     *     mappedBy="project",
      *     orphanRemoval=true,
      *     cascade={"remove", "persist"}
      * )
@@ -139,7 +140,7 @@ class Project
     private $tools;
 
 
-    public function __construct()
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->categories = new ArrayCollection();
         $this->codingLanguages = new ArrayCollection();
@@ -151,7 +152,7 @@ class Project
 
     public function __toString()
     {
-        return $this->getTitle();
+        return '<a href="#">' . $this->getTitle() . '</a>';
     }
 
     public function getId(): ?int

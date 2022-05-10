@@ -19,7 +19,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class CreateAdminCommand extends Command
 {
-
     const REQUIRE_USERNAME = true;
     const REQUIRE_PASSWORD = true;
 

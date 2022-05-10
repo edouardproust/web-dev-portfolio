@@ -2,17 +2,12 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-    {{ encore_entry_link_tags('content') }}
-	{% if showComments %}
-		{{ encore_entry_link_tags('ui') }}
-	{% endif %}
+    {{ encore_entry_link_tags('project') }}
 {% endblock %}
 
 {% block javascripts %}
 	{{ parent() }}
-	{{ encore_entry_script_tags('content') }}
-	{{ encore_entry_script_tags('slider') }}
-	{{ encore_entry_script_tags('gallery') }}
+    {{ encore_entry_script_tags('project') }}
 {% endblock %}
 
 {# /!\ 
@@ -132,7 +127,7 @@
 												</li>
 											{% endif %}
 
-											{% if project.comments|length > 0 %}
+											{% if project.comments is not empty %}
 												<li>
 													<span class="not-bold">
 														<i class="icon-comment-alt1"></i><a href="#comments">{{ project.comments|length }} comment{% if project.comments|length > 1 %}s{% endif %}</a>

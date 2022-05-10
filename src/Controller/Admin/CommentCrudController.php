@@ -12,10 +12,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\BatchActionDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class CommentCrudController extends AbstractEntityCrudController
 {
@@ -55,6 +57,9 @@ class CommentCrudController extends AbstractEntityCrudController
         yield AssociationField::new('project', 'On project')->hideOnIndex();
         yield AssociationField::new('lesson', 'On lesson')->hideOnIndex();
         yield AssociationField::new('post', 'On post')->hideOnIndex();
+        yield UrlField::new('postTypeUrl', 'Post')
+            ->onlyOnIndex()
+            ->formatValue(fn () => 'View');
         yield DateTimeField::new('createdAt', 'Posted on')
             ->hideWhenCreating()
             ->setFormat('medium');

@@ -1,9 +1,13 @@
 {% extends '_layout/collection.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('projects') }}
+{% endblock %}
+
 {% block javascripts %}
-    {{ parent() }}
-	{{ encore_entry_script_tags('slider') }}
-	{{ encore_entry_script_tags('gallery') }}
+	{{ parent() }}
+    {{ encore_entry_script_tags('projects') }}
 {% endblock %}
 
 {# Config #}
@@ -15,10 +19,10 @@
     {label: 'Home', url: path('home')},
     {label: 'Portfolio', active: true}
 ] %}
-{% set collection_filters = {
+{% set collection_filters = [ {
     collection: categories,
     showAllLabel: 'All Categories'
-} %}
+} ] %}
 
 
 {# Collection of Projects =============================================== #}

@@ -38,7 +38,8 @@
 {% block hero %}
 
     {% include "_sections/page-title/lesson-show.html.twig" with { 
-        post: lesson
+        post: lesson,
+        comments: visibleComments
 	} %}
 
 {% endblock %}

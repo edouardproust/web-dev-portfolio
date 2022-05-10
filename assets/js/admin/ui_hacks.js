@@ -12,7 +12,7 @@ function exec(){
 	const eaForm = document.querySelector(SELECTOR_EDIT) ?? document.querySelector(SELECTOR_NEW);
 
 		if(eaIndexBody) { // only on index
-			adminOptionPlaceholdersTransform(eaIndexBody); console.log('adminOptionPlaceholdersTransform executed');
+			adminOptionPlaceholdersTransform(eaIndexBody); console.log('ui_hacks::adminOptionPlaceholdersTransform executed');
 		}		
 		if(eaForm) { // only on forms
 			// ...

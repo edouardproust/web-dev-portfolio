@@ -102,7 +102,7 @@ class Post
 
     public function __toString()
     {
-        return $this->getTitle();
+        return '<a href="#">' . $this->getTitle() . '</a>';
     }
 
     public function getId(): ?int

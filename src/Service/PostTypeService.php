@@ -4,18 +4,44 @@ namespace App\Service;
 
 use App\Entity\Post;
 use App\Entity\Lesson;
+use App\Entity\Comment;
 use App\Entity\Project;
-use Doctrine\Common\Collections\Collection;
+use App\Form\CommentType;
+use App\Event\CommentSubmitEvent;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use App\EventListener\CommentSubmitSubscriber;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class PostTypeService
+class PostTypeService extends AbstractController
 {
-    private $urlGenerator;
+    const COMMENT_SUBMIT_SUCCESS_EVENT = 'commentSubmitSuccess';
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
-    {
+    private $urlGenerator;
+    private $entityManager;
+    private $flashBag;
+    private $eventDispatcher;
+    private $session;
+
+    public function __construct(
+        UrlGeneratorInterface $urlGenerator,
+        EntityManagerInterface $entityManager,
+        FlashBagInterface $flashBag,
+        EventDispatcherInterface $eventDispatcher,
+        SessionInterface $session
+    ) {
         $this->urlGenerator = $urlGenerator;
+        $this->entityManager = $entityManager;
+        $this->flashBag = $flashBag;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->session = $session;
     }
 
     /**
@@ -83,5 +109,23 @@ class PostTypeService
             return $nextPosts[0] ?? null;
         }
         return null;
+    }
+
+    public function getCommentForm(Request $request, object $entity)
+    {
+        $form = $this->createForm(CommentType::class, new Comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = $form->getData();
+
+            // Event hook
+            $commentSubmitEvent = new CommentSubmitEvent($comment, $entity);
+            $this->eventDispatcher->addSubscriber(new CommentSubmitSubscriber());
+            $this->eventDispatcher->dispatch($commentSubmitEvent, CommentSubmitEvent::NAME);
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
+            $this->flashBag->add(self::COMMENT_SUBMIT_SUCCESS_EVENT, 'Your comment has been submitted to moderation.');
+        }
+        return $form;
     }
 }

@@ -4,7 +4,12 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('ui') }}
+    {{ encore_entry_link_tags('login-register') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('login-register') }}
 {% endblock %}
 
 {% block content %}

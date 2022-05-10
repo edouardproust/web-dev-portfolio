@@ -30,20 +30,20 @@
 					<div class="col-md-6">
 					<div class="py-5 py-md-0">
 						<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">{{ section }}</small>
-						<h2 class="text-rotater" data-cursor={{ titleCursor }}>
+						<h1 class="fw-bold text-rotater" data-cursor={{ titleCursor }}>
 							{% if title.words is not defined %}
 								{{ title }}
 							{% else %}
 								<span class="t-rotate-texts d-none">{{ title.words }}</span>
 								{{ title.before is defined ? (' ' ~ title.before)|raw : '' }} <span class="t-rotate nocolor"></span>{{ title.after is defined ? (' ' ~ title.after)|raw : '' }}
 							{% endif %}
-						</h2>
+						</h1>
 
 						<h5 class="fw-light ls1" style="opacity: .7">{{ headline }}</h5>
 						
-						{% include "_elements/contact-button.html.twig" with {
-							contactLabel: 'View my works',
-							contactLink: path('projects'),
+						{% include "_elements/contact-button-section.html.twig" with {
+							label: 'View my works',
+							url: path('projects'),
 							btnIcon: null,
 							socials: [ 
 								{ slug: 'email3', link: 'mailto:' ~ config('CONTACT_EMAIl') },
