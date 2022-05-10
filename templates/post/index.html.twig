@@ -18,10 +18,10 @@
     {label: 'Home', url: path('home')},
     {label: 'Blog', active: true}
 ] %}
-{% set collection_filters = {
+{% set collection_filters = [ {
     collection: categories,
     showAllLabel: 'All Categories'
-} %}
+} ] %}
 
 
 {# Collection of Posts =============================================== #}
@@ -41,7 +41,7 @@
 
         {{ parent() }}
 
-        <div id="collection" class="row grid-container block-gallery-9">
+        <div id="collection" class="row grid-container">
             {% for post in posts %}
                 {% include "_elements/blog-collection-item-2.html.twig" with { post: post } %}
             {% endfor %}

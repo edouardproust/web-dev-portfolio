@@ -7,6 +7,14 @@ namespace App;
  */
 class Path
 {
+    // front
+
+    const URL_PREFIX_PORTFOLIO = 'portfolio';
+    const URL_PREFIX_BLOG = 'blog';
+    const URL_PREFIX_LESSONS = 'lessons';
+
+    // back
+
     const PUBLIC = '/public';
 
     const UPLOADS_CKFINDER = '/uploads/ckfinder';

@@ -19,10 +19,10 @@
     {label: 'Lessons', url: path('lessons')},
 	{label: category.label, active: true}
 ] %}
-{% set collection_filters = {
+{% set collection_filters = [ {
     collection: codingLanguages,
     showAllLabel: 'All Languages' 
-} %}
+} ] %}
 {% set collection_items = lessons %}
 
 

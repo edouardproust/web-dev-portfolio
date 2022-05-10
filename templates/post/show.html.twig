@@ -37,7 +37,8 @@
 {% block hero %}
 
     {% include "_sections/page-title/post-show.html.twig" with { 
-        post: post
+        post: post,
+        comments: visibleComments
     } %}
 
 {% endblock %}

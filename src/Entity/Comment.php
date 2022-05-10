@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Helper\StringHelper;
+use App\Path;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -148,5 +149,23 @@ class Comment
     public function getExtract(): string
     {
         return StringHelper::extract($this->getContent(), 70);
+    }
+
+    /**
+     * @return null|Project|Lesson|Post
+     */
+    public function getPostTypeUrl()
+    {
+        switch ($this) {
+            case $this->getPost() !== null: $urlPrefix = Path::URL_PREFIX_BLOG; break;
+            case $this->getLesson() !== null: $urlPrefix = Path::URL_PREFIX_LESSONS; break;
+            case $this->getProject() !== null: $urlPrefix = Path::URL_PREFIX_PORTFOLIO; break;
+            default: $urlPrefix = null;
+        }
+        if ($urlPrefix) {
+            $entity = $this->getPost() ?? $this->getLesson() ?? $this->getProject();
+            return $urlPrefix . '/' . $entity->getSlug() . '_' . $entity->getId();
+        }
+        return null;
     }
 }

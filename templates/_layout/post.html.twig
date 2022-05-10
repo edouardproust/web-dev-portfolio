@@ -31,7 +31,7 @@
         <div class="content-wrap">
             <div class="container clearfix">
 
-                <div class="single-post mw-xs mx-auto">
+                <div class="single-post mw-sm mx-auto">
 
                     {% if hasAfterContent %}
                         <div class="entry clearfix">
@@ -63,7 +63,7 @@
 
                         {% if showComments %}
                             {% include "_sections/posttype/comments.html.twig" with { 
-                                comments: post.comments 
+                                comments: visibleComments 
                             } %}
                         {% endif %}
 

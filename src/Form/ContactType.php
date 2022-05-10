@@ -29,7 +29,7 @@ class ContactType extends AbstractType
             ])
             ->add('content', TextareaType::class, [
                 'label' => 'Your message',
-                'attr' => [ 'placeholder' => 'Name', 'style' => "height: 150px"],
+                'attr' => [ 'placeholder' => 'Name'],
                 'row_attr' => [ 'class' => 'form-floating' ],
             ]);
     }

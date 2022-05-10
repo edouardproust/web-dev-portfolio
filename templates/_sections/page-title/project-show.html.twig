@@ -15,7 +15,7 @@
     {% set animationDuration = '600ms' %}
     {# set shapeDivider = 'slant' #}
     {# set shapeDividerReverse = true #}
-    {% set h2LineHeight = '3.2rem' %}
+    {% set h1LineHeight = '3.2rem' %}
 
 
 {# Prepare #}
@@ -39,9 +39,9 @@
         {% endif %}
 
         <div class="fadeInUp animated" data-animate="fadeInUp"{{ animationDurationAttr|raw }}>
-            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >
+            <h1 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h1LineHeight }}" >
                 {{ post.title }}
-            </h2>
+            </h1>
             {% if post.headline is defined and post.headline is not null %}
                 <div class="page-description" style="opacity: .7">
                     {{ post.headline }}

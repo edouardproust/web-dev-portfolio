@@ -13,13 +13,13 @@
             ] %} 
         - shapeDivider = <string> eg. 'slant' Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html
         - shapeDividerReverse: <bool>
-        - h2LineHeight: <string> eg. '3.2rem'
+        - h1LineHeight: <string> eg. '3.2rem'
         - animationDuration = <string> eg. '600ms'
 #}
 
 {# set shapeDivider = 'slant' #}
 {# set shapeDividerReverse = true #}
-{% set h2LineHeight = '3.2rem' %}
+{% set h1LineHeight = '3.2rem' %}
 {% set animationDuration = '600ms' %}
 
 
@@ -45,7 +45,7 @@
         
 
         <div class="fadeInUp animated" data-animate="fadeInUp"{# data-delay="200" #}{{ animationDurationAttr|raw }}>
-            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ title }}</h2>
+            <h1 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h1LineHeight }}" >{{ title }}</h1>
 
             {% if subtitle is defined and subtitle is not null %}
                     <div class="page-description" style="opacity: .7">

@@ -127,7 +127,7 @@
 												</li>
 											{% endif %}
 
-											{% if project.comments|length > 0 %}
+											{% if project.comments is not empty %}
 												<li>
 													<span class="not-bold">
 														<i class="icon-comment-alt1"></i><a href="#comments">{{ project.comments|length }} comment{% if project.comments|length > 1 %}s{% endif %}</a>

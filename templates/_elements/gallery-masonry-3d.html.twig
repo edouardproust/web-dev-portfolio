@@ -37,7 +37,7 @@
 					<div class="img-hover-detail">
 						<small class="text-light ls1 fw-light">{{ categoriesList }}</small>
 						<h3 class="img-hover-title">
-							<a href="#">{{ title }}</a>
+							<a href="#">{{ title|extract(30) }}</a>
 						</h3>
 						<div class="img-link">
 							<a href="#"><i class="{{ icon is defined ? icon : 'icon-line-arrow-right' }}"></i></a>

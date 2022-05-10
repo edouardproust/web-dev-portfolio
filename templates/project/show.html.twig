@@ -44,7 +44,8 @@
 {% block hero %}
 
 	{% include "_sections/page-title/project-show.html.twig" with { 
-        post: project
+        post: project,
+        comments: visibleComments
     } %}
 	
 {% endblock %}

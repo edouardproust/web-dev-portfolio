@@ -17,10 +17,10 @@
     {label: 'Portfolio', url: path('projects')},
 	{label: codingLanguage.label, active: true}
 ] %}
-{% set collection_filters = {
+{% set collection_filters = [ {
     collection: categories,
     showAllLabel: 'All categories'
-} %}
+} ] %}
 {% set collection_items = projects %}
 
 
