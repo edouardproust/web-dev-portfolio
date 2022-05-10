@@ -66,7 +66,7 @@
 							{# Project Data #}
 							<div class="col-md-4">
 								<div class="card event-meta">
-									<div class="card-body">
+									<div class="card-body px-4">
 										<ul class="portfolio-meta mb-0">
 											
 											{% if project.url is not null %}
@@ -149,7 +149,7 @@
 							</div>
 						</div>
 
-			{% if hasAfterContent %}
+			{% if hasAfterContent and relatedProjects|length > 0 %}
 
 						<div class="divider divider-center"><i class="icon-circle"></i></div>
 
@@ -161,7 +161,7 @@
 					</div>
 				</div>
 
-				<div class="single-post mw-xs mx-auto">
+				<div class="single-post mw-sm mx-auto">
                             
 
 					{% if showProjectNavigation %}

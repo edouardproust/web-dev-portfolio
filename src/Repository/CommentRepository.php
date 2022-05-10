@@ -42,15 +42,18 @@ class CommentRepository extends ServiceEntityRepository
         ;
     }
 
-    /*
-    public function findOneBySomeField($value): ?Comment
+    /**
+     * @param int $max Maximum number of comments
+     * @return Comment[] Returns an array of Comment objects
+     */
+    public function findIsNotVisibleAll(int $max)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.isVisible = false')
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults($max)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
 }

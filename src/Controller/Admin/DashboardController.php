@@ -22,6 +22,7 @@ use App\Helper\CKFinderAuthenticator;
 use App\Repository\AdminOptionRepository;
 use App\Controller\Admin\AuthorCrudController;
 use App\Path;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -39,17 +40,20 @@ class DashboardController extends AbstractDashboardController
     private $adminUrlGenerator;
     private $adminOptionRepository;
     private $userService;
+    private $commentRepository;
 
     public function __construct(
         AuthorRepository $authorRepository,
         AdminUrlGenerator $adminUrlGenerator,
         AdminOptionRepository $adminOptionRepository,
-        UserService $userService
+        UserService $userService,
+        CommentRepository $commentRepository
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->adminOptionRepository = $adminOptionRepository;
         $this->userService = $userService;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -57,16 +61,20 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        // Cards
+        // Cards (templates: `templates/admin/_parts/card`)
         $highestRole = $this->userService->getHighestRole($this->getUser());
         $cards = [];
         if ($highestRole === Config::ROLE_ADMIN) {
-            $cards['approveAuthors'] = [
-                'authors' => $this->authorRepository->findIsNotApproved(),
-                'link' => $this->adminUrlGenerator->setController(AuthorCrudController::class)->generateUrl()
-            ];
-            $cards['purgeFiles'] = [
-                'link' => $this->generateUrl('admin_files_purge')
+            $cards = [
+                'approveAuthors' => [
+                    'authors' => $this->authorRepository->findIsNotApproved(),
+                    'link' => $this->adminUrlGenerator->setController(AuthorCrudController::class)->generateUrl()
+                ],
+                'purgeFiles' => [ 'link' => $this->generateUrl('admin_files_purge') ],
+                'approveComments' => [
+                    'comments' => $this->commentRepository->findIsNotVisibleAll(6),
+                    'link' => $this->adminUrlGenerator->setController(CommentCrudController::class)->generateUrl()
+                ]
             ];
         }
 

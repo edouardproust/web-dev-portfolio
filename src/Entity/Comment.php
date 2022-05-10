@@ -146,9 +146,21 @@ class Comment
         return $this;
     }
 
-    public function getExtract(): string
+    // Methods for twig
+
+    /**
+     * @return null|Project|Lesson|Post
+     */
+    public function getEntity()
     {
-        return StringHelper::extract($this->getContent(), 70);
+        return $this->getPost() ?? $this->getLesson() ?? $this->getProject();
+    }
+
+    // Methods for easyadmin fields
+
+    public function getExtract(int $length = 70): string
+    {
+        return StringHelper::extract($this->getContent(), $length);
     }
 
     /**
@@ -163,7 +175,7 @@ class Comment
             default: $urlPrefix = null;
         }
         if ($urlPrefix) {
-            $entity = $this->getPost() ?? $this->getLesson() ?? $this->getProject();
+            $entity = $this->getEntity();
             return $urlPrefix . '/' . $entity->getSlug() . '_' . $entity->getId();
         }
         return null;
