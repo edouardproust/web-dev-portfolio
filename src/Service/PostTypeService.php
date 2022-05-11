@@ -81,6 +81,7 @@ class PostTypeService extends AbstractController
      * Returns previous or next Post, Lesson or Project (based on ids)
      * @param Post|Lesson|Project $entity The reference entity
      * @param string $prevNext 'prev' or 'next' depending on the link you want to get (previous or next one)
+     * @param array $order Default: ['createdAt' => 'DESC']
      * @return Post|Lesson|Project|null The previous or next entity
      * / null if first post (no previous one) or last post (no next one)
      * (depending on the $result var value: 'prev' or 'nex')
@@ -88,25 +89,19 @@ class PostTypeService extends AbstractController
     private function getPreviousAndNextPosts(
         object $entity,
         ServiceEntityRepository $repository,
-        $prevNext = 'prev'
+        string $prevNext,
+        array $order = ['createdAt' => 'DESC']
     ): ?object {
-        $allPosts = $repository->findBy([], ['id' => 'ASC']);
-        $nextPosts = $prevPosts = [];
-
+        $allPosts = $repository->findBy([], $order);
+        foreach ($allPosts as $index => $post) {
+            if ($entity === $post) {
+                $entityIndex = $index;
+            }
+        }
         if ($prevNext === 'prev') {
-            for ($i = count($allPosts) - 1; $i >= 0; $i--) {
-                if ($allPosts[$i]->getId() < $entity->getId()) {
-                    $prevPosts[] = $allPosts[$i];
-                }
-            }
-            return $prevPosts[0] ?? null;
+            return $allPosts[$entityIndex - 1] ?? null;
         } elseif ($prevNext === 'next') {
-            for ($i = 0; $i < count($allPosts) - 1; $i++) {
-                if ($allPosts[$i]->getId() > $entity->getId()) {
-                    $nextPosts[] = $allPosts[$i];
-                }
-            }
-            return $nextPosts[0] ?? null;
+            return $allPosts[$entityIndex + 1] ?? null;
         }
         return null;
     }

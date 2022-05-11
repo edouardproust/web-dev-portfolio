@@ -28,7 +28,6 @@
 ] %}
 
 {# Prepare #}
-
     {% set logoUrl = vich_uploader_asset(config('SITE_LOGO', true), 'fileFile') %}
     {% set faviconUrl = vich_uploader_asset(config('SITE_FAVICON', true), 'fileFile') %}
     {% set logoFooterClass = 'logo-color-invert' %}
@@ -107,7 +106,7 @@
                                 {% if isTextLogo %}
                                     <h3 class="footer-logo-text">{{ siteName|raw }}</h3>
                                 {% else %}
-                                    <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME')|raw }} logo" class="mb-4"  style="height:{{ headerLogoHeight / 1.5 }}px"><br>
+                                    <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME')|raw }} logo" class="mb-4" style="height:{{ headerLogoHeight / 1.5 }}px"><br>
                                 {% endif %}
                                 &copy; {{ date()|date('Y') }}. All Rights Reserved.
                             </div>

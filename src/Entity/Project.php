@@ -152,7 +152,7 @@ class Project
 
     public function __toString()
     {
-        return '<a href="#">' . $this->getTitle() . '</a>';
+        return $this->getTitle();
     }
 
     public function getId(): ?int

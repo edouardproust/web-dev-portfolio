@@ -38,7 +38,7 @@
                                     <div class="flip-card-inner mt-3">
                                         <h4 class="mb-4">{{ card.contentBack }}</h4>
                                         {% if card.btnLabel is defined and card.btnLink is defined %}
-                                            {% include "_elements/buttons/button-lg-reveal.html.twig" with {
+                                            {% include "_elements/button.html.twig" with {
                                                 url: card.btnLink,
                                                 label: card.btnLabel
                                             } %}

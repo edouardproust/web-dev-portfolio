@@ -156,7 +156,20 @@ class Comment
         return $this->getPost() ?? $this->getLesson() ?? $this->getProject();
     }
 
-    // Methods for easyadmin fields
+    /**
+     * @return null|string
+     */
+    public function getEntityType()
+    {
+        switch ($this) {
+            case $this->getPost() !== null: return Path::URL_PREFIX_BLOG;
+            case $this->getLesson() !== null: return Path::URL_PREFIX_LESSONS;
+            case $this->getProject() !== null: return Path::URL_PREFIX_PORTFOLIO;
+            default: return null;
+        }
+    }
+
+    // Methods for EasyAdmin fields
 
     public function getExtract(int $length = 70): string
     {
@@ -168,15 +181,9 @@ class Comment
      */
     public function getPostTypeUrl()
     {
-        switch ($this) {
-            case $this->getPost() !== null: $urlPrefix = Path::URL_PREFIX_BLOG; break;
-            case $this->getLesson() !== null: $urlPrefix = Path::URL_PREFIX_LESSONS; break;
-            case $this->getProject() !== null: $urlPrefix = Path::URL_PREFIX_PORTFOLIO; break;
-            default: $urlPrefix = null;
-        }
-        if ($urlPrefix) {
+        if ($entityType = $this->getEntityType()) {
             $entity = $this->getEntity();
-            return $urlPrefix . '/' . $entity->getSlug() . '_' . $entity->getId();
+            return $entityType . '/' . $entity->getSlug() . '_' . $entity->getId();
         }
         return null;
     }

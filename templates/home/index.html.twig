@@ -14,9 +14,8 @@
 
 {% block hero %}
 
-    <section id="slider"
-        class="slider-element min-vh-60 min-vh-md-100 include-header" 
-        style="background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto"
+    <section class="include-header" 
+        style="height: 100vh; background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto"
     >
         {% include "_sections/home/hero-slider.html.twig" with {
 			section: "Hello,",
@@ -37,7 +36,7 @@
 {% block main %}
 
 	<section id="content">
-		<div class="content-wrap">
+		<div class="content-wrap pt-0">
 
 			{# flip cards #}
 			{% include "_sections/home/flip-cards.html.twig" with {

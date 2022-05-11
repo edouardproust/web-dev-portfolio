@@ -58,7 +58,7 @@ class ProjectController extends AbstractController
     {
         $project = $this->projectRepository->find($id);
         $prevNextLinks = $this->postTypeService
-            ->getPrevNextLinks($project, $this->projectRepository, 'project_show');
+            ->getPrevNextLinks($project, $this->projectRepository, 'project_show', ['createdAt' => 'DESC']);
 
         if ($this->adminOptions->get('SHOW_COMMENTS_ON_PROJECT')) {
             $commentForm = $this->postTypeService->getCommentForm($request, $project);

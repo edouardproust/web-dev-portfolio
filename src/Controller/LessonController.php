@@ -58,7 +58,7 @@ class LessonController extends AbstractController
     {
         $lesson = $this->lessonRepository->find($id);
         $prevNextLinks = $this->postTypeService
-            ->getprevNextLinks($lesson, $this->lessonRepository, 'lesson_show');
+            ->getprevNextLinks($lesson, $this->lessonRepository, 'lesson_show', ['createdAt' => 'DESC']);
 
         if ($this->adminOptions->get('SHOW_COMMENTS_ON_LESSON')) {
             $commentForm = $this->postTypeService->getCommentForm($request, $lesson);

@@ -6,16 +6,16 @@
     {% endfor %}
 {% endfor %}
 
-<form method="post" novalidate>
+<form method="post" class="mb-0" novalidate>
     
-    <div class="form-group">
+    <div class="form-floating">
+        <input type="email" class="form-control" placeholder="name@example.com" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" required autofocus>    
         <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control sm-form-control" autocomplete="email" required autofocus>
     </div>
 
-    <div class="form-group">
+    <div class="form-floating">
+        <input type="password" class="form-control" placeholder="12345abcd" name="password" id="inputPassword" autocomplete="current-password" required>
         <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control sm-form-control" autocomplete="current-password" required>
     </div>
 
     <input type="hidden" name="_csrf_token"
@@ -33,8 +33,10 @@
         </div>
     #}
 
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Sign in</button>
-    </div>
+    {% include "_elements/button.html.twig" with {
+        label: 'Sign in',
+        type: 'submit',
+        icon: 'icon-line2-login'
+    } %}
 
 </form>

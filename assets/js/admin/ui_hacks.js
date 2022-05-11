@@ -1,5 +1,3 @@
-import lightbox from "../gallery/lightbox";
-
 const SELECTOR_INDEX = '.ea-index';
 const SELECTOR_EDIT = '.ea-edit-form';
 const SELECTOR_NEW = '.ea-new-form';
@@ -11,15 +9,15 @@ function exec(){
 	const eaEditForm = document.querySelector(SELECTOR_EDIT);
 	const eaForm = document.querySelector(SELECTOR_EDIT) ?? document.querySelector(SELECTOR_NEW);
 
-		if(eaIndexBody) { // only on index
-			adminOptionPlaceholdersTransform(eaIndexBody); console.log('ui_hacks::adminOptionPlaceholdersTransform executed');
-		}		
-		if(eaForm) { // only on forms
-			// ...
-		}
-		if(eaEditForm) { // only on edit
-			// ...
-		}	
+	if(eaIndexBody) { // only on index
+		adminOptionPlaceholdersTransform(eaIndexBody); console.log('ui_hacks::adminOptionPlaceholdersTransform executed');
+	}		
+	if(eaForm) { // only on forms
+		// ...
+	}
+	if(eaEditForm) { // only on edit
+		// ...
+	}	
 }
 export default { exec };
 
@@ -29,10 +27,8 @@ function adminOptionPlaceholdersTransform(body)
 	const placeholderBoundaryRight = '~%}';
 	const _value_ = '{%~value~%}';
 	const blocks = {
-		image: //
-			'<a href="' + _value_ + '" data-lightbox="image">' + 
-				'<img src="' + _value_ + '" style="max-width:200px;height:auto" />' +
-			'</a>',
+		image: 
+			'<img data-lightbox src="' + _value_ + '" style="max-width:200px;height:auto" />',
 		boolean: // {"type":"boolean","value":false}
 			'<div class="form-check form-switch">' +
 				'<input type="checkbox" class="form-check-input" ' + _value_ + ' disabled autocomplete="off">' +
@@ -48,7 +44,6 @@ function adminOptionPlaceholdersTransform(body)
 	indexTable.setAttribute('data-lightbox', true)
 	let adminOptionCells = indexTable.querySelectorAll('td[data-label="Value"]');
 	if(adminOptionCells) {
-		lightbox.exec();
 		adminOptionCells.forEach((cell) => {
 		let title = cell.querySelector('span[title]').title;
 		if(title.includes(placeholderBoundaryLeft) && title.includes(placeholderBoundaryRight)) {

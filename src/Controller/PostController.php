@@ -53,7 +53,7 @@ class PostController extends AbstractController
     {
         $post = $this->postRepository->find($id);
         $prevNextLinks = $this->postTypeService
-            ->getPrevNextLinks($post, $this->postRepository, 'post_show');
+            ->getPrevNextLinks($post, $this->postRepository, 'post_show', ['createdAt' => 'DESC']);
 
         if ($this->adminOptions->get('SHOW_COMMENTS_ON_POST')) {
             $commentForm = $this->postTypeService->getCommentForm($request, $post);
