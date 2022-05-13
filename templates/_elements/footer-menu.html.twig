@@ -1,7 +1,0 @@
-<div class="copyrights-menu copyright-links">
-    {% for link in menu %}
-        {% if link.isVisible is not defined or link.isVisible is same as(true) %}
-            <a href="{{ link.url }}">{{ link.label }}</a>
-        {% endif %}
-    {% endfor %}
-</div>
