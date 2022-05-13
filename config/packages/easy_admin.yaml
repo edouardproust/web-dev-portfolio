@@ -1,6 +1,0 @@
-easy_admin:
-
-    entities:
-        User:
-            edit:
-                - { property: 'password', type: 'text', type_options: { required: false, empty_data: '' } }
