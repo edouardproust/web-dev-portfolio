@@ -1,0 +1,26 @@
+{# // Examples: https://themes.semicolonweb.com/html/canvas/toggles-accordions.html #}
+
+{#
+Mandatory variables:
+    - accordions: <array> Array of objects: [ { title: <string>, content: <string> },... ]
+        html is allowed for 'title' and 'content' attributes
+#}
+
+<div class="accordion accordion-bg" data-collapsible="true">
+    
+    {% for accordion in accordions %}
+        <div class="accordion-header">
+            <div class="accordion-icon">
+                <i class="accordion-closed icon-ok-circle"></i>
+                <i class="accordion-open icon-remove-circle"></i>
+            </div>
+            <div class="accordion-title">
+                {{ accordion.title|raw }}
+            </div>
+        </div>
+        <div class="accordion-content">
+            {{ accordion.content|raw }}
+        </div>
+    {% endfor %}
+    
+</div>

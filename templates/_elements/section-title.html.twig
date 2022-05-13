@@ -1,0 +1,41 @@
+{# 
+    Variables:
+    - title: hidden if not defined. Html allowed (add <span> tags around words to color them)
+    - titelSize: Default: '34px'
+	- titleLineHeight: Eg. '3.6rem'
+	- offsetLeft: true to apply a left offset
+    - content: string|string[] If si array: each subitem is a paragraph
+	- additionalHtml : Add additional HTML here if needed
+	- removeVerticalMargins: true to remove margin top and bottom
+	- columns: Bootstrap columns. Default: 6 (for 'col-lg-6')
+	- parallax: The class will apply only if both 'top' adnd 'bottom' parameters are defined. Default: not applied
+        - top: eg. '-100px'
+        - bottom: eg. '100px'
+#}
+
+{% set width = columns is defined ? 'col-lg-' ~ columns : 'col-lg-6' %}
+{% set offset = offsetLeft is defined and offsetLeft is same as(true) ? ' offset-lg-1' : '' %}
+{% set parallaxClass = parallax.top is defined and parallax.bottom is defined ? ' parallax' : '' %}
+{% set parallaxData = parallaxClass is not same as('') ? ' data-bottom-top=margin-top:' ~ parallax.top ~ ' data-top-bottom=margin-top:' ~ parallax.bottom : '' %}
+
+{% set verticalMargins = removeVerticalMargins is defined and removeVerticalMargins is same as(true) ? '' : ' mb-5' %}
+
+<div class="{{ width }}{{ offset }}{{ verticalMargins }}{{ parallaxClass }}"{{ parallaxData }}>
+	<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">{{ section }}</small>
+	<h2 class="fw-bold ls0 mb-4">
+		{{ title|raw }}
+	</h2>
+	{% if content is defined %}
+		{% if content is iterable %}
+			{% for paragraph in content %}
+				<p class="text-muted" style="font-size: 16px;">{{ paragraph }}</p>
+			{% endfor %}
+		{% else %}
+			<p class="text-muted" style="font-size: 16px;">{{ content }}</p>
+		{% endif %}
+		{% if additionalHtml is defined %}
+			{{ additionalHtml|raw }}
+		{% endif %}
+	{% endif %}
+	
+</div>

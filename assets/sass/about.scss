@@ -1,0 +1,12 @@
+@import './public/variables';
+@import './public/mixins';
+
+@import './public/pagetitle'; // optimized m
+@import './public/elements/sliders/flex-slider'; // needs to be optimized (created)
+@import './public/elements/skill-bar';
+@import './public/elements/counter';
+
+// 'related projects' section
+@import './public/portfolio'; // optimized m
+@import './public/animations'; // optimized l
+@import './public/elements/sliders/owl-carousel'; // optimized s (created)

@@ -1,0 +1,56 @@
+{% extends '_layout/post.html.twig' %}
+
+{# Config 
+
+    Mandatory variables:
+        - block 'title': displayed on browser tab
+        - page_title: <string> Used in 'title-page.html.twig' section
+        - post: <Post> The blog post object (set in controller)
+
+    Optionnal variables 
+        - whiteLogo: <bool>
+        - breadcrumb: <object[]> Used in 'title-page.html.twig' section
+            Array of objects: [{ label: <string>, url: <string> }, ... ]
+        - showAuthor: <bool>
+        - showComments: <bool>
+        - showPostNavigation: <bool> If set on true, youn must also set (mandatory):
+            - prevNextLinks: <array[]> Array containing data for each link (previous and next):
+                [ 'prev' => ['url' => string, 'title' => string], 'next' => ['url' => string, 'title' => string] ]
+#}
+
+{% block title %}Blog | {{ post.title|extract(30) }}{% endblock %}
+
+{% set whiteLogo = true %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Blog', url: path('posts')},
+    {label: post.title, active: true}
+] %}
+{% set showPostNavigation = true %}
+{% set showAuthor = true %}
+{% set showComments = true %}
+{% set prevNextLinks = prevNextLinks %}
+{% set author_routeName = 'author_posts' %}
+
+{# Show one Post ================================================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/post-show.html.twig" with { 
+        post: post,
+        comments: visibleComments
+    } %}
+
+{% endblock %}
+
+{% block content %}
+
+	{% if post.headline is not null %}
+		<div class="page_headline">
+			{{ post.headline }}
+		</div>
+	{% endif %}
+
+    {{ post.content }}
+
+{% endblock %}

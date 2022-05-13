@@ -1,0 +1,32 @@
+<h2>New Author registration request on "{{ config('SITE_NAME') }}"</h2>
+
+<p>Connect to <a href="{{ url('admin') }}">your admin dashboard</a> to accept or deny it.</p>
+
+<p>
+    <b>Registration details:</b>
+</p><p>
+	<b>Fullname:</b>
+	{{ authorRequest.fullName }}
+</p><p>
+	<b>Email:</b>
+	{{ authorRequest.user.email }}
+</p><p>
+	<b>bio:</b>
+    <br>
+    {{ authorRequest.bio|nl2br }}
+</p><p>
+	<b>Contact email:</b>
+	{{ authorRequest.contactEmail ?? '/' }}
+</p><p>
+	<b>Website:</b>
+	{{ authorRequest.contactEmail ?? '/' }}
+</p><p>
+	<b>GitHub:</b>
+	{{ authorRequest.github ?? '/' }}
+</p><p>
+	<b>StackOverflow:</b>
+	{{ authorRequest.stackoverflow ?? '/' }}
+</p><p>
+	<b>LinkedIn:</b>
+	{{ authorRequest.linkedIn ?? '/' }}
+</p>

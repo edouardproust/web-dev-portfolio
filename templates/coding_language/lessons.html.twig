@@ -1,0 +1,52 @@
+{% extends '_layout/collection.html.twig' %}
+
+{% block title %}{{ codingLanguage.label ~ ' Lessons' }}{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('lessons') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('lessons') }}
+{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'Lessons', url: path('lessons')},
+	{label: codingLanguage.label, active: true}
+] %}
+{% set collection_filters = [ {
+    collection: categories,
+    showAllLabel: 'All categories' 
+} ] %}
+{% set collection_items = lessons %}
+
+
+{# Collection of Projects =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Lessons: ' ~ codingLanguage.label,
+        subtitle: null
+    } %}
+    
+{% endblock %}
+
+{% block content %}
+
+    {% if lessons is defined and lessons|length > 0 %}
+        {{ parent() }}
+        <div id="collection" class="row grid-container">
+            {% for lesson in lessons %}
+                {% include "_elements/lesson-collection-item.html.twig" %}
+            {% endfor %}
+        </div>
+    {% else %}
+        No lesson for this language.
+    {% endif %}
+    
+{% endblock %}
+

@@ -1,0 +1,16 @@
+$counter-prefix: counter;
+
+.#{$counter-prefix} {
+	font-size: $counter-font-size;
+	font-weight: $counter-font-wight;
+	font-family: $counter-font-family;
+
+	&#{&}-large { font-size: $counter-lg-font-size; }
+
+	+ h5 {
+		font-weight: 400;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin-bottom: 10px;
+	}
+}

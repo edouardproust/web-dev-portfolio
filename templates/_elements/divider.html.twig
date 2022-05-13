@@ -1,0 +1,22 @@
+{# Examples: https://themes.semicolonweb.com/html/canvas/dividers.html #}
+
+{#
+Mandatory variables: 
+    - style: <int> Default: 1
+    - icon: <string> Default: 'icon-pencil'
+#}
+
+{# set #}
+
+{% set style = style is defined and style is not null ? style : 1 %}
+{% set icon = icon is defined and icon is not null ? icon : 'icon-pencil' %}
+
+{# Render #}
+
+{% if style == 1 %}
+    <div class="divider divider-border divider-center"><i class="{{ icon }}"></i></div>
+{% elseif style == 2 %}
+    <div class="divider divider-sm divider-rounded divider-center"><i class="{{ icon }}"></i></div>
+{% else %}
+    <div class="divider divider-border divider-center"><i class="{{ icon }}"></i></div>
+{% endif %}

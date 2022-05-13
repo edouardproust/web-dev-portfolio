@@ -1,0 +1,38 @@
+{# Mandatory variavles: 
+    - icon: <string> The icon class. Eg 'icon-line-mail' (list of icons: https://themes.semicolonweb.com/html/canvas/icons.html)
+    - title: <string> Html allowed
+    - content: <string> Html allowed
+#}
+
+{# Optionnal variables: 
+    - link: <string> The link url (href attribute)
+    - targetBlank: <bool> Open the link in a new page?
+    - hoverAnimation: <bool> Play hover animation even if the box has no link?
+#}
+
+{% set hasLink = link is defined and link is not null ? true : false %}
+{% set hoverAnimation = hasLink or hoverAnimation is defined and hoverAnimation is same as(true) ? ' fbox-effect' : '' %}
+{% set target = targetBlank is defined and targetBlank is same as(true) ? ' target="_blank"' : '' %}
+{% set colWidthLg = colWidthLg is defined ? colWidthLg : '3' %}
+{% set colWidthSm = colWidthSm is defined ? colWidthSm : '3' %}
+
+<div class="col-sm-{{ colWidthSm }} col-lg-{{ colWidthLg }}">
+
+    {% if hasLink %}
+        <a href="{{ link }}"{{ target }}>
+    {% endif %}
+
+    <div class="feature-box fbox-center fbox-bg{{ hoverAnimation }}">
+        <div class="fbox-icon">
+            <i class="{{ icon }}"></i>
+        </div>
+        <div class="fbox-content">
+            <h3>{{ title|raw }}<span class="subtitle">{{ content|raw }}</span></h3>
+        </div>
+    </div>
+
+    {% if hasLink %}
+        </a>
+    {% endif %}
+
+</div>

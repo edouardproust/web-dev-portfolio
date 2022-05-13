@@ -1,0 +1,17 @@
+
+<div class="col-sm-12 col-md-6 col-lg-4">
+  <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+            {% block card_title %}{% endblock %}
+        </h5>
+        <p class="card-text">
+          {% block card_text %}{% endblock %}
+        </p>
+        <div>{% block card_btn %}{% endblock %}</div>
+        <div class="mt-3 text-muted small">
+            {% block card_help %}{% endblock %}
+        </div>
+      </div>
+  </div>
+</div>

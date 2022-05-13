@@ -1,0 +1,41 @@
+.breadcrumbs {
+    width: 100% !important;
+}
+
+section.content-header {
+    flex-wrap: wrap;
+}
+
+.btn {
+    border-radius: 20px;
+    padding: 6px 16px;
+}
+
+.btn-light {
+    color: #525252 !important;
+    background-color: #ffffff !important;
+}
+.admin-crud-row-btn {
+    filter: opacity(1) !important;
+    // width: 30px !important;
+    transition: opacity 0.5s;
+    // border-radius: 20px;
+    padding: 8px 10px;
+}
+.admin-crud-row-btn:hover {
+    color: white !important;
+    opacity: 0.7;
+}
+.admin-crud-row-btn.btn-light:hover {
+    color: #525252 !important;
+}
+
+.datagrid td.actions .action-icon {
+    filter: opacity(1);
+    width: 16px !important;
+    margin: 0 !important;
+}
+
+.action-icon {
+    margin-right: 5px;
+}

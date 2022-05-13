@@ -1,0 +1,54 @@
+{% extends '_layout/collection.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('posts') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('posts') }}
+{% endblock %}
+
+{# Config #}
+
+{% block title %}Blog{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Blog', active: true}
+] %}
+{% set collection_filters = [ {
+    collection: categories,
+    showAllLabel: 'All Categories'
+} ] %}
+
+
+{# Collection of Posts =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Blog',
+        subtitle: 'Latest article, curated by world experts.'
+    } %}
+    
+{% endblock %}
+
+{% block content %}
+
+    {% if posts is defined and posts|length > 0 %}
+
+        {{ parent() }}
+
+        <div id="collection" class="row grid-container">
+            {% for post in posts %}
+                {% include "_elements/blog-collection-item-2.html.twig" with { post: post } %}
+            {% endfor %}
+        </div>
+
+    {% else %}
+        No post yet.
+    {% endif %}
+
+{% endblock %}

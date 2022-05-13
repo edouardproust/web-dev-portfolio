@@ -1,0 +1,194 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('project') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('project') }}
+{% endblock %}
+
+{# /!\ 
+    All variables are defined inside the page template: '<posttype>/show.html.twig'
+    Go to this template to get the variables list 
+#}
+
+{# Options #}
+
+{% set showAuthorMetaLink = false %}
+
+{# Prepare #}
+
+{% set projectUrl = path('project_show', {id: project.id, slug: project.slug}) %}
+
+{% set showProjectNavigation = showProjectNavigation is defined and showProjectNavigation is same as(true) ? true : false %}
+{% set showAuthor = showAuthor is defined and showAuthor is same as(true) ? true : false %}
+{% set showComments = showComments is defined and showComments is same as(true) ? true : false %}
+{% set showRelatedProjects = showRelatedProjects is defined and showRelatedProjects is same as(true) ? true : false %}
+
+{% set hasAfterContent = showProjectNavigation or showAuthor or showComments or showRelatedProjects ? true : false %}
+{% set hasCompletedOn = project.completedOn is defined and project.completedOn is not null ? true :false %}
+{% if hasCompletedOn %}
+	{% set completedOnFormated = project.completedOn|date('M d, Y') %}
+{% endif %}
+
+
+{# Project Show layout ====================================================================== #}
+
+{% block main %}
+
+<div class="as-console-wrapper"><div class="as-console"></div></div></body>
+
+	<section id="content" class="project-show">
+		<div class="content-wrap">
+			<div class="container clearfix">
+
+			{% if hasAfterContent %}
+				<div class="entry clearfix">
+					<div class="clear"></div>
+					<div class="entry-content mt-3">
+			{% endif %}
+
+						<div class="row col-mb-50">
+
+							{# Carousel #}
+	
+							<div class="col-12 portfolio-single-image">
+								{% if project.gallery|length > 0 %}
+									{% include "_elements/project_gallery_slider.html.twig" with { gallery: project.gallery } %}
+								{% else %}
+									<img src="{{ uploadUrl('UPLOADS_PROJECTS_THUMB', project.thumbnail) }}" alt="Image of project: {{ project.title }}">
+								{% endif %}
+							</div>
+
+							{# Project Data #}
+							<div class="col-md-4">
+								<div class="card event-meta">
+									<div class="card-body px-4">
+										<ul class="portfolio-meta mb-0">
+											
+											{% if project.url is not null %}
+												<li><span><i class="icon-line-external-link"></i><a href="{{ project.url }}" target="_blank">Visit project</a></span></li>
+											{% endif %}
+
+											{% if project.repository is not null %}
+												<li><span><i class="icon-line-github"></i><a href="{{ project.repository }}" target="_blank">Github repository</a></span></li>
+											{% endif %}
+
+											{% if project|hasApprovedAuthor and showAuthorMetaLink %}
+												<li><span><i class="icon-user1"></i>Author:</span>
+													<a href="{{ path('author_projects', {id: project.author.id}) }}">{{ project.author.fullname }}</a>
+												</li>
+											{% endif %}
+
+											{% if hasCompletedOn %}
+												<li><span><i class="icon-line-calendar"></i>Completed on:</span>{{ completedOnFormated }}</li>
+											{% endif %}
+
+											{% if project.codingLanguages|length > 0 %}
+												<li><span><i class="icon-code1"></i>Language{% if project.codingLanguages|length > 1 %}s{% endif %}:</span>
+												{% for language in project.codingLanguages %}
+													{% if language is not same as(project.codingLanguages|first) %} / {% endif %}
+													{{ language.label }}
+												{% endfor %}
+												</li>
+											{% endif %}											
+											
+											{% if project.technologies|length > 0 %}
+												<li><span><i class="icon-cubes"></i>Technolog{% if project.technologies|length > 1 %}ies{% else %}y{% endif %}:</span>
+												{% for technology in project.technologies %}
+													{% if technology is not same as(project.technologies|first) %} / {% endif %}
+													<a href="{{ technology.url }}" target="_blank">
+														{{ technology.label }}
+													</a>
+												{% endfor %}
+												</li>
+											{% endif %}
+
+											{% if project.tools|length > 0 %}
+												<li><span><i class="icon-line-tool"></i>Tool{% if project.tools|length > 1 %}s{% endif %}:</span>
+												{% for tool in project.tools %}
+													{% if tool is not same as(project.tools|first) %} / {% endif %}
+													<a href="{{ tool.url }}" target="_blank">
+														{{ tool.label }}
+													</a>
+												{% endfor %}
+												</li>
+											{% endif %}
+
+											{% if project.categories|length > 0 %}
+												<li><span><i class="icon-line-tag"></i>In:</span>
+												{% for category in project.categories %}
+													{% if category is not same as(project.categories|first) %} / {% endif %}
+													<a href="{{ path('project_category', {slug: category.slug}) }}">{{ category.label }}</a>
+												{% endfor %}
+												</li>
+											{% endif %}
+
+											{% if project.comments is not empty %}
+												<li>
+													<span class="not-bold">
+														<i class="icon-comment-alt1"></i><a href="#comments">{{ project.comments|length }} comment{% if project.comments|length > 1 %}s{% endif %}</a>
+													</span>
+												</li>
+											{% endif %}
+
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							{# Project Info #}
+							<div class="col-md-8 portfolio-single-content">
+
+								<div class="description-title">Project Info:</div>
+								{% block page_content %}{% endblock %}
+
+							</div>
+						</div>
+
+			{% if hasAfterContent and relatedProjects|length > 0 %}
+
+						<div class="divider divider-center"><i class="icon-circle"></i></div>
+
+						{% if showRelatedProjects %}
+							<h4>Related Projects:</h4>
+							{% include "_elements/projects-carousel.html.twig" with {projects: relatedProjects} %}
+						{% endif %}
+
+					</div>
+				</div>
+
+				<div class="single-post mw-sm mx-auto">
+                            
+
+					{% if showProjectNavigation %}
+						{% include "_sections/posttype/post-navigation.html.twig" with {
+							prevNextLinks: prevNextLinks
+						} %}
+					{% endif %}
+					
+					{% if showAuthor %}
+						{% include "_sections/posttype/author-box.html.twig" with {
+							author: project.author,
+							author_routeName: author_routeName
+						} %}
+					{% endif %}
+
+					{% if showComments %}
+						{% include "_sections/posttype/comments.html.twig" with {
+							comments: project.comments
+						} %}
+					{% endif %}
+
+				</div>
+
+			{% endif %}
+
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

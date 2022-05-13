@@ -1,0 +1,315 @@
+/* ----------------------------------------------------------------
+	Portfolio
+-----------------------------------------------------------------*/
+
+$portfolio-prefix: portfolio;
+$masonry-prefix: masonry;
+
+
+/* Portfolio - Items
+-----------------------------------------------------------------*/
+
+.#{$portfolio-prefix} {
+	position: relative;
+	&-item {
+		position: relative;
+		.#{$portfolio-prefix}-reveal & { overflow: hidden; }
+		.#{$portfolio-prefix}-image {
+			position: relative;
+			// overflow: hidden;
+		}
+		.#{$portfolio-prefix}-image,
+		.#{$portfolio-prefix}-image > a,
+		.#{$portfolio-prefix}-image img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+		&:not(.no-min-height) {
+			min-height: $portfolio-item-min-height;
+			.#{$portfolio-prefix}-image img {
+				min-height: $portfolio-item-min-height;
+				object-fit: cover;
+			}
+		}
+	}
+	&-rounded &-image {
+		border-radius: $grid_filter-border-radius + 1;
+		// overflow: hidden;
+	}
+
+	body:not(.device-touch) & {
+		-webkit-transition: height .4s linear;
+		-o-transition: height .4s linear;
+		transition: height .4s linear;
+	}
+}
+.portfolio-carousel-item {
+	.#{$portfolio-prefix}-image,
+	.#{$portfolio-prefix}-image > a,
+	.#{$portfolio-prefix}-image img {
+		height: $portfolio-carousel-height;
+		object-fit: cover;
+	}
+}
+
+@include media-breakpoint-up(md) {
+	.#{$portfolio-prefix}-reveal {
+		.#{$portfolio-prefix}-image img,
+		.bg-overlay {
+			-webkit-transition: all .3s ease-in-out;
+			-o-transition: all .3s ease-in-out;
+			transition: all .3s ease-in-out;
+		}
+	}
+}
+
+
+/* Portfolio - Item Title
+-----------------------------------------------------------------*/
+
+.#{$portfolio-prefix}-desc {
+	position: relative;
+	z-index: 6;
+	padding: $Portfolio_desc-padding;
+	h3 {
+		margin: 0 0 0.4rem 0;
+		padding: 0;
+		font-size: $Portfolio_desc-title-size;
+		.col-md-9 & {
+			font-size: decimal-round($Portfolio_desc-title-size / 1.1111, 3);
+		}
+
+		a {
+			color: darken($text-color, 13.33);
+			&:hover {
+				color: $theme-color;
+			}
+		}
+	}
+	span {
+		padding-top: 10px;
+		.col-md-9 & {
+			font-size: decimal-round($Portfolio_desc-title-size / 1.428, 3);
+		}
+	}
+
+	span,
+	span a {
+		color: lighten($text-color, 26.67);
+	}
+
+	span a:hover {
+		color: #000;
+	}
+
+	.desc-lg  & {
+		padding: 20px 8px;
+		h3 {
+			font-size: decimal-round($Portfolio_desc-title-size / .8333, 3);
+		}
+
+		span {
+			font-size: 110%;
+		}
+	}
+
+	.desc-sm & {
+		padding: $container-padding-x 5px;
+		h3 {
+		font-size: decimal-round($Portfolio_desc-title-size * .8, 3);
+		}
+
+		 span {
+			font-size: 90%;
+		}
+	}
+	.#{$portfolio-prefix}.g-0 & {
+		padding-left: $container-padding-x;
+		padding-right: $container-padding-x;
+	}
+
+	.desc-sm.g-0 & {
+		padding-left: $container-padding-x - 5;
+		padding-right: $container-padding-x - 5;
+	}
+
+	.#{$portfolio-prefix}-reveal & {
+		background-color: #FFF;
+		top: -100%;
+		-webkit-transform: translateY(100%);
+		transform: translateY(100%);
+		@include media-breakpoint-up(md) {
+			-webkit-transition: all .3s ease-in-out;
+			-o-transition: all .3s ease-in-out;
+			transition: all .3s ease-in-out;
+		}
+		@include media-breakpoint-down(sm) {
+			display: none !important;
+		}
+	}
+}
+
+.#{$portfolio-prefix}-reveal {
+	.#{$portfolio-prefix}-item {
+		&:hover {
+			.#{$portfolio-prefix}-desc {
+				-webkit-transform: translateY(0);
+				transform: translateY(0);
+			}
+
+			.#{$portfolio-prefix}-image img,
+			.bg-overlay {
+				-webkit-transform: translateY(0);
+				transform: translateY(0);
+				@include media-breakpoint-up(md) {
+					-webkit-transform: translateY(-15%);
+					transform: translateY(-15%);
+				}
+			}
+		}
+	}
+}
+
+/* ----------------------------------------------------------------
+	Grids
+-----------------------------------------------------------------*/
+
+.grid-container,
+.grid-inner {
+	position: relative;
+	overflow: hidden;
+	will-change: transform;
+}
+
+.grid-inner {
+	width: 100%;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+body:not(.device-touch) .grid-container {
+	-webkit-transition: height .4s ease;
+	-o-transition: height .4s ease;
+	transition: height .4s ease;
+}
+
+
+/* ----------------------------------------------------------------
+	Bootstrap Utility Classes: Extended
+-----------------------------------------------------------------*/
+
+@if $gutter-classes {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+		@include media-breakpoint-up($breakpoint) {
+	    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+	    @for $gutter-element from 1 through $gutter-classes {
+			@if $gutter-element % 10 == 0 {
+					.gutter#{$infix}-#{$gutter-element} {
+						margin-right: -#{$gutter-element/2}px;
+						margin-left: -#{$gutter-element/2}px;
+						margin-bottom: -#{$gutter-element}px;
+					}
+
+					.gutter#{$infix}-#{$gutter-element} > .col,
+					.gutter#{$infix}-#{$gutter-element} > [class*="col-"] {
+						padding-right: #{$gutter-element/2}px;
+						padding-left: #{$gutter-element/2}px;
+						padding-bottom: #{$gutter-element}px;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* ----------------------------------------------------------------
+	Overlays
+-----------------------------------------------------------------*/
+
+
+.bg-overlay,
+.bg-overlay-bg,
+.bg-overlay-content {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.bg-overlay {
+	z-index: 5;
+	[data-hover-animate]:not(.animated) {
+		opacity: 0;
+	}
+
+	&-content {
+		display: -ms-flexbox;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1;
+		padding: 20px;
+	}
+
+	&-bg {
+		background-color: rgba(255,255,255,0.85);
+	}
+}
+
+.dark .bg-overlay-bg,
+.bg-overlay-bg.dark {
+	background-color: rgba(0,0,0,0.5);
+}
+
+
+.text-overlay-mask {
+	opacity: 0.85;
+	top: auto;
+	bottom: 0;
+	height: auto;
+	padding: 40px 15px 15px;
+	background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.85))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.85) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.85) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.85) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.85) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+}
+
+.overlay-trigger-icon {
+	display: block;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
+	margin: 0 0.25rem;
+	font-size: 1.125rem;
+	text-align: center;
+	border-radius: 50%;
+	transition: all .3s ease;
+}
+
+.overlay-trigger-icon .icon-line-play {
+	position: relative;
+	left: 2px;
+}
+
+.overlay-trigger-icon.size-sm {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	margin: 0 0.5rem;
+	font-size: 0.875rem;
+}
+
+.overlay-trigger-icon.size-lg {
+	width: 64px;
+	height: 64px;
+	line-height: 64px;
+	margin: 0 0.5rem;
+	font-size: 1.5rem;
+}

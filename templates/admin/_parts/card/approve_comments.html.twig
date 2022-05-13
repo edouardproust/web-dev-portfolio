@@ -1,0 +1,22 @@
+{% extends "admin/_parts/card.html.twig" %}
+
+{% block card_title %}Approve comments{% endblock %}
+
+{% block card_text %}
+    <div class="mb-2">Last comments requesting your approval:</div>
+    {% for comment in data.comments %}
+        <div>
+            <span>« {{ comment.content|extract(30) }} »</span>
+            <span class="text-muted"> | {{ comment.entity.title|extract(20) }} ({{ comment.entityType }})</span>
+            <span class="text-muted"> | {{ comment.createdAt|date('m/d') }}</span>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block card_btn %}
+    <a href="{{ data.link }}" class="btn btn-primary">Manage comments</a>
+{% endblock %}
+
+{% block card_help %}
+    Only admins like you can approve or delete comments.
+{% endblock %}

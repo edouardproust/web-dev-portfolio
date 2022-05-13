@@ -1,0 +1,54 @@
+<div class="fslider testimonial testimonial-full" data-animation="fade" data-arrows="false">
+    <div class="flexslider">
+        <div class="slider-wrap">
+
+            {% for slide in slides %}
+                
+                {# mandatory variables #}
+                {% set content = slide.content %}
+                {% set name = slide.name %}
+
+                {# Optionnal variables #}
+                {% set link = slide.link %}
+                {% set img = slide.img %}
+                {% set company = slide.company %}
+
+                {# prepare #}
+                {% set hasLink = slide.link is defined and slide.link is not null ? true : false %}
+                {% set hasImg = slide.img is defined and slide.img is not null %}
+                {% set hasCompany = slide.company is defined and slide.company is not null %}
+
+                {% if hasLink %}
+                    <a href="{{ link }}">
+                {% endif %}
+                        <div class="slide">
+                
+                            {% if hasImg %}
+                                <div class="testi-image">
+                                    <img src="{{ img }}" alt="Testimonial of {{ name }}">
+                                </div>
+                            {% endif %}
+
+                            <div class="testi-content">
+
+                                <p>{{ content }}</p>
+                                
+                                <div class="testi-meta">
+                                    {{ name }}
+                                    {% if hasCompany %}
+                                        <span>{{company }}</span>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+
+                {% if hasLink %}
+                    </a>
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

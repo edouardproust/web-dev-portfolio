@@ -1,0 +1,23 @@
+<h3 class="mb-5">Register for an Account</h3>
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">{{ message|raw }}</div>
+    {% endfor %}
+{% endfor %}
+
+<p class="mb-5">
+    <span>Complete this form to submit you request to become an author on this website.</span>
+    <span> Authors can write blog posts and lessons.</span>
+    <span> After submitted, your request will be reviewed by the administrator.</span>
+    <span> Mandatory fields are marked with a *.</span>
+</p>
+
+{{ form_start(registerForm, {attr: {novalidate: '', class: 'mb-0' }}) }}
+{{ form_widget(registerForm) }}
+{{ form_errors(registerForm) }}
+{% include "_elements/button.html.twig" with {
+    label: 'Register',
+    type: 'submit'
+} %}
+{{ form_end(registerForm) }}
