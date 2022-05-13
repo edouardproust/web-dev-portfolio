@@ -32,15 +32,9 @@
 
                 <h3>Leave a <span>Comment</span></h3>
 
-                {% for flashGroup, flashes in app.flashes %}
-                    {% if flashGroup is same as('commentSubmitSuccess') %}
-                        <div class="style-msg successmsg">
-                            <div class="sb-msg">
-                                <i class="icon-check me-"></i>{{ flashes.0 }}
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                {% include "_elements/alert.html.twig" with {
+                    successGroup: 'commentSubmitSuccess'
+                } %}
 
                 {{ form_start(commentForm) }}
                 {{ form_widget(commentForm) }}

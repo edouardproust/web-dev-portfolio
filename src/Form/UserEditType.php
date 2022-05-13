@@ -20,14 +20,18 @@ class UserEditType extends AbstractType
                 'constraints' => [
                     new Email(),
                     new NotBlank()
-                ]
+                ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('password', PasswordType::class, [
                 'required' => false,
                 'label' => 'New password',
                 'constraints' => [
                     new NotBlank()
-                ]
+                ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ]);
     }
 

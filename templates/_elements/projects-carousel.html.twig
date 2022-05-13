@@ -27,7 +27,7 @@
 
 {# Projects Carousel element ===================================================== #}
 
-<div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget mb-5" data-margin="30" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="{{ cols }}" data-items-xl="{{ cols }}">
+<div id="related-portfolio" class="owl-carousel portfolio-carousel carousel-widget" data-margin="30" data-nav="false" data-autoplay="5000" data-items-xs="1" data-items-sm="2" data-items-md="{{ cols }}" data-items-xl="{{ cols }}">
     {% for project in projects %}
 
         {% set projectUrl = path('project_show', {id: project.id, slug: project.slug}) %}

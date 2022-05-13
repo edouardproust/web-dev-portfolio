@@ -1,5 +1,7 @@
 <h3 class="mb-5">Login to your Account</h3>
 
+{% include "_elements/alert.html.twig" %}
+
 {% for type, messages in app.flashes %}
     {% for message in messages %}
         <div class="alert alert-{{ type }}">{{ message|raw }}</div>

@@ -13,21 +13,35 @@
 {% endblock %}
 
 {% block hero %}
-
-    <section class="include-header" 
-        style="height: 100vh; background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto"
-    >
-        {% include "_sections/home/hero-slider.html.twig" with {
+	{# title rotation: 
+		{before: <string>, rotate: <string>, 'after: <string>} 
+		Separate 'words' with a "|". Eg: "These|words|will|rotate" 
+	#}	
+    <section class="include-header" style="height: 100vh; background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto">
+		{% include "_sections/home/hero.html.twig" with {
 			section: "Hello,",
 			title: {
 				before: "I am<br>", 
 				words:"a web developer.|a marketer.|an ecommerce expert.|a video editor.|a graphic designer.|a self-learner.", 
 			},
 			headline: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi quo ea magnam dignissimos quis obcaecati aut in.",
-			slides: [
-				{img: 'build/images/home/edouard.jpg'},
-				{img: 'build/images/home/edouard-nb.jpg'}
-			]
+			contactButtons: {
+				label: 'View my works',
+				url: path('projects'),
+				btnIcon: null,
+				socials: [ 
+					{ slug: 'email3', link: 'mailto:' ~ config('CONTACT_EMAIl') },
+					{ slug: 'github', link: config('SOCIAL_GITHUB') },
+					{ slug: 'linkedin', link: config('SOCIAL_LINKEDIN') }
+				]
+			},
+			slider: {
+				slides: [
+					{img: asset('build/images/home/edouard.jpg')},
+					{img: asset('build/images/home/edouard-nb.jpg')}
+				],
+				options: {}
+			}
 		} %}
     </section>
 
@@ -43,7 +57,6 @@
 				section: 'Experience',
 				title: "I've been coding every single day for the last " ~ stats.daysOfCoding ~ " days.",
 				columns: 4,
-				parallax: { top: '-100px', bottom: '100px' },
 				removeVerticalMargins: true,
 				cards: [ {
                         icon: 'icon-check',
