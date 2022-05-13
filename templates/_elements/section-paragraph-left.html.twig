@@ -1,0 +1,18 @@
+{# 
+    Variables:
+    - title: hidden if not defined
+    - content: string|string[] If si array: each subitem is a paragraph
+#}
+
+<div class="col-lg-6 offset-lg-1 my-5">
+    {% if title is defined %}
+        <h3 class="fw-bold ls0 mb-3" style="font-size: 34px;">{{ title }}</h3>
+    {% endif %}
+    	{% if content is iterable %}
+		{% for paragraph in content %}
+			<p class="text-muted" style="font-size: 16px;">{{ paragraph }}</p>
+		{% endfor %}
+	{% else %}
+		<p class="text-muted" style="font-size: 16px;">{{ content }}</p>
+	{% endif %}
+</div>

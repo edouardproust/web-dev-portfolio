@@ -1,0 +1,48 @@
+{#
+Mandatory options:
+    - slides: <array> [{ img: <string>, height: <string> }, ...]
+
+Optionnal:
+    - options: {
+        dataHeightJs: string Default "true"
+        defaultHeight: <string> Default: "400px"
+        autoplay = <string> Default: "true"
+        touch = <string> Default: "true"
+        smoothHeight = <string> Default: "false"
+        animation = <string> Default: "fade"
+        arrows = <string> Default: "false"
+        pagination = <string> Default: "true"
+    }
+#}
+
+{# Prepare #}
+
+{% set defaultMinHeight = defaultMinHeight is defined ? defaultMinHeight : "400px" %}
+{% set autoplay = autoplay is defined ? autoplay : "true" %}
+{% set touch = touch is defined ? touch : "true" %}
+{% set smoothHeight = smoothHeight is defined ? smoothHeight : "false" %}
+{% set animation = animation is defined ? animation : "fade" %}
+{% set arrows = arrows is defined ? arrows : "false" %}
+{% set pagination = pagination is defined ? pagination : "true" %}
+
+{# Render #}
+
+<div class="fslider" data-slideshow={{ autoplay }} data-smooth-height={{ smoothHeight }} data-animation={{ animation }} data-arrows={{ arrows }} data-pagi={{ pagination }}>
+    <div class="flexslider">
+        <div class="slider-wrap">
+
+            {% for slide in slides %}
+
+                {% set img = slide.img %}
+                {% set minHeight = slide.minHeight ?? defaultMinHeight %}
+
+                <div class="slide rounded">
+                    <div 
+                        style="min-height:{{ minHeight }}; background: url('{{ asset(img) }}') center center no-repeat; background-size: cover;"
+                    ></div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

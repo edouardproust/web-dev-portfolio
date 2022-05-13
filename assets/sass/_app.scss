@@ -1,0 +1,27 @@
+@import './public/variables';
+@import './public/mixins';
+
+@import '~bootstrap/scss/bootstrap';
+
+// Layout
+
+@import './public/layouts';
+// header & nav
+@import './public/header'; // optimized
+@import './public/menu'; // optimized
+// footer
+@import './public/footer'; // optimized
+@import './public/elements/gototop'; // optimized (created)
+
+// icons
+
+@import './public/icons/icons'; // optimized
+@import './public/icons/icons-style';
+
+// elements
+@import './public/elements/buttons'; // optimized s
+
+// font & typo
+
+@import './public/typography'; // optimized
+@import './public/fonts'; // optimized

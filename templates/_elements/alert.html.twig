@@ -1,0 +1,70 @@
+{% set successIcon = 'icon-check' %}
+{% set dangerIcon = 'icon-line-cross' %}
+{% set infoIcon = 'icon-info' %}
+
+{# Render #}
+
+{% set hasCustomMessage = flashMessage is defined and flashGroup is defined ? true : false %}
+
+{% if hasCustomMessage %}
+
+    {% set isSuccess = flashGroup is same as('success') ? true : false %}
+    {% set isDanger = flashGroup is same as('danger') ? true : false %}
+    
+    {% if isSuccess %}
+        {% set icon = successIcon %}
+        {% set class = 'successmsg' %}
+    {% elseif isDanger %}
+        {% set icon = dangerIcon %}
+        {% set class = 'errormsg' %}
+    {% else %}
+        {% set icon = infoIcon %}
+        {% set class = 'infomsg' %}
+    {% endif %}
+
+    <div class="style-msg {{ class }}">
+        <div class="sb-msg">
+            <i class="{{ icon }} me-2"></i>
+            {{ flashMessage|raw }}
+        </div>
+    </div>
+
+{% else %}
+
+    {% set hasCustomSuccessGroup = successGroup is defined ? true : false %}
+    {% set hasCustomDangerGroup = dangerGroup is defined ? true : false %}
+
+    {% for flashGroup, flashes in app.flashes %}
+
+        {% set isSuccess = flashGroup is same as('success') or (hasCustomSuccessGroup and flashGroup is same as successGroup) ? true : false %}
+        {% set isDanger = flashGroup is same as('danger') or (hasCustomDangerGroup and flashGroup is same as dangerGroup) ? true : false %}
+
+        {% if isSuccess %}
+            {% set icon = successIcon %}
+            {% set class = 'successmsg' %}
+        {% elseif isDanger %}
+            {% set icon = dangerIcon %}
+            {% set class = 'errormsg' %}
+        {% else %}
+            {% set icon = infoicon %}
+            {% set class = 'infomsg' %}
+        {% endif %}
+
+        <div class="style-msg {{ class }}">
+            <div class="sb-msg">
+            {% if flashes|length > 1 %}
+                <i class="{{ icon }} me-2"></i>
+                <ul>
+                    {% for flash in flashes %}
+                        <li>{{ flash|raw }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <i class="{{ icon }} me-2"></i>{{ flashes.0|raw }}
+            {% endif %}
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endif %}

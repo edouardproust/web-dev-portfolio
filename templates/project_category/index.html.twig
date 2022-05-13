@@ -1,0 +1,53 @@
+{% extends '_layout/collection.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('projects') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('projects') }}
+{% endblock %}
+
+{% block title %}Portfolio: {{ category.label }}{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'Portfolio', url: path('projects')},
+	{label: category.label, active: true}
+] %}
+{% set collection_filters = null %}
+{% set collection_items = projects %}
+
+
+{# Collection of Projects =============================================== #}
+
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Portfolio: ' ~ category.label,
+        subtitle: category.description
+    } %}
+    
+{% endblock %}
+
+{% block content %}
+
+    {% if projects is defined and projects|length > 0 %}
+        {{ parent() }}
+        <div id="collection" class="portfolio portfolio-reveal row grid-container gutter-30" data-layout="fitRows">
+            {% for projects in collection_items %}
+                {% include "_elements/portfolio-collection-item.html.twig" with {
+                    project: projects,
+                    data: { 
+                        categories: false,
+                        codingLanguages: true }
+                } %}
+            {% endfor %}
+        </div>
+    {% else %}
+        No project in this category.
+    {% endif %}
+    
+{% endblock %}

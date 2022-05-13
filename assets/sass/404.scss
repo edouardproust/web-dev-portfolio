@@ -1,0 +1,22 @@
+@import './public/variables';
+
+@import './public/video-bg';
+
+.error404-wrap .error404 {
+    line-height: 0.9;
+    margin-bottom: 40px;
+    font-weight: bold;
+    font-size: 19vw;
+    color: $text-color-dark !important;
+    opacity: 0.2;
+    text-shadow: 1px 1px 5px rgb(0 0 0 / 40%);
+}
+
+.error404 {
+    display: block;
+    letter-spacing: 4px;
+    &-text * {
+        color: $text-color-dark !important;
+        font-weight: 400;
+    }
+}

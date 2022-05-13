@@ -1,0 +1,57 @@
+{# Ref: https://themes.semicolonweb.com/html/canvas/block-blog-single-2.html #}
+
+{% extends '_layout/project.html.twig' %}
+
+{# Config 
+
+    Mandatory variables:
+        - block 'title': displayed on browser tab
+        - page_title: <string> Used in 'title-page.html.twig' section
+        - project: <Project> The project object (set in controller)
+
+    Optionnal variables 
+        - whiteLogo: <bool>
+        - breadcrumb: <object[]> Used in 'title-page.html.twig' section
+            Array of objects: [{ label: <string>, url: <string> }, ... ]
+        - showAuthor: <bool>
+        - showComments: <bool>
+        - showRelatedProjects: <bool> If set on true, you must also set (mandatory):
+            - relatedProjects: <Project[]> Array of Projects objects (set in controller). 
+        - showPostNavigation: <bool> If set on true, youn must also set (mandatory):
+            - prevNextLinks: <array[]> Array containing data for each link (previous and next):
+                [ 'prev' => ['url' => string, 'title' => string], 'next' => ['url' => string, 'title' => string] ]
+#}
+
+{% block title %}Portfolio | {{ project.title|extract(30) }}{% endblock %}
+ 
+{% set page_title = project.title %}
+{% set breadcrumb = [
+    {label: 'Home', url: path('home')},
+    {label: 'Portfolio', url: path('projects')},
+    {label: page_title, active: true}
+] %}
+{% set page_project = project %}
+{% set showAuthor = false %}
+{% set showComments = true %}
+{% set showRelatedProjects = true %}
+{% set showProjectNavigation = false %}
+{% set prevNextLinks = prevNextLinks %}
+{% set author_routeName = 'author_projects' %}
+
+
+{# Show one Project ================================================================== #}
+
+{% block hero %}
+
+	{% include "_sections/page-title/project-show.html.twig" with { 
+        post: project,
+        comments: visibleComments
+    } %}
+	
+{% endblock %}
+
+{% block page_content %}
+
+    {{ project.content|raw }}
+
+{% endblock %}

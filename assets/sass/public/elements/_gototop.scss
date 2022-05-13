@@ -1,0 +1,44 @@
+/* ----------------------------------------------------------------
+	Go To Top
+-----------------------------------------------------------------*/
+
+#gotoTop {
+	display: none;
+	z-index: 599;
+	position: fixed;
+	width: $gotoTop-size;
+	height: $gotoTop-size;
+	background-color: #333;
+	background-color: $gotoTop-bg;
+	font-size: $gotoTop-icon-size;
+	line-height: 36px;
+	text-align: center;
+	color: $gotoTop-icon-color;
+	top: auto;
+	left: auto;
+	right: $gotoTop-position-boxed-right;
+	bottom: $gotoTop-position-boxed-bottom;
+	cursor: pointer;
+	border-radius: $gotoTop-border-radius;
+	body:not(.device-touch) & {
+		transition: background-color .2s linear;
+		-webkit-transition: background-color .2s linear;
+		-o-transition: background-color .2s linear;
+	}
+
+	.stretched & {
+		right: $gotoTop-position-boxed-right;
+		bottom: $gotoTop-position-boxed-bottom;
+	}
+
+	&:hover { background-color: $gotoTop-hover-color; }
+
+	@include media-breakpoint-down(sm) {
+		@if $gotoTop-hidden-sm == true {
+			display: none !important;
+		} @else {
+			display: block !important;
+		}
+	}
+}
+

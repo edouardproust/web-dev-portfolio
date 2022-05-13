@@ -1,0 +1,55 @@
+<div class="section bg-transparent">
+
+    <div class="container center">
+
+        {% include "_elements/section-title.html.twig" with {
+            section: section,
+            title: title,
+            columns: columns
+        } %}
+
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="row">
+
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/1.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/2.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/3.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/4.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/5.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/6.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/7.png'),
+                        link: '#'
+                    } %}
+                    {% include "_elements/client.html.twig" with {
+                        img: asset('build/images/clients/light/8.png'),
+                        link: '#'
+                    } %}
+
+                </div>
+            </div>
+        </div>
+        <a href="#" class="button button-change button-large button-rounded nott fw-light mt-4 ms-0">
+            <span>View more Clients <i class="icon-line-arrow-right"></i></span>
+        </a>
+    </div>
+</div>

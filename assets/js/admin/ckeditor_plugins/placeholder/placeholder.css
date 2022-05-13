@@ -1,0 +1,11 @@
+.cke-placeholder {
+    background: #ffff00 !important;
+    padding: 4px 2px !important;
+    outline-offset: -2px !important;
+    line-height: 1em !important;
+    margin: 0 1px !important;
+}
+
+.cke-placeholder::selection {
+    display: none !important;
+}

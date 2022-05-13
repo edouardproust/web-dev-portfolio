@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('home') }}
+{% endblock %}
+
+{% block hero %}
+	{# title rotation: 
+		{before: <string>, rotate: <string>, 'after: <string>} 
+		Separate 'words' with a "|". Eg: "These|words|will|rotate" 
+	#}	
+    <section class="include-header" style="height: 100vh; background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto">
+		{% include "_sections/home/hero.html.twig" with {
+			section: "Hello,",
+			title: {
+				before: "I am<br>", 
+				words:"a web developer.|a marketer.|an ecommerce expert.|a video editor.|a graphic designer.|a self-learner.", 
+			},
+			headline: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi quo ea magnam dignissimos quis obcaecati aut in.",
+			contactButtons: {
+				label: 'View my works',
+				url: path('projects'),
+				btnIcon: null,
+				socials: [ 
+					{ slug: 'email3', link: 'mailto:' ~ config('CONTACT_EMAIl') },
+					{ slug: 'github', link: config('SOCIAL_GITHUB') },
+					{ slug: 'linkedin', link: config('SOCIAL_LINKEDIN') }
+				]
+			},
+			slider: {
+				slides: [
+					{img: asset('build/images/home/edouard.jpg')},
+					{img: asset('build/images/home/edouard-nb.jpg')}
+				],
+				options: {}
+			}
+		} %}
+    </section>
+
+{% endblock %}
+		
+{% block main %}
+
+	<section id="content">
+		<div class="content-wrap pt-0">
+
+			{# flip cards #}
+			{% include "_sections/home/flip-cards.html.twig" with {
+				section: 'Experience',
+				title: "I've been coding every single day for the last " ~ stats.daysOfCoding ~ " days.",
+				columns: 4,
+				removeVerticalMargins: true,
+				cards: [ {
+                        icon: 'icon-check',
+                        title: 'Wedding Shoots',
+                        contentFront: 'Alias dicta repudiandae sed laudantium eius ipsa, ullam voluptas quod! Quia, accusamus perferendis.',
+                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sunt laborum pariatur cum!',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+                    },{
+                        icon: 'icon-check',
+                        title: 'Candid Moments',
+                        contentFront: 'Laboriosam ad culpa ab in et blanditiis ullam consectetur inventore?', 
+                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+                    },{
+                        icon: 'icon-check',
+                        title: 'Wild Photography',
+                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+					},{
+                        icon: 'icon-check',
+                        title: 'Wild Photography',
+                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+				} ]
+			} %}
+
+			{# 3d cards #}
+			<div class="section bg-transparent">
+				<div class="container">
+					{% include "_elements/section-title.html.twig" with {
+						section: 'Projects',
+						title: 'A glimpse of what i do.',
+						offsetLeft: true,
+						content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?'
+					} %}
+
+					{% include "_elements/gallery-masonry-3d.html.twig" with { 
+						cards : featuredProjects
+					} %}
+
+					{% include "_elements/section-paragraph-left.html.twig" with {
+						title: 'See what I Did.',
+						content: [
+							'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?',
+							'Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda voluptatum, perspiciatis quae dolorum exercitationem quos ullam, doloribus voluptates nulla reprehenderit maxime sunt ducimus eligendi ratione quaerat vero ex voluptatem earum.'
+						] 
+					} %}
+
+				</div>
+			</div>
+
+			{# counters #}
+
+			{% include "_sections/home/counters.html.twig" with { counters: [
+				{
+					to: stats.daysOfCoding * (5 / 7) * 5, 
+					title: "hours of coding",
+					content: '',
+					after: '+'
+				},
+				{
+					to: stats.languages.count,
+					title: "Mastered languages",
+					content: 'Including ' ~ stats.languages.list ~ '.'
+				},
+				{
+					to: stats.technologies.count,
+					title: "Frameworks and bundles",
+					content: stats.technologies.list
+				},
+				{
+					to: stats.githubRepositories|length,
+					title: "Projects on Github",
+					content: ''
+				}
+			] } %}
+			
+			{# clients #}
+			{# {% include "_sections/home/clients.html.twig" with {
+				section: 'Trusted Partners',
+				title: 'Happy Clients',
+				columns: 12
+			} %} #}
+
+			{# services cards #}
+			{% include "_sections/home/services.html.twig" with {
+				section: 'Steps of Works',
+				title: 'See How I Do.',
+				cards: [
+					{
+						img: asset('build/images/icons/shutter.svg'),
+						title: 'Updated Lenses:',
+						content: [
+							'Objectively productivate interoperable process improvements after team building testing procedures. Distinctively architect resource-leveling portals.',
+							'Objectively productivate interoperable process improvements.'
+						]
+					}, {
+						img: asset('build/images/icons/video-camera.svg'),
+						title: 'Most Edited Tools:',
+						content: [
+							'Objectively productivate interoperable process improvements after team building.',
+							'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur dolores sit, corrupti laborum ab.'
+						]
+					}, {
+						img: asset('build/images/icons/lr.svg'),
+						title: 'Film Making:',
+						content: [
+							'Objectively productivate interoperable process improvements.',
+							'Team building testing procedures. Distinctively architect resource-leveling portals.'
+						]
+					}
+				]
+			} %}
+			
+			{# contact & testimonials #}
+			{% include "_sections/home/footer-contact.html.twig"  with {
+				section: "Let's Say Hi!",
+				title: "Contact Me Here.",
+				testimonials: false
+			} %}
+
+		</div>
+	</section>
+
+{% endblock %}

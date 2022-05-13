@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('contact') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('contact') }}
+{% endblock %}
+
+{% block title %}Contact{% endblock %}
+
+{% set breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'Contact', active: true}
+] %}
+
+
+{# Contact page =============================================================== #}
+		
+{% block hero %}
+
+    {% include "_sections/page-title/default.html.twig" with { 
+        title: 'Contact',
+        subtitle: null
+    } %}
+    
+{% endblock %}
+
+{% block main %}
+
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+
+                {% include "_sections/feature-boxes.html.twig" with { boxes: [
+                    {
+                        icon: 'icon-line-phone',
+                        title: 'Email',
+                        content: config('CONTACT_EMAIL')|safeEmail(false),
+                        link: 'mailto:' ~ config('CONTACT_EMAIL')
+                    },{
+                        icon: 'icon-line-mail',
+                        title: 'Phone',
+                        content: config('CONTACT_PHONE')
+                    },{
+                        icon: 'icon-linkedin-in',
+                        title: 'LinkedIn',
+                        content: 'Click to write me on LinkedIn',
+                        link: config('SOCIAL_LINKEDIN'),
+                        targetBlank: true
+                    },{
+                        icon: 'icon-line-home',
+                        title: 'Address',
+                        content: config('CONTACT_ADDRESS')
+                    }
+                ]} %}
+
+                {# contact form + google map #}
+                <div class="row align-items-stretch col-mb-50 mb-0">
+
+                    {# Contact Form #}
+                    <div class="col-lg-6">
+
+                        <div class="fancy-title title-border">
+                            <h3>Send me an Email</h3>
+                        </div>
+
+                        <div class="form-widget">
+
+							{{ form_start(contactForm) }}
+                            {{ form_errors(contactForm) }}
+                            {{ form_widget(contactForm) }}
+                            {% include "_elements/button.html.twig" with {
+                                label: 'Send',
+                                type: 'submit',
+                                icon: 'icon-email3'
+                            } %}
+                            {{ form_end(contactForm) }}
+
+                        </div>
+
+                    </div>
+
+                    {# Google Map #}
+                    <div class="col-lg-6 min-vh-50" style="min-height:400px">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d163975.34506402636!2d19.864790694540723!3d50.04668135328545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471644c0354e18d1%3A0xb46bb6b576478abf!2zS3Jha8OzdywgUG9sYW5k!5e0!3m2!1sen!2suk!4v1646823396559!5m2!1sen!2suk" 
+                            {# width="600"  #}
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                        ></iframe>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

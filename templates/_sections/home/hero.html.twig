@@ -1,0 +1,78 @@
+{# Options
+	- section: <string>
+	- title: {
+		before: <string>, 
+		words: <string> 
+	},
+	headline: <string>
+	titleCursor: <string> Default: "false",
+	contactButtons: {
+		label: <string>,
+		url: <string>,
+		btnIcon: <string|null>,
+		socials: <array> [ { slug: <qtring<, link: <string>, ...]
+	},
+	slider: {
+		- slides: <array> [{ img: <string>, height: <string> }, ...]
+		- options: {
+			defaultMinHeight: <string> Default: "400px",
+			autoplay = <string> Default: "true",
+			touch = <string> Default: "true",
+			smoothHeight = <string> Default: "false",
+			animation = <string> Default: "fade",
+			arrows = <string> Default: "false",
+			pagination = <string> Default: "true"
+		}
+	}
+#}
+
+{# Prepare #}
+
+{% set titleCursor = "false" %}
+
+{# Render #}
+
+<div class="vertical-middle">
+
+	<div class="container parallax py-5" data-0="opacity: 1; overflow: visible; margin-top:0px" data-top-bottom="opacity: 0; overflow: visible; margin-top:100px">
+
+		<div class="row align-items-center col-mb-50">
+				<div class="col-md-6">
+				<div class="py-5 py-md-0">
+					<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">{{ section }}</small>
+					<h1 class="fw-bold text-rotater" data-cursor={{ titleCursor }}>
+						{% if title.words is not defined %}
+							{{ title }}
+						{% else %}
+							<span class="t-rotate-texts d-none">{{ title.words }}</span>
+							{{ title.before is defined ? (' ' ~ title.before)|raw : '' }} <span class="t-rotate nocolor"></span>{{ title.after is defined ? (' ' ~ title.after)|raw : '' }}
+						{% endif %}
+					</h1>
+
+					<h5 class="fw-light ls1" style="opacity: .7">{{ headline }}</h5>
+					
+					{% include "_elements/contact-button-section.html.twig" with {
+						label: contactButtons.label,
+						url: contactButtons.url,
+						btnIcon: contactButtons.btnIcon,
+						socials: contactButtons.socials
+					} %}
+					
+				</div>
+			</div>
+
+			<div class="col d-flex">
+				<div class="col"></div>
+				<div class="col-lg-6 col-sm-12 ps-md-5 ps-lg-0">
+					{% include "_elements/flexslider-small.html.twig" with {
+						slides: slider.slides,
+						options: slider.options
+					} %}
+				</div>
+			</div>
+
+		</div>
+			
+	</div>
+
+</div>

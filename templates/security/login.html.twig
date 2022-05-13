@@ -1,0 +1,52 @@
+{% extends '_layout/bg-video.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('login-register') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('login-register') }}
+{% endblock %}
+
+{% set whiteLogo = true %}
+
+{% block content %}
+
+<div class="login-form-container d-flex mw-xs m-auto">
+
+    <div class="login-form-wrapper">
+        {% include "_elements/button.html.twig" with {
+            label: 'Login',
+            url: '#tab-login',
+            reveal: false,
+            margin: 'me-3 mb-3',
+            size: 'small',
+            fontWeight: 'bold'
+        } %}
+        {% include "_elements/button.html.twig" with {
+            label: 'Register',
+            url: path('author_register'),
+            reveal: false,
+            size: 'small',
+            fontWeight: 'bold'
+        } %}
+
+        <div id="tab-login">
+            <div class="card">
+                <div class="card-body" style="padding: 40px;">
+
+                    {% include "security/_login-form.html.twig" %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+

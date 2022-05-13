@@ -1,0 +1,52 @@
+{
+    "devDependencies": {
+        "@ckeditor/ckeditor5-inspector": "^4.0.0",
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^3.0.0",
+        "@symfony/webpack-encore": "^1.7.0",
+        "core-js": "^3.0.0",
+        "file-loader": "^6.2.0",
+        "regenerator-runtime": "^0.13.2",
+        "sass": "^1.49.7",
+        "sass-loader": "^12.4.0",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@ckeditor/ckeditor5-adapter-ckfinder": "^34.0.0",
+        "@ckeditor/ckeditor5-alignment": "^34.0.0",
+        "@ckeditor/ckeditor5-build-classic": "^34.0.0",
+        "@ckeditor/ckeditor5-code-block": "^34.0.0",
+        "@ckeditor/ckeditor5-core": "^34.0.0",
+        "@ckeditor/ckeditor5-dev-webpack-plugin": "^30.1.3",
+        "@ckeditor/ckeditor5-find-and-replace": "^34.0.0",
+        "@ckeditor/ckeditor5-font": "^34.0.0",
+        "@ckeditor/ckeditor5-horizontal-line": "^34.0.0",
+        "@ckeditor/ckeditor5-source-editing": "^34.0.0",
+        "@ckeditor/ckeditor5-theme-lark": "^34.0.0",
+        "@ckeditor/ckeditor5-word-count": "^34.0.0",
+        "@popperjs/core": "^2.11.2",
+        "bootstrap": "^5.1.3",
+        "fitvids": "^2.1.1",
+        "flexslider-conditional-before": "^2.6.4",
+        "highlight.js": "^11.5.1",
+        "intersection-observer": "^0.12.0",
+        "isotope-layout": "^3.0.6",
+        "jquery": "^3.6.0",
+        "jquery-bridget": "^3.0.1",
+        "jquery-countto": "^1.2.0",
+        "jquery.easing": "^1.4.1",
+        "jrespond": "^1.0.0",
+        "magnific-popup": "^1.1.0",
+        "owl.carousel": "^2.3.4",
+        "skrollr": "^0.6.26",
+        "typed.js": "^2.0.12"
+    }
+}

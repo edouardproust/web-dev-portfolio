@@ -1,0 +1,16 @@
+<div class="card comment">
+
+	<div class="card_data">
+		<span class="name">{{ comment.fullName }}</span>
+		<span class="date">
+			|
+			{{ comment.createdAt|date('m/d/Y (H:i)') }}</span>
+	</div>
+
+	<div class="card_content">
+		{{ comment.content|raw }}
+	</div>
+
+</div>
+
+<br>

@@ -1,0 +1,62 @@
+{% extends "@EasyAdmin/page/content.html.twig" %}
+
+{% block page_title %}Welcome {{ eaAuthorName(author) }} - {{ config('SITE_NAME')|striptags }}{% endblock %}
+
+{% block content %}
+
+{% set hasAuthorsToApprove = cards.approveAuthors is defined and cards.approveAuthors.authors|length > 0 %}
+{% set hasCommentsToApprove = cards.approveComments is defined and cards.approveComments.comments|length > 0 %}
+
+<article class="content">
+
+    <section class="content-header">
+        <div class="title">
+            <h1>Welcome {{ eaAuthorName(author) }}
+            </h1>
+        </div>
+    </section>
+
+    <section class="content-body">
+
+        <div class="mb-5">
+            This is your {{ user|highestRole(true) }} dashboard.
+        </div>
+
+        {# Cards #}
+        {% if cards is defined and cards|length > 0 %}
+            <div class="row g-3">
+                
+                {# Approve authors #}
+                {% if hasAuthorsToApprove %}
+                    {% include "admin/_parts/card/approve_authors.html.twig" with {
+                        data: cards.approveAuthors
+                    } %}
+                {% endif %}
+
+                {# Purge files button #}
+                {% if cards.purgeFiles is defined %}
+                    {% include "admin/_parts/card/purge_files.html.twig" with {
+                        data: cards.purgeFiles
+                    } %}
+                {% endif %}
+
+                {# Validate comments #}
+                {% if hasCommentsToApprove %}
+                    {% include "admin/_parts/card/approve_comments.html.twig" with {
+                        data: cards.approveComments
+                    } %}
+                {% endif %}
+
+                {# Approve comments #}
+                {# ... #}
+
+            </div>
+        {% else %}
+            <i>No card to display</i>
+        {% endif %}
+
+    </section>
+    
+</article>
+
+{% endblock %}
