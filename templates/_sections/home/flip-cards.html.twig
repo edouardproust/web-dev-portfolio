@@ -8,50 +8,47 @@
                 title: title,
                 columns: columns,
                 content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?',
-                parallax: parallax,
+                parallax: parallax is defined ? parallax : null,
                 removeVerticalMargins: removeVerticalMargins,
-                titleSize: titleSize
             } %}
 
             <div class="col-lg-7">
-                <div class="row">
+                <div class="row mt-5">
 
-                    {% include "_elements/card-flip.html.twig" with {
-                        icon: asset('build/images/icons/camera1-dark.svg'),
-                        title: 'Travel Blog',
-                        contentFront: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi rem, facilis nobis voluptatum.',
-                        contentBack: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias cum repellat velit.',
-                        imgBack: asset('build/images/features/1.jpg'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
-                    } %}
-                    {% include "_elements/card-flip.html.twig" with {
-                        icon: asset('build/images/icons/wedding-dark.svg'),
-                        title: 'Wedding Shoots',
-                        contentFront: 'Alias dicta repudiandae sed laudantium eius ipsa, ullam voluptas quod! Quia, accusamus perferendis.',
-                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sunt laborum pariatur cum!',
-                        imgBack: asset('build/images/features/2.jpg'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
-                    } %}
-                    {% include "_elements/card-flip.html.twig" with {
-                        icon: asset('build/images/icons/camera2-dark.svg'),
-                        title: 'Candid Moments',
-                        contentFront: 'Laboriosam ad culpa ab in et blanditiis ullam consectetur inventore?', 
-                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
-                        imgBack: asset('build/images/features/3.jpg'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
-                    } %}
-                    {% include "_elements/card-flip.html.twig" with {
-                        icon: asset('build/images/icons/travel-dark.svg'),
-                        title: 'Wild Photography',
-                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
-                        imgBack: asset('build/images/features/4.jpg'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
-                    } %}
+                    {% for card in cards %}
+
+                        {% set imgBack = card.imgBack is defined ? 'style="background-image: url("' ~ card.imgBack ~ '")"' : '' %}
+
+                        <div class="col-sm-6 mb-5">
+                            <div class="flip-card">
+                                <div class="flip-card-front no-after">
+                                    <div class="flip-card-inner">
+                                        {% if card.icon is defined %}
+                                            <div class="mb-2">
+                                                <i class="{{ card.icon }}"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div class="fbox-content">
+                                            <h4>{{ card.title }}</h4>
+                                            <p class="text-muted fw-medium">{{ card.contentFront }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back" style="background-image: url('{{ card.imgBack }}')">
+                                    <div class="flip-card-inner mt-3">
+                                        <h4 class="mb-4">{{ card.contentBack }}</h4>
+                                        {% if card.btnLabel is defined and card.btnLink is defined %}
+                                            {% include "_elements/button.html.twig" with {
+                                                url: card.btnLink,
+                                                label: card.btnLabel
+                                            } %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
                     
                 </div>
             </div>

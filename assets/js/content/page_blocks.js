@@ -9,8 +9,9 @@ import accordions from "../../js/content/accordions";
  * (must correspond to the ones previously defined in `assets/ckfider/config.php`, under the "Resource Types" section)
  */
 const ALLOWED_FILE_TYPES = {
+    result: [ 'php' ],
     images: ['ico','webp','bmp','gif','jpeg','jpg','png','svg','tif','tiff'],
-    scripts: ['htm','html','css','js','php','phps','sql','txt'],
+    scripts: ['htm','html','css','js','phps','sql','txt'],
     documents: ['csv','doc','docx','odt','ods','pdf','xls','xlsx'],
     videos: ['mp4','webm'],
     audio_clips: ['mid','mp3','wav'],
@@ -26,10 +27,10 @@ const UPLOADS_STYLES = {
         '</figure>',
     scripts: 
         '<pre>' + 
-            '<code class="language-{{ extension }} hljs{{ extraClass }}">' + 
-                '{{ fileUrl }}' +
-            '</code>' +
+            '<code class="language-{{ extension }} hljs" data-file-url="{{ fileUrl }}"></code>' +
         '</pre>',
+    result: 
+        '<iframe class="content-result" src="{{ fileUrl }}" data-file-url="{{ fileUrl }}" title="Result"></iframe>',
     documents: 
         '<div class="content-button-container">' +
             '<a href="{{ fileUrl }}" target="_blank">' + 
@@ -82,10 +83,15 @@ const EMBED_CONVERTERS = {
                 'allowfullscreen' +
             '></iframe>'
     }
-}
+};
+
+const EXTENSION_REPLACE = {
+    phps: 'php',
+};
 
 function exec() {
     uploadedFile();
+    resultBox();
     codeBlock();
     singleImage();
     mediaEmbed();
@@ -102,10 +108,8 @@ function uploadedFile()
         .forEach((aElement) => {
             // verify that the file has been included by CKFinder
             if(aElement.classList.length === 0 && aElement.parentNode.tagName !== 'FIGURE') {
-                let embedContainer = uploadedFile__build(aElement);
-                if(embedContainer) {
-                    uploadedFile__applyStyle(embedContainer);
-                }
+                let embedDiv = uploadedFile__buildOne(aElement, EXTENSION_REPLACE);
+                if(embedDiv) uploadedFile__applyStyle(embedDiv);
             }
         });
 }
@@ -115,13 +119,19 @@ function uploadedFile()
  */
 async function codeBlock() 
 {
-    let elements = document.querySelectorAll('code');
+    const SELECTOR = 'code';
+
+    let elements = document.querySelectorAll(SELECTOR);
     if(elements.length < 1) return;
 
-    await uploadedFile__showScriptsContent();
-    elements.forEach((element) => {
-        codeBlock__build(element);
-    });
+    for(let element of elements) {
+        if(element.classList.length > 0 && element.classList[0].startsWith('language-')) { // to avoid conflict with the inline `code` markup
+            if(element.getAttribute('data-file-url')) {
+                await uploadedFile__fetchContent(element);
+            }
+            codeBlock__buildOne(element);
+        }
+    }
     hljs.highlightAll(); console.log('highlight.js loaded!');
 }
 
@@ -136,7 +146,7 @@ function singleImage()
     elements.forEach((element) => {
         let img = element.querySelector('img');
         let caption = element.querySelector('figcaption');
-        let imgContainer = singleImage__build(element, img, caption);
+        let imgContainer = singleImage__buildOne(element, img, caption);
         singleImage__size(element, imgContainer);
         singleImage__horizontalAlign(element);
         singleImage__clickable(element, imgContainer, img, caption);
@@ -177,57 +187,64 @@ function mediaEmbed()
  */
 function accordion(accordions, additionalClass = null)
 {
-    const SELECTOR_CLASS = 'ck-accordion-item';
+    const SELECTOR_CLASS = 'accordion-container';
 
     let elements = document.getElementsByClassName(SELECTOR_CLASS);
-    if(elements.length < 1) {
-        return;
-    }
+    if(elements.length < 1) return;
 
     const parent = elements[0].parentNode;
-    const childs = parent.childNodes;
 
-    // make groups
-    let accordionsEls = [];
-    let groupIndex = 0;
-    accordionsEls[groupIndex] = [];
-    childs.forEach((child, index) => {
-        if(child.classList.contains(SELECTOR_CLASS)) {
-            // si c'est index 0 
-            if(index > 0 && !childs[index - 1].classList.contains(SELECTOR_CLASS)) {
-                if(accordionsEls[groupIndex].length > 0) {
-                    groupIndex += 1;
-                    accordionsEls[groupIndex] = [];
-                }
-            }
-            accordionsEls[groupIndex].push(child);
-        }
-    });
-
-    // Build a container for each group
-    accordionsEls.forEach((group) => {
-        let containerDiv = document.createElement('div');
-        containerDiv.classList.add('accordion');
-        if(additionalClass) containerDiv.classList.add(additionalClass);
-        containerDiv.setAttribute('data-collapsible', true);
-        parent.insertBefore(containerDiv, group[0]);
-        group.forEach((item) => {
-            let titleEl = item.querySelector('div.accordion-title');
-            let contentEl = item.querySelector('div.accordion-content');
-
-            let headerDiv = document.createElement('div');
-            headerDiv.classList.add('accordion-header');
-            headerDiv.innerHTML = 
-                '<div class="accordion-icon">' + 
-                    '<i class="accordion-closed icon-ok-circle"></i>' + 
-                    '<i class="accordion-open icon-remove-circle"></i>' +
-                '</div>';
-            if(titleEl) headerDiv.appendChild(titleEl);
-            containerDiv.appendChild(headerDiv);
-            if(contentEl) containerDiv.appendChild(contentEl);
-        });
+    let groups = accordion__groupItems(parent, SELECTOR_CLASS);
+    groups.forEach((group) => {
+        accordion__buildOne(group, parent, additionalClass);
     });
     accordions.exec();
+}
+
+/**
+ * Render all result boxes on the page
+ */
+async function resultBox()
+{
+    const SELECTOR = '.resultbox-container';
+
+    let elements = document.querySelectorAll(SELECTOR);
+    if(elements.length < 1) return;
+
+    for(let element of elements) {
+        // build structure
+        let headerDiv = document.createElement('div');
+        headerDiv.classList.add('resultbox-header');
+        headerDiv.innerText = "RESULT";
+        let bodyDiv = document.createElement('div');
+        bodyDiv.classList.add('resultbox-body');
+        bodyDiv.innerHTML = element.querySelector('.resultbox-content').innerHTML;
+        element.removeChild(element.querySelector('.resultbox-content'));
+        element.appendChild(headerDiv);
+        element.appendChild(bodyDiv);
+        bodyDiv.querySelectorAll('p').forEach((pEl) => {
+            if(pEl.innerHTML.length < 1) bodyDiv.removeChild(pEl);
+        });
+        
+        // if contains files
+        let embedDivs = element.querySelectorAll('.ckfinder-embed')
+        if(embedDivs.length > 0) {
+            for(let embedDiv of embedDivs) {
+                let type = embedDiv.getAttribute('data-ckfinder-embed-type');
+                if(type === 'result') { // script result
+                    uploadedFile__fetchContent(embedDiv.querySelector('.content-result'));
+
+                    var frame = embedDiv.querySelector("iframe.content-result");
+                    frame.style.height = frame.contentWindow.document.body.scrollHeight+"px";
+                    // console.log(frame)
+                    // frame.onload = function() {
+                    //     frame.style.height = frame.contentWindow.document.body.scrollHeight + 'px';
+                    //     // frame.style.width  = frame.contentWindow.document.body.scrollWidth+'px';
+                    // }
+                }
+            }
+        }
+    }
 }
 
 
@@ -236,41 +253,33 @@ function accordion(accordions, additionalClass = null)
 /**
  * Build the embed div structure for 1 element, with usefull classes for furter styling
  * - Example of a div created:
- * ```bash
- * <div class="ckfinder-embed-container">
- *        <div class="ckfinder-embed html" data-ckfinder-embed="/uploads/ckfinder/scripts/test.html"></div>
- * </div>
- * ```
+ * `<div class="ckfinder-embed html" data-ckfinder-embed="/uploads/ckfinder/scripts/test.html"></div>`
  * @param {HTMLElement} aElement The HTMLElement to be analysed and modified byt the method
- * @returns {HTMLElement} The newly created  `div.ckfinder-embed-container` element
+ * @returns {HTMLElement} The newly created  `div.ckfinder-embed` element
  */
-function uploadedFile__build(aElement)
+function uploadedFile__buildOne(aElement, extensionReplace = [])
 {
     let extension = uploadedFile__isAllowed(aElement.innerText);
-    let embedContainer = null;
+    let embedDiv = null;
     if(extension) {
-        embedContainer = document.createElement('div');
-        embedContainer.classList.add('ckfinder-embed-container');
-        let embedDiv = document.createElement('div');
-        // Add class and attributes for further filtering and styling
+        embedDiv = document.createElement('div');
         embedDiv.classList.add('ckfinder-embed');
         embedDiv.setAttribute('data-ckfinder-embed', true);
         embedDiv.setAttribute('data-ckfinder-embed-url', aElement.innerText);
         embedDiv.setAttribute('data-ckfinder-embed-type', uploadedFile__getType(extension));
+        if(Object.keys(extensionReplace).includes(extension)) extension = extensionReplace[extension];
         embedDiv.setAttribute('data-ckfinder-embed-extension', extension);
-        embedContainer.appendChild(embedDiv);
-        aElement.replaceWith(embedContainer);
+        aElement.replaceWith(embedDiv);
     };
-    return embedContainer;
+    return embedDiv;
 }
 
 /**
  * Apply custom styling for 1 element
- * @param {HTMLElement} embedContainer The `div.ckfinder-embed-container` element
+ * @param {HTMLElement} embedDiv The `div.ckfinder-embed` element
  */
-function uploadedFile__applyStyle(embedContainer) 
+function uploadedFile__applyStyle(embedDiv) 
 {
-    let embedDiv = embedContainer.childNodes[0];
     // clean the `embedContainer` in case it is not empty
     embedDiv.innerHTML = '';
     // get data on file
@@ -278,19 +287,12 @@ function uploadedFile__applyStyle(embedContainer)
     let type = embedDiv.getAttribute('data-ckfinder-embed-type');
     let extension = embedDiv.getAttribute('data-ckfinder-embed-extension');
     // make some extensions replacement when needed
-    let extraClass = null;
     if(extension === 'htm') extension = 'html';
-    if(extension === 'phps') extension = 'php'
-    if(extension === 'txt' && type === 'scripts') {
-        extraClass = 'no-highlight';
-        extension = 'text'
-    }
-    if(extraClass) extraClass = ' class="' + extraClass + '"';
+    if(extension === 'txt' && type === 'scripts') extension = 'plaintext';
     // Fill `embedContainer` with the custom content
     embedDiv.innerHTML = UPLOADS_STYLES[type]
         .replace('{{ fileUrl }}', fileUrl)
         .replace('{{ extension }}', extension)
-        .replace('{{ extraClass }}', extraClass);
 }
 
 /**
@@ -300,6 +302,7 @@ function uploadedFile__applyStyle(embedContainer)
  */
 function uploadedFile__getType(extension) 
 {
+    // others
     let matchType = null;
     Object.keys(ALLOWED_FILE_TYPES).forEach((type) => {
         const extensions = ALLOWED_FILE_TYPES[type];
@@ -336,10 +339,10 @@ function uploadedFile__isAllowed(file)
  * which will be used for further styling of the code
  * @param {HTMLElement} element The `code.hljs` element
  */
-function codeBlock__build(element)
+function codeBlock__buildOne(codeEl)
 {
     // Create structure
-    let preDiv = element.parentNode;
+    let preDiv = codeEl.parentNode;
     let codeContainer = document.createElement('div');
     let codeHeader = document.createElement('div');
     let codeBody = document.createElement('div');
@@ -349,26 +352,25 @@ function codeBlock__build(element)
     codeBody.classList.add('code-body');
     codeContainer.appendChild(codeHeader);
     codeContainer.appendChild(codeBody);
+
     // Fill with the (escaped) content
-    let codeEl = preDiv.querySelector('code');
-    codeEl.innerHTML = uploadedFile__escapeContent(codeEl.innerHTML);;
+    codeEl.innerHTML = uploadedFile__escapeContent(codeEl.innerHTML);
     codeBody.appendChild(preDiv);
-    // Displey the language name on the header
-    let langClass = codeBody.querySelector('code').classList[0];
-    codeHeader.innerText = langClass.substring(langClass.indexOf('-') + 1).toUpperCase();
+    
+    // Header content
+    let langClass = codeEl.classList[0];
+    let langName = langClass.substring(langClass.indexOf('-') + 1);
+    if(langName === 'plaintext') langName = 'Plain text';
+    codeHeader.innerText = langName.toUpperCase();
 }
 
-async function uploadedFile__showScriptsContent() {
-    let scriptDivs = document.querySelectorAll('div[data-ckfinder-embed-type="scripts"]');
-    for(let scriptDiv of scriptDivs) {
-        let scriptUrl = scriptDiv.getAttribute('data-ckfinder-embed-url');
-        let codeElement = scriptDiv.querySelector('code');
+async function uploadedFile__fetchContent(codeElement) {
+        let scriptUrl = codeElement.getAttribute('data-file-url');
         await fetch(scriptUrl)
         .then((result) => { return result.text(); })
         .then((content) => { 
             codeElement.innerText = content;
         });
-    }
 }
 
 function uploadedFile__escapeContent(string)
@@ -386,7 +388,7 @@ function uploadedFile__escapeContent(string)
  * @returns The `img-container` div just created 
  * (containing all the figure structure)
  */
-function singleImage__build(element, img, caption)
+function singleImage__buildOne(element, img, caption)
 {
     let imgContainer = document.createElement('div');
     imgContainer.classList.add('img-container')
@@ -532,8 +534,56 @@ function mediaEmbed__translateUrl(url, plateform) {
     return url;
 }
 
+/**
+ * Group accordion items that are adjacent
+ * @returns {Array} Array of accordions items (HTMLElements)
+ */
+function accordion__groupItems(parent, selectorClass)
+{
+    const childs = parent.childNodes;
 
+    let accordionEls = [];
+    let groupIndex = 0;
+    accordionEls[groupIndex] = [];
+    childs.forEach((child, index) => {
+        if(child.classList.contains(selectorClass)) {
+            // si c'est index 0 
+            if(index > 0 && !childs[index - 1].classList.contains(selectorClass)) {
+                if(accordionEls[groupIndex].length > 0) {
+                    groupIndex += 1;
+                    accordionEls[groupIndex] = [];
+                }
+            }
+            accordionEls[groupIndex].push(child);
+        }
+    });
+    return accordionEls;
+}
+ 
+/**
+ * Wrap groups of accordion items into a container, and build the structure for further styling (with css)
+ * @param {Array} accordionEls Arrayof accordions items (HTMLElements)
+ */
+function accordion__buildOne(group, parent, additionalClass)
+{
+    let containerDiv = document.createElement('div');
+    containerDiv.classList.add('accordion');
+    if(additionalClass) containerDiv.classList.add(additionalClass);
+    containerDiv.setAttribute('data-collapsible', true);
+    parent.insertBefore(containerDiv, group[0]);
+    group.forEach((item) => {
+        let titleEl = item.querySelector('div.accordion-title');
+        let contentEl = item.querySelector('div.accordion-content');
 
-
-
-
+        let headerDiv = document.createElement('div');
+        headerDiv.classList.add('accordion-header');
+        headerDiv.innerHTML = 
+            '<div class="accordion-icon">' + 
+                '<i class="accordion-closed icon-ok-circle"></i>' + 
+                '<i class="accordion-open icon-remove-circle"></i>' +
+            '</div>';
+        if(titleEl) headerDiv.appendChild(titleEl);
+        containerDiv.appendChild(headerDiv);
+        if(contentEl) containerDiv.appendChild(contentEl);
+    });
+}

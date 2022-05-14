@@ -1,0 +1,17 @@
+@import './public/variables';
+@import './public/mixins';
+
+@import './public/pagetitle'; // optimized m
+@import './public/portfolio-single';
+@import './public/elements/sliders/flex-slider'; // optimized s (created)
+@import './public/elements/dividers'; // optimized m
+
+// 'related projects' section
+@import './public/portfolio';
+@import './public/animations'; // optimized l
+@import './public/elements/sliders/owl-carousel'; // optimized s (created)
+
+// 'comments' section
+@import './public/elements/comments'; // optimized (created)
+@import './public/elements/form-field'; // optimized (created)
+@import './public/elements/alerts'; // optimized (created)

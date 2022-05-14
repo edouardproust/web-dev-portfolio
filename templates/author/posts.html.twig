@@ -1,5 +1,15 @@
 {% extends '_layout/collection.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('posts') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('posts') }}
+{% endblock %}
+
 {# Config #}
 
 {% block title %}Blog: {{ author.fullName }}{% endblock %}
@@ -10,10 +20,10 @@
     {label: 'Blog', url: path('projects')},
     {label: author.fullname, active: true}
 ] %}
-{% set collection_filters = {
+{% set collection_filters = [ {
     collection: categories,
     showAllLabel: 'All Categories'
-}%}
+} ] %}
 
 
 {# Collection of Projects =============================================== #}

@@ -1,14 +1,13 @@
 {% extends "base.html.twig" %}
 
-{% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('content') }}
-{% endblock %}
-
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('ui') }}
-	{{ encore_entry_link_tags('content') }}
+    {{ encore_entry_link_tags('lesson') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('lesson') }}
 {% endblock %}
 
 {# /!\ 
@@ -32,7 +31,7 @@
         <div class="content-wrap">
             <div class="container clearfix">
 
-                <div class="single-post mw-xs mx-auto">
+                <div class="single-post mw-sm mx-auto">
 
                     {% if hasAfterContent %}
                         <div class="entry clearfix">
@@ -49,6 +48,8 @@
 
                     {% if hasAfterContent %}
 
+                        <div class="divider divider-center"><i class="icon-circle"></i></div>
+
                         {% if showPostNavigation %}
                             {% include "_sections/posttype/post-navigation.html.twig" with { 
                                 prevNextLinks: prevNextLinks 
@@ -64,7 +65,7 @@
 
                         {% if showComments %}
                             {% include "_sections/posttype/comments.html.twig" with { 
-                                comments: post.comments 
+                                comments: visibleComments
                             } %}
                         {% endif %}
 

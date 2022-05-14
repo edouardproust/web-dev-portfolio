@@ -2,35 +2,24 @@
 
 {% block title %}Login{% endblock %}
 
-{% block javascripts %}
-	{{ parent() }}
-    {{ encore_entry_script_tags('video') }}
-{% endblock %}
-
-{% set whiteLogo = true %}
-
 {% block main %}
 
-    <section class="slider-element include-header">
-		<div class="slider-inner" style="position: static">
+    <section class="video-bg-section d-flex">
 
-			<div class="vertical-middle">
-				<div class="container py-5">
+			<div class="vertical-middle py-5">
 
-					{% block content %}{% endblock %}
+				{% block content %}{% endblock %}
 
-				</div>
 			</div>
 
-			<div class="video-wrap" style="position: fixed">
-				<video poster="{{ asset('build/images/videos/deskwork.jpg') }}" preload="auto" loop autoplay muted>
-					<source src='{{ asset('build/images/videos/deskwork.mp4') }}' type='video/mp4' />
-					<source src='{{ asset('build/images/videos/deskwork.webm') }}' type='video/webm' />
-				</video>
-				<div class="video-overlay" style="background-color: rgba(0,0,0,0.3);"></div>
-			</div>
-
+		<div class="video-wrap">
+			<video poster="{{ asset('build/images/videos/deskwork.jpg') }}" preload="auto" loop autoplay muted>
+				<source src='{{ asset('build/images/videos/deskwork.mp4') }}' type='video/mp4' />
+				<source src='{{ asset('build/images/videos/deskwork.webm') }}' type='video/webm' />
+			</video>
+			<div class="video-overlay"></div>
 		</div>
+
 	</section>
 
 {% endblock %}

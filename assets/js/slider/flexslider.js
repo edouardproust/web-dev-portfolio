@@ -7,19 +7,18 @@ const SELECTOR = '.fslider';
 
 // module
 function exec(){
-	flexSlider(); 
-}
-export default { exec };
-
-function flexSlider() {
 	let $elements = $(SELECTOR);
 	$elements = $elements.filter(':not(.customjs)');
 
 	if( $elements.length < 1 ){
 		return;
 	}
-	console.log('flexSlider executed');
+	flexSlider($elements);
+}
+export default { exec };
 
+function flexSlider($elements) {
+	console.log('flexSlider executed');
 	$elements.each(function() {
 		let element			= $(this),
 			elLazy			= element.find('.lazy'),
@@ -102,7 +101,5 @@ function flexSlider() {
 				}, 500 );
 			}
 		});
-
 	});
-
 }

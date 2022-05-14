@@ -15,9 +15,9 @@
 
     {% set dateFormated = post.createdAt|date('M j, Y') %}
     {% set animationDuration = '600ms' %}
-    {% set shapeDivider = 'slant' %} {# Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html #}
-    {% set shapeDividerReverse = true %}
-    {% set h2LineHeight = '3.2rem' %}
+    {# set shapeDivider = 'slant' #}
+    {# set shapeDividerReverse = true #}
+    {% set h1LineHeight = '3.2rem' %}
 
 
 {# Prepare #}
@@ -46,7 +46,7 @@
         {% endif %}
 
         <div class="fadeInUp animated" data-animate="fadeInUp"{{ animationDurationAttr|raw }}>
-            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ post.title }}</h2>
+            <h1 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h1LineHeight }}" >{{ post.title }}</h1>
         
             <ol class="page-description">
 
@@ -76,8 +76,8 @@
                     <li class="sep createdAt pt-1"><i class="icon-calendar3"></i>{{ ' ' ~ dateFormated }}</li>
                 {% endif %}
 
-                {% if post.comments|length > 0 %}
-                    <li class="sep pt-1"><a href="#comments" class="meta-separator"><i class="icon-comments"></i>{{ ' ' ~ post.comments|length }}</a>
+                {% if comments|length > 0 %}
+                    <li class="sep pt-1"><a href="#comments" class="meta-separator"><i class="icon-comments"></i>{{ ' ' ~ comments|length }}</a>
                 {% endif %}
 
             </ol>

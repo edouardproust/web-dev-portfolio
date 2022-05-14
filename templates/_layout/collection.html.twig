@@ -1,10 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block javascripts %}
-	{{ parent() }}
-	{{ encore_entry_script_tags('gallery') }}
-{% endblock %}
-
 {# Prepare #}
     {% set hasFeaturedSection = featuredProjects is defined 
         and featuredProjects is iterable 
@@ -23,29 +18,24 @@
 
                 {% block content %}
                 
-                    {# Featured projects #}
+                    {# Projects only #}
                     {% if hasFeaturedSection %}
-                    <div class="section bg-transparent pt-0">
-                        <h2>Featured</h2>
-                        {% include "_elements/projects-carousel.html.twig" with {
-                            projects: featuredProjects,
-                            cols: 3
-                        } %}
-                    </div>
+                        <div class="section bg-transparent">
+                            <h2>Featured</h2>
+                            {% include "_elements/projects-carousel.html.twig" with {
+                                projects: featuredProjects,
+                                cols: 3
+                            } %}
+                        </div>
 
-                    <h2>All projects</h2>
+                        <h2>All projects</h2>
                     {% endif %}
 
+                    {# All #}
                     {% if collection_filters is defined and collection_filters is not null %}
-                        {% if collection_filters|length > 1 and collection_filters.0 is defined %}
-                            {% include "_elements/collection-filters-double.html.twig" with {
-                                filters: collection_filters
-                            } %}
-                        {% else %}
-                            {% include "_elements/collection-filters.html.twig" with {
-                                filters: collection_filters,
-                            } %}
-                        {% endif %}
+                        {% include "_elements/collection-filters.html.twig" with {
+                            filters: collection_filters
+                        } %}
                     {% endif %}
 
                     {# Collection Items:

@@ -5,59 +5,49 @@
 
 {# Comments section (on 'show' template) ============================================ #}
 
-<div id="comments" class="clearfix">
+{% if commentForm is not null %}
 
-    {% if comments|length > 0 %}
-        
-        <h3 id="comments-title" class="mb-3">
-            <span>{{ comments|length }}</span> Comments
-        </h3>
+    <div id="comments" class="clearfix">
 
-        {# Comments List #}
+        {% if visibleComments|length > 0 %}
+            
+            <h3 id="comments-title" class="mb-3">
+                <span>{{ visibleComments|length }}</span> Comments
+            </h3>
 
-        <ol class="commentlist clearfix">
-            {% for i, comment in comments %}
-                {% include "_elements/card-comment.html.twig" with { comment: comment } %}
-            {% endfor %}
-        </ol>
-        <div class="clear"></div>
-        
-    {% endif %}
+            {# Comments List #}
 
-    {# Form #}
+            <ol class="commentlist clearfix">
+                {% for i, comment in visibleComments %}
+                    {% include "_elements/card-comment.html.twig" with { comment: comment } %}
+                {% endfor %}
+            </ol>
+            <div class="clear"></div>
+            
+        {% endif %}
 
-    <div id="respond">
+        {# Form #}
 
-    <h3>Leave a <span>Comment</span></h3>
+            <div id="respond">
 
-    <form class="row" action="#" method="post" id="commentform">
-        <div class="col-md-4 form-group">
-            <label for="author">Name</label>
-            <input type="text" name="author" id="author" value="" size="22" tabindex="1" class="sm-form-control" />
-        </div>
+                <h3>Leave a <span>Comment</span></h3>
 
-        <div class="col-md-4 form-group">
-            <label for="email">Email</label>
-            <input type="text" name="email" id="email" value="" size="22" tabindex="2" class="sm-form-control" />
-        </div>
+                {% include "_elements/alert.html.twig" with {
+                    successGroup: 'commentSubmitSuccess'
+                } %}
 
-        <div class="col-md-4 form-group">
-            <label for="url">Website</label>
-            <input type="text" name="url" id="url" value="" size="22" tabindex="3" class="sm-form-control" />
-        </div>
+                {{ form_start(commentForm) }}
+                {{ form_widget(commentForm) }}
+                {{ form_errors(commentForm) }}
+                {% include "_elements/button.html.twig" with {
+                    type: 'submit',
+                    label: "Submit"
+                } %}
+                {{ form_end(commentForm) }}
 
-        <div class="w-100"></div>
 
-        <div class="col-12 form-group">
-            <label for="comment">Comment</label>
-            <textarea name="comment" cols="58" rows="7" tabindex="4" class="sm-form-control"></textarea>
-        </div>
+            </div>
 
-        <div class="col-12 form-group">
-            <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0">Submit Comment</button>
-        </div>
-    </form>
+    </div>
 
-</div>
-
-</div>
+{% endif %}

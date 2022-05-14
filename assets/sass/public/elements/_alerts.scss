@@ -1,0 +1,78 @@
+.style-msg,
+.style-msg2 {
+	position: relative;
+	display: block;
+	color: #444;
+	border-left: 4px solid rgba(0,0,0,0.1);
+	margin-bottom: 20px;
+}
+
+.style-msg2 { border-left: 4px solid rgba(0,0,0,0.2); }
+
+.successmsg {
+	background: $color-success-light;
+	color: $color-success;
+}
+
+.errormsg {
+	background: $color-danger-light;
+	color: $color-danger;
+}
+
+.infomsg {
+	background: $color-info-light;
+	color: $color-info;
+}
+
+.alertmsg {
+	background: $color-alert-light;
+	color: $color-alert;
+}
+
+.style-msg .sb-msg,
+.style-msg2 .msgtitle,
+.style-msg2 .sb-msg {
+	display: block;
+	padding: 15px;
+	border-left: 1px solid rgba(255,255,255,0.5);
+	font-size: 1rem;
+}
+
+.style-msg2 .msgtitle {
+	background: rgba(0,0,0,0.15);
+	border-top: none;
+	border-bottom: none;
+	font-weight: bold;
+}
+
+.style-msg-light .sb-msg,
+.style-msg-light .msgtitle {
+	color: #FFF;
+}
+
+.style-msg2 .sb-msg { font-weight: normal; }
+
+.style-msg2 ol,
+.style-msg2 ul { margin: 0 0 0 30px; }
+
+.style-msg2 ol { list-style-type: decimal; }
+
+.style-msg2 ul { list-style-type: disc; }
+
+.alert i,
+.sb-msg i,
+.msgtitle i {
+	position: relative;
+	top: 1px;
+	font-size: 0.875rem;
+	width: 14px;
+	text-align: center;
+	margin-right: 5px;
+}
+
+.style-msg .btn-close {
+	position: absolute;
+	top: 0px;
+	left: auto;
+	right: 0px;
+}

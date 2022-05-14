@@ -1,0 +1,197 @@
+/* ----------------------------------------------------------------
+	Page Title
+-----------------------------------------------------------------*/
+
+$page_title-prefix: page-title;
+
+##{$page_title-prefix} {
+	position: relative;
+	padding: $page-title-padding;
+	margin-top: -105px;
+	border-bottom: none;
+	background-color: $page-title-bg;
+	border-bottom: $page-title-border;
+	@include media-breakpoint-down(sm) {
+		padding: 2rem 0;
+		text-align: center;
+	}
+	&.project-show {
+		padding-bottom: 300px;
+	}
+	.container {
+		position: relative;
+	}
+	h1 {
+		padding: 0;
+		margin: 0;
+		line-height: 1;
+		font-weight: 600;
+		letter-spacing: 1px;
+		color: $page-title-bg-dark;
+		font-size: $page-title-size;
+		text-transform: $page-title-tt;
+		@include media-breakpoint-down(sm) {
+			line-height: 1.5;
+			font-size: calc( 1rem + 2vw );
+		}
+	}
+	span {
+		display: block;
+		margin-top: 10px;
+		font-weight: 300;
+		color: #777;
+		font-size: $page-title-subtitle-size;
+	}
+
+	.breadcrumb {
+		// position: absolute !important;
+		width: auto !important;
+		top: 50% !important;
+		left: auto !important;
+		right: 15px !important;
+		margin: 0 !important;
+		background-color: transparent !important;
+		padding: 0 !important;
+		font-size: 90%;
+		transform: translateY(-50%);
+		a { color: #555;
+			a:hover { color: $theme-color; }
+		}
+
+		i { width: auto !important; }
+
+		@include media-breakpoint-down(sm) {
+			position: relative !important;
+			top: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			margin: 20px 0 0 !important;
+			justify-content: center;
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+	}
+
+	.breadcrumb-item:not(:first-child)::before {	
+		content: $page-title-breadcrumb-separator;
+	}
+
+	.page-description {
+		display: flex;
+		list-style: none;
+		font-weight: 300 !important;
+		font-size: 14px !important;
+		* i {
+			padding-right: 0.3rem !important;
+		}
+		.sep::before {
+			float: left;
+			padding: 0 0.7rem;
+			opacity: 0.3 !important;
+			content: $page-title-meta-separator;
+		}
+		.createdAt {
+			opacity: 0.6 !important;
+		}
+	}
+}
+
+.logo-color-invert {
+	filter: brightness(200) grayscale(100%);
+}
+
+##{$page_title-prefix}.#{$page_title-prefix} {
+	&-dark {
+		background-color: #333;
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.1) !important;
+		border-bottom: none;
+		h1 { color: rgba(255,255,255,0.9) !important; }
+
+		span { color: rgba(255,255,255,0.7) !important; }
+
+		.breadcrumb {
+			> .active { color: rgba(255,255,255,0.6); }
+			a { color: rgba(255,255,255,0.8);
+				&:hover { color: rgba(255,255,255,0.95); }
+			}
+		}
+
+		.breadcrumb-item + .breadcrumb-item::before {
+			color: #CCC;
+		}
+	}
+
+	/* Page Title - Background Pattern
+	-----------------------------------------------------------------*/
+
+	&-pattern {
+		background-image: url('../../images/theme/pattern.png');
+		background-repeat: repeat;
+		background-attachment: fixed;
+		padding-top: 180px;
+	}
+
+	/* Page Title - Background Image
+	-----------------------------------------------------------------*/
+
+	&-bg-img {
+		padding: $post-title-padding !important;
+		* {
+			color: white !important;
+		}
+		
+		.breadcrumb-item::before {
+			color: white !important;
+		}
+		.bg-overlay,
+		.bg-overlay-bg,
+		.bg-overlay-content {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			overflow: hidden;
+		}
+	}
+
+}
+
+@include media-breakpoint-down(sm) {
+
+	#page-title #portfolio-navigation,
+	#portfolio-ajax-title #portfolio-navigation {
+		position: relative;
+		top: 0;
+		left: 0;
+		margin: 15px auto 0;
+	}
+}
+
+/* Tag Cloud
+-----------------------------------------------------------------*/
+
+.tagcloud { margin-bottom: -2px;
+	a {
+		display: block;
+		float: left;
+		margin-right: 4px;
+		margin-bottom: 4px;
+		padding: 3px 6px;
+		border: 1px solid darken($body-bg, 10.20);
+		font-size: 13px !important;
+		color: lighten($text-color, 13.33);
+		border-radius: 2px;
+
+		body:not(.device-touch) & {
+			-webkit-transition: all .3s ease-in-out;
+			-o-transition: all .3s ease-in-out;
+			transition: all .3s ease-in-out;
+		}
+
+		&:hover {
+			border-color: $theme-color !important;
+			color: $theme-color !important;
+		}
+	}
+}

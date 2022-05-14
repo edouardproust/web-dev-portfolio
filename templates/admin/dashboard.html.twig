@@ -4,6 +4,9 @@
 
 {% block content %}
 
+{% set hasAuthorsToApprove = cards.approveAuthors is defined and cards.approveAuthors.authors|length > 0 %}
+{% set hasCommentsToApprove = cards.approveComments is defined and cards.approveComments.comments|length > 0 %}
+
 <article class="content">
 
     <section class="content-header">
@@ -24,8 +27,8 @@
             <div class="row g-3">
                 
                 {# Approve authors #}
-                {% if cards.approveAuthors is defined and cards.approveAuthors.authors|length > 0 %}
-                    {% include "admin/_parts/card/authors_waiting_list.html.twig" with {
+                {% if hasAuthorsToApprove %}
+                    {% include "admin/_parts/card/approve_authors.html.twig" with {
                         data: cards.approveAuthors
                     } %}
                 {% endif %}
@@ -34,6 +37,13 @@
                 {% if cards.purgeFiles is defined %}
                     {% include "admin/_parts/card/purge_files.html.twig" with {
                         data: cards.purgeFiles
+                    } %}
+                {% endif %}
+
+                {# Validate comments #}
+                {% if hasCommentsToApprove %}
+                    {% include "admin/_parts/card/approve_comments.html.twig" with {
+                        data: cards.approveComments
                     } %}
                 {% endif %}
 

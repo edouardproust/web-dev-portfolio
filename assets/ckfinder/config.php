@@ -91,7 +91,7 @@ $config['resourceTypes'][] = array(
     'name'              => 'Scripts',
     'directory'         => 'scripts',
     'maxSize'           => '10M',
-    'allowedExtensions' => 'htm,html,css,js,php,sql,txt',
+    'allowedExtensions' => 'htm,html,css,js,php,sql,txt,phps',
     'backend'           => 'default'
 );
 
@@ -145,7 +145,7 @@ $config['accessControl'][] = array(
     'FILE_VIEW'           => true,
     'FILE_CREATE'         => true,
     'FILE_RENAME'         => true,
-    'FILE_DELETE'         => true,
+    'FILE_DELETE'         => false,
 
     'IMAGE_RESIZE'        => true,
     'IMAGE_RESIZE_CUSTOM' => true

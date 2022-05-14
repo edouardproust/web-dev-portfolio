@@ -1,7 +1,7 @@
 {# 
     Inherited variables from:
         _elements/section-title.html.twig
-        _elements/contact-button.html.twig
+        _elements/contact-button-section.html.twig
         _elements/testimonials-slider-small.html.twig
 #}
 
@@ -11,9 +11,9 @@
         <div class="row justify-content-between mt-5">
 
             {% set additionalHtml %}
-                {% include "_elements/contact-button.html.twig" with {
-                    contactLabel: 'Contact Me!',
-                    contactLink: '#',
+                {% include "_elements/contact-button-section.html.twig" with {
+                    label: 'Contact Me!',
+                    url: path('contact'),
                     socials: [ 
                         { slug: 'facebook', link: 'https://facebook.com' },
                         { slug: 'twitter', link: 'https://twitter.com' },
@@ -32,16 +32,15 @@
                 removeVerticalMargins: true
             } %}
 
-            {% include "_elements/testimonials-slider-small.html.twig"  with {
-                title: 'What Clients Says:',
-                slides: [{ 
-                        content: 'Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero illo rerum repellendus!',
-                        name: 'Fig Nelson'
-                    },{
-                        content: 'Completely e-enable premier infomediaries and long-term high-impact process improvements. Completely provide access to B2C.',
-                        name: 'Bailey Wonger'
-                    }]
-            } %}
+            {% if testimonials is not same as(false) %}
+                {% include "_elements/testimonials-slider-small.html.twig"  with {
+                    title: 'What Clients Says:',
+                    slides: [{ 
+                            content: 'Incidunt deleniti blanditiis quas aperiam recusandae consequatur ullam quibusdam cum libero illo rerum repellendus!',
+                            name: 'Fig Nelson'
+                        }]
+                } %}
+            {% endif %}
 
         </div>
     </div>

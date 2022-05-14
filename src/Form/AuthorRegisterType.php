@@ -39,6 +39,8 @@ class AuthorRegisterType extends AbstractType
                         new Length(['max' => 255])
                     ],
                     'mapped' => false,
+                    'attr' => [ 'placeholder' => 'Name', ],
+                    'row_attr' => [ 'class' => 'form-floating' ],
                 ])
                 ->add('password', PasswordType::class, [
                     'label' => 'Password*',
@@ -46,7 +48,9 @@ class AuthorRegisterType extends AbstractType
                         new NotBlank(),
                         new Length(['max' => 255])
                     ],
-                    'mapped' => false
+                    'mapped' => false,
+                    'attr' => [ 'placeholder' => 'Name', ],
+                    'row_attr' => [ 'class' => 'form-floating' ],
                 ]);
         }
         $builder
@@ -56,6 +60,8 @@ class AuthorRegisterType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 255])
                 ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('bio', TextareaType::class, [
                 'label' => 'Bio*',
@@ -67,6 +73,8 @@ class AuthorRegisterType extends AbstractType
                         'max' => 500
                     ])
                 ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('avatarFile', VichImageType::class, [
                 'required' => false,
@@ -78,7 +86,7 @@ class AuthorRegisterType extends AbstractType
                         'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
                         'mimeTypesMessage' => 'Image format {{ type }} is not allowed. Please use one of the following: {{ types }}.'
                     ])
-                ]
+                ],
             ])
             ->add('contactEmail', EmailType::class, [
                 'required' => false,
@@ -88,6 +96,8 @@ class AuthorRegisterType extends AbstractType
                     new Email,
                     new Length(['max' => 255])
                 ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('website', UrlType::class, [
                 'required' => false,
@@ -96,6 +106,8 @@ class AuthorRegisterType extends AbstractType
                     new Url,
                     new Length(['max' => 255])
                 ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('github', UrlType::class, [
                 'required' => false,
@@ -105,6 +117,8 @@ class AuthorRegisterType extends AbstractType
                     new Url,
                     new Length(['max' => 255])
                 ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('linkedin', UrlType::class, [
                 'required' => false,
@@ -114,6 +128,8 @@ class AuthorRegisterType extends AbstractType
                     new Url,
                     new Length(['max' => 255])
                 ],
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ])
             ->add('stackoverflow', UrlType::class, [
                 'required' => false,
@@ -123,9 +139,8 @@ class AuthorRegisterType extends AbstractType
                     new Url,
                     new Length(['max' => 255])
                 ],
-            ])
-            ->add('submitRegister', SubmitType::class, [
-                'label' => "<i class='icon-line-check'></i> Register"
+                'attr' => [ 'placeholder' => 'Name', ],
+                'row_attr' => [ 'class' => 'form-floating' ],
             ]);
     }
 }

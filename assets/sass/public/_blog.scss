@@ -1,0 +1,134 @@
+/* ----------------------------------------------------------------
+	Blog
+-----------------------------------------------------------------*/
+
+#posts { position: relative; }
+
+.entry-title {
+	h3 {
+		text-transform: none;
+		margin: 0;
+		font-size: $post-title-font-size;
+		font-weight: $post-title-font-weight;
+		letter-spacing: $post-title-font-spacing;
+		color: $post-title-font-color;
+		a { color: $post-title-font-color;
+			&:hover { color: $theme-color; }
+		}
+		a:hover {
+			color: inherit !important;
+		}
+	}
+}
+
+.btn-more {
+    opacity: 0;
+    font-size: 1.5rem;
+    color: #FFF;
+    margin-top: 15px;
+    transition: opacity .3s ease;
+}
+.grid-item:hover .btn-more {
+    opacity: 1;
+}
+
+.grid-item .bg-overlay-content {
+    top: auto;
+    bottom: -40px;
+    transition: bottom .3s ease;
+}
+.grid-item:hover .bg-overlay-content {
+    bottom: 0;
+}
+
+.entry-meta {
+	position: relative;
+	overflow: hidden;
+	margin-top: 10px;
+	.posts-sm & { margin-top: 6px; }
+	.posts-sm & {
+		margin-bottom: 0px;
+	}
+	ul {
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		align-items: center;
+		margin: 0 0 -10px -20px;
+		list-style: none;
+	}
+}
+
+.entry-meta ul.flex-column {
+	align-items: flex-start;
+	margin-left: 0;
+}
+
+.entry-meta li {
+	margin: 0 15px 10px 0;
+}
+
+.entry-meta li,
+.entry-meta li a {
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+    font-size: 90%;
+}
+
+.entry-meta ul.flex-column li {
+	margin-left: 0;
+}
+
+.entry-meta i {
+	position: relative;
+	top: 1px;
+	padding-left: 1px;
+	margin-right: 5px;
+}
+
+.entry-meta:not(.no-separator) li::before {
+	content: $post-meta-seperator;
+	width: 5px;
+	text-align: center;
+	display: inline-block;
+	margin-right: $post-meta-margin;
+	opacity: 0.5;
+}
+
+.entry-meta a:not(:hover) { color: $post-meta-color; }
+
+/* ----------------------------------------------------------------
+	Overlays
+-----------------------------------------------------------------*/
+
+.bg-overlay,
+.bg-overlay-bg,
+.bg-overlay-content {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.bg-overlay {
+	z-index: 5;
+	[data-hover-animate]:not(.animated) {
+		opacity: 0;
+	}
+
+	&-content {
+		display: -ms-flexbox;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1;
+		padding: 20px;
+	}
+
+	&-bg {
+		background-color: rgba(255,255,255,0.85);
+	}
+}

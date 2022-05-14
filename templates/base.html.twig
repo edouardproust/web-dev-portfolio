@@ -6,7 +6,6 @@
     {% set siteName = config('SITE_NAME') %}
     {% set logo = config('SITE_LOGO') %}
     {% set headerLogoHeight = config('SITE_LOGO_HEIGHT') %}
-    {% set favicon = config('SITE_FAVICON') %}
 
     {% set headerMenu = [
         {label: 'Home', url: path('home')},
@@ -29,8 +28,8 @@
 ] %}
 
 {# Prepare #}
-
     {% set logoUrl = vich_uploader_asset(config('SITE_LOGO', true), 'fileFile') %}
+    {% set faviconUrl = vich_uploader_asset(config('SITE_FAVICON', true), 'fileFile') %}
     {% set logoFooterClass = 'logo-color-invert' %}
     {% set logoClass = null %}
     {% if whiteLogo is defined %} {# whiteLogo can be defined on each layout (or static pages) #}
@@ -55,7 +54,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}{% endblock %} - {{ config('SITE_NAME')|striptags }}</title>
-        <link rel="shortcut icon" href="/{{ favicon }}" />
+        <link rel="shortcut icon" href="{{ faviconUrl }}" />
 
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
@@ -68,12 +67,12 @@
         // data-loader-html="<div><img src='{{ asset('build/images/theme/loader.svg') }}' alt='Loader'></div>" 
     #}>
 
-        <div id="wrapper" class="clearfix">{# <-- Don't remove wrapper #}
+        <div id="wrapper">{# <-- Don't remove wrapper #}
 
 {# Navigation ===================================================== #}
 
             <header id="header" class="transparent-header{{ stickyClass }}{{ animationClass }}"{{ animationAttr|raw }}>
-                <div id="header-wrap">
+                <div>
                     <div class="container">
                         <div class="header-row">
                             <a href="{{ path('home') }}">
@@ -87,7 +86,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="header-wrap-clone"></div>
             </header>
 
 {# View ===================================================== #}
@@ -103,31 +101,27 @@
                 <div id="copyrights">
                     <div class="container clearfix">
 
-                        <div class="w-100 text-center topmargin-sm">
-
-                            <div class="row justify-content-between">
-                                <div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
-                                    {% if isTextLogo %}
-                                        <h4 class="footer-logo-text">{{ siteName|raw }}</h4>
-                                    {% else %}
-                                        <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME') }} logo" class="mb-4"  style="height:{{ headerLogoHeight / 1.5 }}px"><br>
-                                    {% endif %}
-                                    &copy; {{ config('SITE_NAME') }} {{ date()|date('Y') }}. All Rights Reserved.
-                                </div>
-
-                                <div class="col-12 col-lg-auto text-center text-lg-end">
-
-                                    {% include "_elements/footer-menu.html.twig" with { menu: headerMenu } %}
-                                    {% include "_elements/footer-menu.html.twig" with { menu: footerMenu } %}
-
-                                    {% include "_elements/social-icons.html.twig" with { 
-                                        type: 'footer',
-                                        socials: footerSocials
-                                    } %}
-                                    
-                                </div>
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
+                                {% if isTextLogo %}
+                                    <h3 class="footer-logo-text">{{ siteName|raw }}</h3>
+                                {% else %}
+                                    <img src="{{ logoUrl }}" class="logo-footer {{ logoFooterClass }}" alt="{{ config('SITE_NAME')|raw }} logo" class="mb-4" style="height:{{ headerLogoHeight / 1.5 }}px"><br>
+                                {% endif %}
+                                &copy; {{ date()|date('Y') }}. All Rights Reserved.
                             </div>
-                        
+
+                            <div class="col-12 col-lg-auto text-center text-lg-end">
+
+                                {% include "_elements/footer-menu.html.twig" with { menu: headerMenu } %}
+                                {% include "_elements/footer-menu.html.twig" with { menu: footerMenu } %}
+
+                                {% include "_elements/social-icons.html.twig" with { 
+                                    type: 'footer',
+                                    socials: footerSocials
+                                } %}
+                                
+                            </div>
                         </div>
 
                     </div>
@@ -137,7 +131,7 @@
 
         </div>{# <-- End of wrapper #}
 
-        <div id="gotoTop" class="icon-angle-up bg-color"></div>
+        <div id="gotoTop" class="icon-angle-up"></div>
         
     </body>
 

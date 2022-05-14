@@ -2,6 +2,7 @@
 
     Mandatory variables:
         - post: <Post> The current Post
+        - visibleComments: <Comment[]> Array of comments with a 'isVisible' property on true 
 
     Optionnal variables:
         - breadcrumb: <array{}> Array of link objects:
@@ -16,9 +17,9 @@
 
 {% set dateFormated = post.createdAt|date('M j, Y') %}
 {% set animationDuration = '600ms' %}
-{% set shapeDivider = 'slant' %} {# Browse shapes: https://themes.semicolonweb.com/html/canvas/shape-dividers.html #}
-{% set shapeDividerReverse = true %}
-{% set h2LineHeight = '3.2rem' %}
+{# set shapeDivider = 'slant' #}
+{# set shapeDividerReverse = true #}
+{% set h1LineHeight = '3.2rem' %}
 {% set overlayColor = 'rgba(0, 0, 0, 0.5)' %}
 {% set defaultMainImage = 'placeholder.png' %}
 
@@ -40,7 +41,7 @@
 
 {# Title Page section ======================================================== #} 
 
-<section id="page-title" class="page-title-pattern bg-image-title" style="background-image:url({{ mainImageUrl }}) !important">
+<section id="page-title" class="page-title-bg-img" style="background-image:url({{ mainImageUrl }}) !important">
         
     <div class="bg-overlay-bg" style="background: radial-gradient({{ overlayColor }}, {{ overlayColor }}), url({{ mainImageUrl }}) center center / cover no-repeat fixed"></div>
 
@@ -55,7 +56,7 @@
         {% endif %}
 
         <div class="fadeInUp animated" data-animate="fadeInUp"{{ animationDurationAttr|raw }}>
-            <h2 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h2LineHeight }}" >{{ post.title }}</h2>
+            <h1 class="fw-bold ls0 mb-3" style="font-size:46px; line-height:{{ h1LineHeight }}" >{{ post.title }}</h1>
             
             <ol class="page-description">
 
@@ -75,8 +76,8 @@
                     <li class="sep createdAt pt-1"><i class="icon-calendar3"></i>{{ ' ' ~ dateFormated }}</li>
                 {% endif %}
                 
-                {% if post.comments|length > 0 %}
-                    <li class="sep pt-1"><a href="#comments" class="meta-separator"><i class="icon-comments"></i>{{ ' ' ~ post.comments|length }}</a>
+                {% if comments is not empty %} {# = if comments are activated in admin options #}
+                    <li class="sep pt-1"><a href="#comments" class="meta-separator"><i class="icon-comments"></i>{{ ' ' ~ comments|length }}</a>
                 {% endif %}
 
             </ol>

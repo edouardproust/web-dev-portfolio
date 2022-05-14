@@ -31,10 +31,10 @@
     {label: page_title, active: true}
 ] %}
 {% set page_project = project %}
-{% set showAuthor = true %}
+{% set showAuthor = false %}
 {% set showComments = true %}
 {% set showRelatedProjects = true %}
-{% set showProjectNavigation = true %}
+{% set showProjectNavigation = false %}
 {% set prevNextLinks = prevNextLinks %}
 {% set author_routeName = 'author_projects' %}
 
@@ -44,7 +44,8 @@
 {% block hero %}
 
 	{% include "_sections/page-title/project-show.html.twig" with { 
-        post: project
+        post: project,
+        comments: visibleComments
     } %}
 	
 {% endblock %}

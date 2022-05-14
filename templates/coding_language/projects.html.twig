@@ -2,9 +2,14 @@
 
 {% block title %}{{ codingLanguage.label ~ ' Projects' }}{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('projects') }}
+{% endblock %}
+
 {% block javascripts %}
-    {{ parent() }}
-	{{ encore_entry_script_tags('slider') }}
+	{{ parent() }}
+    {{ encore_entry_script_tags('projects') }}
 {% endblock %}
 
 {% set breadcrumb = [
@@ -12,10 +17,10 @@
     {label: 'Portfolio', url: path('projects')},
 	{label: codingLanguage.label, active: true}
 ] %}
-{% set collection_filters = {
+{% set collection_filters = [ {
     collection: categories,
     showAllLabel: 'All categories'
-} %}
+} ] %}
 {% set collection_items = projects %}
 
 

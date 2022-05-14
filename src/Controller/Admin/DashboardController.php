@@ -20,8 +20,9 @@ use App\Entity\ProjectCategory;
 use App\Repository\AuthorRepository;
 use App\Helper\CKFinderAuthenticator;
 use App\Repository\AdminOptionRepository;
-use Symfony\Component\HttpFoundation\Request;
 use App\Controller\Admin\AuthorCrudController;
+use App\Path;
+use App\Repository\CommentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -31,7 +32,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\Security\Core\User\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
@@ -39,21 +39,21 @@ class DashboardController extends AbstractDashboardController
     private $authorRepository;
     private $adminUrlGenerator;
     private $adminOptionRepository;
-    private $adminContext;
     private $userService;
+    private $commentRepository;
 
     public function __construct(
         AuthorRepository $authorRepository,
         AdminUrlGenerator $adminUrlGenerator,
         AdminOptionRepository $adminOptionRepository,
-        AdminContextProvider $adminContext,
-        UserService $userService
+        UserService $userService,
+        CommentRepository $commentRepository
     ) {
         $this->authorRepository = $authorRepository;
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->adminOptionRepository = $adminOptionRepository;
-        $this->adminContext = $adminContext;
         $this->userService = $userService;
+        $this->commentRepository = $commentRepository;
     }
 
     /**
@@ -61,16 +61,20 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        // Cards
+        // Cards (templates: `templates/admin/_parts/card`)
         $highestRole = $this->userService->getHighestRole($this->getUser());
         $cards = [];
         if ($highestRole === Config::ROLE_ADMIN) {
-            $cards['approveAuthors'] = [
-                'authors' => $this->authorRepository->findIsNotApproved(),
-                'link' => $this->adminUrlGenerator->setController(AuthorCrudController::class)->generateUrl()
-            ];
-            $cards['purgeFiles'] = [
-                'link' => $this->generateUrl('admin_files_purge')
+            $cards = [
+                'approveAuthors' => [
+                    'authors' => $this->authorRepository->findIsNotApproved(),
+                    'link' => $this->adminUrlGenerator->setController(AuthorCrudController::class)->generateUrl()
+                ],
+                'purgeFiles' => [ 'link' => $this->generateUrl('admin_files_purge') ],
+                'approveComments' => [
+                    'comments' => $this->commentRepository->findIsNotVisibleAll(6),
+                    'link' => $this->adminUrlGenerator->setController(CommentCrudController::class)->generateUrl()
+                ]
             ];
         }
 
@@ -102,9 +106,10 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+        $favicon = $this->adminOptionRepository->get('SITE_FAVICON');
         $dashboard = Dashboard::new()
-            ->setTitle($this->adminOptionRepository->get('SITE_NAME')->getValue());
-
+            ->setTitle($this->adminOptionRepository->get('SITE_NAME')->getValue() ?? '')
+            ->setFaviconPath($favicon ? Path::UPLOADS_ADMIN_OPTIONS . '/' . $favicon->getFile() : '');
         return $dashboard;
     }
 

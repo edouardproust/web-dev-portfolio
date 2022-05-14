@@ -8,27 +8,25 @@
 
 #}
 
-{# Prepare #}
-
-    {% set showAllLabel = filter.show is defined and showAllLabel is not null ? showAllLabel : 'Show All' %}
-    {% set showRandomBtn = collection_filters_random is defined and collection_filters_random is not same as(false) ? true : false %}
-
-
 {# Collection Filters element ======================================================= #}
 
-<div class="grid-filter-wrap">
+<div class="grid-filter-container">
 
-    <ul class="grid-filter style-4" data-container="#collection">
-        <li class="activeFilter"><a href="#" data-filter="*">{{ filters.showAllLabel }}</a></li>
-        {% for filter in filters.collection %}
-            <li><a href="#" data-filter=".{{ filter.slug }}">{{ filter.label }}</a></li>
-        {% endfor %}
-    </ul>
+    {% for filtr in filters %}
 
-    {% if showRandomBtn %}
-        <div class="grid-shuffle rounded" data-container="#collection">
-            <i class="icon-random"></i>
+        {% set showAllLabel = filtr.showAllLabel is defined ? filtr.showAllLabel : 'All' %}
+
+        <div class="d-flex">
+            <ul class="grid-filter style-4" data-container="#collection">
+                {% if filtr.label is defined and filtr.label is not null %}
+                    <li class="grid-filter-label">{{ filtr.label }}:</li>
+                {% endif %}
+                <li class="activeFilter"><a href="#" data-filter="*">{{ showAllLabel }}</a></li>
+                {% for item in filtr.collection %}
+                    <li><a href="#" data-filter=".{{ item.slug }}">{{ item.label }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
-    {% endif %}
+    {% endfor %}
 
 </div>

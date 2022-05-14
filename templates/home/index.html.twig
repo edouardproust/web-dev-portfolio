@@ -2,31 +2,46 @@
 
 {% block title %}Home{% endblock %}
 
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('home') }}
+{% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
-	{{ encore_entry_script_tags('gallery') }}
-	{{ encore_entry_script_tags('slider') }}
-	{{ encore_entry_script_tags('animation') }}
-	{{ encore_entry_script_tags('content') }}
+    {{ encore_entry_script_tags('home') }}
 {% endblock %}
 
 {% block hero %}
-
-    <section id="slider"
-        class="slider-element min-vh-60 min-vh-md-100 include-header" 
-        style="background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto"
-    >
-        {% include "_sections/home/hero-slider.html.twig" with {
+	{# title rotation: 
+		{before: <string>, rotate: <string>, 'after: <string>} 
+		Separate 'words' with a "|". Eg: "These|words|will|rotate" 
+	#}	
+    <section class="include-header" style="height: 100vh; background: url('{{ asset('build/images/dots-1.png') }}') 100% 0 no-repeat; background-size: 60% auto">
+		{% include "_sections/home/hero.html.twig" with {
 			section: "Hello,",
 			title: {
 				before: "I am<br>", 
 				words:"a web developer.|a marketer.|an ecommerce expert.|a video editor.|a graphic designer.|a self-learner.", 
 			},
 			headline: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi quo ea magnam dignissimos quis obcaecati aut in.",
-			slides: [
-				{img: 'build/images/home/edouard.jpg'},
-				{img: 'build/images/home/edouard-nb.jpg'}
-			]
+			contactButtons: {
+				label: 'View my works',
+				url: path('projects'),
+				btnIcon: null,
+				socials: [ 
+					{ slug: 'email3', link: 'mailto:' ~ config('CONTACT_EMAIl') },
+					{ slug: 'github', link: config('SOCIAL_GITHUB') },
+					{ slug: 'linkedin', link: config('SOCIAL_LINKEDIN') }
+				]
+			},
+			slider: {
+				slides: [
+					{img: asset('build/images/home/edouard.jpg')},
+					{img: asset('build/images/home/edouard-nb.jpg')}
+				],
+				options: {}
+			}
 		} %}
     </section>
 
@@ -35,19 +50,50 @@
 {% block main %}
 
 	<section id="content">
-		<div class="content-wrap">
+		<div class="content-wrap pt-0">
 
 			{# flip cards #}
 			{% include "_sections/home/flip-cards.html.twig" with {
 				section: 'Experience',
 				title: "I've been coding every single day for the last " ~ stats.daysOfCoding ~ " days.",
 				columns: 4,
-				parallax: { top: '-100px', bottom: '100px' },
 				removeVerticalMargins: true,
-				titleSize: '36px'
+				cards: [ {
+                        icon: 'icon-check',
+                        title: 'Wedding Shoots',
+                        contentFront: 'Alias dicta repudiandae sed laudantium eius ipsa, ullam voluptas quod! Quia, accusamus perferendis.',
+                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sunt laborum pariatur cum!',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+                    },{
+                        icon: 'icon-check',
+                        title: 'Candid Moments',
+                        contentFront: 'Laboriosam ad culpa ab in et blanditiis ullam consectetur inventore?', 
+                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+                    },{
+                        icon: 'icon-check',
+                        title: 'Wild Photography',
+                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+					},{
+                        icon: 'icon-check',
+                        title: 'Wild Photography',
+                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
+                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
+                        btnLabel: 'View Photos',
+                        btnLink: '#'
+				} ]
 			} %}
 
-			{# wrap cards #}
+			{# 3d cards #}
 			<div class="section bg-transparent">
 				<div class="container">
 					{% include "_elements/section-title.html.twig" with {
@@ -99,22 +145,47 @@
 			] } %}
 			
 			{# clients #}
-			{% include "_sections/home/clients.html.twig" with {
+			{# {% include "_sections/home/clients.html.twig" with {
 				section: 'Trusted Partners',
 				title: 'Happy Clients',
 				columns: 12
-			} %}
+			} %} #}
 
 			{# services cards #}
 			{% include "_sections/home/services.html.twig" with {
 				section: 'Steps of Works',
 				title: 'See How I Do.',
+				cards: [
+					{
+						img: asset('build/images/icons/shutter.svg'),
+						title: 'Updated Lenses:',
+						content: [
+							'Objectively productivate interoperable process improvements after team building testing procedures. Distinctively architect resource-leveling portals.',
+							'Objectively productivate interoperable process improvements.'
+						]
+					}, {
+						img: asset('build/images/icons/video-camera.svg'),
+						title: 'Most Edited Tools:',
+						content: [
+							'Objectively productivate interoperable process improvements after team building.',
+							'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur dolores sit, corrupti laborum ab.'
+						]
+					}, {
+						img: asset('build/images/icons/lr.svg'),
+						title: 'Film Making:',
+						content: [
+							'Objectively productivate interoperable process improvements.',
+							'Team building testing procedures. Distinctively architect resource-leveling portals.'
+						]
+					}
+				]
 			} %}
 			
 			{# contact & testimonials #}
 			{% include "_sections/home/footer-contact.html.twig"  with {
 				section: "Let's Say Hi!",
-				title: "Contact Me Here."
+				title: "Contact Me Here.",
+				testimonials: false
 			} %}
 
 		</div>

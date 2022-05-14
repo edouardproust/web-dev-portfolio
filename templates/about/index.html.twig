@@ -5,76 +5,21 @@
 
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+    {{ encore_entry_link_tags('about') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    {{ encore_entry_script_tags('about') }}
+{% endblock %}
+
 {% block title %}About{% endblock %}
-
-{# Layout #}
-
-    {% block javascripts %}
-        {{ parent() }}
-        {{ encore_entry_script_tags('content') }}
-        {{ encore_entry_script_tags('slider') }}
-        {# {{ encore_entry_script_tags('animation') }} #}
-        {{ encore_entry_script_tags('gallery') }}
-    {% endblock %}
-
-    {% block stylesheets %}
-        {{ parent() }}
-        {{ encore_entry_link_tags('content') }}
-    {% endblock %}
-
-    {% set breadcrumb = [
-        {label: 'Home', url: '/'},
-        {label: 'About', active: true}
-    ] %}
-
-{# Page sections #}
-
-    {% set socials = [
-        {icon: 'icon-facebook', link: config('SOCIAL_GITHUB'), color: null},
-        {icon: 'icon-twitter', link: config('SOCIAL_STACKOVERFLOW'), color: null}
-    ] %}
-    {% set skillColumns = [
-        {
-            title: 'languages & Frameworks',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, libero perspiciatis. Ipsa, incidunt?',
-            skills: [
-                ['PHP', 80],
-                ['Object-oriented Programming', 60],
-                ['Symfony', 85],
-                ['Javascript', 90],
-                ['CSS + Sass', 70],
-                ['SQL', 85],
-            ] 
-        },{
-            title: 'Libraries & Tools',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi iure molestiae, beatae corrupti maiores iste. Quibusdam, animi quasi.',
-            skills: [
-                ['Docker', 85],
-                ['WebPack Encore', 85],
-                ['Git / GitHub / GitLab', 85],
-                ['Trello', 85]
-            ]
-        },{
-            title: 'No code',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod tempore ipsam repellendus tenetur sunt neque.',
-            skills: [
-                ['Wordpress', 90],
-                ['Shopify', 70],
-                ['Webflow', 85]
-            ]
-        },{
-            title: 'Knowledge & Methodology',
-            desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, amet.',
-            skills: [
-                ['UX & UI Design', 80],
-                ['Marketing & online sales (e-commerce)', 60],
-                ['ULM Schemes', 85]
-            ] 
-        } 
-    ] %}
-
-
-{# About page ======================================================================== #}
+{% set breadcrumb = [
+    {label: 'Home', url: '/'},
+    {label: 'About', active: true}
+] %}
 		
 {% block hero %}
 
@@ -93,10 +38,15 @@
             {# portrait #}
             <div class="section bg-transparent py-0">
                 <div class="container clearfix">
-
                     <div class="row">
-
-                        <div class="col-lg-3 col-md-5 col-padding{# order-md-last #}" style="background: url('{{ asset('build/images/about/team/3.jpg') }}') center center no-repeat; background-size: cover;"></div>
+                        <div class="col-lg-3 col-md-5 col-padding{# order-md-last #}">
+                            {% include "_elements/flexslider-small.html.twig" with {
+                                slides: [
+                                    {img: asset('build/images/home/edouard.jpg')},
+                                    {img: asset('build/images/home/edouard-nb.jpg')}
+                                ]
+                            } %}
+                        </div>
 
                         <div class="col-lg-9 col-md-7 col-padding">
                             <div class="heading-block">
@@ -107,16 +57,27 @@
                             <div class="col">
                                 <p>Employment respond committed meaningful fight against oppression social challenges rural legal aid governance. Meaningful work, implementation, process cooperation, campaign inspire.</p>
                                 <p>Advancement, promising development John Lennon, our ambitions involvement underprivileged billionaire philanthropy save the world transform. Carbon rights maintain healthcare emergent, implementation inspire social change solve clean water livelihoods.</p>
-                                
-                                <a href="{{ path('contact') }}">Contact me</a>
-                                <div>CV: Embed / Download / View on LinkedIn</div>
                                 {% include "_elements/social-icons.html.twig" with { 
                                     type: 'default',
-                                    socials: socials 
+                                    socials: [
+                                        {icon: 'icon-linkedin', link: config('SOCIAL_LINKEDIN'), color: null},
+                                        {icon: 'icon-github', link: config('SOCIAL_GITHUB'), color: null},
+                                        {icon: 'icon-stackoverflow', link: config('SOCIAL_STACKOVERFLOW'), color: null}
+                                    ] 
+                                } %}
+                                {% include "_elements/button.html.twig" with {
+                                    url: path('contact'),
+                                    label: "View my CV",
+                                    icon: "icon-line-file",
+                                    margin: "me-3"
+                                } %}
+                                {% include "_elements/button.html.twig" with {
+                                    url: path('contact'),
+                                    label: "Contact me",
+                                    icon: 'icon-line2-envelope'
                                 } %}
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -124,6 +85,44 @@
             {# skills columns #}
             <div class="section bg-transparent">
             <div class="container clearfix">
+            
+                {% set skillColumns = [ {
+                        title: 'languages & Frameworks',
+                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, libero perspiciatis. Ipsa, incidunt?',
+                        skills: [
+                            ['PHP', 80],
+                            ['Object-oriented Programming', 60],
+                            ['Symfony', 85],
+                            ['Javascript', 90],
+                            ['CSS + Sass', 70],
+                            ['SQL', 85],
+                        ] 
+                    },{
+                        title: 'Libraries & Tools',
+                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi iure molestiae, beatae corrupti maiores iste. Quibusdam, animi quasi.',
+                        skills: [
+                            ['Docker', 85],
+                            ['WebPack Encore', 85],
+                            ['Git / GitHub / GitLab', 85],
+                            ['Trello', 85]
+                        ]
+                    },{
+                        title: 'No code',
+                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod tempore ipsam repellendus tenetur sunt neque.',
+                        skills: [
+                            ['Wordpress', 90],
+                            ['Shopify', 70],
+                            ['Webflow', 85]
+                        ]
+                    },{
+                        title: 'Knowledge & Methodology',
+                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, amet.',
+                        skills: [
+                            ['UX & UI Design', 80],
+                            ['Marketing & online sales (e-commerce)', 60],
+                            ['ULM Schemes', 85]
+                        ] 
+                } ] %}
 
                 <div class="row col-mb-50">
                     {% for column in skillColumns %}
@@ -157,25 +156,25 @@
                     <div class="row col-mb-50">
 
                         <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn">
-                            <i class="i-plain i-xlarge mx-auto icon-line2-directions"></i>
+                                <i class="i-large mx-auto icon-line2-directions"></i>
                             <div class="counter counter-lined"><span data-from="100" data-to="846" data-refresh-interval="50" data-speed="2000"></span>K+</div>
                             <h5>Lines of Codes</h5>
                         </div>
 
                         <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="200">
-                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-graph"></i>
+                            <i class="i-large mx-auto mb-0 icon-line2-graph"></i>
                             <div class="counter counter-lined"><span data-from="3000" data-to="15360" data-refresh-interval="100" data-speed="2500"></span>+</div>
                             <h5>KBs of HTML Files</h5>
                         </div>
 
                         <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="400">
-                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-layers"></i>
+                            <i class="i-large mx-auto mb-0 icon-line2-layers"></i>
                             <div class="counter counter-lined"><span data-from="10" data-to="408" data-refresh-interval="25" data-speed="3500"></span>*</div>
                             <h5>No. of Templates</h5>
                         </div>
 
                         <div class="col-sm-6 col-lg-3 text-center" data-animate="bounceIn" data-delay="600">
-                            <i class="i-plain i-xlarge mx-auto mb-0 icon-line2-clock"></i>
+                            <i class="i-large mx-auto mb-0 icon-line2-clock"></i>
                             <div class="counter counter-lined"><span data-from="60" data-to="1200" data-refresh-interval="30" data-speed="2700"></span>+</div>
                             <h5>Hours of Coding</h5>
                         </div>

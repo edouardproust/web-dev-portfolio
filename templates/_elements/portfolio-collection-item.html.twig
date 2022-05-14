@@ -22,7 +22,7 @@
             }
 #}
     {% set zoomIcon = 'icon-line-zoom-in' %}
-    {% set showZoomIcon = true %}
+    {% set showZoomIcon = false %}
     {% set viewProjectIcon = 'icon-line-eye' %}
     {% set overlayAnimation = 'fadeIn' %}
     {% set iconAnimationIn = 'fadeInDownSmall' %}
@@ -124,7 +124,7 @@
         </div>
 
         <div class="portfolio-desc">
-            <h3><a href="{{ projectUrl }}">{{ project.title }}</a></h3>
+            <h3><a href="{{ projectUrl }}">{{ project.title|extract(40) }}</a></h3>
 
             <div class="small">
 
@@ -137,7 +137,7 @@
                 {% endif %}
 
                 {% if showCategories %}
-                    {% if showCodingLanguages %}<span>/</span>{% endif %}
+                    {% if showCodingLanguages %}<span class="small text-muted"> / </span>{% endif %}
                     <span>
                         {% for index, category in project.categories %}
                             <a href="{{ path('project_category', {slug: category.slug}) }}">{{ category.label }}</a>{% if index < (project.categories|length - 1) %}, {% endif %}

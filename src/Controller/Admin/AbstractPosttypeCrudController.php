@@ -30,7 +30,10 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
     public function configureActions(Actions $actions): Actions
     {
         parent::configureActions($actions);
-        
+
+        $purgeFiles = Action::new('PURGE', 'Files', 'fa fa-trash')
+            ->linkToRoute('admin_files_purge');
+
         $view = Action::new('VIEW', false, 'fa fa-eye')
             ->linkToRoute($this->route . '_show', function (object $entity) {
                 return ['id' => $entity->getId(), 'slug' => $entity->getSlug()];
@@ -39,11 +42,13 @@ abstract class AbstractPosttypeCrudController extends AbstractEntityCrudControll
             ->setCssClass('btn btn-light admin-crud-row-btn');
 
         return $actions
+            ->add(Crud::PAGE_EDIT, $purgeFiles)
+            ->add(Crud::PAGE_NEW, $purgeFiles)
             ->add(Crud::PAGE_INDEX, $view)
             ->add(Crud::PAGE_EDIT, $view)
             ->remove(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER)
             ->reorder(Crud::PAGE_INDEX, [Action::EDIT, 'VIEW', Action::DELETE])
-            ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::SAVE_AND_CONTINUE, 'VIEW'])
+            ->reorder(Crud::PAGE_EDIT, [Action::SAVE_AND_RETURN, Action::SAVE_AND_CONTINUE, 'PURGE', 'VIEW'])
         ;
     }
 

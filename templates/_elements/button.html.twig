@@ -1,0 +1,37 @@
+{# 
+Mandatory options:
+    - label: <string>
+
+Optionnal:
+    - size: <string> Default: 'large'
+    - color: <string|null> Default: null / choices: defined in _variables.scss ('button_colors')
+    - border: <bool> Default: false
+    - reveal: <bool> Default: true
+    - rounded: <bool> Default: true
+    - fontWeight: <string> Default: 'normal' / choices: 'light', 'normal', 'bold'
+    - margin: <string> Default: 'm-0'
+    - url: mandatory if not a type="submit" button. Default =  undefined
+    - type: default = undefined / Mandatory if 'url' is not defined
+    - icon: default: 'icon-angle-right'
+#}
+
+{% set isTypeSubmit = type is defined and type is same as('submit') ? true : false %}
+{% set classColor = color is defined ? ' button-' ~ color : '' %}
+{% set classBorder = border is defined and border is same as(true) ? ' button-border' : '' %}
+{% set classSize = size is defined ? ' button-' ~ size : ' button-large' %}
+{% set classFontWeight = fontWeight is defined ? ' fw-' ~ fontWeight : ' fw-normal' %}
+{% set classReveal = reveal is defined and reveal is same as(false) ? '' : ' button-reveal text-end' %}
+{% set classMargin = margin is defined ? ' m-0 ' ~ margin : ' m-0' %}
+{% set classRounded = rounded is defined and rounded is same as(false) ? '' : ' button-rounded' %}
+
+{% set icon = icon is defined ? icon : null %}
+{% if classReveal is not same as('') %}
+    {% set icon = icon is null ? 'icon-angle-right' : icon %}
+{% endif %}
+
+{% if isTypeSubmit %}
+    <button type="submit"{% else %}<a href="{{ url }}"
+{% endif %} class="button{{ classSize ~ classColor ~ classBorder ~ classReveal ~ classRounded ~ classFontWeight ~ classMargin }}">
+    {% if icon is not null %}<i class="{{ icon }}"></i>{% endif %}
+    <span>{{ label }}</span>
+{% if isTypeSubmit %}</button>{% else %}</a>{% endif %}

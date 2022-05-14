@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Post;
+use App\Entity\Lesson;
 use App\Entity\Comment;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Project;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +17,43 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    const MAX_COMMENTS_PER_PAGE = 10;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
     }
 
-    // /**
-    //  * @return Comment[] Returns an array of Comment objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $entityProperty 'post', 'lesson' or 'project'
+     * @param Post|Lesson|Project $entity
+     * @return Comment[] Returns an array of Comment objects
+     */
+    public function findIsVisibleBy(string $entityProperty, object $entity)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.' . $entityProperty . ' = :val')
+            ->andWhere('c.isVisible = true')
+            ->setParameter('val', $entity)
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults(self::MAX_COMMENTS_PER_PAGE)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Comment
+    /**
+     * @param int $max Maximum number of comments
+     * @return Comment[] Returns an array of Comment objects
+     */
+    public function findIsNotVisibleAll(int $max)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('c.isVisible = false')
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults($max)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
 }

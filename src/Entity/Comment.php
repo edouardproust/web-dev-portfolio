@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Helper\StringHelper;
+use App\Path;
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -145,8 +146,45 @@ class Comment
         return $this;
     }
 
-    public function getExtract(): string
+    // Methods for twig
+
+    /**
+     * @return null|Project|Lesson|Post
+     */
+    public function getEntity()
     {
-        return StringHelper::extract($this->getContent(), 70);
+        return $this->getPost() ?? $this->getLesson() ?? $this->getProject();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEntityType()
+    {
+        switch ($this) {
+            case $this->getPost() !== null: return Path::URL_PREFIX_BLOG;
+            case $this->getLesson() !== null: return Path::URL_PREFIX_LESSONS;
+            case $this->getProject() !== null: return Path::URL_PREFIX_PORTFOLIO;
+            default: return null;
+        }
+    }
+
+    // Methods for EasyAdmin fields
+
+    public function getExtract(int $length = 70): string
+    {
+        return StringHelper::extract($this->getContent(), $length);
+    }
+
+    /**
+     * @return null|Project|Lesson|Post
+     */
+    public function getPostTypeUrl()
+    {
+        if ($entityType = $this->getEntityType()) {
+            $entity = $this->getEntity();
+            return $entityType . '/' . $entity->getSlug() . '_' . $entity->getId();
+        }
+        return null;
     }
 }

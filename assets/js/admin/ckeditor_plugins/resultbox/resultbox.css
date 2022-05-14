@@ -1,0 +1,12 @@
+.ck-resultbox-container {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #cfcfcf;
+    border-radius: 4px;
+}
+.ck-resultbox-container:before {
+    content: 'Result Box';
+    background-color: #0d6efd;
+    color: white;
+    padding: 4px 10px
+}

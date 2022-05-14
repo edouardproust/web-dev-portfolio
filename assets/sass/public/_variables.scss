@@ -1,0 +1,447 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+$color-primary : #1abc9c;
+$color-success: #155724;
+$color-success-light: #d4edda;
+$color-danger: #721c24;
+$color-danger-light: #f8d7da;
+$color-info: #0c5460;
+$color-info-light: #d1ecf1;
+$color-alert: #856404;
+$color-alert-light: #fff3cd;
+
+// Colors - Button
+$button_colors: (
+  "red": #c02942,
+  "teal": #53777a,
+  "yellow": #ecd078,
+  "purple": #5d4157,
+  "pink": #f89fa1,
+  "blue": #1265a8,
+  "green": #59ba41,
+  "brown": #774f38,
+  "aqua": #40c0cb,
+  "lime": #aee239,
+  "leaf": #a8caba,
+  "dirtygreen": #1693a5,
+  "amber": #eb9c4d,
+  "black": #111,
+  // Just add variables and color-codes and it will be create a button class of that variables name;
+);
+
+//-------------------- Base Colors --------------------//
+
+$theme-color: $color-primary;
+$body-text-color: #555;
+$body-bg: $white; // White
+$body-bg-dark: #383838;
+$text-color: #444; // #444
+$text-color-dark: #eee; // #EEE
+$code-text-bg-color: #ebebeb;
+$heading-color: $text-color;
+$section-bg: darken($body-bg, 2.35%); // #f9f9f9
+
+//-------------------- Line Height Variables --------------------//
+
+$line-height-base: 1.5;
+$line-height-content: 1.8;
+$line-height-h1: 1;
+$line-height-h2: 1.25;
+
+//-------------------- Utilities --------------------//
+
+$content-padding: 80px; // Top and Bottom 80px
+
+// Heper Classes Values
+$letter-spacing: 5; //ls-* value Until
+
+// Gutters
+$gutter-classes: 50; //Gutter Classes Until Step by 10
+
+// Gradients
+$max-widths: (
+  xs: 38rem,
+  sm: 48rem,
+  md: 64rem,
+  lg: 80rem,
+  xl: 90rem,
+  xxl: 100rem,
+);
+
+//-------------------- Bootstrap-Adjustment --------------------//
+
+$grid-gutter-width: 30px !default;
+$container-padding-x: $grid-gutter-width / 2 !default;
+
+$spacer: 1rem !default;
+$spacers: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge(
+  (
+    0: 0,
+    1: (
+      $spacer * 0.25,
+    ),
+    2: (
+      $spacer * 0.5,
+    ),
+    3: $spacer,
+    4: (
+      $spacer * 1.5,
+    ),
+    5: (
+      $spacer * 3,
+    ),
+    6: (
+      $spacer * 5,
+    ),
+    // Added New
+  ),
+  $spacers
+);
+
+//-------------------- Font Families --------------------//
+
+$body-font: "Lato", sans-serif;
+$heading-font: "Poppins", sans-serif;
+$secondary-font: "PT Serif", serif;
+
+//-------------------- Font Sizes --------------------//
+
+$font-size-base: 1rem;
+$font-size-h1: ($font-size-base * 3);
+$font-size-h2: ($font-size-base * 2.125);
+$font-size-h3: ($font-size-base * 1.5);
+$font-size-h4: ($font-size-base * 1.125);
+$font-size-h5: ($font-size-base * 0.875);
+$font-size-h6: ($font-size-base * 0.75);
+
+//-------------------- Layouts --------------------//
+
+$section-margin: 3rem 0;
+$section-padding: 3rem 0;
+$section-first-child-margin-top: 2rem;
+$section-first-child-padding-top: 0;
+$section-last-child-margin-bottom: 2rem;
+$section-last-child-padding-bottom: 0;
+
+//-------------------- Header --------------------//
+
+$header-height: 100px;
+$header-bg: $body-bg;
+
+//-------------------- Menu Easing ---------------------//
+
+$menu-easing-font-color: #fff;
+$menu-easing-font-size: 1.625rem;
+$menu-easing-bg-color: #e41c34;
+$menu-easing-path-color-1: #dce3f1;
+$menu-easing-path-color-2: #869ccc;
+$menu-easing-path-color-3: #30436f;
+$menu-easing-path-color-4: #0d1831;
+
+//-------------------- Video Background --------------------//
+
+$video-bg-overlay-color: rgba(0,0,0,0.3);
+
+//-------------------- Primary Menu --------------------//
+
+$primary-menu-font-color: $text-color;
+
+//-------------------- Page Title -------------------- //
+
+$page-title-base-color: darken($text-color, 6.67%);
+$page-title-padding: 10rem 0 3rem;
+$page-title-bg: darken($body-bg, 3.92%);
+$page-title-bg-dark: $page-title-base-color;
+$page-title-size: 2rem;
+$page-title-tt: none;
+$page-title-subtitle-size: 18px;
+$page-title-border: 1px solid darken($page-title-bg, 2.75%);
+$page-title-meta-separator: "|";
+$page-title-breadcrumb-separator: "»";
+
+//-------------------- Sliders --------------------//
+
+// Flex Slider
+$fslider-dots-position-top: 14px;
+$fslider-dots-position-right: 10px;
+$fslider-dots-size: 0.625rem;
+$fslider-dots-border: 1px solid $body-bg;
+$fslider-dots-border-radius: 50%;
+$fslider-dots-transition: 0.3s ease-in-out;
+
+$fslider-thumbs-gutters: 2px;
+$fslider-thumbs-width: 100px; // for .flex-thumb-grid
+
+// Slider Arrows
+
+$slider-arrows-size: 52px;
+$slider-arrows-sm-size: $slider-arrows-size - 20px;
+$slider-arrows-bg-color: rgba($black, 0.3);
+$slider-arrows-bg-hover-color: rgba($black, 0.6);
+$slider-arrows-border-radius: 3px;
+$slider-arrow-sm-offset: 20px;
+
+$slider-arrow-colors: $white;
+
+//-------------------- Button --------------------//
+
+$button-theme-color: $theme-color;
+$button-light: darken($white, 6.67);
+$button-light-hover-color: darken($theme-color, 6.67);
+$button-dark: darken($text-color, 6.67);
+$button-padding-x: 22px;
+$button-padding-y: 8px;
+$button-l-height: 24px;
+$button-font-size: 0.875rem;
+$button-icon-margin: 8px;
+$button-text-shadow: rgba($black, 0.2);
+
+// Button Mini
+$button-mini-padding-x: round($button-padding-x / 1.571);
+$button-mini-padding-y: round($button-padding-y / 2);
+$button-mini-l-height: round($button-l-height / 1.2);
+$button-mini-font-size: 11px;
+
+// Button Small
+$button-sm-padding-x: round($button-padding-x / 1.294);
+$button-sm-padding-y: round($button-padding-y / 1.14);
+$button-sm-l-height: round($button-l-height / 1.2);
+$button-sm-font-size: 12px;
+
+// Button Large
+$button-lg-padding-x: round($button-padding-x * 1.18);
+$button-lg-padding-y: $button-padding-y;
+$button-lg-l-height: round($button-l-height * 1.25);
+$button-lg-font-size: 16px;
+
+// Button xLarge
+$button-xl-padding-x: round($button-padding-x * 1.45);
+$button-xl-padding-y: round($button-padding-y * 1.14);
+$button-xl-l-height: round($button-l-height * 1.42);
+$button-xl-font-size: 18px;
+
+// Button Border
+$button-border-width: 2px;
+$button-border-thin-width: 1px;
+
+// Button 3D / Radius
+$button-rounded: 3px;
+
+// Button Reveal Icon
+$button-reveal-padding-x: ($button-padding-x + 6);
+$button-reveal-icon: ($button-padding-x + 10);
+
+$button-transition-speed: 0.2s ease-in-out;
+$button-reveal-transition-speed: 0.3s ease;
+
+// Animations
+
+$animationOpacity: 0;
+
+// Button Desc in Device-sm
+
+$buttons-color: true; // colors are inside of $button_colors . eg: button-red;
+$buttons-social-colors: false; // Ex:button-facebook - Find below of this page( $si-colors ). class name eg: button-facebook;
+
+//-------------------- Styled Icons -------------------- //
+
+$styled-icons-size: 52px;
+$styled-icons-plain-size: 36px;
+
+//-------------------- Social Icons -------------------- //
+
+$social-margins: 5px;
+$social-icon-size: 40px;
+$social-icon-font-size: 1.25rem;
+$social-icon-lg-size: 56px;
+$social-icon-lg-font-size: 30px;
+$social-icon-sm-size: 32px;
+$social-icon-sm-font-size: 14px;
+$social-icon-color: lighten($text-color, 6.67%);
+$social-icon-border: 1px;
+$social-icon-border-color: darken($body-bg, 33.33);
+$social-icon-rounded: 3px;
+$social-icon-enable-bg-classes: true;
+$social-icon-enable-tcolor-classes: true;
+
+//-------------------- Featured Box -------------------- //
+
+$featured-box-icon: 4rem;
+$featured-box-padding-x: 0.75rem;
+$featured-box-icon-size: 1.75rem;
+$featured-box-font-size: $font-size-base;
+$featured-box-font-color: darken($text-color, 6.67%);
+$featured-box-font-weight: 600;
+$featured-box-bg-light: darken($body-bg, 3.92);
+$featured-box-bg-dark: lighten($body-bg-dark, 1.96);
+$featured-box-plain-icon-size: 3rem;
+
+//-------------------- Counter Skills --------------------//
+
+$counter-font-size: 42px;
+$counter-font-wight: 700;
+$counter-font-family: $heading-font;
+$counter-lg-font-size: round($counter-font-size * 1.33);
+
+// Progress Skills
+
+$progress-skills-height: 4px;
+$progress-skills-margin-gutters: 38px;
+$progress-skills-Font-size: 12px;
+$progress-skills-empty-color: darken($body-bg, 3.92);
+$progress-skills-radius: 2px;
+$progress-skills-progress-color: $theme-color;
+$progress-skills-transition: 1.2s ease-in-out;
+
+$progress-skills-percent-padding: 5px;
+$progress-skills-percent-bgcolor: darken($text-color, 6.67);
+$progress-skills-percent-color: darken($body-bg, 2.39);
+$progress-skills-percent-size: 11px;
+$progress-skills-counter-font: $body-font;
+$progress-skills-counter-font-color: darken($text-color, 13.33);
+
+//-------------------- Owl Carousel --------------------//
+
+$carousel-animation-transition: 1000ms; // For animate.css
+
+$owl-video-play-icon-size: 64px;
+$owl-video-play-icon-hover: scale(1.3);
+// Owl Na
+$owl-nav-hidden: true;
+$owl-nav-size: 18px;
+$owl-nav-border: 1px solid rgba($black, 0.2);
+$owl-nav-background: $body-bg;
+$owl-nav-color: #666;
+$owl-nav-border-radius: 50%;
+
+// Owl Full Na
+$owl-full-nav-size: 28px;
+$owl-full-nav-border-radius: 3px;
+$owl-full-nav-bgcolor: rgba($black, 0.4);
+$owl-full-nav-color: darken($body-bg, 6.67);
+$owl-full-nav-hover-bgcolor: $theme-color;
+$owl-full-nav-hover-color: $body-bg;
+
+// Owl Dots
+$owl-dots-size: 8px;
+$owl-dots-background: $theme-color;
+$owl-dots-opacity: 0.5;
+
+//-------------------- Flip Card --------------------//
+
+$flipcard-transition: 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+$flipcard-height: 280px;
+$flipcard-border-radius: 6px;
+$flipcard-font-size: 1.5rem;
+$flipcard-bg-overlay: $black;
+$flipcard-bg-overlay-op: 0.6;
+
+$flipcard-inner-tranform: translateY(-50%) translateZ(60px) scale(0.94);
+$flipcard-inner-padding: 2rem;
+
+//-------------------- Dividers --------------------//
+
+$divider-colors: darken($body-bg, 10.2%);
+$divider-margins: 3rem;
+$divider-border-size: 1px;
+$divider-border-color: lighten($divider-colors, 3.53);
+
+$divider-thick-height: 3px;
+
+$divider-icon-size: 18px;
+$divider-icon-gutter: 0.5rem;
+$divider-icon-hover-color: darken($divider-colors, 36.47%);
+
+$divider-short-width-sm: 55%;
+$divider-short-width-xs: 35%;
+
+$divider-rounded-size: round($divider-icon-size * 2.22);
+$divider-rounded-color: darken($divider-colors, 16.47%);
+$divider-rounded-background: lighten($divider-colors, 6.27%);
+
+//-------------------- SM-Form Control --------------------//
+
+// Goto Top
+$gotoTop-size: 40px;
+$gotoTop-bg: $theme-color; // rgba($black, 0.3);
+$gotoTop-icon-size: 1.25rem;
+$gotoTop-icon-color: $white;
+$gotoTop-position-boxed-right: 30px;
+$gotoTop-position-boxed-bottom: 50px;
+$gotoTop-border-radius: 50%;
+$gotoTop-hover-color: $theme-color;
+
+$gotoTop-hidden-sm: true;
+
+//-------------------- Portfolio --------------------//
+
+//Grid Filter
+$grid_filter-mb: 3.5rem;
+$grid-filter-gap: 30px;
+$grid_filter-border-radius: 0px;
+$grid_filter-item-padding-x: 5px;
+$grid_filter-item-padding-y: 13px;
+$grid_filter-item-font-size: 0.9375rem;
+
+// Portfolio: 	;
+$portfolio-item-min-height: 300px;
+$Portfolio_desc-padding: 20px 15px;
+$Portfolio_desc-title-size: 1.1rem;
+$portfolio-carousel-height: 250px;
+
+// Modal. AJAX
+$portfolio-modal-padding: 40px;
+$portfolio-ajax-width: 1200px;
+
+// Portfolio Meta
+$portfolio-meta-font-size: 0.875rem;
+$portfolio-meta-color: lighten($text-color, 13.33);
+$portfolio-meta-row-1-color: darken($text-color, 6.67);
+$portfolio-meta-icon: 14px;
+$portfolio-meta-border: 1px solid darken($body-bg, 10.2);
+
+//-------------------- Blog --------------------//
+
+// Post Title
+$post-title-padding: 16rem 0 5rem;
+$post-title-font-size: $font-size-h3 / 1.2;
+$post-title-font-weight: 500;
+$post-title-font-spacing: 0;
+$post-title-font-color: rgba(255,255,255,0.8);
+
+// Post Meta
+$post-meta-seperator: "\205E";
+$post-meta-margin: 15px;
+$post-meta-color: lighten($text-color, 33.33);
+
+//-------------------- Footers --------------------//
+
+$footer-bg: darken($body-bg, 6.67%);
+$footer-logo-text-color: rgba($white, 0.8);
+$copyrights-font-size: $font-size-h5;
+$footer-top-border: 5px solid rgba(black, 0.2);
+$footer-sticky-global: false !default;
+
+//-------------------- Social Icons Colors --------------------//
+
+$si-colors: (
+  facebook: #3b5998,
+  reddit: #c6c6c6,
+  blogger: #fc4f08,
+  dribbble: #ea4c89,
+  linkedin: #0e76a8,
+  vk: #2b587a,
+  twitter: #00acee,
+  youtube: #c4302b,
+  vimeo: #86c9ef,
+  email3: #6567a5,
+  github: #171515,
+  tumblr: #34526f,
+  stackoverflow: #ef8236,
+  instagram: #8a3ab9,
+  pinterest: #c8232c,
+);

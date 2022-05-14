@@ -4,7 +4,7 @@
 
 {# Render #}
 
-<div class="row grid-container gutter-30" style="overflow: visible;">
+<div class="row grid-container" style="overflow: visible;">
 
 	{% for card in cards %}
 
@@ -25,7 +25,7 @@
 			alt="{% if categories|first is not same as(false) %}{{ (categories|first).label }}{% else %}Project{% endif %}: {{ title }}"
 		{% endset %}
 
-		<div class="col-lg-4 col-sm-6 rounded img-hover-wrap">
+		<div class="col-lg-4 col-sm-6 pb-4 rounded img-hover-wrap">
 
 			<div class="img-hover-card">
 				{% if lightbox %}
@@ -37,7 +37,7 @@
 					<div class="img-hover-detail">
 						<small class="text-light ls1 fw-light">{{ categoriesList }}</small>
 						<h3 class="img-hover-title">
-							<a href="#">{{ title }}</a>
+							<a href="#">{{ title|extract(30) }}</a>
 						</h3>
 						<div class="img-link">
 							<a href="#"><i class="{{ icon is defined ? icon : 'icon-line-arrow-right' }}"></i></a>

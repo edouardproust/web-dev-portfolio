@@ -1,0 +1,150 @@
+/* ----------------------------------------------------------------
+	Layouts (Bootstrap Adjustments)
+-----------------------------------------------------------------*/
+
+.col-1-5,
+.col-sm-1-5,
+.col-md-1-5,
+.col-lg-1-5,
+.col-xl-1-5,
+.col-xxl-1-5 {
+	position: relative;
+	width: 100%;
+	padding-right: $container-padding-x;
+	padding-left: $container-padding-x;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+	@include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+		.col#{$infix}-1-5 {
+			-ms-flex: 0 0 20%;
+			flex: 0 0 20%;
+			max-width: 20%;
+		}
+	}
+}
+
+#wrapper {
+	position: relative;
+	float: none;
+	width: 100%;
+	margin: 0 auto;
+	background-color: $body-bg;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	body:not(.stretched) & {
+		@include media-breakpoint-up(xl) {
+			max-width: map-get($grid-breakpoints, "xl");
+		}
+		@include media-breakpoint-up(xxl) {
+			max-width: map-get($grid-breakpoints, "xxl");
+		}
+	}
+	.stretched & {
+		width: 100%;
+		margin: 0;
+		box-shadow: none;
+	}
+}
+
+
+/* ----------------------------------------------------------------
+	Sections
+-----------------------------------------------------------------*/
+
+.section {
+	position: relative;
+	width: 100%;
+	margin: $section-margin;
+	padding: $section-padding;
+	background-color: $section-bg;
+	overflow: hidden;
+	.container { z-index: 2;
+		+ .video-wrap { z-index: 1; }
+	}
+}
+.section:first-child {
+	margin-top: $section-first-child-margin-top;
+	padding-top: $section-first-child-padding-top;
+}
+.section:last-child {
+	margin-bottom: $section-last-child-margin-bottom;
+	padding-bottom: $section-last-child-padding-bottom;
+}
+
+.parallax {
+	background-color: transparent;
+	background-attachment: fixed;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	overflow: hidden;
+	will-change: auto;
+}
+
+.mobile-parallax,
+.video-placeholder {
+	background-size: cover !important;
+	background-attachment: scroll !important;
+	background-position: center center !important;
+}
+
+.revealer-image {
+	position: relative;
+	bottom: -100px;
+	transition: bottom .3s ease-in-out;
+	-webkit-transition: bottom .3s ease-in-out;
+	-o-transition: bottom .3s ease-in-out;
+
+	.section:hover & { bottom: -50px; }
+}
+
+/* ----------------------------------------------------------------
+	Content
+-----------------------------------------------------------------*/
+
+[class*="col-"]:not([class*="sticky-"]):not([class*="position-"]) {
+	position: relative;
+}
+
+#content {
+	position: relative;
+	background-color: $body-bg;
+	p { line-height: $line-height-content; }
+	.content-wrap {
+		position: relative;
+		padding: $content-padding 0;
+		overflow: hidden;
+	}
+	.container { position: relative; }
+}
+
+/* Container width */
+@if $max-widths {
+	@each $name, $widths in $max-widths {
+		.mw-#{$name} {
+			max-width: #{$widths} !important;
+		}
+	}
+}
+
+/* ----------------------------------------------------------------
+	Utilities
+-----------------------------------------------------------------*/
+
+.vertical-middle {
+	z-index: 3;
+	position: relative;
+	display: -ms-flexbox;
+	display: flex;
+	width: 100%;
+	min-height: 100%;
+	justify-content: center;
+	flex-flow: column;
+	&-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}

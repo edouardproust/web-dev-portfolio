@@ -1,0 +1,122 @@
+$portfolio-prefix: portfolio;
+
+/* Replace existing props
+-----------------------------------------------------------------*/
+
+#content.project-show {
+    margin-top: -300px !important;
+    z-index: 1 !important;
+    background-color: transparent !important;
+}
+
+.col-mb-50 > [class*=col-] {
+    padding-bottom: 50px;
+}
+
+/* Portfolio Single - Content
+-----------------------------------------------------------------*/
+
+.#{$portfolio-prefix}-single-content .description-title {
+	margin: 0 0 20px;
+	padding: 0;
+	font-size: $Portfolio_desc-title-size;
+	font-weight: 600 !important;
+}
+
+.#{$portfolio-prefix}-image img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.modal-padding { padding: $portfolio-modal-padding; }
+
+.ajax-modal-title {
+	background-color: darken($body-bg, 2.35);
+	border-bottom: 1px solid darken($body-bg, 6.67);
+	padding: 25px 40px;
+}
+
+.ajax-modal-title h2 {
+	font-size: decimal-floor($Portfolio_desc-title-size / 0.714, 3);
+	margin-bottom: 0;
+}
+
+
+#portfolio-ajax-wrap {
+	position: relative;
+	max-height: 0;
+	overflow: hidden;
+	-webkit-transition: max-height .4s ease;
+	-o-transition: max-height .4s ease;
+	transition: max-height .4s ease;
+}
+
+#portfolio-ajax-wrap.#{$portfolio-prefix}-ajax-opened { max-height: $portfolio-ajax-width; }
+
+#portfolio-ajax-container {
+	display: none;
+	padding-bottom: 60px;
+}
+
+#portfolio-ajax-title h2 { font-size: decimal-floor($Portfolio_desc-title-size / 0.714, 3);; }
+
+
+/* Portfolio Single - Meta
+-----------------------------------------------------------------*/
+
+.#{$portfolio-prefix}-meta,
+.#{$portfolio-prefix}-share {
+	list-style: none;
+	font-size: $portfolio-meta-font-size;
+}
+
+.#{$portfolio-prefix}-meta li {
+	margin: 10px 0;
+	color: $portfolio-meta-color;
+}
+
+.#{$portfolio-prefix}-meta li span {
+	display: inline-block;
+	font-weight: bold;
+	color: $portfolio-meta-row-1-color;
+	margin-right: $portfolio-meta-icon / 2;
+	&.not-bold {
+		font-weight: normal !important;
+	}
+}
+
+.#{$portfolio-prefix}-meta li span i {
+	position: relative;
+	top: 1px;
+	width: $portfolio-meta-icon;
+	text-align: center;
+	margin-right: $portfolio-meta-icon / 2;
+}
+
+.well .line {
+	margin: 20px 0;
+	border-color: $portfolio-meta-border;
+}
+
+.#{$portfolio-prefix}-single {
+	&-image {
+		> a,
+		.slide a,
+		img,
+		iframe,
+		video {
+			display: block;
+			width: 100%;
+		}
+
+		&-full {
+			position: relative;
+			height: 600px;
+			overflow: hidden;
+			margin: -80px 0 80px !important;
+		}
+	}
+
+	&-video { height: auto !important; }
+}

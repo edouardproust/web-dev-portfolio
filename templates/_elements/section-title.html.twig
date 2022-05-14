@@ -22,7 +22,7 @@
 
 <div class="{{ width }}{{ offset }}{{ verticalMargins }}{{ parallaxClass }}"{{ parallaxData }}>
 	<small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">{{ section }}</small>
-	<h2 class="fw-bold ls0 mb-4" style="font-size: {{ titleSize is defined ? titleSize : '46px' }}{{ titleLineHeight is defined ? '; line-height: ' ~ titleLineHeight : '' }}">
+	<h2 class="fw-bold ls0 mb-4">
 		{{ title|raw }}
 	</h2>
 	{% if content is defined %}
