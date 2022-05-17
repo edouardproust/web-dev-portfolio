@@ -5,10 +5,10 @@ namespace App\Entity;
 use App\Config;
 use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProjectRepository; // don't remove
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 

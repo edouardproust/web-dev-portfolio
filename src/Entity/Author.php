@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\AuthorRepository;
+use App\Repository\AuthorRepository; // don't remove
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

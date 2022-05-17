@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Helper\StringHelper;
 use App\Path;
-use App\Repository\CommentRepository;
+use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommentRepository; // don't remove
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)

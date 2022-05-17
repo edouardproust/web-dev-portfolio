@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Helper\FileHelper;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\GalleryItemRepository;
+use App\Repository\GalleryItemRepository; // don't remove
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 

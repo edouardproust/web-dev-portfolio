@@ -4,10 +4,10 @@
         - gallery: <string[]> Array of images names
 
 #}
+    {% set maxHeight = 90 %}{# in 'vh' #}
     {% set autoplay = false %}
     {% set showArrows = true %}
     {% set showPagination = true %}
-    {% set smoothHeight = true %}
 
     {% set sliderShowThumbnail = false %}
     {% set autoplayDelay = 6000 %}
@@ -15,6 +15,7 @@
 
     {% set videoWidth = 'auto' %}
     {% set videoHeight = '500' %}
+    {% set videoAutoPlay = false %}
 
 
 {# Prepare #}
@@ -23,49 +24,55 @@
     {% set showArrows = showArrows is defined and showArrows is not same as(false) ? "true" : "false" %}
     {% set showPagination = showPagination is defined and showPagination is not same as(false) ? "true" : "false" %}
     {% set smoothHeight = smoothHeight is defined and smoothHeight is not same as(false) ? "true" : "false" %}
+    {% set videoAttributes = videoAutoPlay is defined and videoAutoPlay is not same as(false) 
+        ? 'loop autoplay muted' 
+        : 'controls' 
+    %}
 
 {# Project Gallery Slider ======================================================== #}
 
-<div class="fslider shadow project-show" data-smooth-height={{ smoothHeight }} data-slideshow={{ autoplay }} data-pagi={{ showPagination }} data-arrows={{ showArrows }} data-pause={{ autoplayDelay }} data-speed={{ slideSpeed }}>
-    <div class="flexslider">
+<div class="fslider shadow project-show" data-max-height="{{ maxHeight }}vh" data-smooth-height={{ smoothHeight }} data-slideshow={{ autoplay }} data-pagi={{ showPagination }} data-arrows={{ showArrows }} data-pause={{ autoplayDelay }} data-speed={{ slideSpeed }}>
+    <div class="flexslider"><!-- hide-left-btn -->
         <div class="slider-wrap scroll-hover-container">
 
             {# mainImage slide #}
             {% if sliderShowThumbnail %}
-                <div class="slide shadow scroll-hover-img">
-                    <img src="{{ uploadUrl('UPLOADS_PROJECTS_THUMB', project.thumbnail) }}" alt="Image of project: {{ project.title }}">
+                <div class="slide shadow">
+                    <img class="scroll-hover-item lazy" src="{{ uploadUrl('UPLOADS_PROJECTS_THUMB', project.thumbnail) }}" alt="Image of project: {{ project.title }}">
                 </div>
             {% endif %}
 
             {# gallery slides #}
             {% for i, item in project.gallery %}
 
+                {% set srcAttr = sliderShowThumbnail is same as(false) and i is same as(0) ? 'src' : 'data-src' %}
                 {% set isVideo = slideType(item.item) is same as(file('VIDEO_TYPE')) ? true : false %}
                 {% set isEmbed = slideType(item.item) is same as(file('EMBED_TYPE')) ? true : false %}
                 {% set slideVideoClass = isVideo or isEmbed ? ' slide-video' : '' %}
-                
-                <div class="slide{{ slideVideoClass }}{{ isVideo ? " slider-element" }} scroll-hover-img">
+                <div class="slide{{ slideVideoClass }}{{ isVideo ? " slider-element" }}">
                         		
                     {% if isVideo %}
 
-                        <video preload="auto" loop autoplay muted>
-                            <source src='{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}' type='video/mp4' />
+                        <video {{ videoAttributes }} class="scroll-hover-item">
+                                <source class="lazy" {{ srcAttr }}='{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}' type='video/mp4' />
                         </video>
 
                     {% elseif isEmbed %}
                     
-                        {# VIEMO: the file must contain the video Id #}
+                        {# VIMEO: the file must contain the video Id #}
                         {% if file('getExtension', item.item) is same as(file('EMBED_TYPE_VIMEO')) %}
                             {% set videoId = fileContent('UPLOADS_PROJECTS_GALLERY', item.item) %}
                             <iframe 
-                                src="https://player.vimeo.com/video/{{ videoId }}" width="{{ videoWidth }}" height="{{ videoHeight }}" 
+                                class="scroll-hover-item lazy" 
+                                {{ srcAttr }}="https://player.vimeo.com/video/{{ videoId }}" width="{{ videoWidth }}" height="{{ videoHeight }}" 
                                 frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
                             ></iframe>
                         {# YOUTUBE: the file must contain the video Id #}
                         {% elseif file('getExtension', item.item) is same as(file('EMBED_TYPE_YOUTUBE'))%}
                             {% set videoId = fileContent('UPLOADS_PROJECTS_GALLERY', item.item) %}
                             <iframe 
-                                width="{{ videoWidth }}" height="{{ videoHeight }}" src="https://www.youtube-nocookie.com/embed/{{ videoId }}" 
+                                class="scroll-hover-item lazy" 
+                                width="{{ videoWidth }}" height="{{ videoHeight }}" {{ srcAttr }}="https://www.youtube-nocookie.com/embed/{{ videoId }}" 
                                 title="YouTube video player" frameborder="0" 
                                 allowfullscreen
                             ></iframe>
@@ -76,7 +83,7 @@
 
                     {% else %} 
 
-                        <img src="{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}" alt="Image n.{{ i }} of project: {{ project.title }}">
+                        <img class="scroll-hover-item lazy" {{ srcAttr }}="{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}" alt="Image n.{{ i }} of project: {{ project.title }}">
                     
                     {% endif %}
 
