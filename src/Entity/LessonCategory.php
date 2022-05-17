@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\LessonCategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\LessonCategoryRepository; // don't remove
 
 /**
  * @ORM\Entity(repositoryClass=LessonCategoryRepository::class)

@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Config;
 use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\PostRepository;
+use App\Repository\PostRepository; // don't remove
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;

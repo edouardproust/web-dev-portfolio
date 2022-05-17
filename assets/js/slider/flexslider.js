@@ -1,18 +1,15 @@
-import 'flexslider-conditional-before'
-import lightbox from '../gallery/lightbox'
-import animations from '../animation/animations'
-import $ from 'jquery'
+import 'flexslider';
+import $ from 'jquery';
 
 const SELECTOR = '.fslider';
+const SELECTOR_LAZY = '.lazy';
+const SELECTOR_HIDE_LEFT_BTN = '.hide-left-btn';
 
 // module
 function exec(){
 	let $elements = $(SELECTOR);
 	$elements = $elements.filter(':not(.customjs)');
-
-	if( $elements.length < 1 ){
-		return;
-	}
+	if( $elements.length < 1 ) return;
 	flexSlider($elements);
 }
 export default { exec };
@@ -21,7 +18,6 @@ function flexSlider($elements) {
 	console.log('flexSlider executed');
 	$elements.each(function() {
 		let element			= $(this),
-			elLazy			= element.find('.lazy'),
 			elAnimation		= element.attr('data-animation') || 'slide',
 			elEasing		= element.attr('data-easing') || 'swing',
 			elDirection		= element.attr('data-direction') || 'horizontal',
@@ -36,9 +32,11 @@ function flexSlider($elements) {
 			elArrowRight	= element.attr('data-arrow-right') || 'icon-angle-right',
 			elThumbs		= element.attr('data-thumbs'),
 			elHover			= element.attr('data-hover'),
-			elSheight		= element.attr('data-smooth-height'),
+			elSheight		= element.attr('data-smooth-height') || false,
 			elTouch			= element.attr('data-touch'),
-			elUseCSS		= false;
+			elUseCSS		= false,
+			hideLeftBtn     = element.find(SELECTOR_HIDE_LEFT_BTN).length > 0,
+			sliderMaxHeight = element.attr('data-max-height');
 
 		if( elEasing == 'swing' ) {
 			elEasing = 'swing';
@@ -71,34 +69,59 @@ function flexSlider($elements) {
 			smoothHeight: elSheight,
 			useCSS: elUseCSS,
 			touch: elTouch,
-			start: function( slider ){
-				animations.exec();
-				lightbox.exec();
+			start: (slider) => { // Fires when the slider loads the first slide
+				if(hideLeftBtn) {
+					let prevBtn = slider.find('.flex-prev');
+					if(prevBtn.length > 0) prevBtn.remove();
+				}
 				$('.flex-prev').html('<i class="'+ elArrowLeft +'"></i>');
 				$('.flex-next').html('<i class="'+ elArrowRight +'"></i>');
-				setTimeout( function(){
-					if( slider.parents( '.grid-container' ).length > 0 ) {
-						slider.parents( '.grid-container' ).isotope('layout');
-					}
-				}, 1200 );
-				if( typeof skrollrInstance !== "undefined" ) {
-					skrollrInstance.refresh();
-				}
+				$(slider)
+				.find('img.lazy:eq(0)')
+				.each(function() {
+					let src = $(this).attr('data-src');
+					$(this).attr('src', src).removeAttr('data-src');
+				});
 			},
-			after: function( slider ){
-				if( slider.parents( '.grid-container' ).length > 0 ) {
-					slider.parents( '.grid-container' ).isotope('layout');
+			before: (slider) => { // Fires asynchronously with each slider animation
+				let slides = slider.slides,
+					index = slider.animatingTo,
+					$slide = $(slides[index]),
+					current = index,
+					next_slide = current + 1,
+					prev_slide = current - 1,
+					parent = $slide.parent(),
+					items = parent.find(SELECTOR_LAZY + ':eq(' + current + '), ' + SELECTOR_LAZY + ':eq(' + prev_slide + '), ' + SELECTOR_LAZY + ':eq(' + next_slide + ')')
+				;
+				if(hideLeftBtn) {
+					items = parent.find(SELECTOR_LAZY + ':eq(' + current + '), ' + SELECTOR_LAZY + ':eq(' + next_slide + ')');
 				}
-				$('.menu-item:visible').find( '.flexslider .slide' ).resize();
-			}
-		});
-
-		$(window).on( 'lazyLoadLoaded', function(){
-			if( elLazy.length == element.find('.lazy.lazy-loaded').length ) {
-				lazyLoadInstance.update();
-				setTimeout( function(){
-					element.find('.flexslider').resize();
-				}, 500 );
+				items.each((index, item) => {
+					let src = item.getAttribute('data-src');
+					if(src) {
+						item.setAttribute('src', src);
+						item.removeAttribute('data-src');
+						if(item.tagName === "SOURCE") {
+							item.parentNode.load();
+							item.parentNode.play();
+						}
+					}
+				});
+			},
+			after: (slider) => {
+				let slides = slider.slides,
+					index = slider.animatingTo,
+					$slide = $(slides[index]);
+				let currentItem = $slide.find(SELECTOR_LAZY);
+				if(currentItem.prop("tagName") === "SOURCE") {
+					currentItem = currentItem.parent();
+				}
+				// apply smoothHeight only if item's height < sliderMaxHeight
+				const maxHeight = (parseInt(sliderMaxHeight)/100) * window.innerHeight; // get slidermaxHeight in px (from vh)
+				let flexViewport = slider.find('.flex-viewport');
+				if(flexViewport.height() <= maxHeight) {
+					flexViewport.height(Math.floor(currentItem.height()) + 'px');
+				}
 			}
 		});
 	});
