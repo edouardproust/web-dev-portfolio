@@ -6,7 +6,7 @@ use App\Path;
 use App\Config;
 use App\Helper\FileHelper;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\AdminOptionRepository;
+use App\Repository\AdminOptionRepository; // don't remove
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 

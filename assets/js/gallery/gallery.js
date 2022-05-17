@@ -60,17 +60,5 @@ function gridContainerInit() {
 		}, 1000);
 
 		let resizeTimer;
-
-		$(window).on( 'resize', function() {
-			clearTimeout(resizeTimer);
-			resizeTimer = setTimeout(function() {
-				element.isotope('layout');
-			}, 250);
-		});
-
-		$(window).on( 'lazyLoadLoaded', function(){
-			element.isotope('layout');
-		});
-
 	});
 }

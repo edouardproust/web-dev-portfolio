@@ -40,7 +40,7 @@ class FileHelper
         ],
         self::VIDEO_TYPE => [
             'label' => 'Video',
-            'ext' => ['mp4', 'mov', 'avi', 'flv', 'mkv', 'wmv', 'webm', 'avchd', 'h264', 'mpeg4'],
+            'ext' => ['mp4', 'mov', 'avi', 'flv', 'mkv', 'wmv', 'webm', 'avchd', 'h264', 'mpeg4', 'm4v'],
             'maxSize' => '5m',
             'mime' => 'video'
         ],

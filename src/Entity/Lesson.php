@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Config;
 use App\Helper\StringHelper;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\LessonRepository;
+use App\Repository\LessonRepository; // don't remove
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;

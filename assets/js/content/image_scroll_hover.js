@@ -1,14 +1,10 @@
-import $ from 'jquery';
-
-
 const SELECTOR_CONTAINER = '.scroll-hover-container';
-const SELECTOR_IMG = '.scroll-hover-img';
-const IMAGE_HEIGHT_BREAKPOINT = '90vh';
+const SELECTOR_ITEM = '.scroll-hover-item';
 const SCROLL_SPEED_BASE_MS = 5; // in ms
 
 // if is 
     // a video 
-    // OR an image with a height > IMAGE_HEIGHT_BREAKPOINT
+    // OR an item with a height > IMAGE_HEIGHT_BREAKPOINT
 // Then apply the hover script
 
 function exec(){
@@ -20,30 +16,30 @@ function imageScrollHover() {
 
     const sliders = document.querySelectorAll(SELECTOR_CONTAINER);
 
-    let sliderStyleOnLoad = function(slider) {
-        slider.style.maxHeight = IMAGE_HEIGHT_BREAKPOINT;
-        slider.parentNode.style.maxHeight = IMAGE_HEIGHT_BREAKPOINT;
-    };
-
-    let imageStyleOnMouseEnter = function(image) {
-        let imageHeight = image.offsetHeight;
-        let containerHeight = image.parentNode.offsetHeight;
-        image.style.transition = "transform " + (SCROLL_SPEED_BASE_MS * image.offsetHeight) + "ms ease";
-        image.style.transform = "translateY(-" + (imageHeight - containerHeight) + "px)";
-    };
-
-    let imageStyleOnMouseOut = function(image) {
-        image.style.transform = "translateY(0px)";
-    }
-
     sliders.forEach((slider) => {
-        window.addEventListener('load', (event) => {
+        window.addEventListener('load', () => {
             sliderStyleOnLoad(slider);
-            slider.querySelectorAll(SELECTOR_IMG).forEach((image) => {
-                image.addEventListener('mouseenter', () => imageStyleOnMouseEnter(image));
-                image.addEventListener('mouseout', () => imageStyleOnMouseOut(image));
+            slider.querySelectorAll(SELECTOR_ITEM).forEach((item) => {
+                item.addEventListener('mouseenter', () => imageStyleOnMouseEnter(item));
+                item.addEventListener('mouseout', () => imageStyleOnMouseOut(item));
             });
         });
     });
+
+    let sliderStyleOnLoad = function(slider) {
+        const sliderMaxHeight = slider.parentNode.parentNode.parentNode.getAttribute('data-max-height');
+        slider.style.maxHeight = slider.parentNode.style.maxHeight = sliderMaxHeight;
+    };
+
+    let imageStyleOnMouseEnter = function(item) {
+        let itemHeight = item.offsetHeight;
+        let containerHeight = item.parentNode.offsetHeight;
+        item.style.transition = "transform " + (SCROLL_SPEED_BASE_MS * item.offsetHeight) + "ms ease";
+        item.style.transform = "translateY(-" + (itemHeight - containerHeight) + "px)";
+    };
+
+    let imageStyleOnMouseOut = function(item) {
+        item.style.transform = "translateY(0px)";
+    }
 
 }

@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Repository\TestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TestRepository; // don't remove
 
 /**
  * @ORM\Entity(repositoryClass=TestRepository::class)

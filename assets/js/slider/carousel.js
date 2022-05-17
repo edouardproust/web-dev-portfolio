@@ -107,16 +107,6 @@ function carousel() {
 				}
 			}
 		});
-
-		$(window).on( 'lazyLoadLoaded', function(){
-			if( element.find('.lazy').length == element.find('.lazy.lazy-loaded').length ) {
-				lazyLoadInstance.update();
-				setTimeout( function(){
-					carousel.trigger( 'refresh.owl.carousel' );
-				}, 500 );
-			}
-		});
-
 	});
 
 }
