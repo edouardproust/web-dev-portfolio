@@ -35,10 +35,9 @@ public/uploads/projects/thumbnail/*
 !public/uploads/projects/thumbnail/placeholder.png
 
 public/uploads/admin/*
-public/uploads/admin/options
+!public/uploads/admin/options
 public/uploads/admin/options/*
-public/uploads/admin/options/logo.png
-public/uploads/admin/options/favicon.ico
+!public/uploads/admin/options/favicon.ico
 
 /public/media/cache/
 public/uploads/ckfinder/
