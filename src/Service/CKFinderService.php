@@ -32,6 +32,13 @@ class CKFinderService
     public function purgeLocalFiles()
     {
         $localFiles = $this->getLocalFilesList();
+        if (!$localFiles) {
+            $this->flash->add(
+                'danger',
+                'The upload folder does not exist. You must upload your ' .
+                'first file using CKFinder before using this button.'
+            );
+        }
         $manifestFiles = $this->getManifestFilesList();
 
         // get list of files to remve
@@ -144,13 +151,17 @@ class CKFinderService
         return $allFiles;
     }
 
-    private function getLocalFilesList(): array
+    private function getLocalFilesList(): ?array
     {
 
         // PROCESS ----------------------
-        $rii = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator(self::getCKFinderUploadsDir())
-        );
+        if (is_dir(self::getCKFinderUploadsDir())) {
+            $rii = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(self::getCKFinderUploadsDir())
+            );
+        } else {
+            return null;
+        }
 
         // 1. get list of files to keep (exceptions)
         $filesToPreserve = [];

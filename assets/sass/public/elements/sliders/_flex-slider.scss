@@ -92,7 +92,8 @@ html[xmlns] .slider-wrap {
 .no-js .slider-wrap > .slide:first-child {display: block;}
 
 .flex-viewport {
-	max-height: 2000px;
+	min-height: 200px;
+	max-height: 100vh;
 	-webkit-transition: all 1s ease;
 	-o-transition: all 1s ease;
 	transition: all 1s ease;
