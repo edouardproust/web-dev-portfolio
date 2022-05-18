@@ -4,6 +4,7 @@ import $ from 'jquery';
 const SELECTOR = '.fslider';
 const SELECTOR_LAZY = '.lazy';
 const SELECTOR_HIDE_LEFT_BTN = '.hide-left-btn';
+const SLIDE_MIN_HEIGHT = '400px';
 
 // module
 function exec(){
@@ -117,11 +118,16 @@ function flexSlider($elements) {
 					currentItem = currentItem.parent();
 				}
 				// apply smoothHeight only if item's height < sliderMaxHeight
-				const maxHeight = (parseInt(sliderMaxHeight)/100) * window.innerHeight; // get slidermaxHeight in px (from vh)
-				let flexViewport = slider.find('.flex-viewport');
-				if(flexViewport.height() <= maxHeight) {
-					flexViewport.height(Math.floor(currentItem.height()) + 'px');
-				}
+				setTimeout(() => {
+					const maxHeight = (parseInt(sliderMaxHeight)/100) * window.innerHeight; // get slidermaxHeight in px (from vh)
+					let flexViewport = slider.find('.flex-viewport');
+					if(flexViewport.height() <= maxHeight && flexViewport.height() !== undefined && flexViewport.height() !== 0) {
+						flexViewport.height(Math.floor(currentItem.height()) + 'px');
+					}
+					else {
+						flexViewport.height(SLIDE_MIN_HEIGHT);
+					}
+				}, 200);
 			}
 		});
 	});
