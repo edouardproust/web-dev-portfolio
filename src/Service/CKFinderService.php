@@ -38,6 +38,7 @@ class CKFinderService
                 'The upload folder does not exist. You must upload your ' .
                 'first file using CKFinder before using this button.'
             );
+            return;
         }
         $manifestFiles = $this->getManifestFilesList();
 
