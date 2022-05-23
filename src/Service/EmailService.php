@@ -56,10 +56,11 @@ class EmailService
      */
     public function sendEmailOnContactSubmit(array $data)
     {
+        $siteAdress = new Address($this->siteEmail, $this->siteName);
         try {
             $email = (new TemplatedEmail)
-                ->to(new Address($this->siteEmail, $this->siteName))
-                ->from(new Address($data['email'], $data['fullName']))
+                ->to($siteAdress)
+                ->from($siteAdress)
                 ->subject('New contact message from ' . $this->siteName)
                 ->htmlTemplate('email/contact.html.twig')
                 ->context([

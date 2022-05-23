@@ -107,26 +107,6 @@ function flexSlider($elements) {
 						}
 					}
 				});
-			},
-			after: (slider) => {
-				// let slides = slider.slides,
-				// 	index = slider.animatingTo,
-				// 	$slide = $(slides[index]);
-				// let currentItem = $slide.find(SELECTOR_LAZY);
-				// if(currentItem.prop("tagName") === "SOURCE") {
-				// 	currentItem = currentItem.parent();
-				// }
-				// apply smoothHeight only if item's height < sliderMaxHeight
-				// setTimeout(() => {
-				// 	const maxHeight = (parseInt(sliderMaxHeight)/100) * window.innerHeight; // get slidermaxHeight in px (from vh)
-				// 	let flexViewport = slider.find('.flex-viewport');
-				// 	if(flexViewport.height() <= maxHeight && flexViewport.height() !== undefined && flexViewport.height() !== 0) {
-				// 		flexViewport.height(Math.floor(currentItem.height()) + 'px');
-				// 	}
-				// 	else {
-				// 		flexViewport.height(SLIDE_MIN_HEIGHT);
-				// 	}
-				// }, 200);
 			}
 		});
 	});
