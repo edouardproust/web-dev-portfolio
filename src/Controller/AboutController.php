@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ProjectRepository;
+use App\Service\HomeService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,10 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AboutController extends AbstractController
 {
     private $projectRepository;
+    private $homeService;
 
-    public function __construct(ProjectRepository $projectRepository)
+    public function __construct(ProjectRepository $projectRepository, HomeService $homeService)
     {
         $this->projectRepository = $projectRepository;
+        $this->homeService = $homeService;
     }
 
     /**
@@ -25,7 +28,8 @@ class AboutController extends AbstractController
             'projects' => $this->projectRepository->findBy(
                 ['featured' => true],
                 ['createdAt' => 'DESC']
-            )
+            ),
+            'stats' => $this->homeService->getStatistics()
         ]);
     }
 }

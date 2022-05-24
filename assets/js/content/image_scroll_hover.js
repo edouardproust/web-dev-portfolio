@@ -33,7 +33,6 @@ function imageScrollHover() {
 
     let imageStyleOnMouseEnter = function(item) {
         let itemHeight = item.offsetHeight;
-        console.log(item.parentNode);
         let containerHeight = item.parentNode.offsetHeight;
         item.style.transition = "transform " + (SCROLL_SPEED_BASE_MS * item.offsetHeight) + "ms ease";
         item.style.transform = "translateY(-" + (itemHeight - containerHeight) + "px)";

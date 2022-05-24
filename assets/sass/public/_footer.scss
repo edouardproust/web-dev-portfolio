@@ -121,7 +121,10 @@ body,
 	background: #222 !important;
 }
 
-.footer-sep {
+.footer-sep::before {
+	content: '|';
+	padding-left: 4px;
+	padding-right: 8px;
 	opacity: .5;
 }
 
