@@ -21,8 +21,9 @@
 		{% include "_sections/home/hero.html.twig" with {
 			section: "Hello,",
 			title: {
-				before: "I am<br>", 
-				words:"a web developer.|a marketer.|an ecommerce expert.|a video editor.|a graphic designer.|a self-learner.", 
+				before: "I am a ", 
+				words:"full-stack|PHP|javascript|web",
+				after: "<br>developer" 
 			},
 			headline: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi quo ea magnam dignissimos quis obcaecati aut in.",
 			contactButtons: {
@@ -120,29 +121,45 @@
 
 			{# counters #}
 
-			{% include "_sections/home/counters.html.twig" with { counters: [
-				{
-					to: stats.daysOfCoding * (5 / 7) * 5, 
-					title: "hours of coding",
-					content: '',
-					after: '+'
-				},
-				{
-					to: stats.languages.count,
-					title: "Mastered languages",
-					content: 'Including ' ~ stats.languages.list ~ '.'
-				},
-				{
-					to: stats.technologies.count,
-					title: "Frameworks and bundles",
-					content: stats.technologies.list
-				},
-				{
-					to: stats.githubRepositories|length,
-					title: "Projects on Github",
-					content: ''
-				}
-			] } %}
+			<div class="section" style="background: #FFF url('{{ asset('build/images/dots.png') }}') 170% 0% no-repeat; background-size: 60% auto">
+                <div class="container clearfix">
+
+                    {% include "_sections/counters.html.twig" with { counters: [
+                        {
+                            icon: 'icon-line2-clock',
+                            title: 'hours of coding',
+                            to: stats.daysOfCoding * (5 / 7) * 5,
+                            after: '+',
+                            interval: 25,
+                            speed: 2000
+                        },{
+                            icon: 'icon-code1',
+                            title: 'Mastered languages',
+							content: 'Including ' ~ stats.languages.list ~ '.',
+                            to: stats.languages.count,
+                            interval: 100,
+                            speed: 2500,
+                            delay: 200
+                        },{
+                            icon: 'icon-line2-layers',
+                            title: 'Frameworks and bundles',
+							content: stats.technologies.list,
+                            to: stats.technologies.count,
+                            interval: 25,
+                            speed: 3500,
+                            delay: 400
+                        },{
+                            icon: 'icon-line2-graph',
+                            title: 'Projects on Github',
+                            to: stats.githubRepositories|length,
+                            interval: 30,
+                            speed: 2700,
+                            delay: 600
+                        },
+                    ] } %}
+
+                </div>
+            </div>
 			
 			{# clients #}
 			{# {% include "_sections/home/clients.html.twig" with {
@@ -152,6 +169,7 @@
 			} %} #}
 
 			{# services cards #}
+
 			{% include "_sections/home/services.html.twig" with {
 				section: 'Steps of Works',
 				title: 'See How I Do.',

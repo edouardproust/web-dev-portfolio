@@ -21,14 +21,24 @@
                     {# Projects only #}
                     {% if hasFeaturedSection %}
                         <div class="section bg-transparent">
-                            <h2>Featured</h2>
+                            {% include "_elements/section-title.html.twig" with {
+                                section: null,
+                                title: '<span>Featured</span> Projects',
+                                offsetLeft: false,
+                                content: null
+                            } %}
                             {% include "_elements/projects-carousel.html.twig" with {
                                 projects: featuredProjects,
                                 cols: 3
                             } %}
                         </div>
 
-                        <h2>All projects</h2>
+                        {% include "_elements/section-title.html.twig" with {
+                            section: null,
+                            title: '<span>All</span> Projects',
+                            offsetLeft: false,
+                            content: null
+                        } %}
                     {% endif %}
 
                     {# All #}

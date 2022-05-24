@@ -1,0 +1,26 @@
+{% set animation = "bounceIn" %}
+
+<div class="row col-mb-50">
+
+    {% for counter in counters %}
+
+        {% set icon = counter.icon %}
+        {% set title = counter.title %}
+        {% set after = counter.after is defined ? counter.after : '' %}
+        {% set dataFrom = counter.from is defined ? counter.from : 0 %}
+        {% set dataTo = counter.to %}
+        {% set dataRefreshInterval = counter.interval is defined ? counter.interval : 25 %}
+        {% set dataSpeed = counter.speed is defined ? counter.speed : 2000 %}
+        {% set delay = counter.delay is defined ? counter.delay : 0 %}
+
+        <div class="col-sm-6 col-lg-3 text-center" data-animate="{{ animation }}" data-delay="{{ delay }}">
+            {% if counter.icon is defined %}
+                <i class="i-large mx-auto {{ icon }}"></i>
+            {% endif %}
+            <div class="counter counter-lined"><span data-from="{{ dataFrom }}" data-to="{{ dataTo }}" data-refresh-interval="{{ dataRefreshInterval }}" data-speed="{{ dataSpeed }}"></span>{{ after }}</div>
+            <h5>{{ title }}</h5>
+        </div>
+        
+    {% endfor %}
+
+</div>
