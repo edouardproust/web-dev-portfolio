@@ -8,6 +8,7 @@
     {% set autoplay = false %}
     {% set showArrows = true %}
     {% set showPagination = true %}
+    {% set smoothHeight = true %}
 
     {% set sliderShowThumbnail = false %}
     {% set autoplayDelay = 6000 %}
@@ -26,7 +27,7 @@
     {% set smoothHeight = smoothHeight is defined and smoothHeight is not same as(false) ? "true" : "false" %}
     {% set videoAttributes = videoAutoPlay is defined and videoAutoPlay is not same as(false) 
         ? 'loop autoplay muted' 
-        : 'controls' 
+        : 'autoplay controls' 
     %}
 
 {# Project Gallery Slider ======================================================== #}
@@ -86,6 +87,8 @@
                         <img class="scroll-hover-item lazy" {{ srcAttr }}="{{ uploadUrl('UPLOADS_PROJECTS_GALLERY', item.item) }}" alt="Image n.{{ i }} of project: {{ project.title }}">
                     
                     {% endif %}
+
+                    <div class="slider-spinner"></div>
 
                 </div>
 

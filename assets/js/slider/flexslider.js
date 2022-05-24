@@ -4,7 +4,6 @@ import $ from 'jquery';
 const SELECTOR = '.fslider';
 const SELECTOR_LAZY = '.lazy';
 const SELECTOR_HIDE_LEFT_BTN = '.hide-left-btn';
-const SLIDE_MIN_HEIGHT = '400px';
 
 // module
 function exec(){
@@ -15,7 +14,7 @@ function exec(){
 }
 export default { exec };
 
-function flexSlider($elements) {
+async function flexSlider($elements) {
 	console.log('flexSlider executed');
 	$elements.each(function() {
 		let element			= $(this),
@@ -83,6 +82,8 @@ function flexSlider($elements) {
 					let src = $(this).attr('data-src');
 					$(this).attr('src', src).removeAttr('data-src');
 				});
+				// smoothHieght of 1st slide
+				smootHeight(slider, 0);
 			},
 			before: (slider) => { // Fires asynchronously with each slider animation
 				let slides = slider.slides,
@@ -97,38 +98,43 @@ function flexSlider($elements) {
 				if(hideLeftBtn) {
 					items = parent.find(SELECTOR_LAZY + ':eq(' + current + '), ' + SELECTOR_LAZY + ':eq(' + next_slide + ')');
 				}
-				items.each((index, item) => {
-					let src = item.getAttribute('data-src');
-					if(src) {
-						item.setAttribute('src', src);
-						item.removeAttribute('data-src');
-						if(item.tagName === "SOURCE") {
-							item.parentNode.load();
-							item.parentNode.play();
+				setTimeout(() => {
+					items.each((index, item) => {
+						let src = item.getAttribute('data-src');
+						if(src) {
+							item.setAttribute('src', src);
+							item.removeAttribute('data-src');
+							if(item.tagName === "SOURCE") {
+								item.parentNode.load();
+								item.parentNode.play();
+							}
 						}
-					}
-				});
+					});
+				}, 1000);
 			},
 			after: (slider) => {
-				let slides = slider.slides,
-					index = slider.animatingTo,
-					$slide = $(slides[index]);
-				let currentItem = $slide.find(SELECTOR_LAZY);
-				if(currentItem.prop("tagName") === "SOURCE") {
-					currentItem = currentItem.parent();
-				}
-				// apply smoothHeight only if item's height < sliderMaxHeight
-				setTimeout(() => {
-					const maxHeight = (parseInt(sliderMaxHeight)/100) * window.innerHeight; // get slidermaxHeight in px (from vh)
-					let flexViewport = slider.find('.flex-viewport');
-					if(flexViewport.height() <= maxHeight && flexViewport.height() !== undefined && flexViewport.height() !== 0) {
-						flexViewport.height(Math.floor(currentItem.height()) + 'px');
-					}
-					else {
-						flexViewport.height(SLIDE_MIN_HEIGHT);
-					}
-				}, 200);
+				smootHeight(slider, slider.animatingTo);
 			}
 		});
 	});
+}
+
+function smootHeight(slider, index)
+{
+	let slides = slider.slides,
+		$slide = $(slides[index]);
+	const intervalId = setInterval(() => {
+		if($slide.find('[src]').length > 0) { // check that the image has loaded
+			let height;
+			setTimeout(() => { // This timeout is to ensure that the height is calculate AFTER the image has loaded (not at the same time)
+				if($slide.find('video').length > 0) {
+					height = $slide.find('video').height();
+				} else {
+					height = $slide.find('img').height();
+				}					
+				slider.find('.flex-viewport').height( height );
+				clearInterval(intervalId)
+			}, 50);
+		}
+	}, 50);
 }

@@ -272,6 +272,9 @@
 
 // icons list
 
+.icon-code1:before {
+	content: "\e7bf";
+}
 .icon-angle-left:before {
 	content: "\e7a4";
 }
@@ -427,9 +430,6 @@
 }
 .icon-line2-envelope:before {
 	content: "\e086";
-}
-.icon-line2-directions:before {
-	content: "\e041";
 }
 .icon-line2-graph:before {
 	content: "\e06b";

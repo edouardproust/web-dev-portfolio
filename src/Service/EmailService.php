@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Author;
 use App\Repository\AdminOptionRepository;
+use DateTime;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -56,10 +57,12 @@ class EmailService
      */
     public function sendEmailOnContactSubmit(array $data)
     {
+        $siteAdress = new Address($this->siteEmail, $this->siteName);
+        $data['dateTime'] = new DateTime('now');
         try {
             $email = (new TemplatedEmail)
-                ->to(new Address($this->siteEmail, $this->siteName))
-                ->from(new Address($data['email'], $data['fullName']))
+                ->to($siteAdress)
+                ->from($siteAdress)
                 ->subject('New contact message from ' . $this->siteName)
                 ->htmlTemplate('email/contact.html.twig')
                 ->context([
