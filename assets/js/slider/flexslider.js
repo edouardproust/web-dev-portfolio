@@ -98,19 +98,17 @@ async function flexSlider($elements) {
 				if(hideLeftBtn) {
 					items = parent.find(SELECTOR_LAZY + ':eq(' + current + '), ' + SELECTOR_LAZY + ':eq(' + next_slide + ')');
 				}
-				setTimeout(() => {
-					items.each((index, item) => {
-						let src = item.getAttribute('data-src');
-						if(src) {
-							item.setAttribute('src', src);
-							item.removeAttribute('data-src');
-							if(item.tagName === "SOURCE") {
-								item.parentNode.load();
-								item.parentNode.play();
-							}
+				items.each((index, item) => {
+					let src = item.getAttribute('data-src');
+					if(src) {
+						item.setAttribute('src', src);
+						item.removeAttribute('data-src');
+						if(item.tagName === "SOURCE") {
+							item.parentNode.load();
+							item.parentNode.play();
 						}
-					});
-				}, 1000);
+					}
+				});
 			},
 			after: (slider) => {
 				smootHeight(slider, slider.animatingTo);
@@ -134,7 +132,7 @@ function smootHeight(slider, index)
 				}					
 				slider.find('.flex-viewport').height( height );
 				clearInterval(intervalId)
-			}, 50);
+			}, 500);
 		}
 	}, 50);
 }
