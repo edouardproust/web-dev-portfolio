@@ -100,7 +100,7 @@ html[xmlns] .slider-wrap {
 .slide {
 	background-color: white;
 	position: relative;
-	img, video {
+	img, video, iframe {
 		z-index: 1;
 		position: absolute;
 	}
