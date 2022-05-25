@@ -132,7 +132,7 @@ function smootHeight(slider, index)
 				}					
 				slider.find('.flex-viewport').height( height );
 				clearInterval(intervalId)
-			}, 50);
+			}, 500);
 		}
 	}, 50);
 }
