@@ -90,30 +90,30 @@
 											{% if project.codingLanguages|length > 0 %}
 												<li><span><i class="icon-code1"></i>Language{% if project.codingLanguages|length > 1 %}s{% endif %}:</span>
 												{% for language in project.codingLanguages %}
-													{% if language is not same as(project.codingLanguages|first) %} / {% endif %}
+													{% if language is not same as(project.codingLanguages|first) %}, {% endif %}
 													{{ language.label }}
 												{% endfor %}
 												</li>
 											{% endif %}											
 											
 											{% if project.technologies|length > 0 %}
-												<li><span><i class="icon-cubes"></i>Technolog{% if project.technologies|length > 1 %}ies{% else %}y{% endif %}:</span>
+												<li class="portfolio-meta-links"><span><i class="icon-cubes"></i>Technolog{% if project.technologies|length > 1 %}ies{% else %}y{% endif %}:</span>
 												{% for technology in project.technologies %}
-													{% if technology is not same as(project.technologies|first) %} / {% endif %}
-													<a href="{{ technology.url }}" target="_blank">
+													{% if technology is not same as(project.technologies|first) %}, {% endif %}
+													{% if technology.url is not null %}<a href="{{ technology.url }}" target="_blank">{% endif %}
 														{{ technology.label }}
-													</a>
+													{% if technology.url is not null %}</a>{% endif %}
 												{% endfor %}
 												</li>
 											{% endif %}
 
 											{% if project.tools|length > 0 %}
-												<li><span><i class="icon-line-tool"></i>Tool{% if project.tools|length > 1 %}s{% endif %}:</span>
+												<li class="portfolio-meta-links"><span><i class="icon-line-tool"></i>Tool{% if project.tools|length > 1 %}s{% endif %}:</span>
 												{% for tool in project.tools %}
-													{% if tool is not same as(project.tools|first) %} / {% endif %}
-													<a href="{{ tool.url }}" target="_blank">
+													{% if tool is not same as(project.tools|first) %}, {% endif %}
+													{% if tool.url is not null %}<a href="{{ tool.url }}" target="_blank">{% endif %}
 														{{ tool.label }}
-													</a>
+													{% if tool.url is not null %}</a>{% endif %}
 												{% endfor %}
 												</li>
 											{% endif %}
@@ -163,7 +163,6 @@
 
 				<div class="single-post mw-sm mx-auto">
                             
-
 					{% if showProjectNavigation %}
 						{% include "_sections/posttype/post-navigation.html.twig" with {
 							prevNextLinks: prevNextLinks

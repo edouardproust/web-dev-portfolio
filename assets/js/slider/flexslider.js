@@ -82,7 +82,7 @@ async function flexSlider($elements) {
 					let src = $(this).attr('data-src');
 					$(this).attr('src', src).removeAttr('data-src');
 				});
-				// smoothHieght of 1st slide
+				// smoothHeight of 1st slide
 				smootHeight(slider, 0);
 			},
 			before: (slider) => { // Fires asynchronously with each slider animation
