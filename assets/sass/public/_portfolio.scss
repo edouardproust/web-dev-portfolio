@@ -52,6 +52,10 @@ $portfolio-prefix: portfolio;
 	}
 }
 
+.portfolio-meta-links a {
+	color: $body-text-color !important;
+}
+
 @include media-breakpoint-up(md) {
 	.#{$portfolio-prefix}-reveal {
 		.#{$portfolio-prefix}-image img,
@@ -226,7 +230,6 @@ body:not(.device-touch) .grid-container {
 /* ----------------------------------------------------------------
 	Overlays
 -----------------------------------------------------------------*/
-
 
 .bg-overlay,
 .bg-overlay-bg,
