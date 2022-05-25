@@ -16,7 +16,7 @@ security-checker:
   stage: SecurityChecker
   script:
     - local-php-security-checker composer.lock
-  allow_failure: false
+  allow_failure: true
 
 phpcs:
   stage: CodingStandards
