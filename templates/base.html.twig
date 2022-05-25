@@ -67,28 +67,28 @@
         // data-loader-html="<div><img src='{{ asset('build/images/theme/loader.svg') }}' alt='Loader'></div>" 
     #}>
 
-        <div id="wrapper">{# <-- Don't remove wrapper #}
-
 {# Navigation ===================================================== #}
 
-            <header id="header" class="transparent-header{{ stickyClass }}{{ animationClass }}"{{ animationAttr|raw }}>
-                <div>
-                    <div class="container">
-                        <div class="header-row">
-                            <a href="{{ path('home') }}">
-                                {% if isTextLogo %}
-                                    <h3 id="header-logo" class="py-3 my-3 {{ logoClass }}">{{ siteName|raw }}</h3>
-                                {% else %}
-                                    <img id="header-logo" src="{{ logoUrl }}" class="logo-header {{ logoClass }}" alt="{{ config('SITE_NAME') }} logo" style="height:{{ headerLogoHeight }}px">
-                                {% endif %}
-                            </a>
-                            {% include "_menus/head_main.html.twig" with { menu: headerMenu } %}
-                        </div>
+        <header id="header" class="transparent-header{{ stickyClass }}{{ animationClass }}"{{ animationAttr|raw }}>
+            <div>
+                <div class="container">
+                    <div class="header-row">
+                        <a href="{{ path('home') }}">
+                            {% if isTextLogo %}
+                                <h3 id="header-logo" class="py-3 my-3 {{ logoClass }}">{{ siteName|raw }}</h3>
+                            {% else %}
+                                <img id="header-logo" src="{{ logoUrl }}" class="logo-header {{ logoClass }}" alt="{{ config('SITE_NAME') }} logo" style="height:{{ headerLogoHeight }}px">
+                            {% endif %}
+                        </a>
+                        {% include "_menus/head_main.html.twig" with { menu: headerMenu } %}
                     </div>
                 </div>
-            </header>
+            </div>
+        </header>
 
 {# View ===================================================== #}
+
+        <div id="wrapper">{# <-- Don't remove wrapper #}
 
 			{% block hero %}{% endblock %}
 
