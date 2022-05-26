@@ -57,12 +57,13 @@
 				z-index: 299;
 			}
 		}
-		+ #wrapper .include-header {
-			margin-top: -$header-height - 2px;
-			display: inline-block;
-			vertical-align: bottom;
-			width: 100%;
-		}
+	#header + #wrapper .include-header,
+	#header + .include-header {
+		margin-top: -$header-height - 2px;
+		display: inline-block;
+		vertical-align: bottom;
+		width: 100%;
+	}
 	}
 }
 
