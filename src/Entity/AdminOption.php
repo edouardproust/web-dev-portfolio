@@ -274,8 +274,13 @@ class AdminOption
                     'type' => FileHelper::IMAGE_TYPE,
                     'value' => $fileUrl
                 ]);
+            }
             // document
-            // ...
+            elseif ($fileType === FileHelper::DOCUMENT_TYPE) {
+                $json = json_encode([
+                    'type' => FileHelper::DOCUMENT_TYPE,
+                    'value' => $fileUrl
+                ]);
             } else {
                 $json = json_encode([
                     'type' => Config::TYPE_NULL,
