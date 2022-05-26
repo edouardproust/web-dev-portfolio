@@ -133,7 +133,7 @@ class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
         'type' => Config::FIELD_TEXT,
         'isUploadable' => true,
         'label' => 'About: CV',
-        'help' => 'Upload your Summary for recruiters.'
+        'help' => 'Upload your Summary for recruters.'
     ];
 
     const NOTIFICATION_NEW_COMMENT = [

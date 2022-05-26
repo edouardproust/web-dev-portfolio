@@ -67,8 +67,11 @@ class AppExtension extends AbstractExtension
     {
         $optionEntity = $this->adminOptionRepository->get($optionName);
         if (!$returnOptionEntity) {
-            // $adminOption->getValue() must be checked last (as it is the default value)
-            return $optionEntity->getFile() ?: $optionEntity->getIsActive() ?: $optionEntity->getValue();
+            if ($optionEntity) {
+                // $adminOption->getValue() must be checked last (as it is the default value)
+                return $optionEntity->getFile() ?: $optionEntity->getIsActive() ?: $optionEntity->getValue();
+            }
+            return null;
         }
         return $optionEntity;
     }

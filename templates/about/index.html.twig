@@ -65,12 +65,15 @@
                                         {icon: 'icon-stackoverflow', link: config('SOCIAL_STACKOVERFLOW'), color: null}
                                     ] 
                                 } %}
-                                {% include "_elements/button.html.twig" with {
-                                    url: path('contact'),
-                                    label: "View my CV",
-                                    icon: "icon-line-file",
-                                    margin: "me-3"
-                                } %}
+                                {% if config('ABOUT_CV') is not null %}
+                                    {% include "_elements/button.html.twig" with {
+                                        url: uploadUrl('UPLOADS_ADMIN_OPTIONS', config('ABOUT_CV')),
+                                        label: "View my CV",
+                                        icon: "icon-line-file",
+                                        margin: "me-3",
+                                        targetBlank: true
+                                    } %}
+                                {% endif %}
                                 {% include "_elements/button.html.twig" with {
                                     url: path('contact'),
                                     label: "Contact me",
