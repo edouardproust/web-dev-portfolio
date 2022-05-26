@@ -26,9 +26,12 @@ function adminOptionPlaceholdersTransform(body)
 	const placeholderBoundaryLeft = '{%~';
 	const placeholderBoundaryRight = '~%}';
 	const _value_ = '{%~value~%}';
+
 	const blocks = {
 		image: 
 			'<img data-lightbox src="' + _value_ + '" style="max-width:200px;height:auto" />',
+		document: 
+			'<a href="' + _value_ + '" target="_blank">View file</a>',
 		boolean: // {"type":"boolean","value":false}
 			'<div class="form-check form-switch">' +
 				'<input type="checkbox" class="form-check-input" ' + _value_ + ' disabled autocomplete="off">' +

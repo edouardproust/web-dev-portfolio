@@ -13,6 +13,7 @@ class FileHelper
     const ICON_TYPE = 'icon';
     const VIDEO_TYPE = 'video';
     const EMBED_TYPE = 'text';
+    const DOCUMENT_TYPE = 'document';
 
     const EMBED_TYPE_VIMEO = 'vimeo';
     const EMBED_TYPE_YOUTUBE = 'youtube';
@@ -51,6 +52,12 @@ class FileHelper
             'ext' => ['embed', 'txt', 'html', 'htm', 'vimeo', 'youtube', 'plain'],
             'maxSize' => '1k',
             'mime' => 'text'
+        ],
+        self::DOCUMENT_TYPE => [
+            'label' => 'Document',
+            'ext' => ['pdf', 'doc', 'docx', 'txt'],
+            'maxSize' => '3m',
+            'mime' => 'application'
         ],
     ];
 

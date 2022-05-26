@@ -129,6 +129,13 @@ class AdminOptions extends AbstractFixtures implements FixtureGroupInterface
         'help' => 'Link to you LinkedIn profile (eg. https://stackoverflow.com/users/12345678/myname)'
     ];
 
+    const ABOUT_CV = [
+        'type' => Config::FIELD_TEXT,
+        'isUploadable' => true,
+        'label' => 'About: CV',
+        'help' => 'Upload your Summary for recruiters.'
+    ];
+
     const NOTIFICATION_NEW_COMMENT = [
         'type' => Config::FIELD_BOOL,
         'label' => 'Notification: New comment published',
