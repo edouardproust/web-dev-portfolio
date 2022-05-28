@@ -64,9 +64,13 @@
                     {# Contact Form #}
                     <div class="col-lg-6">
 
-                        <div class="fancy-title title-border">
-                            <h3>Send me an Email</h3>
-                        </div>
+                        {% include "_elements/section-title.html.twig" with {
+                            section: null,
+                            title: "Send me an <span>email</span>",
+                            offsetLeft: false,
+                            content: null
+                        } %}
+                        
                         {% include "_elements/alert.html.twig" %}
                         <div class="form-widget">
 

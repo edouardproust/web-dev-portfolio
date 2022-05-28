@@ -50,13 +50,11 @@
 
                         <div class="col-lg-9 col-md-7 col-padding">
                             <div class="heading-block">
-                                <small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">Full-Stack Developer</small>
-                                <h3>Edouard Proust</h3>
-                            </div>
 
-                            <div class="col">
-                                <p>Employment respond committed meaningful fight against oppression social challenges rural legal aid governance. Meaningful work, implementation, process cooperation, campaign inspire.</p>
-                                <p>Advancement, promising development John Lennon, our ambitions involvement underprivileged billionaire philanthropy save the world transform. Carbon rights maintain healthcare emergent, implementation inspire social change solve clean water livelihoods.</p>
+                                <small class="text-muted text-uppercase fw-light ls4 mb-1 d-block">Full-Stack Developer</small>
+
+                                <h3 class="mb-1">Edouard Proust</h3>
+
                                 {% include "_elements/social-icons.html.twig" with { 
                                     type: 'default',
                                     socials: [
@@ -65,20 +63,25 @@
                                         {icon: 'icon-stackoverflow', link: config('SOCIAL_STACKOVERFLOW'), color: null}
                                     ] 
                                 } %}
-                                {% if config('ABOUT_CV') is not null %}
+                                <div class="mb-4">
+                                    {% if config('ABOUT_CV') is not null %}
+                                        {% include "_elements/button.html.twig" with {
+                                            url: uploadUrl('UPLOADS_ADMIN_OPTIONS', config('ABOUT_CV')),
+                                            label: "View my CV",
+                                            icon: "icon-line-file",
+                                            margin: "me-3",
+                                            targetBlank: true
+                                        } %}
+                                    {% endif %}
                                     {% include "_elements/button.html.twig" with {
-                                        url: uploadUrl('UPLOADS_ADMIN_OPTIONS', config('ABOUT_CV')),
-                                        label: "View my CV",
-                                        icon: "icon-line-file",
-                                        margin: "me-3",
-                                        targetBlank: true
+                                        url: path('contact'),
+                                        label: "Contact me",
+                                        icon: 'icon-line2-envelope'
                                     } %}
-                                {% endif %}
-                                {% include "_elements/button.html.twig" with {
-                                    url: path('contact'),
-                                    label: "Contact me",
-                                    icon: 'icon-line2-envelope'
-                                } %}
+                                </div>
+                                
+                                <p><b>I am a self-learner.</b> In sales, in just a year and starting from zero, i ran stores that made thousands of euros per month and helped clients to improve their own brands. As for sales, i learned programming all by myself, full time, during 18 months. My actual goal is to get always better at what i do. This is why I will always continue to learn, to add to my skills and to dedicate myself to more and more challenging projects.</p>
+                                <p><b>I code by passion.</b> My first website was made when i was 12 (it was on a video game and became one of the most visited website on it). My first profitable website was made when i was 14 and back then I was coding on the college calculator in BASIC language... When I look at a piece of well thought out and organized code, I feel a real inner pleasure.</p>
                             </div>
                         </div>
                     </div>
@@ -87,56 +90,75 @@
 
             {# skills columns #}
             <div class="section bg-transparent">
-            <div class="container clearfix">
-            
-                {% set skillColumns = [ {
-                        title: 'languages & Frameworks',
-                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, libero perspiciatis. Ipsa, incidunt?',
-                        skills: [
-                            ['PHP', 80],
-                            ['Object-oriented Programming', 60],
-                            ['Symfony', 85],
-                            ['Javascript', 90],
-                            ['CSS + Sass', 70],
-                            ['SQL', 85],
-                        ] 
-                    },{
-                        title: 'Libraries & Tools',
-                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi iure molestiae, beatae corrupti maiores iste. Quibusdam, animi quasi.',
-                        skills: [
-                            ['Docker', 85],
-                            ['WebPack Encore', 85],
-                            ['Git / GitHub / GitLab', 85],
-                            ['Trello', 85]
-                        ]
-                    },{
-                        title: 'No code',
-                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod tempore ipsam repellendus tenetur sunt neque.',
-                        skills: [
-                            ['Wordpress', 90],
-                            ['Shopify', 70],
-                            ['Webflow', 85]
-                        ]
-                    },{
-                        title: 'Knowledge & Methodology',
-                        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, amet.',
-                        skills: [
-                            ['UX & UI Design', 80],
-                            ['Marketing & online sales (e-commerce)', 60],
-                            ['ULM Schemes', 85]
-                        ] 
-                } ] %}
+                <div class="container clearfix">
 
-                <div class="row col-mb-50">
-                    {% for column in skillColumns %}
-                        {% set colWidth = skillColumns|length <= 3 ? 12 / skillColumns|length : 6 %}
-                        <div class="col-lg-{{ colWidth }}">
-                            {% include "_elements/skill-counters.html.twig" with { skills: column } %}
-                        </div>
-                    {% endfor %}
+                    {% include "_elements/section-title.html.twig" with {
+                        section: null,
+                        title: 'My <span>tech stack</span> & <span>skills</sapn>',
+                        offsetLeft: false,
+                        content: "I use the following skills to achieve the best projects I can."
+                    } %}
+                
+                    {% set skillColumns = [ {
+                            title: 'Languages & Frameworks',
+                            desc: null,
+                            skills: [
+                                ['PHP', 100],
+                                ['Symfony', 90],
+                                ['Javascript', 80],
+                                ['HTML', 100],
+                                ['CSS', 100],
+                                ['Sass', 70],
+                                ['SQL', 70],
+                            ] 
+                        },{
+                            title: 'Tools & Libraries',
+                            desc: null,
+                            skills: [
+                                ['Git, GitHub, GitLab', 70],
+                                ['Docker', 50],
+                                ['Webpack Encore', 50],
+                                ['PHPUnits', 40],
+                                ['EasyAdmin Bundle', 100],
+                                ['CKEditor + CKFinder', 80],
+                                ['GSAP', 80],
+                                ['jQuery', 70]
+                            ]
+                        },{
+                            title: 'No-code',
+                            desc: null,
+                            skills: [
+                                ['Wordpress + Woo + Elementor', 100],
+                                ['Shopify', 100],
+                                ['Webflow', 80]
+                            ]
+                        },{
+                            title: 'Skills',
+                            desc: null,
+                            skills: [
+                                ['UX & UI Design', 80],
+                                ['Adobe CS Suite (graphism)', 80],
+                                ['Marketing & Sales', 60],
+                                ['Team working', 60],
+                            ]
+                    } ] %}
+
+                    <div class="skills-container row col-mb-50">
+                        {% for index, column in skillColumns %}
+                            <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
+                                <div class="card shadow-lg d-flex align-items-end flex-column p-3">
+                                    <div class="card-number">{{ index + 1 }}</div>
+                                    <div class="card-body">
+                                        {% if column.title is defined and column.title is not null %}<h4 class="card-title fw-normal">{{ column.title|raw }}</h4>{% endif %}
+                                        {% if column.desc is defined and column.desc is not null %}<p class="card-desc">{{ column.desc|raw }}</p>{% endif %}
+                                        {% include "_elements/skill-counters.html.twig" with { skills: column } %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
                 </div>
-
-            </div>
             </div>
 
             {# some projects #}
@@ -144,7 +166,7 @@
 				<div class="container">
 					{% include "_elements/section-title.html.twig" with {
 						section: null,
-						title: 'Some of my <span>Projects</span>',
+						title: 'Some of my <span>projects</span>',
 						offsetLeft: false,
 						content: "Awesome Works that I've contibuted to. Proudly!"
 					} %}

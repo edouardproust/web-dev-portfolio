@@ -5,32 +5,14 @@
 
 #}
 
-    {% set title = skills.title %}
-    {% set desc = skills.desc %}
     {% set skills = skills.skills %}
-
+    
     {# All skills values #}
     {% set dataFrom = 0 %}
     {% set dataRefreshInterval = 30 %} 
     {% set dataSpeed = 1100 %}
 
-{# Prepare #}
-
-    {% set hasTitle = title is defined and title is not null ? true : false %}
-    {% set hasDesc = desc is defined and desc is not null ? true : false %}
-
-
 {# Skill Counters element ======================================================= #}
-
-    {% if hasTitle %}
-        <div class="heading-block fancy-title border-bottom-0 title-bottom-border">
-            <h4>{{ title|raw }}</h4>
-        </div>
-    {% endif %}
-
-    {% if hasDesc %}
-        <p>{{ desc|raw }}</p>
-    {% endif %}
 
     <ul class="skills">
 
