@@ -12,6 +12,11 @@ dl, dt, dd, ol, ul, li {
 	padding: 0;
 }
 
+ul, ol {
+	margin-top: -20px;
+	margin-left: 20px;
+}
+
 em { font-family: $secondary-font; }
 
 .clear {

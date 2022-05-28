@@ -13,7 +13,8 @@
     <div class="global-menu">
         <div class="global-menu__wrap">
             {% for link in menu %}
-                <a class="global-menu__item" href="{{ link.url }}">{{ link.label }}</a>
+                {% set target = link.target is defined ? ' target="' ~ link.target ~ '"' : '' %}
+                <a class="global-menu__item" href="{{ link.url }}"{{ target }}>{{ link.label }}</a>
             {% endfor %}
         </div>
     </div>

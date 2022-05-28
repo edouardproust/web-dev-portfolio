@@ -25,7 +25,7 @@
 				words:"full-stack|PHP|javascript|web",
 				after: "<br>developer" 
 			},
-			headline: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga quasi quo ea magnam dignissimos quis obcaecati aut in.",
+			headline: "I don't just build web apps. I build web apps that SELL.",
 			contactButtons: {
 				label: 'View my works',
 				url: path('projects'),
@@ -38,8 +38,8 @@
 			},
 			slider: {
 				slides: [
-					{img: asset('build/images/home/edouard.jpg')},
-					{img: asset('build/images/home/edouard-nb.jpg')}
+					{img: asset('build/images/home/hero/coding-1.svg')},
+					{img: asset('build/images/home/hero/coding-2.svg')},
 				],
 				options: {}
 			}
@@ -55,42 +55,43 @@
 
 			{# flip cards #}
 			{% include "_sections/home/flip-cards.html.twig" with {
-				section: 'Experience',
-				title: "I've been coding every single day for the last " ~ stats.daysOfCoding ~ " days.",
+				section: 'References',
+				title: "Let's bring your project <span>to life</span> together.",
+				content: "I assist you on your web or marketing project from A to Z, from design to online.",
 				columns: 4,
 				removeVerticalMargins: true,
 				cards: [ {
-                        icon: 'icon-check',
-                        title: 'Wedding Shoots',
-                        contentFront: 'Alias dicta repudiandae sed laudantium eius ipsa, ullam voluptas quod! Quia, accusamus perferendis.',
-                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Id sunt laborum pariatur cum!',
-                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
+                        icon: 'icon-code',
+                        title: 'Web developement',
+                        contentFront: 'You or you company needs a website or an application made in PHP and javascript.',
+                        contentBack: 'Let\'s talk about your projet in order to establish the architecture of the application.',
+                        imgBack: asset('build/images/home/flip/web-developement.jpg'),
+                        btnLabel: 'See references',
+                        btnLink: path('project_category',{slug: 'web-developement'})
                     },{
-                        icon: 'icon-check',
-                        title: 'Candid Moments',
-                        contentFront: 'Laboriosam ad culpa ab in et blanditiis ullam consectetur inventore?', 
-                        contentBack: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. ',
-                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
+                        icon: 'icon-shopping-cart',
+                        title: 'Marketing & Ecommerce expertise',
+                        contentFront: 'You have an online store and you want to go to the next level (rebranding, sales tunnel optimization, scaling).', 
+                        contentBack: 'I will conduct a complete review of your current marketing strategy and develop a phased growth plan.',
+                        imgBack: asset('build/images/home/flip/ecommerce.jpg'),
+                        btnLabel: 'See references',
+                        btnLink: path('project_category',{slug: 'ecommerce'})
                     },{
-                        icon: 'icon-check',
-                        title: 'Wild Photography',
-                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
-                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
+                        icon: 'icon-shapes',
+                        title: 'Brand creation',
+                        contentFront: 'You want to launch your brand and want to have a custom brand with a unique identity that inspires your target customer.',
+                        contentBack: 'I create your logo, define the color and typographic code of the brand, as well as banner designs.',
+                        imgBack: asset('build/images/home/flip/branding.jpg'),
+                        btnLabel: 'See references',
+                        btnLink: path('project_category',{slug: 'branding'})
 					},{
-                        icon: 'icon-check',
-                        title: 'Wild Photography',
-                        contentFront: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-                        contentBack: 'Ratione voluptate aspernatur quidem deserunt',
-                        imgBack: asset('uploads/projects/thumbnail/placeholder.png'),
-                        btnLabel: 'View Photos',
-                        btnLink: '#'
+                        icon: 'icon-video',
+                        title: 'Video editing',
+                        contentFront: 'You have a video project: advertising for social networks, video presentation of your brand, realization of an animated logo.',
+                        contentBack: 'I make dynamic montages highlighting your brand or product.',
+                        imgBack: asset('build/images/home/flip/videos.jpg'),
+                        btnLabel: 'See references',
+                        btnLink: path('project_category',{slug: 'videos'})
 				} ]
 			} %}
 
@@ -98,23 +99,23 @@
 			<div class="section bg-transparent">
 				<div class="container">
 					{% include "_elements/section-title.html.twig" with {
-						section: 'Projects',
-						title: 'A glimpse of what i do.',
+						section: 'Web developement',
+						title: "I've been coding every single day for the last <span>" ~ stats.daysOfCoding ~ " days</span>.",
 						offsetLeft: true,
-						content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?'
+						content: 'Here is a glimpse of a few projects i worked on.'
 					} %}
 
 					{% include "_elements/gallery-masonry-3d.html.twig" with { 
 						cards : featuredProjects
 					} %}
-
-					{% include "_elements/section-paragraph-left.html.twig" with {
+					
+					{# {% include "_elements/section-paragraph-left.html.twig" with {
 						title: 'See what I Did.',
 						content: [
 							'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur blanditiis saepe dolore tempora nihil praesentium dolorum unde, earum, nostrum odit?',
 							'Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda voluptatum, perspiciatis quae dolorum exercitationem quos ullam, doloribus voluptates nulla reprehenderit maxime sunt ducimus eligendi ratione quaerat vero ex voluptatem earum.'
 						] 
-					} %}
+					} %} #}
 
 				</div>
 			</div>
@@ -170,7 +171,7 @@
 
 			{# services cards #}
 
-			{% include "_sections/home/services.html.twig" with {
+			{# {% include "_sections/home/services.html.twig" with {
 				section: 'Steps of Works',
 				title: 'See How I Do.',
 				cards: [
@@ -197,13 +198,19 @@
 						]
 					}
 				]
-			} %}
+			} %} #}
 			
 			{# contact & testimonials #}
 			{% include "_sections/home/footer-contact.html.twig"  with {
-				section: "Let's Say Hi!",
-				title: "Contact Me Here.",
-				testimonials: false
+				section: "Contact",
+				title: "Let's get <span>in touch</span>.",
+				content: "You have a project to realize or you are looking for a new collaborator within your company? I am always looking for new challenges! Do not hesitate to write to me so that we can talk about it together.",
+				testimonials: false,
+				socials: [ 
+					{ slug: 'email3', link: 'mailto:' ~ config('CONTACT_EMAIl') },
+					{ slug: 'github', link: config('SOCIAL_GITHUB') },
+					{ slug: 'linkedin', link: config('SOCIAL_LINKEDIN') }
+				]
 			} %}
 
 		</div>

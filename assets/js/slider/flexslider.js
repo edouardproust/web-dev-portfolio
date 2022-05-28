@@ -82,7 +82,7 @@ async function flexSlider($elements) {
 					let src = $(this).attr('data-src');
 					$(this).attr('src', src).removeAttr('data-src');
 				});
-				// smoothHieght of 1st slide
+				// smoothHeight of 1st slide
 				smootHeight(slider, 0);
 			},
 			before: (slider) => { // Fires asynchronously with each slider animation
@@ -124,15 +124,17 @@ function smootHeight(slider, index)
 	const intervalId = setInterval(() => {
 		if($slide.find('[src]').length > 0) { // check that the image has loaded
 			let height;
-			setTimeout(() => { // This timeout is to ensure that the height is calculate AFTER the image has loaded (not at the same time)
-				if($slide.find('video').length > 0) {
-					height = $slide.find('video').height();
-				} else {
-					height = $slide.find('img').height();
-				}					
+			if($slide.find('video').length > 0) {
+				height = $slide.find('video').height();
+			} else if($slide.find('iframe').length > 0) {
+				height = $slide.find('iframe').attr('height');
+			} else {
+				height = $slide.find('img').height();
+			}
+			if(height > 200) { // check if the image is loaded (it has an height)
 				slider.find('.flex-viewport').height( height );
-				clearInterval(intervalId)
-			}, 50);
+				clearInterval(intervalId);
+			}
 		}
 	}, 50);
 }

@@ -187,7 +187,7 @@ class EasyAdminService
                         $valueField = TextField::new('fileFile', $label)
                             ->setFormType(VichImageType::class)
                             ->setFormTypeOption('constraints', [
-                                    new File(['mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE')])
+                                    new File(['mimeTypes' => FileHelper::getMimeTypes('IMAGE_TYPE', 'DOCUMENT_TYPE')])
                             ]);
                     } else {
                         $valueField = $fieldClass::new('value', $label);

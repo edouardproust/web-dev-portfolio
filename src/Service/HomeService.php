@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Path;
 use App\Entity\Project;
-use Github\Api\AbstractApi;
 use App\Helper\StringHelper;
 use App\Repository\ToolRepository;
 use App\Repository\TechnologyRepository;
@@ -96,7 +95,7 @@ class HomeService
         try {
             $repositories = $client->api('user')->repositories('edouardproust');
         } catch (\Exception $e) {
-            trigger_error('Github API: failed to connect.', E_USER_WARNING);
+            // trigger_error('Github API: failed to connect.', E_USER_WARNING);
         }
         return $repositories ?? 14;
     }

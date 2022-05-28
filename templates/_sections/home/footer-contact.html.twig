@@ -14,25 +14,21 @@
                 {% include "_elements/contact-button-section.html.twig" with {
                     label: 'Contact Me!',
                     url: path('contact'),
-                    socials: [ 
-                        { slug: 'facebook', link: 'https://facebook.com' },
-                        { slug: 'twitter', link: 'https://twitter.com' },
-                        { slug: 'instagram', link: 'https://instagram.com' }
-                    ]
+                    socials: socials is defined ? socials : []
                 } %}
             {% endset %}
 
             {% include "_elements/section-title.html.twig" with {
                 section: section,
                 title: title,
-                content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae sunt dolor cum, maxime excepturi alias rem numquam iure laborum, amet, vero quam nulla nostrum ipsum deserunt maiores voluptatem animi cupiditate.",
+                content: content,
                 additionalHtml: additionalHtml,
                 titleSize: '64px',
                 titleLineHeight: '4.4rem',
                 removeVerticalMargins: true
             } %}
 
-            {% if testimonials is not same as(false) %}
+            {# {% if testimonials is not same as(false) %}
                 {% include "_elements/testimonials-slider-small.html.twig"  with {
                     title: 'What Clients Says:',
                     slides: [{ 
@@ -40,7 +36,7 @@
                             name: 'Fig Nelson'
                         }]
                 } %}
-            {% endif %}
+            {% endif %} #}
 
         </div>
     </div>

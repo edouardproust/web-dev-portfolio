@@ -79,3 +79,28 @@ $skills-prefix: skills;
 	left: 50%;
 	margin-left: -5px;
 }
+
+/* ----------------------------------------------------------------
+	Cards
+-----------------------------------------------------------------*/
+
+.card {
+	position: relative;
+	border: none;
+}
+.card-body .card-title {
+	margin-bottom: 30px;
+}
+.card-body {
+	width: 100%;
+	z-index: 1;
+}
+.card-number {
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+    color: #e6e6e6;
+	font-weight: bold;
+    font-size: 4rem;
+    z-index: 0;
+}
