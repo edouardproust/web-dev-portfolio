@@ -1,7 +1,8 @@
 <div class="copyrights-menu copyright-links">
     {% for link in menu %}
+        {% set target = link.target is defined ? ' target="' ~ link.target ~ '"' : '' %}
         {% if link.isVisible is not defined or link.isVisible is same as(true) %}
-            <a href="{{ link.url }}">{{ link.label }}</a>
+            <a href="{{ link.url }}"{{ target }}>{{ link.label }}</a>
         {% endif %}
     {% endfor %}
 </div>

@@ -9,7 +9,7 @@
 #}
 
 
-{% set height = height is defined ? 'height: ' ~ height ~ '; ' %}
+{% set height = height is defined ? 'height: ' ~ height ~ '; ' : '' %}
 {% set bgColor = bgColor is defined ? bgColor : '#fff' %}
 {% set border = border is defined ? border : '1px solid #FFF' %}
 
