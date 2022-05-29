@@ -29,7 +29,7 @@
 
 			<div class="img-hover-card">
 				{% if lightbox %}
-					<a href="{{ img }}" data-lightbox="image">
+					<a href="{{ card.url }}"{# data-lightbox="image" #}>
 				{% endif %}
 						<img src="{{ img }}"{{ altTag }}>
 				{% if lightbox %}</a>{% endif %}
@@ -40,7 +40,7 @@
 							<a href="#">{{ title|extract(30) }}</a>
 						</h3>
 						<div class="img-link">
-							<a href="#"><i class="{{ icon is defined ? icon : 'icon-line-arrow-right' }}"></i></a>
+							<a href="{{ card.url }}"><i class="{{ icon is defined ? icon : 'icon-line-arrow-right' }}"></i></a>
 						</div>
 					</div>
 

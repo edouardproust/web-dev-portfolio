@@ -8,8 +8,10 @@ use App\Helper\StringHelper;
 use App\Repository\ToolRepository;
 use App\Repository\TechnologyRepository;
 use App\Repository\CodingLanguageRepository;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HomeService
+class HomeService extends AbstractController
 {
     private $codingLanguageRepository;
     private $toolRepository;
@@ -47,6 +49,10 @@ class HomeService
             $filteredList[$i]['img'] = Path::UPLOADS_PROJECTS_THUMB . '/' . $project->getThumbnail();
             $filteredList[$i]['title'] = $project->getTitle();
             $filteredList[$i]['categories'] = $project->getCategories();
+            $filteredList[$i]['url'] = $this->generateUrl('project_show', [
+                'id' => $project->getId(),
+                'slug'=> $project->getSlug()
+            ]);
         }
         return $filteredList;
     }
