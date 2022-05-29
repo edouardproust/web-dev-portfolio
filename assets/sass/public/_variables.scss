@@ -187,6 +187,26 @@ $slider-arrow-sm-offset: 20px;
 
 $slider-arrow-colors: $white;
 
+//-------------------- Accordion -----------------//@at-root
+
+$toggle-base-color:						$text-color;
+$toggle-font-size:						$font-size-base;
+
+$toggle-border-size:					1px;
+$toggle-border-color:					darken($body-bg, 20%);
+$toggle-border-radius:					4px; // Same Accordion Radius
+
+$toggle-bg-color:						darken($body-bg, 6.67%); // Same Accordion Color
+$toggle-title-color:					$toggle-base-color; // Same Accordion Title Color
+
+// // Accordion
+$accordion-border-size:					1px;
+$accordion-border-color:				darken($body-bg, 13.33%);
+
+
+$toggle-content-padding:				0.75rem;
+$accordion-content-padding:				1.5rem;
+
 //-------------------- Button --------------------//
 
 $button-theme-color: $theme-color;

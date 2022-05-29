@@ -1,0 +1,63 @@
+$accordion-prefix: accordion;
+
+.#{$accordion-prefix} {
+	margin-bottom: 20px;
+	&-header {
+		position: relative;
+		display: -ms-flexbox;
+		display: flex;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+		margin: 0 -5px;
+		cursor: pointer;
+		color: $toggle-base-color;
+		font-size: $toggle-font-size;
+		font-weight: 700;
+        padding: $toggle-content-padding 0;
+		border-top: $accordion-border-size dotted $accordion-border-color;
+		cursor: pointer;
+		&:first-child { border-top: none; }
+	}
+	&-icon {
+		-ms-flex: 0 0 auto;
+		flex: 0 0 auto;
+		width: auto;
+		max-width: 100%;
+		padding: 0 5px;
+		text-align: center;
+	}
+    &-title {
+		-ms-flex-preferred-size: 0;
+		flex-basis: 0;
+		-ms-flex-positive: 1;
+		flex-grow: 1;
+		max-width: 100%;
+		padding: 0 5px;
+	}
+	&:not([data-collapsible="true"]) .#{$accordion-prefix}-header.#{$accordion-prefix}-active { cursor: auto; }
+	&-header:not(.#{$accordion-prefix}-active) .#{$accordion-prefix}-open,
+	&-active .#{$accordion-prefix}-closed { display: none; }
+	&-active .#{$accordion-prefix}-open { display: inline-block; }
+	&-content {
+		padding-top: 0;
+		padding-bottom: $accordion-content-padding;
+	}
+}
+
+
+/* Accordion - with Title Background
+-----------------------------------------------------------------*/
+
+.#{$accordion-prefix}-bg {
+	.#{$accordion-prefix}-header {
+		background-color: $toggle-bg-color;;
+		padding: $toggle-content-padding;
+		border-radius: 2px;
+		margin: 0;
+		margin-bottom: 5px;
+		border-top: 0;
+	}
+	.#{$accordion-prefix}-content {
+		padding: $toggle-content-padding $toggle-content-padding $accordion-content-padding;
+	}
+}

@@ -149,11 +149,11 @@
 							</div>
 						</div>
 
-			{% if hasAfterContent and relatedProjects|length > 0 %}
+			{% if hasAfterContent %}
 
 						<div class="divider divider-center"><i class="icon-circle"></i></div>
 
-						{% if showRelatedProjects %}
+						{% if showRelatedProjects and relatedProjects|length > 0 %}
 							<h4>Related Projects:</h4>
 							{% include "_elements/projects-carousel.html.twig" with {projects: relatedProjects} %}
 						{% endif %}
@@ -188,6 +188,7 @@
 
 			</div>
 		</div>
+		
 	</section>
 
 {% endblock %}
