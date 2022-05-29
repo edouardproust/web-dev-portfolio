@@ -21,7 +21,7 @@ class FileHelper
     const UPLOAD_TYPES = [
         self::FILE_TYPE => [ // default
             'label' => 'File',
-            'maxSize' => '2m',
+            'maxSize' => '3m',
             'mimeMsg' => 'File format {{ type }} is not allowed. Please use one of the following: {{ types }}.',
         ],
         self::IMAGE_TYPE => [
