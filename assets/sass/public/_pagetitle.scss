@@ -4,6 +4,11 @@
 
 $page_title-prefix: page-title;
 
+ul.page-description,
+ol.page-description {
+	margin: 0 !important;
+}
+
 ##{$page_title-prefix} {
 	position: relative;
 	padding: $page-title-padding;

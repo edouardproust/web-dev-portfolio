@@ -29,10 +29,12 @@
         {% if hasAuthorLink %}</a>{% endif %}
         </strong>
     </div>
-    <div class="card-body">
-        <div class="author-image">
-            <img src="{{ avatarUrl }}" alt="Image" class="rounded-circle">
+    <div class="card-body d-flex">
+        <div class="author-image col-4 col-md-2 pe-3">
+            <img src="{{ avatarUrl }}" style="width:100%" alt="Image" class="rounded-circle">
         </div>
-        {{ author.bio|raw }}
+        <div class="author-bio">
+            {{ author.bio|raw }}
+        </div>
     </div>
 </div>
