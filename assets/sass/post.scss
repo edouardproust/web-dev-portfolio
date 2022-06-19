@@ -1,7 +1,10 @@
 @import './public/variables';
 
-@import './public/pagetitle';
-@import './public/elements/dividers';
+@import './public/pagetitle'; // optimized m
+@import './public/content';
+@import './public/elements/dividers'; // optimized m
+@import './public/elements/accordion';
+@import './public/magnific-popup';
 
 // 'comments' section
 @import './public/elements/comments';
