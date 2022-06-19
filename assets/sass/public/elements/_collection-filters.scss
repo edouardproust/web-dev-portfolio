@@ -1,21 +1,22 @@
 /* Grid - Filter
 -----------------------------------------------------------------*/
 
-$grid_filter-prefix: grid-filter;
+$grid-filter-prefix: grid-filter;
 
-.#{$grid_filter-prefix} {
+.#{$grid-filter-prefix} {
 	&-container {
-		margin-bottom: $grid_filter-mb;
+		margin-bottom: $grid-filter-mb;
 	}
 	&-label {
-		padding: $grid_filter-item-padding-y 0 0 0;
+		font-weight: 700;
+		padding: $grid-filter-item-padding-y 0 0 0;
 	}
 	position: relative;
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-	margin-bottom: 0;
+	margin: $grid-filter-margin;
 	width: 100%;
 	list-style: none;
 	&-wrap {
@@ -24,7 +25,7 @@ $grid_filter-prefix: grid-filter;
 		justify-content: space-between;
 	}
 	border: none;
-		border-radius: 0;
+	border-radius: 0;
 
 	li {
 		position: relative;
@@ -35,8 +36,8 @@ $grid_filter-prefix: grid-filter;
 		a {
 			display: block;
 			position: relative;
-			padding: $grid_filter-item-padding-y $grid_filter-item-padding-x;
-			font-size: $grid_filter-item-font-size;
+			padding: $grid-filter-item-padding-y $grid-filter-item-padding-x;
+			font-size: $grid-filter-item-font-size;
 			color: #666;
 			text-align: center;
 			border-left: 1px solid rgba(0,0,0,0.07);
@@ -55,10 +56,10 @@ $grid_filter-prefix: grid-filter;
 		}
 		&:first-child a {
 			border-left: none;
-			border-radius: $grid_filter-border-radius 0 0 $grid_filter-border-radius;
+			border-radius: $grid-filter-border-radius 0 0 $grid-filter-border-radius;
 		}
 		&:last-child a { 
-			border-radius: 0 $grid_filter-border-radius $grid_filter-border-radius 0; 
+			border-radius: 0 $grid-filter-border-radius $grid-filter-border-radius 0; 
 		}
 	}
 

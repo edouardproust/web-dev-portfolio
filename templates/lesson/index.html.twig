@@ -42,6 +42,17 @@
 
 {% block content %}
 
+    {% include "_elements/button.html.twig" with {
+        label: 'View archives',
+        icon: 'icon-line-archive',
+        url: 'http://phpstack-749317-2528704.cloudwaysapps.com/lessons-list.php',
+        target: '_blank',
+        margin: 'mb-3',
+        border: true,
+        size: 'small',
+        rounded: true
+    } %}
+
     {% if lessons is defined and lessons|length > 0 %}
         {{ parent() }}
         <div id="collection" class="row grid-container">
