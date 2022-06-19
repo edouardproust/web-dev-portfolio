@@ -400,12 +400,13 @@ $gotoTop-hidden-sm: true;
 //-------------------- Portfolio --------------------//
 
 //Grid Filter
-$grid_filter-mb: 3.5rem;
+$grid-filter-mb: 3.5rem;
 $grid-filter-gap: 30px;
-$grid_filter-border-radius: 0px;
-$grid_filter-item-padding-x: 5px;
-$grid_filter-item-padding-y: 13px;
-$grid_filter-item-font-size: 0.9375rem;
+$grid-filter-margin: 0;
+$grid-filter-border-radius: 0px;
+$grid-filter-item-padding-x: 5px;
+$grid-filter-item-padding-y: 13px;
+$grid-filter-item-font-size: 0.9375rem;
 
 // Portfolio: 	;
 $portfolio-item-min-height: 300px;
