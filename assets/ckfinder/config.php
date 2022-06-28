@@ -90,8 +90,8 @@ $config['resourceTypes'][] = array(
 $config['resourceTypes'][] = array(
     'name'              => 'Scripts',
     'directory'         => 'scripts',
-    'maxSize'           => '10M',
-    'allowedExtensions' => 'htm,html,css,js,php,sql,txt,phps',
+    'maxSize'           => '500K',
+    'allowedExtensions' => 'htm,html,css,js,php,sql,txt,phps,c,h',
     'backend'           => 'default'
 );
 
