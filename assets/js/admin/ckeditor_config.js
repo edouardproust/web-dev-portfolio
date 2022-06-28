@@ -135,6 +135,7 @@ export default { exec };
                 { language: 'css', label: 'CSS' },
                 { language: 'php', label: 'PHP' },
                 { language: 'javascript', label: 'JavaScript' },
+                { language: 'c', label: 'C' },
                 { language: 'plaintext', label: 'Plain text' }
             ]
         },
