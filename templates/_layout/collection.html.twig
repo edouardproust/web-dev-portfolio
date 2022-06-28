@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {# Prepare #}
-    {% set hasFeaturedSection = featuredProjects is defined 
+    {% set hasFeaturedSection = 
+        (featuredProjects is defined or featuredLessons is defined or featuredPosts is defined)
         and featuredProjects is iterable 
         and featuredProjects|length > 0 
             ? true : false
@@ -28,7 +29,7 @@
                                 content: null
                             } %}
                             {% include "_elements/projects-carousel.html.twig" with {
-                                projects: featuredProjects,
+                                projects: featuredProjects ?? featuredLessons ?? featuredPosts,
                                 cols: 3
                             } %}
                         </div>

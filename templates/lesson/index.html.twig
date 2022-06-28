@@ -35,12 +35,23 @@
 
     {% include "_sections/page-title/default.html.twig" with { 
         title: 'Lessons',
-        subtitle: 'Learn coding or improve your skills.'
+        subtitle: 'Notes taken while learning programming. These notes not only serve me as a reminder in my work but can also be used by others to complete their knowledge of programming.'
     } %}
     
 {% endblock %}
 
 {% block content %}
+
+    {% include "_elements/button.html.twig" with {
+        label: 'Lessons archive',
+        icon: 'icon-line-archive',
+        url: 'http://phpstack-749317-2528704.cloudwaysapps.com/lessons-list.php',
+        target: '_blank',
+        margin: 'mb-3',
+        border: true,
+        size: 'small',
+        rounded: true
+    } %}
 
     {% if lessons is defined and lessons|length > 0 %}
         {{ parent() }}

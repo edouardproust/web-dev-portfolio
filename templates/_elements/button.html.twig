@@ -13,7 +13,7 @@ Optionnal:
     - url: mandatory if not a type="submit" button. Default =  undefined
     - type: default = undefined / Mandatory if 'url' is not defined
     - icon: default: 'icon-angle-right'
-    - targetBlank: <bool> Default: false
+    - target: <string> Open the link in a new page = '_blank'. Default = ''
 #}
 
 {% set isTypeSubmit = type is defined and type is same as('submit') ? true : false %}
@@ -24,7 +24,7 @@ Optionnal:
 {% set classReveal = reveal is defined and reveal is same as(false) ? '' : ' button-reveal text-end' %}
 {% set classMargin = margin is defined ? ' m-0 ' ~ margin : ' m-0' %}
 {% set classRounded = rounded is defined and rounded is same as(false) ? '' : ' button-rounded' %}
-{% set target = targetBlank is defined and targetBlank is same as(true) ? ' target="_blank"' : ''  %}
+{% set target = target is defined and target is same as('_blank') ? ' target="_blank"' : ''  %}
 
 {% set icon = icon is defined ? icon : null %}
 {% if classReveal is not same as('') %}

@@ -33,7 +33,7 @@ $portfolio-prefix: portfolio;
 		}
 	}
 	&-rounded &-image {
-		border-radius: $grid_filter-border-radius + 1;
+		border-radius: $grid-filter-border-radius + 1;
 		// overflow: hidden;
 	}
 

@@ -11,7 +11,7 @@ import accordions from "../../js/content/accordions";
 const ALLOWED_FILE_TYPES = {
     result: [ 'php' ],
     images: ['ico','webp','bmp','gif','jpeg','jpg','png','svg','tif','tiff'],
-    scripts: ['htm','html','css','js','phps','sql','txt'],
+    scripts: ['htm','html','css','js','phps','sql','txt', 'c', 'h'],
     documents: ['csv','doc','docx','odt','ods','pdf','xls','xlsx'],
     videos: ['mp4','webm'],
     audio_clips: ['mid','mp3','wav'],
@@ -87,6 +87,7 @@ const EMBED_CONVERTERS = {
 
 const EXTENSION_REPLACE = {
     phps: 'php',
+    h: 'c'
 };
 
 function exec() {

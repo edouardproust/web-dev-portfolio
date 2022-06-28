@@ -20,7 +20,7 @@ $btn-prefix: button;
 	padding: $button-padding-y $button-padding-x;
 	font-size: $button-font-size;
 	line-height: $button-l-height;
-	@include gradient-bg($button-theme-color);
+	@include gradient-bg($button-color);
 	color: $color-contrast-light;
 	font-weight: 700;
 	letter-spacing: 1px;
@@ -44,7 +44,7 @@ $btn-prefix: button;
 			background-color: $button-light;
 			color: darken($text-color, 6.67);
 		} @else {
-			background-color: $button-theme-color;
+			background-color: $button-color;
 			color: #FFF;
 		}
 		text-shadow: none !important;
@@ -122,27 +122,27 @@ $btn-prefix: button;
 
 	&.#{$btn-prefix}-border {
 		border: $button-border-width solid $button-dark;
+		border-color: $button-color;
 		background: transparent;
-		color: darken($button-dark, 6.67);
+		color: darken($button-color, 10%); // darken($button-dark, 6.67);
 		font-weight: 700;
 		text-shadow: none;
+		i { 
+			height: calc(100% + $button-border-width * 2) !important;
+		}
 		&-thin {
 			border-width: $button-border-thin-width;
+			i { 
+				height: calc(100% + $button-border-thin-width * 2) !important; 
+			}
 		}
-
-		&.text-end:hover i {
-			height: 110%;
-		}
-
 		&.#{$btn-prefix}-desc { line-height: 1; }
-
 		&:not(.#{$btn-prefix}-fill):hover {
 			color: #FFF;
 			background-color: $button-light-hover-color;
 			border-color: rgba(0,0,0,0.1) !important;
 			text-shadow: 1px 1px 1px $button-text-shadow;
 		}
-
 		&.#{$btn-prefix}-light {
 			@if $buttons-color == true {
 				border-color: #FFF;
