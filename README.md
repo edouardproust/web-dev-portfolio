@@ -5,6 +5,8 @@ v.1.0: march 2022
 
 This project is developped on GitLab: https://gitlab.com/solo-projects3/ep-portfolio.git
 
+![image](https://user-images.githubusercontent.com/45925914/176814990-39c1c23f-7ac0-42bc-916e-a71a09c4f73d.png)
+
 ----------
 
 ## Technologies & Requirements
