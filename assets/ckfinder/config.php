@@ -91,7 +91,7 @@ $config['resourceTypes'][] = array(
     'name'              => 'Scripts',
     'directory'         => 'scripts',
     'maxSize'           => '500K',
-    'allowedExtensions' => 'htm,html,css,js,php,sql,txt,phps,c,h',
+    'allowedExtensions' => 'htm,html,css,js,php,sql,txt,phps,c,h,py',
     'backend'           => 'default'
 );
 
