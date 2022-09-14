@@ -11,7 +11,7 @@ import accordions from "../../js/content/accordions";
 const ALLOWED_FILE_TYPES = {
     result: [ 'php' ],
     images: ['ico','webp','bmp','gif','jpeg','jpg','png','svg','tif','tiff'],
-    scripts: ['htm','html','css','js','phps','sql','txt', 'c', 'h', 'py'],
+    scripts: ['htm','html','css','js','phps','sql','txt', 'c', 'h', 'py', 'sh'],
     documents: ['csv','doc','docx','odt','ods','pdf','xls','xlsx'],
     videos: ['mp4','webm'],
     audio_clips: ['mid','mp3','wav'],
@@ -395,7 +395,10 @@ function singleImage__buildOne(element, img, caption)
     imgContainer.classList.add('img-container')
     element.appendChild(imgContainer);
     imgContainer.appendChild(img)
-    if(caption) imgContainer.appendChild(caption);
+    if(caption) {
+        imgContainer.appendChild(caption);
+        img-container.classList.add('captioned')
+    }
     return imgContainer;
 }
 
