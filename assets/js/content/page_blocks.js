@@ -362,7 +362,6 @@ function codeBlock__buildOne(codeEl)
     let langClass = codeEl.classList[0];
     let langName = langClass.substring(langClass.indexOf('-') + 1);
     if(langName === 'plaintext') langName = 'Plain text';
-    if(langName === 'py') langName = 'Python';
     codeHeader.innerText = langName.toUpperCase();
 }
 
