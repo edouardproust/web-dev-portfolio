@@ -39,7 +39,8 @@ figcaption,
 .code-container,
 .resultbox-container,
 .accordion {
-    margin-bottom: 40px;
+    margin-top: 1.2rem;
+	margin-bottom: 1.2rem;
 }
 
 /** Code block & Result box */
@@ -47,7 +48,7 @@ figcaption,
 code {
     color: $text-color;
     background-color: $code-text-bg-color;
-    padding: 4px 10px;
+    padding: 4px 6px 2px;
     border-radius: 4px;
 }
 
@@ -79,9 +80,8 @@ code.hljs,
 
 /** Captions (Image + Code) */
 
-figcaption {
+.img-container.captioned {
     border: $card-border-width solid $card-border-color;
-    border-top: none;
 }
 
 /* lightbox captions (image) */

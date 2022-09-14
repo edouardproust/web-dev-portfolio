@@ -10,14 +10,17 @@
 dl, dt, dd, ol, ul, li {
 	margin: 0;
 	padding: 0;
+	margin-bottom: 2px;
 }
 
 ul, ol {
-	margin-top: -20px;
+	margin-top: 0px;
 	margin-left: 20px;
 }
 
-em { font-family: $secondary-font; }
+em { 
+	font-family: $secondary-font; 
+}
 
 .clear {
 	clear: both;
@@ -103,14 +106,22 @@ h1 {
 
 h2 { 
 	font-size: $font-size-h2;
-	line-height: $line-height-h2; 
+	line-height: $line-height-h2;
+	margin-top: 3.6rem;
+	margin-bottom: 2rem; 
 }
 
-h3 { font-size: $font-size-h3; }
+h3 { 
+	font-size: $font-size-h3; 
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+}
 
 h4 {
 	font-size: $font-size-h4;
 	font-weight: 600;
+	margin-top: 1.4rem;
+	margin-bottom: 1rem;
 }
 
 h5 { font-size: $font-size-h5; }
@@ -144,7 +155,15 @@ blockquote,
 address,
 table,
 fieldset,
-form { margin-bottom: 30px; }
+form { 
+	margin-bottom: 30px; 
+}
+
+p,
+#content p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
 
 small { 
 	font-family: $body-font; 
@@ -161,7 +180,7 @@ small > span.sep-before::before {
 	font-size: 20px;
 	line-height: 30px;
 	color: #777777;
-	padding-bottom: 3rem;
+	margin-bottom: 3rem;
 }
 
 /* ----------------------------------------------------------------
