@@ -159,6 +159,12 @@ form {
 	margin-bottom: 30px; 
 }
 
+p,
+#content p {
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
 small { 
 	font-family: $body-font; 
 }
