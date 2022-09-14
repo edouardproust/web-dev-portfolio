@@ -5,6 +5,14 @@ v.1.0: march 2022
 
 This project is developped on GitLab: https://gitlab.com/solo-projects3/ep-portfolio.git
 
+👉 [**Live demo**](https://www.edouardproust.dev)
+
+![image](https://user-images.githubusercontent.com/45925914/176814990-39c1c23f-7ac0-42bc-916e-a71a09c4f73d.png)
+![image](https://user-images.githubusercontent.com/45925914/176815194-c1a6085e-6afa-438f-8c14-f22f1a3eda7b.png)
+![image](https://user-images.githubusercontent.com/45925914/176815281-21d4a4d8-571a-4e7c-8379-c76589c87827.png)
+![image](https://user-images.githubusercontent.com/45925914/176815325-1edeee52-d9de-4d30-a43e-77a36f243860.png)
+
+
 ----------
 
 ## Technologies & Requirements
