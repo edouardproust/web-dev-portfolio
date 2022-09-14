@@ -395,7 +395,10 @@ function singleImage__buildOne(element, img, caption)
     imgContainer.classList.add('img-container')
     element.appendChild(imgContainer);
     imgContainer.appendChild(img)
-    if(caption) imgContainer.appendChild(caption);
+    if(caption) {
+        imgContainer.appendChild(caption);
+        imgContainer.classList.add('captioned');
+    }
     return imgContainer;
 }
 
