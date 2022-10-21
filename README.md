@@ -41,9 +41,9 @@ symfony serve -d
 ```
 If database not set up yet;
 ```bash
-php bin/console make:migration -n
-php bin/console d:m:m -n
-php bin/console d:f:l --group=dev -n
+symfony console make:migration -n
+symfony console d:m:m -n
+symfony console d:f:l --group=dev -n
 ```
 
 ----------
