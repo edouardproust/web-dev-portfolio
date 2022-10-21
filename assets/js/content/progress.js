@@ -32,9 +32,8 @@ function progress() {
 			entries.forEach( function(entry){
 				if (entry.isIntersecting) {
 					if (!elBar.hasClass('skills-animated')) {
-						counter.exec({
-							el: element.find('.counter-instant')
-						});
+						console.log('ELEMENT PROGRESS.JS:', element.find('.counter-instant'))
+						counter.exec(element.find('.counter-instant'));
 						elBar.find('.progress').css({width: elValue + "%"}).addClass('skills-animated');
 					}
 					observer.unobserve( entry.target );
